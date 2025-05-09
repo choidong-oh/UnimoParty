@@ -10,7 +10,7 @@ public class IngameObserver
 
     public UserPlayer UserPlayer { get; private set; }
     private int gameoverTargetScore = 100;
-    private DataCenter gamedata = new DataCenter(3, 0);
+    private DataCenter gamedata = new DataCenter(100, 0);
     private bool isGameOver = false;
 
 
@@ -25,6 +25,8 @@ public class IngameObserver
         if (gamedata.life <= 0)
         {
             isGameOver = true;
+
+            // 여기에 포톤 추가.
             OnGameEnd.Invoke();
         }
     }
@@ -39,6 +41,19 @@ public class IngameObserver
         OnGameDataChange?.Invoke(tempfairy);
     }
 
+    public void RetrunFairy()
+    {
+        PlayerFairy tempPlayerFairy;
+        tempPlayerFairy.FairyType1 = 0;
+        tempPlayerFairy.FairyType2 = 0;
+        tempPlayerFairy.FairyType3 = 0;
+
+        gamedata.playerFairyType = tempPlayerFairy;
+        var tempfairy = gamedata;
+
+        //여기에 포톤 추가.
+        OnGameDataChange?.Invoke(tempfairy);
+    }
 
     public void AddScore(int score)
     {
@@ -51,6 +66,8 @@ public class IngameObserver
         if(gamedata.score >= gameoverTargetScore)
         {
             isGameOver = true;
+
+            // 여기에 포톤 추가.
             OnGameEnd.Invoke();
         }
     }

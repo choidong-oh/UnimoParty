@@ -6,6 +6,13 @@ public struct PlayerFairy
     public int FairyType3;
 }
 
+public struct EndFairyCount
+{
+    public int EndFairyType1;
+    public int EndFairyType2;
+    public int EndFairyType3;
+}
+
 public class DataCenter
 {
     public int life;
