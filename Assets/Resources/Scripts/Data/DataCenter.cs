@@ -1,7 +1,16 @@
+
+public struct PlayerFairy
+{
+    public int FairyType1;
+    public int FairyType2;
+    public int FairyType3;
+}
+
 public class DataCenter
 {
     public int life;
     public int score;
+    public PlayerFairy playerFairyType;
 
     public DataCenter(DataCenter gamedata) : this(gamedata.life, gamedata.score) { }
 

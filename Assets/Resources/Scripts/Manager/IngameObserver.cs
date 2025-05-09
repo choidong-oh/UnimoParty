@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class IngameObserver
 {
-    public event Action<int> OnGameDataChange;
+    public event Action<DataCenter> OnGameDataChange;
     public event Action OnGameEnd;
 
     public UserPlayer UserPlayer { get; private set; }
@@ -17,7 +17,7 @@ public class IngameObserver
     public void HitPlayer(int damage)
     {
         gamedata.life = gamedata.life - damage;
-        var templife = gamedata.life;
+        var templife = gamedata;
 
         //여기에 포톤 추가.
         OnGameDataChange?.Invoke(templife);
@@ -29,10 +29,21 @@ public class IngameObserver
         }
     }
 
+    public void GetFairy(PlayerFairy fairytype)
+    {
+        //페어리 타입을 이미 전부 받은 상태에서 유저 페어리에 대입함.
+        gamedata.playerFairyType = fairytype;
+        var tempfairy = gamedata;
+
+        //여기에 포톤 추가.
+        OnGameDataChange?.Invoke(tempfairy);
+    }
+
+
     public void AddScore(int score)
     {
         gamedata.score = gamedata.score + score;
-        var tempscore = gamedata.score;
+        var tempscore = gamedata;
 
         //여기에 포톤 추가.
         OnGameDataChange?.Invoke(tempscore);
@@ -53,6 +64,7 @@ public class IngameObserver
     {
         if(isGameOver == true)
         {
+            //여기에 포톤 추가.
             OnGameEnd.Invoke();
         }
     }
