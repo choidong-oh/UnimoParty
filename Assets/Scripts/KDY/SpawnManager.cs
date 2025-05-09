@@ -40,7 +40,14 @@ public class SpawnManager : MonoBehaviour
             Transform spawnPoint = spawnPoints[index];
 
             // 해당 스폰 포인트의 위치,회전을 가져와서 플레이어 생성
-            Instantiate(playerPrefab, spawnPoint.position, spawnPoint.rotation);
+            //Instantiate(playerPrefab, spawnPoint.position, spawnPoint.rotation);
+
+            Vector3 spawnPos = spawnPoint.position;
+
+            // Y축 회전만 유지 (X/Z는 0으로)
+            Quaternion yRotationOnly = Quaternion.Euler(0, spawnPoint.rotation.eulerAngles.y, 0);
+
+            Instantiate(playerPrefab, spawnPos, yRotationOnly);
 
             Debug.Log($"플레이어가 스폰됨: 인덱스 {index}, 위치:{spawnPoint.name}");
         }
