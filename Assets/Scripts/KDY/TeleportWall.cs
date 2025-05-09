@@ -53,7 +53,12 @@ public class TeleportWall : MonoBehaviour
         }
 
         other.transform.position = newPos;
-        Debug.Log($"{wallType} 벽 충돌: {currentPos} → {newPos} 이동 완료");
+
+        // 기존에는 회전을 유지하거나 Y축만 보정하는 방식을 사용했으나,
+        // 이번에는 항상 초기화(0,0,0 회전)하도록 변경하여 테스트함.
+        other.transform.rotation = Quaternion.identity;
+
+        Debug.Log($"{wallType} 벽 충돌: {currentPos} → {newPos} 이동 완료 (회전 초기화됨)");
     }
 }
 
