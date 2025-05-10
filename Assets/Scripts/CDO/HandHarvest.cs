@@ -6,20 +6,28 @@ using UnityEngine.XR.Interaction.Toolkit;
 public class HandHarvest : MonoBehaviour
 {
     [SerializeField] XRRayInteractor RayInteractor;
+    FlowerUi flowerUi; //채집물
 
     //코루틴변수
     Coroutine harvestingRoutine = null; //시작코루틴
     Coroutine decreaseRoutine = null; //감소코루틴
 
     //쿨타임 게이지
-    [Header("게이지 속도 관련")]
+    [Header("게이지 관련")]
     public  float currentProgress = 0f; // 현재게이지
     [SerializeField] float harvestTime = 3f; // 게이지 쿨타임
     [SerializeField] float decreaseSpeed = 0.5f; // 줄어드는 속도
     List<float> checkPoints = new List<float>(); // 체크포인트 목록
 
-    FlowerUi flowerUi;
+    [Header("테스트 채집성공 포인트")]
+    [SerializeField] int harvestPoint = 0;
 
+
+
+
+    //콜백은 OnEnable 안댐
+    //player은 안사라지니깐 awake, start에 넣으면 댈듯 
+    //콜백 쓸만한건없긴함
     void OnEnable()
     {
         RayInteractor.selectEntered.AddListener(OnGrabbed);
@@ -34,6 +42,7 @@ public class HandHarvest : MonoBehaviour
 
     private void Start()
     {
+        //체크포인트
         checkPoints.Add(harvestTime / 3f);
         checkPoints.Add(harvestTime / 3f * 2f);
     }
@@ -85,6 +94,8 @@ public class HandHarvest : MonoBehaviour
     }
 
     //수확 시작
+    //델타타임 써는데 상대방의게이지가 안보여서 신경안써도 댈듯
+    //정확히할려면 바꿔야대고
     private IEnumerator HarvestCoroutine()
     {
         while (currentProgress < harvestTime)
@@ -131,7 +142,11 @@ public class HandHarvest : MonoBehaviour
         harvestingRoutine = null;
         currentProgress = 0f;
 
-        Debug.Log("채집 완료!");
+        flowerUi.gameObject.SetActive(false);
+
+        harvestPoint++;
+
+        Debug.Log("채집 했음");
     }
 
 }

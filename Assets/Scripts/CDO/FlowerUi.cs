@@ -11,7 +11,5 @@ public class FlowerUi : MonoBehaviour
     {
         GaugeText.text = Gauge.ToString();
     }
-
-    
-
+   
 }
