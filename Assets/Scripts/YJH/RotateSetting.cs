@@ -17,18 +17,20 @@ public class RotateSetting : MonoBehaviour
 
     void Update()
     {
-        Vector3 currentHMDForward = FlatDirection(cameraTF.forward);
-        float angle = Vector3.SignedAngle(baseForward, currentHMDForward, Vector3.up);
+        Vector3 currentCameraForward = FlatDirection(cameraTF.forward);
+        float angle = Vector3.SignedAngle(baseForward, currentCameraForward, Vector3.up);
 
         if (!isRotating)
         {
             if (angle >= 60)
             {
+                Debug.Log("오른쪽 회전");
                 rotateDirection = 1;
                 isRotating = true;
             }
             else if (angle <= -60)
             {
+                Debug.Log("왼쪽 회전");
                 rotateDirection = -1;
                 isRotating = true;
             }
@@ -44,6 +46,7 @@ public class RotateSetting : MonoBehaviour
             }
             else
             {
+                Debug.Log("회전 멈춤");
                 isRotating = false;
                 baseForward = FlatDirection(spaceShip.forward);
             }
@@ -52,6 +55,7 @@ public class RotateSetting : MonoBehaviour
 
     Vector3 FlatDirection(Vector3 dir)
     {
+        Debug.Log("정면 셋팅");
         dir.y = 0f;
         return dir.normalized;
     }

@@ -358,9 +358,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24332f404f16edb4c996a948acba29f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hmdTransform: {fileID: 56787118}
+  cameraTF: {fileID: 56787118}
   spaceShip: {fileID: 423639237}
-  thresholdAngle: 60
   rotateSpeed: 60
 --- !u!1 &695742666
 GameObject:
@@ -1208,6 +1207,63 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1222174931}
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1618187066 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9014170783809206332, guid: 895f6f3c2d334633b5800312285058d2, type: 3}
+  m_PrefabInstance: {fileID: 1777488283}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1618187070
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1618187066}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3433a4f1b2997d04abae7ffd2f8c93af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  xrOrigin: {fileID: 582168562}
+  dashAngle: 30
+  dashDistance: 2
+  dashCooldown: 5
+  onDashForward:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1618187070}
+        m_TargetAssemblyTypeName: HeadDash, Assembly-CSharp
+        m_MethodName: DashForward
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onDashBackward:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1618187070}
+        m_TargetAssemblyTypeName: HeadDash, Assembly-CSharp
+        m_MethodName: DashBackward
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onDashReady:
+    m_PersistentCalls:
+      m_Calls: []
+  onDashBlocked:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &1777488283
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1327,6 +1383,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 7696548424635294048, guid: 895f6f3c2d334633b5800312285058d2, type: 3}
       insertIndex: -1
       addedObject: {fileID: 582168568}
+    - targetCorrespondingSourceObject: {fileID: 9014170783809206332, guid: 895f6f3c2d334633b5800312285058d2, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1618187070}
   m_SourcePrefab: {fileID: 100100000, guid: 895f6f3c2d334633b5800312285058d2, type: 3}
 --- !u!114 &1981255071 stripped
 MonoBehaviour:
