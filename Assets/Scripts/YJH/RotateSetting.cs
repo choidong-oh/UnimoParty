@@ -2,9 +2,8 @@ using UnityEngine;
 
 public class RotateSetting : MonoBehaviour
 {
-    public Transform hmdTransform;         // HMD 카메라
-    public Transform spaceShip;            // 기준점 & 조이스틱 포함 오브젝트
-    public float thresholdAngle = 60f;     // 트리거 각도
+    public Transform cameraTF;         
+    public Transform spaceShip;            
     public float rotateSpeed = 60f;        
 
     private bool isRotating = false;
@@ -18,17 +17,17 @@ public class RotateSetting : MonoBehaviour
 
     void Update()
     {
-        Vector3 currentHMDForward = FlatDirection(hmdTransform.forward);
+        Vector3 currentHMDForward = FlatDirection(cameraTF.forward);
         float angle = Vector3.SignedAngle(baseForward, currentHMDForward, Vector3.up);
 
         if (!isRotating)
         {
-            if (angle > thresholdAngle)
+            if (angle >= 60)
             {
                 rotateDirection = 1;
                 isRotating = true;
             }
-            else if (angle < -thresholdAngle)
+            else if (angle <= -60)
             {
                 rotateDirection = -1;
                 isRotating = true;
@@ -36,21 +35,17 @@ public class RotateSetting : MonoBehaviour
         }
         else
         {
-            // HMD가 계속 회전 범위 밖에 있는 동안 회전 유지
-            if ((rotateDirection == 1 && angle > thresholdAngle) ||
-                (rotateDirection == -1 && angle < -thresholdAngle))
+            if ((rotateDirection == 1 && angle >= 60) || (rotateDirection == -1 && angle <= -60))
             {
                 float rotationAmount = rotateSpeed * Time.deltaTime * rotateDirection;
 
-                // 기준점과 spaceShip을 같이 회전
                 transform.Rotate(0f, rotationAmount, 0f);
                 spaceShip.Rotate(0f, rotationAmount, 0f);
             }
             else
             {
-                // HMD가 다시 기준 범위 안에 들어옴 → 회전 종료 + 기준 갱신
                 isRotating = false;
-                baseForward = FlatDirection(spaceShip.forward); // 새 기준점은 현재 spaceShip의 정면
+                baseForward = FlatDirection(spaceShip.forward);
             }
         }
     }
