@@ -1,5 +1,5 @@
 
-public struct PlayerFairy
+public struct FairyType
 {
     public int FairyType1;
     public int FairyType2;
@@ -17,7 +17,7 @@ public class DataCenter
 {
     public int life;
     public int score;
-    public PlayerFairy playerFairyType;
+    public FairyType playerFairyType;
 
     public DataCenter(DataCenter gamedata) : this(gamedata.life, gamedata.score) { }
 

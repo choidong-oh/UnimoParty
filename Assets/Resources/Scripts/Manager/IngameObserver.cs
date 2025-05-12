@@ -8,21 +8,21 @@ public class IngameObserver
     public event Action<DataCenter> OnGameDataChange;
     public event Action OnGameEnd;
 
-    public UserPlayer UserPlayer { get; private set; }
+    public UserPlayer UserPlayer { get; set; }
     private int gameoverTargetScore = 100;
-    private DataCenter gamedata = new DataCenter(100, 0);
+
     private bool isGameOver = false;
 
 
     public void HitPlayer(int damage)
     {
-        gamedata.life = gamedata.life - damage;
-        var templife = gamedata;
+        UserPlayer.gamedata.life = UserPlayer.gamedata.life - damage;
+        var templife = UserPlayer.gamedata;
 
         //여기에 포톤 추가.
         OnGameDataChange?.Invoke(templife);
 
-        if (gamedata.life <= 0)
+        if (UserPlayer.gamedata.life <= 0)
         {
             isGameOver = true;
 
@@ -31,11 +31,11 @@ public class IngameObserver
         }
     }
 
-    public void GetFairy(PlayerFairy fairytype)
+    public void GetFairy(FairyType fairytype)
     {
         //페어리 타입을 이미 전부 받은 상태에서 유저 페어리에 대입함.
-        gamedata.playerFairyType = fairytype;
-        var tempfairy = gamedata;
+        UserPlayer.gamedata.playerFairyType = fairytype;
+        var tempfairy = UserPlayer.gamedata;
 
         //여기에 포톤 추가.
         OnGameDataChange?.Invoke(tempfairy);
@@ -43,13 +43,13 @@ public class IngameObserver
 
     public void RetrunFairy()
     {
-        PlayerFairy tempPlayerFairy;
+        FairyType tempPlayerFairy;
         tempPlayerFairy.FairyType1 = 0;
         tempPlayerFairy.FairyType2 = 0;
         tempPlayerFairy.FairyType3 = 0;
 
-        gamedata.playerFairyType = tempPlayerFairy;
-        var tempfairy = gamedata;
+        UserPlayer.gamedata.playerFairyType = tempPlayerFairy;
+        var tempfairy = UserPlayer.gamedata;
 
         //여기에 포톤 추가.
         OnGameDataChange?.Invoke(tempfairy);
@@ -57,13 +57,13 @@ public class IngameObserver
 
     public void AddScore(int score)
     {
-        gamedata.score = gamedata.score + score;
-        var tempscore = gamedata;
+        UserPlayer.gamedata.score = UserPlayer.gamedata.score + score;
+        var tempscore = UserPlayer.gamedata;
 
         //여기에 포톤 추가.
         OnGameDataChange?.Invoke(tempscore);
 
-        if(gamedata.score >= gameoverTargetScore)
+        if(UserPlayer.gamedata.score >= gameoverTargetScore)
         {
             isGameOver = true;
 
