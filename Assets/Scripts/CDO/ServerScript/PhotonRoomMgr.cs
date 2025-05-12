@@ -14,6 +14,13 @@ public class PhotonRoomMgr : MonoBehaviourPunCallbacks
     public int readyCount => readyPlayerIDs.Count;
 
 
+    private  void  OnEnable()
+    {
+        base.OnEnable();
+
+
+    }
+
     //겟차일드 찾고 
     //그거에 텍스를 찾아서 변경
     void Start()
@@ -38,6 +45,14 @@ public class PhotonRoomMgr : MonoBehaviourPunCallbacks
         UpdatePlayerList();
     }
 
+    public override void OnPlayerPropertiesUpdate(Player targetPlayer, ExitGames.Client.Photon.Hashtable changedProps)
+    {
+        if (changedProps.ContainsKey("IsReady"))
+        {
+            UpdatePlayerList();
+        }
+    }
+
     //0 텍스트 닉네임
     //1 텍스트 게임준비
     //2 버튼 게임준비버튼
@@ -51,9 +66,9 @@ public class PhotonRoomMgr : MonoBehaviourPunCallbacks
 
         for (int i = 0; i < PhotonNetwork.PlayerList.Length; i++)
         {
-            var dd = Instantiate(RoomUser, RoomListPanel); //룸 리스트 패널 하에 하나 생성
-            dd.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = PhotonNetwork.PlayerList[i].NickName;
-            //dd.transform.GetChild(3).GetComponent<TextMeshProUGUI>().text = playerMoney.ToString();
+            var RoomList = Instantiate(RoomUser, RoomListPanel); //룸 리스트 패널 하에 하나 생성
+            RoomList.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = PhotonNetwork.PlayerList[i].NickName;
+            //RoomList.transform.GetChild(3).GetComponent<TextMeshProUGUI>().text = playerMoney.ToString();
 
             var player = PhotonNetwork.PlayerList[i];
             bool isLocalPlayer = player == PhotonNetwork.LocalPlayer;
@@ -61,9 +76,9 @@ public class PhotonRoomMgr : MonoBehaviourPunCallbacks
             //방장이냐
             if (PhotonNetwork.PlayerList[i].IsMasterClient)
             {
-                dd.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = "Master";
+                RoomList.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = "Master";
 
-                var btn = dd.transform.GetChild(2).GetComponent<Button>();
+                var btn = RoomList.transform.GetChild(2).GetComponent<Button>();
                 var btnText = btn.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
                 btnText.text = "GameStart";
 
@@ -80,11 +95,33 @@ public class PhotonRoomMgr : MonoBehaviourPunCallbacks
             //방장아니냐
             else
             {
-                var statusText = dd.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
-                var btn = dd.transform.GetChild(2).GetComponent<Button>();
+                var statusText = RoomList.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
+                var btn = RoomList.transform.GetChild(2).GetComponent<Button>();
 
                 // 레디한 유저인지 확인
-                if (readyPlayerIDs.Contains(player.ActorNumber))
+                //if (readyPlayerIDs.Contains(player.ActorNumber))
+                //{
+                //    statusText.text = "GameReady";
+                //    Destroy(btn.gameObject); // 버튼 숨김
+                //}
+                //else
+                //{
+                //    statusText.text = "GameNoReady";
+                //    if (isLocalPlayer)
+                //    {
+                //        btn.onClick.AddListener(ReadyCountBtn);
+                //        btn.onClick.AddListener(() => Destroy(btn.gameObject));
+                //        btn.onClick.AddListener(() => statusText.text = "GameReady");
+                //    }
+                //    else
+                //    {
+                //        Destroy(btn.gameObject);
+                //    }
+                //}
+                object isReadyObj;
+                bool isReady = player.CustomProperties.TryGetValue("IsReady", out isReadyObj) && (bool)isReadyObj;
+
+                if (isReady)
                 {
                     statusText.text = "GameReady";
                     Destroy(btn.gameObject); // 버튼 숨김
@@ -103,13 +140,23 @@ public class PhotonRoomMgr : MonoBehaviourPunCallbacks
                         Destroy(btn.gameObject);
                     }
                 }
+
+
             }
         }
+
+
+
     }
 
-    //레디버튼 누를경우 전체의 readyCount가 오름
-    public void ReadyCountBtn()
+    void ReadyCountBtn()
     {
+        ExitGames.Client.Photon.Hashtable props = new ExitGames.Client.Photon.Hashtable
+    {
+        { "IsReady", true }
+    };
+        PhotonNetwork.LocalPlayer.SetCustomProperties(props);
+
         if (!PhotonNetwork.IsMasterClient)
         {
             Debug.Log(PhotonNetwork.LocalPlayer.ActorNumber);
@@ -127,7 +174,28 @@ public class PhotonRoomMgr : MonoBehaviourPunCallbacks
         }
     }
 
-    
+
+    //레디버튼 누를경우 전체의 readyCount가 오름
+    //public void ReadyCountBtn()
+    //{
+    //    if (!PhotonNetwork.IsMasterClient)
+    //    {
+    //        Debug.Log(PhotonNetwork.LocalPlayer.ActorNumber);
+    //        try
+    //        {
+
+
+    //            photonView.RPC("ReadyCount", RpcTarget.All, PhotonNetwork.LocalPlayer.ActorNumber);
+
+    //        }
+    //        catch (System.Exception ee)
+    //        {
+    //            Debug.Log(ee);
+    //        }
+    //    }
+    //}
+
+
 
     [PunRPC]
     public void ReadyCount(int playerID)

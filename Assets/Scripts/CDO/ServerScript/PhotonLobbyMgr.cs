@@ -17,6 +17,8 @@ public class PhotonLobbyMgr : MonoBehaviourPunCallbacks
 
     public GameObject roomPrefab;
 
+    public GameObject testImg;
+
     List<string> names = new List<string>() { "점심내기 한판", "주사위 운빨 겜", "주사위의 신을 찾아라", "내 용돈 줄 사람 구함" };
     static int nameCount;
 
@@ -87,6 +89,7 @@ public class PhotonLobbyMgr : MonoBehaviourPunCallbacks
     public override void OnConnectedToMaster()
     {
         Debug.Log("서버 연결 콜백");
+        testImg.SetActive(true);
         PhotonNetwork.JoinLobby();
     }
 
