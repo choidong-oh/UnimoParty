@@ -17,9 +17,9 @@ public class ScaffoldingSpawner : MonoBehaviour
 
             // ·£´ý À§Ä¡ (Áß¾Ó ±âÁØ)
             Vector3 offset = new Vector3(
-                Random.Range(-50f, 50f),
+                Random.Range(-120f, 120f),
                 0f,
-                Random.Range(-50f, 50f)
+                Random.Range(-120f, 120f)
             );
             cube.transform.position = centerObject.position + offset;
 
