@@ -16,9 +16,13 @@ public class Flower : MonoBehaviour
     //쿨타임 게이지
     [Header("게이지 속도 관련")]
     [SerializeField] float currentProgress = 0f; // 현재게이지
-    [SerializeField] float harvestTime = 2f; // 게이지 쿨타임
+    [SerializeField] float harvestTime = 3f; // 게이지 쿨타임
     [SerializeField] float decreaseSpeed = 0.5f; // 줄어드는 속도
     List<float> checkPoints = new List<float>(); // 체크포인트 목록
+
+    //리스트의 리스트
+    //각플레이어변수 
+    //코루틴2개 현재게이지
 
     void OnEnable()
     {
