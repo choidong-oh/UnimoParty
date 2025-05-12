@@ -32,18 +32,12 @@ public class RotateSetting : MonoBehaviour
         }
         else
         {
-            // 범위 밖이면 계속 회전
-            bool stillOutside =
-                (rotateDirection == 1 && angle > 60f) ||
-                (rotateDirection == -1 && angle < -60f);
-
-            if (stillOutside)
+            if ((rotateDirection == 1 && angle > 60f) || (rotateDirection == -1 && angle < -60f))
             {
                 float rotAmount = rotateSpeed * Time.deltaTime * rotateDirection;
 
                 transform.Rotate(0f, rotAmount, 0f);
                 spaceShip.Rotate(0f, rotAmount, 0f);
-                cameraTF.Rotate(0f, rotAmount, 0f); 
             }
             else
             {
