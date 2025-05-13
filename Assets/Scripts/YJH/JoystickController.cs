@@ -3,26 +3,31 @@ using UnityEngine;
 using UnityEngine.XR.Content.Interaction;
 using UnityEngine.XR.Interaction.Toolkit;
 
-
 public class LeftHandController : MonoBehaviour
 {
-    public GameObject leftHand;
+    public ActionBasedController leftController;
 
+    public GameObject leftHand;
+    public GameObject controllerPrefab;
     public XRJoystick joystick;
+    public Transform joystickTF;
     public GameObject xrOriginObject;     // XROrigin 오브젝트
     public float moveSpeed = 1.0f;        // 이동 속도
-    public Transform stickPos;
 
     private Transform xrOriginTransform;
 
-    bool select= false;
+    GameObject LC;
     void Start()
     {
+        LC = Instantiate(controllerPrefab, joystickTF);        
+        LC.SetActive(false);
+
         xrOriginTransform = xrOriginObject.transform;
 
         joystick.onValueChangeY.AddListener(OnJoystickMoveY);
         joystick.onValueChangeX.AddListener(OnJoystickMoveX);
     }
+
     void OnDestroy()
     {
         joystick.onValueChangeY.RemoveListener(OnJoystickMoveY);
@@ -43,23 +48,12 @@ public class LeftHandController : MonoBehaviour
 
     public void OnSelectEnter()
     {
-        Debug.Log("+");
-        select = true;
-        StartCoroutine(FreezeHand());
+        leftController.modelPrefab = null;
+        LC.SetActive(true);
     }
     public void OnSelectExit()
     {
-        Debug.Log("-");
-        select = false;
-    }
-
-    private IEnumerator FreezeHand()
-    {
-        while (select)
-        {
-            yield return new WaitForEndOfFrame(); // XR이 다 끝나고 나서 강제로 적용
-            leftHand.transform.position = stickPos.position;
-            leftHand.transform.rotation = stickPos.rotation;
-        }
+        leftController.modelPrefab = controllerPrefab.transform;
+        LC.SetActive(false);
     }
 }
