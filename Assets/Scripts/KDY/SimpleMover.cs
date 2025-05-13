@@ -1,15 +1,9 @@
 using UnityEngine;
-using UnityEngine.InputSystem; // New Input System 사용
+using UnityEngine.InputSystem;  // 중요
 
 public class SimpleMover : MonoBehaviour
 {
-    public float speed = 5f;
-    private Rigidbody rb;
-
-    void Start()
-    {
-        rb = GetComponent<Rigidbody>();
-    }
+    public float moveSpeed = 3f;
 
     void Update()
     {
@@ -20,7 +14,7 @@ public class SimpleMover : MonoBehaviour
               )
             : Vector2.zero;
 
-        Vector3 move = new Vector3(input.x, 0, input.y);
-        rb.MovePosition(transform.position + move * speed * Time.deltaTime);
+        Vector3 direction = new Vector3(input.x, 0f, input.y);
+        transform.position += direction * moveSpeed * Time.deltaTime;
     }
 }
