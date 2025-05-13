@@ -5,21 +5,34 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public class LeftHandController : MonoBehaviour
 {
-    public ActionBasedController leftController;
-
-    public GameObject leftHand;
-    public GameObject controllerPrefab;
-    public XRJoystick joystick;
-    public Transform joystickTF;
     public GameObject xrOriginObject;     // XROrigin 오브젝트
+    [Space]
+    [Header("조이스틱 이동속도")]
     public float moveSpeed = 1.0f;        // 이동 속도
+    [Space]
+    public XRJoystick joystick;
+
+
+    [Header("왼쪽 컨트롤러")]
+    public ActionBasedController leftController;
+    private Renderer[] handRenderers;
+
+    [Header("손 모양 프리팹")]
+    public GameObject controllerPrefab;
+    [Space]
+
+    [Header("손 위치")]
+    public Transform joystickTF;
+    [Space]
 
     private Transform xrOriginTransform;
 
     GameObject LC;
     void Start()
     {
-        LC = Instantiate(controllerPrefab, joystickTF);        
+        handRenderers = leftController.GetComponentsInChildren<Renderer>();
+
+        LC = Instantiate(controllerPrefab, joystickTF);         
         LC.SetActive(false);
 
         xrOriginTransform = xrOriginObject.transform;
@@ -48,12 +61,25 @@ public class LeftHandController : MonoBehaviour
 
     public void OnSelectEnter()
     {
-        leftController.modelPrefab = null;
         LC.SetActive(true);
+        SetHandVisible(false);
+
+        leftController.model.gameObject.SetActive(false);
     }
     public void OnSelectExit()
     {
-        leftController.modelPrefab = controllerPrefab.transform;
         LC.SetActive(false);
+        SetHandVisible(true);
+        leftController.model.gameObject.SetActive(true);
+    }
+
+    void SetHandVisible(bool visible)
+    {
+        foreach (var renderer in handRenderers)
+        {      
+            renderer.enabled = visible;
+                     
+        }
+
     }
 }
