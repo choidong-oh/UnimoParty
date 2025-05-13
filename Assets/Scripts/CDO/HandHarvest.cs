@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.XR.Interaction.Toolkit;
 
 public class HandHarvest : MonoBehaviour
@@ -23,22 +24,57 @@ public class HandHarvest : MonoBehaviour
     [SerializeField] int harvestPoint = 0;
 
 
-
+    [SerializeField] private InputActionReference activateAction;
+    Flower flower;
 
     //콜백은 OnEnable 안댐
     //player은 안사라지니깐 awake, start에 넣으면 댈듯 
     //콜백 쓸만한건없긴함
     void OnEnable()
     {
-        RayInteractor.selectEntered.AddListener(OnGrabbed);
-        RayInteractor.selectExited.AddListener(OnReleased);
+        //RayInteractor.selectEntered.AddListener(OnGrabbed);
+        //RayInteractor.selectExited.AddListener(OnReleased);
+        
+        activateAction.action.performed += OnTriggerPressed;
+        activateAction.action.canceled += OnTriggerReleased;
     }
 
     void OnDisable()
     {
-        RayInteractor.selectEntered.RemoveListener(OnGrabbed);
-        RayInteractor.selectExited.RemoveListener(OnReleased);
+        //RayInteractor.selectEntered.RemoveListener(OnGrabbed);
+        //RayInteractor.selectExited.RemoveListener(OnReleased);
+
+         activateAction.action.performed -= OnTriggerPressed;
+        activateAction.action.canceled -= OnTriggerReleased;
     }
+
+    //안전코드 써야댐 flower가없을수있음
+    private void OnTriggerPressed(InputAction.CallbackContext context)
+    {
+        flower = null;
+        if (RayInteractor.TryGetCurrent3DRaycastHit(out RaycastHit hit))
+        {
+            flower = hit.collider.GetComponent<Flower>();
+            if (flower != null)
+            {
+                flower.StartHarvest();
+                Debug.Log("Flower 수확 시작!");
+            }
+        }
+    }
+
+  
+   
+
+    private void OnTriggerReleased(InputAction.CallbackContext context)
+    {
+        Debug.Log("Trigger 뗌");
+        if (this.gameObject.activeSelf == true)
+        {
+            flower.StopHarvest();
+        }
+    }
+
 
     private void Start()
     {

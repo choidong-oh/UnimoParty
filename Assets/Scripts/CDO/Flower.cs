@@ -1,11 +1,12 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.XR.Interaction.Toolkit;
 
 public class Flower : MonoBehaviour
 {
-    [SerializeField] XRGrabInteractable grabInteractable;
 
     [SerializeField] FlowerUi flowerUi;
 
@@ -24,43 +25,57 @@ public class Flower : MonoBehaviour
     //각플레이어변수 
     //코루틴2개 현재게이지
 
-    void OnEnable()
-    {
-        grabInteractable.selectEntered.AddListener(OnGrabbed);
-        grabInteractable.selectExited.AddListener(OnReleased);
-    }
+   
 
-    void OnDisable()
-    {
-        StopAllCoroutines();
-        grabInteractable.selectEntered.RemoveListener(OnGrabbed);
-        grabInteractable.selectExited.RemoveListener(OnReleased);
-    }
+    [SerializeField] private InputActionReference activateAction;
 
+  
+    //private void OnEnable()
+    //{
+
+
+    //    activateAction.action.performed += OnTriggerPressed;
+    //    activateAction.action.canceled += OnTriggerReleased;
+    //    activateAction.action.Enable();
+    //}
+
+    //private void OnDisable()
+    //{
+    //    ResetFlower();
+    //    activateAction.action.performed -= OnTriggerPressed;
+    //    activateAction.action.canceled -= OnTriggerReleased;
+    //    activateAction.action.Disable();
+    //}
+
+    //private void OnTriggerPressed(InputAction.CallbackContext context)
+    //{
+    //    Debug.Log("Trigger 눌림");
+    //    StartHarvest();
+    //}
+
+    //private void OnTriggerReleased(InputAction.CallbackContext context)
+    //{
+    //    Debug.Log("Trigger 뗌");
+    //    if (this.gameObject.activeSelf == true)
+    //    {
+    //        StopHarvest();
+    //    }
+    //}
+
+  
+
+   
+
+   
+   
     private void Start()
     {
-        grabInteractable = GetComponent<XRGrabInteractable>();
         //체크포인트
         checkPoints.Add(harvestTime / 3f);
         checkPoints.Add(harvestTime / 3f * 2f);
     }
 
-
-
-    private void OnGrabbed(SelectEnterEventArgs args)
-    {
-        Debug.Log("잡혔다!");
-        StartHarvest();
-    }
-
-    private void OnReleased(SelectExitEventArgs args)
-    {
-        Debug.Log("놓았다!");
-        if (this.gameObject.activeSelf == true)
-        {
-            StopHarvest();
-        }
-    }
+    
     public void StartHarvest()
     {
         if (decreaseRoutine != null)
@@ -132,7 +147,7 @@ public class Flower : MonoBehaviour
 
 
     //채집 결과
-    private void CompleteHarvest()
+    void CompleteHarvest()
     {
         harvestingRoutine = null;
         currentProgress = 0f;
@@ -141,6 +156,12 @@ public class Flower : MonoBehaviour
 
         Debug.Log("채집 완료!");
     }
+
+    private void ResetFlower()
+    {
+        currentProgress = 0;
+    }
+
 }
 
     
