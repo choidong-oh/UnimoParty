@@ -33,6 +33,7 @@ public class Flower : MonoBehaviour
         grabInteractable.selectExited.RemoveListener(OnReleased);
     }
 
+
     private void Start()
     {
         grabInteractable = GetComponent<XRGrabInteractable>();
