@@ -30,14 +30,14 @@ public class HandHarvest : MonoBehaviour
     //콜백 쓸만한건없긴함
     void OnEnable()
     {
-        RayInteractor.selectEntered.AddListener(OnGrabbed);
-        RayInteractor.selectExited.AddListener(OnReleased);
+        //RayInteractor.selectEntered.AddListener(OnGrabbed);
+        //RayInteractor.selectExited.AddListener(OnReleased);
     }
 
     void OnDisable()
     {
-        RayInteractor.selectEntered.RemoveListener(OnGrabbed);
-        RayInteractor.selectExited.RemoveListener(OnReleased);
+        //RayInteractor.selectEntered.RemoveListener(OnGrabbed);
+        //RayInteractor.selectExited.RemoveListener(OnReleased);
     }
 
     private void Start()
@@ -48,15 +48,19 @@ public class HandHarvest : MonoBehaviour
     }
 
 
-    private void OnGrabbed(SelectEnterEventArgs args)
+    public void OnGrabbed()
     {
         Debug.Log("플레이어 손으로 잡음");
-        flowerUi = args.interactableObject.transform.GetComponent<FlowerUi>();
         StartHarvest();
 
     }
 
-    private void OnReleased(SelectExitEventArgs args)
+    private void OnTriggerEnter(Collider other)
+    {
+        Debug.Log("너냐?");
+    }
+
+    public void OnReleased()
     {
         Debug.Log("플레이어 손에서 놓음");
         StopHarvest();
