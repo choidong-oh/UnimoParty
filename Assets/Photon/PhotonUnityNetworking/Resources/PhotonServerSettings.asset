@@ -41,6 +41,8 @@ MonoBehaviour:
   - RespawnSpaceship
   - ReadyCount
   - StartBtn
+  - Btn
+  - btn
   DisableAutoOpenWizard: 1
-  ShowSettings: 0
+  ShowSettings: 1
   DevRegionSetOnce: 1
