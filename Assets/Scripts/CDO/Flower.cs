@@ -29,12 +29,14 @@ public class Flower : MonoBehaviour
     //테스트
     [SerializeField] HandHarvest handHarvest;
 
+    public float HarvestTime => harvestTime;
+
     private void Start()
     {
         //체크포인트
         checkPoints.Add(harvestTime / 3f);
         checkPoints.Add(harvestTime / 3f * 2f);
-
+        
     }
 
    
