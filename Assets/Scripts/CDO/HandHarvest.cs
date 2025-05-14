@@ -21,7 +21,7 @@ public class HandHarvest : MonoBehaviour
     List<float> checkPoints = new List<float>(); // 체크포인트 목록
 
     [Header("테스트 채집성공 포인트")]
-    [SerializeField] int harvestPoint = 0;
+    [SerializeField] int SpiritVisagePoint = 0;
 
 
     [SerializeField] private InputActionReference activateAction;
@@ -32,19 +32,13 @@ public class HandHarvest : MonoBehaviour
     //콜백 쓸만한건없긴함
     void OnEnable()
     {
-        //RayInteractor.selectEntered.AddListener(OnGrabbed);
-        //RayInteractor.selectExited.AddListener(OnReleased);
-        
         activateAction.action.performed += OnTriggerPressed;
         activateAction.action.canceled += OnTriggerReleased;
     }
 
     void OnDisable()
     {
-        //RayInteractor.selectEntered.RemoveListener(OnGrabbed);
-        //RayInteractor.selectExited.RemoveListener(OnReleased);
-
-         activateAction.action.performed -= OnTriggerPressed;
+        activateAction.action.performed -= OnTriggerPressed;
         activateAction.action.canceled -= OnTriggerReleased;
     }
 
@@ -52,9 +46,16 @@ public class HandHarvest : MonoBehaviour
     private void OnTriggerPressed(InputAction.CallbackContext context)
     {
         flower = null;
+
         if (RayInteractor.TryGetCurrent3DRaycastHit(out RaycastHit hit))
         {
-            flower = hit.collider.GetComponent<Flower>();
+
+            if (!hit.collider.TryGetComponent<Flower>(out flower))
+            {
+                return;
+            }
+
+            //더 안전한 코드
             if (flower != null)
             {
                 flower.StartHarvest();
@@ -69,7 +70,7 @@ public class HandHarvest : MonoBehaviour
     private void OnTriggerReleased(InputAction.CallbackContext context)
     {
         Debug.Log("Trigger 뗌");
-        if (this.gameObject.activeSelf == true)
+        if (this.gameObject.activeSelf == true && flower !=null)
         {
             flower.StopHarvest();
         }
@@ -83,104 +84,16 @@ public class HandHarvest : MonoBehaviour
         checkPoints.Add(harvestTime / 3f * 2f);
     }
 
-
-    private void OnGrabbed(SelectEnterEventArgs args)
-    {
-        Debug.Log("플레이어 손으로 잡음");
-        flowerUi = args.interactableObject.transform.GetComponent<FlowerUi>();
-        StartHarvest();
-
-    }
-
-    private void OnReleased(SelectExitEventArgs args)
-    {
-        Debug.Log("플레이어 손에서 놓음");
-        StopHarvest();
-
-    }
-
-
-   
-    public void StartHarvest()
-    {
-        if (decreaseRoutine != null)
-        {
-            StopCoroutine(decreaseRoutine);
-            decreaseRoutine = null;
-        }
-
-        if (harvestingRoutine == null)
-        {
-            harvestingRoutine = StartCoroutine(HarvestCoroutine());
-        }
-    }
-
-    public void StopHarvest()
-    {
-        if (harvestingRoutine != null)
-        {
-            StopCoroutine(harvestingRoutine);
-            harvestingRoutine = null;
-        }
-
-        if (decreaseRoutine == null)
-        {
-            decreaseRoutine = StartCoroutine(DecreaseCoroutine());
-        }
-    }
-
-    //수확 시작
-    //델타타임 써는데 상대방의게이지가 안보여서 신경안써도 댈듯
-    //정확히할려면 바꿔야대고
-    private IEnumerator HarvestCoroutine()
-    {
-        while (currentProgress < harvestTime)
-        {
-            currentProgress += Time.deltaTime;
-            flowerUi.UpdateGauge(currentProgress);
-
-            yield return null;
-        }
-
-        CompleteHarvest();
-    }
-
-    //수확 감소(중간 놓았을때)
-    private IEnumerator DecreaseCoroutine()
-    {
-        while (currentProgress > 0f)
-        {
-            // 진행도 감소
-            float progressChange = Time.deltaTime * decreaseSpeed;
-            currentProgress = Mathf.Max(0f, currentProgress - progressChange);
-
-            foreach (float checkPoint in checkPoints)
-            {
-                if (Mathf.Abs(currentProgress - checkPoint) < 0.01f)
-                {
-                    currentProgress = checkPoint;
-                    break;
-                }
-            }
-
-            // UI 갱신
-            flowerUi.UpdateGauge(currentProgress);
-
-            yield return null;
-        }
-            decreaseRoutine = null;
-        
-    }
-
     //채집 결과
     private void CompleteHarvest()
     {
         harvestingRoutine = null;
         currentProgress = 0f;
 
+        //나중에 rpc바꿔야댐
         flowerUi.gameObject.SetActive(false);
 
-        harvestPoint++;
+        SpiritVisagePoint++;
 
         Debug.Log("채집 했음");
     }

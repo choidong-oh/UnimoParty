@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.XR.Interaction.Toolkit;
 
 public class Flower : MonoBehaviour
 {
@@ -21,53 +20,12 @@ public class Flower : MonoBehaviour
     [SerializeField] float decreaseSpeed = 0.5f; // 줄어드는 속도
     List<float> checkPoints = new List<float>(); // 체크포인트 목록
 
-    //리스트의 리스트
-    //각플레이어변수 
-    //코루틴2개 현재게이지
-
-   
-
+    //인풋액션
+    [Header("InputSystem")]
     [SerializeField] private InputActionReference activateAction;
 
-  
-    //private void OnEnable()
-    //{
+    public int SpiritVisagePoint;
 
-
-    //    activateAction.action.performed += OnTriggerPressed;
-    //    activateAction.action.canceled += OnTriggerReleased;
-    //    activateAction.action.Enable();
-    //}
-
-    //private void OnDisable()
-    //{
-    //    ResetFlower();
-    //    activateAction.action.performed -= OnTriggerPressed;
-    //    activateAction.action.canceled -= OnTriggerReleased;
-    //    activateAction.action.Disable();
-    //}
-
-    //private void OnTriggerPressed(InputAction.CallbackContext context)
-    //{
-    //    Debug.Log("Trigger 눌림");
-    //    StartHarvest();
-    //}
-
-    //private void OnTriggerReleased(InputAction.CallbackContext context)
-    //{
-    //    Debug.Log("Trigger 뗌");
-    //    if (this.gameObject.activeSelf == true)
-    //    {
-    //        StopHarvest();
-    //    }
-    //}
-
-  
-
-   
-
-   
-   
     private void Start()
     {
         //체크포인트
@@ -151,6 +109,9 @@ public class Flower : MonoBehaviour
     {
         harvestingRoutine = null;
         currentProgress = 0f;
+        
+        //player
+        SpiritVisagePoint++;
 
         this.gameObject.SetActive(false);
 
