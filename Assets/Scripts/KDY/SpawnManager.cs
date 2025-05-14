@@ -21,13 +21,13 @@ public class SpawnManager : MonoBehaviour
     private void Start()
     {
         // 첫 번째 스폰 위치에 한 명 스폰
-        //SpawnAtIndex(0);  
+        SpawnAtIndex(0);  
 
         // 모든 스폰 포인트에 순서대로 플레이어 스폰
-        for (int i = 0; i < spawnPoints.Count; i++)
-        {
-            SpawnAtIndex(i);      
-        }
+        //for (int i = 0; i < spawnPoints.Count; i++)
+        //{
+        //    SpawnAtIndex(i);      
+        //}
     }
 
     // 지정된 인덱스에 플레이어를 스폰하는 메서드
