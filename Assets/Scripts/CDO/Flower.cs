@@ -26,14 +26,18 @@ public class Flower : MonoBehaviour
 
     public int SpiritVisagePoint;
 
+    //테스트
+    [SerializeField] HandHarvest handHarvest;
+
     private void Start()
     {
         //체크포인트
         checkPoints.Add(harvestTime / 3f);
         checkPoints.Add(harvestTime / 3f * 2f);
+
     }
 
-    
+   
     public void StartHarvest()
     {
         if (decreaseRoutine != null)
@@ -109,9 +113,9 @@ public class Flower : MonoBehaviour
     {
         harvestingRoutine = null;
         currentProgress = 0f;
-        
+
         //player
-        SpiritVisagePoint++;
+        handHarvest.spiritPoint++;
 
         this.gameObject.SetActive(false);
 
