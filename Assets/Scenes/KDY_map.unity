@@ -1044,7 +1044,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 483173564856133447, guid: 507b4fefbf7c9224a9e0276dcf2a844b, type: 3}
       propertyPath: m_Size.x
-      value: 2.240738
+      value: 3.0195312
       objectReference: {fileID: 0}
     - target: {fileID: 483173564856133447, guid: 507b4fefbf7c9224a9e0276dcf2a844b, type: 3}
       propertyPath: m_Size.y
@@ -1052,7 +1052,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 483173564856133447, guid: 507b4fefbf7c9224a9e0276dcf2a844b, type: 3}
       propertyPath: m_Center.x
-      value: -1.120369
+      value: -1.5097656
       objectReference: {fileID: 0}
     - target: {fileID: 483173564856133447, guid: 507b4fefbf7c9224a9e0276dcf2a844b, type: 3}
       propertyPath: m_Center.y
@@ -1064,11 +1064,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4667205575805665620, guid: 507b4fefbf7c9224a9e0276dcf2a844b, type: 3}
       propertyPath: mapWidth
-      value: 35
+      value: 380
       objectReference: {fileID: 0}
     - target: {fileID: 4667205575805665620, guid: 507b4fefbf7c9224a9e0276dcf2a844b, type: 3}
       propertyPath: mapHeight
-      value: 35
+      value: 380
       objectReference: {fileID: 0}
     - target: {fileID: 4667205575805665620, guid: 507b4fefbf7c9224a9e0276dcf2a844b, type: 3}
       propertyPath: teleportTarget
