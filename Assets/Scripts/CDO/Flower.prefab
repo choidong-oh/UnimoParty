@@ -137,7 +137,7 @@ GameObject:
   - component: {fileID: 1044216788909998114}
   - component: {fileID: 2129553054002104758}
   - component: {fileID: 2509635859069451052}
-  - component: {fileID: 1163685720228050827}
+  - component: {fileID: 6617873011636352024}
   m_Layer: 0
   m_Name: Flower
   m_TagString: Untagged
@@ -154,7 +154,7 @@ Transform:
   m_GameObject: {fileID: 3477442797691105170}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.5, z: 4.85}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -424,7 +424,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GaugeText: {fileID: 2444651508843583765}
---- !u!114 &1163685720228050827
+--- !u!114 &6617873011636352024
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -436,11 +436,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30874b4e60906ca4fb5e1e9a30cfea71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  grabInteractable: {fileID: 2129553054002104758}
   flowerUi: {fileID: 2509635859069451052}
   currentProgress: 0
   harvestTime: 3
   decreaseSpeed: 0.5
+  activateAction: {fileID: 83097790271614945, guid: c348712bda248c246b8c49b3db54643f, type: 3}
 --- !u!1 &8465618690649787202
 GameObject:
   m_ObjectHideFlags: 0
