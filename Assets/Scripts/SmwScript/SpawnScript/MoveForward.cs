@@ -11,7 +11,7 @@ public class MoveForward : MonoBehaviour
     float pointRecordInterval = 0.2f;   // 몇 초마다 경로 기록할지
 
     Transform Spwner;// 이거는 원중심을 찾기위해서(기준점)
-    int EnemytypeNum;
+    int EnemytypeNum; //이거는 적이 늘어나면 어떤 종류 소환할껀지 처리하는 것 
 
     public void Benchmark(Transform SpawnerTransform) //값을 받아올꺼임 여기서 
     {
@@ -19,7 +19,7 @@ public class MoveForward : MonoBehaviour
     }
 
 
-    public void SetEnemytype(int Enemytype) //몬스터 종류 숫자넣어주면 여기서 그몬스터를 소환함
+    public void SetEnemytype(int Enemytype) //몬스터 종류 숫자넣어주면 여기서 그 몬스터를 소환함
     {
         EnemytypeNum = Enemytype;
     }
@@ -46,6 +46,9 @@ public class MoveForward : MonoBehaviour
         }
 
         StartCoroutine(RecordPathRoutine());//이거는 기즈모로 경로 확인 코루틴 
+
+
+        StartCoroutine(LifeTime(30f));//이거는 그냥 오브젝트 테스트 끝났는데 살아있는게 보기않좋아서 파괴
     }
 
     void SetInitialDirection()
@@ -76,6 +79,12 @@ public class MoveForward : MonoBehaviour
         }
     }
 
+    IEnumerator LifeTime(float delay)//실제 움직임 이런걸 종류를 늘리면됨 (패턴 추가할시)
+    {
+
+        yield return new WaitForSeconds(delay);
+        Destroy(gameObject);
+    }
 
 
 
