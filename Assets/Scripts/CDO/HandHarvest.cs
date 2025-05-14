@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.XR.Interaction.Toolkit;
@@ -7,22 +6,9 @@ using UnityEngine.XR.Interaction.Toolkit;
 public class HandHarvest : MonoBehaviour
 {
     [SerializeField] XRRayInteractor RayInteractor;
-    FlowerUi flowerUi; //채집물
 
-    //코루틴변수
-    Coroutine harvestingRoutine = null; //시작코루틴
-    Coroutine decreaseRoutine = null; //감소코루틴
-
-    //쿨타임 게이지
-    [Header("게이지 관련")]
-    public  float currentProgress = 0f; // 현재게이지
-    [SerializeField] float harvestTime = 3f; // 게이지 쿨타임
-    [SerializeField] float decreaseSpeed = 0.5f; // 줄어드는 속도
-    List<float> checkPoints = new List<float>(); // 체크포인트 목록
-
-    [Header("테스트 채집성공 포인트")]
-    [SerializeField] int SpiritVisagePoint = 0;
-
+    [SerializeField]int SpiritPoint = 0;  
+    public int spiritPoint {  get { return SpiritPoint; } set { if (value < 0) { Debug.Log("정령음수됨"); } SpiritPoint = value; }}
 
     [SerializeField] private InputActionReference activateAction;
     Flower flower;
@@ -64,38 +50,14 @@ public class HandHarvest : MonoBehaviour
         }
     }
 
-  
-   
-
     private void OnTriggerReleased(InputAction.CallbackContext context)
     {
         Debug.Log("Trigger 뗌");
-        if (this.gameObject.activeSelf == true && flower !=null)
+        if (flower.gameObject.activeSelf == true && flower !=null)
         {
             flower.StopHarvest();
         }
     }
 
-
-    private void Start()
-    {
-        //체크포인트
-        checkPoints.Add(harvestTime / 3f);
-        checkPoints.Add(harvestTime / 3f * 2f);
-    }
-
-    //채집 결과
-    private void CompleteHarvest()
-    {
-        harvestingRoutine = null;
-        currentProgress = 0f;
-
-        //나중에 rpc바꿔야댐
-        flowerUi.gameObject.SetActive(false);
-
-        SpiritVisagePoint++;
-
-        Debug.Log("채집 했음");
-    }
 
 }

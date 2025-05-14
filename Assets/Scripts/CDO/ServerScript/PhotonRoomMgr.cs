@@ -14,12 +14,12 @@ public class PhotonRoomMgr : MonoBehaviourPunCallbacks
     public int readyCount => readyPlayerIDs.Count;
 
 
-    private  void  OnEnable()
-    {
-        base.OnEnable();
+    //private  void  OnEnable()
+    //{
+    //    base.OnEnable();
 
 
-    }
+    //}
 
     //겟차일드 찾고 
     //그거에 텍스를 찾아서 변경
