@@ -26,6 +26,8 @@ public class Flower : MonoBehaviour
 
     public int SpiritVisagePoint;
 
+    public float HarvestTime => harvestTime;//이거는 FlowerUi에 필요한 프로퍼티 (게이지쿨타임 받아와야해서 ㅠㅠ)
+
     private void Start()
     {
         //체크포인트
