@@ -34,7 +34,7 @@ public class IngameObserver
 
     public void GetFairy(FairyType fairytype)
     {
-        //페어리 타입을 이미 전부 받은 상태에서 유저 페어리에 대입함.
+        //페어리 타입을 이미 받은 상태에서 유저 페어리에 대입함.
         UserPlayer.gamedata.playerFairyType = fairytype;
         var tempfairy = UserPlayer.gamedata;
 
