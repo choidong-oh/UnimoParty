@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.XR.Interaction.Toolkit;
 
-public class HandHarvest : MonoBehaviour
+public partial class HandHarvest : MonoBehaviour
 {
     [SerializeField] XRRayInteractor RayInteractor;
 
@@ -69,4 +69,8 @@ public class HandHarvest : MonoBehaviour
     }
 
 
+}
+
+public partial class HandHarvest : MonoBehaviour
+{
 }

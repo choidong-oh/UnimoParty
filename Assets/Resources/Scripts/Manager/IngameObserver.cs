@@ -34,7 +34,7 @@ public class IngameObserver
 
     public void GetFairy(FairyType fairytype)
     {
-        //페어리 타입을 이미 전부 받은 상태에서 유저 페어리에 대입함.
+        //페어리 타입을 이미 받은 상태에서 유저 페어리에 대입함.
         UserPlayer.gamedata.playerFairyType = fairytype;
         var tempfairy = UserPlayer.gamedata;
 
@@ -42,15 +42,24 @@ public class IngameObserver
         OnGameDataChange?.Invoke(tempfairy);
     }
 
-    public void DeliveryFairy(int fairytype1, int fairytype2, int fairytype3)
+    public void DeliveryFairy()
     {
-        tempPlayerFairy.FairyDataType_1 = fairytype1;
-        tempPlayerFairy.FairyDataType_2 = fairytype2;
-        tempPlayerFairy.FairyDataType_3 = fairytype3;
+        Manager.Instance.goalCount.GoalFairyValue_1 += UserPlayer.gamedata.playerFairyType.FairyDataType_1;
+        Manager.Instance.goalCount.GoalFairyValue_2 += UserPlayer.gamedata.playerFairyType.FairyDataType_2;
+        Manager.Instance.goalCount.GoalFairyValue_2 += UserPlayer.gamedata.playerFairyType.FairyDataType_3;
+
+        tempPlayerFairy.FairyDataType_1 = 0;
+        tempPlayerFairy.FairyDataType_2 = 0;
+        tempPlayerFairy.FairyDataType_3 = 0;
 
         UserPlayer.gamedata.playerFairyType = tempPlayerFairy;
         var tempfairy = UserPlayer.gamedata;
 
+        if(Manager.Instance.goalCount.GoalFairyValue_1 == Manager.Instance.tempFairyValue_1 && Manager.Instance.goalCount.GoalFairyValue_2 == Manager.Instance.tempFairyValue_2 && Manager.Instance.goalCount.GoalFairyValue_3 == Manager.Instance.tempFairyValue_3)
+        {
+            isGameOver = true;
+            OnGameEnd?.Invoke();
+        }
         //여기에 포톤 추가.
         OnGameDataChange?.Invoke(tempfairy);
     }
@@ -80,6 +89,7 @@ public class IngameObserver
         OnGameDataChange?.Invoke(tempPlayer);
     }
 
+    //강제로 게임을 종료시키는 메소드.
     public void EndGame()
     {
         if(isGameOver == true)

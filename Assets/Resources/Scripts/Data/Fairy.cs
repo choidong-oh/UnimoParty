@@ -12,13 +12,4 @@ public class Fairy : MonoBehaviour
     [SerializeField] GameObject fairyObjectPrefab;
     [SerializeField] float playerEnterRange;
     [SerializeField] float objRemoveTime;
-
-
-    void objRemove()
-    {
-        //폴링을 통해 채집물 관리
-        transform.gameObject.SetActive(false);
-        Manager.Instance.observer.DeliveryFairy(type.FairyDataType_1,type.FairyDataType_2,type.FairyDataType_3);
-        Manager.Instance.observer.AddScore(100);
-    }
 }
