@@ -7,103 +7,73 @@ public class SpawnManager : MonoBehaviour
     [Header("스폰할 플레이어 프리팹")]
     public GameObject playerPrefab;
 
-    [Header("중심 오브젝트")]
-    public Transform centerPoint;
-
-    [Header("스폰 반지름 (중심에서 거리)")]
-    public float spawnRadius = 5f;
-
-    [Header("자동 생성된 스폰 포인트 (읽기 전용)")]
+    [Header("스폰 포인트 리스트 (인스펙터에서 수동으로 설정)")]
     public List<Transform> spawnPoints = new List<Transform>();
 
+    // 현재까지 스폰된 인덱스를 저장하는 변수
     private int currentSpawnIndex = 0;
 
+    // 게임이 시작될 때 실행되는 함수
     private void Start()
     {
-        GenerateSpawnPointsAroundCenter();
-
-        if (spawnPoints.Count > 0)
+        // spawnPoints 리스트가 비어 있는 경우 경고 출력
+        if (spawnPoints == null || spawnPoints.Count == 0)
         {
-            SpawnAtIndex(0); // 첫 번째 자동 생성된 위치에서 스폰
+            Debug.LogWarning("Spawn Points가 비어 있습니다. 인스펙터에서 수동으로 설정하세요.");
+        }
+        else
+        {
+            // 첫 번째 위치에 플레이어 스폰
+            SpawnAtIndex(0);
         }
     }
 
+    // 매 프레임마다 실행되는 함수
     private void Update()
     {
+        // 스페이스 키를 누르면 다음 위치에 플레이어 스폰
         if (Keyboard.current.spaceKey.wasPressedThisFrame)
         {
             SpawnNext();
         }
     }
 
+    // 다음 인덱스로 플레이어를 스폰하는 함수
     private void SpawnNext()
     {
         currentSpawnIndex++;
 
+        // 스폰 포인트를 모두 사용한 경우 로그 출력 후 종료
         if (currentSpawnIndex >= spawnPoints.Count)
         {
             Debug.Log("더 이상 스폰할 위치가 없습니다.");
             return;
         }
 
+        // 다음 인덱스 위치에 스폰
         SpawnAtIndex(currentSpawnIndex);
     }
 
+    // 특정 인덱스 위치에 플레이어를 스폰하는 함수
     public void SpawnAtIndex(int index)
     {
+        // 유효한 인덱스인지 확인
         if (index >= 0 && index < spawnPoints.Count)
         {
             Transform spawnPoint = spawnPoints[index];
             Vector3 spawnPos = spawnPoint.position;
+
+            // Y축 회전만 유지하고 나머지 회전은 제거
             Quaternion yRotationOnly = Quaternion.Euler(0, spawnPoint.rotation.eulerAngles.y, 0);
 
+            // 플레이어 생성
             Instantiate(playerPrefab, spawnPos, yRotationOnly);
-            Debug.Log($"플레이어가 스폰됨: 인덱스 {index}, 위치:{spawnPoint.position}");
+
+            Debug.Log($"플레이어가 스폰됨: 인덱스 {index}, 위치:{spawnPos}");
         }
         else
         {
             Debug.LogWarning($"SpawnAtIndex: 잘못된 인덱스 {index}");
         }
     }
-
-    private void GenerateSpawnPointsAroundCenter()
-    {
-        spawnPoints.Clear();
-
-        if (centerPoint == null)
-        {
-            Debug.LogError("중심 오브젝트가 지정되지 않았습니다.");
-            return;
-        }
-
-        for (int i = 0; i < 8; i++)
-        {
-            float angle = i * 45f * Mathf.Deg2Rad;
-            float x = Mathf.Cos(angle) * spawnRadius;
-            float z = Mathf.Sin(angle) * spawnRadius;
-
-            Vector3 spawnPos = centerPoint.position + new Vector3(x, 0f, z);
-
-            // Terrain 높이 보정 (선택)
-            Terrain terrain = Terrain.activeTerrain;
-            if (terrain != null)
-            {
-                float terrainY = terrain.SampleHeight(spawnPos) + terrain.GetPosition().y;
-                spawnPos.y = terrainY;
-            }
-            else
-            {
-                spawnPos.y = centerPoint.position.y;
-            }
-
-            // 빈 GameObject를 만들어서 위치 보관
-            GameObject point = new GameObject($"SpawnPoint_{i}");
-            point.transform.position = spawnPos;
-            point.transform.SetParent(this.transform); // 계층 정리용
-            spawnPoints.Add(point.transform);
-        }
-
-        Debug.Log("8개의 스폰 포인트가 자동 생성되었습니다.");
-    }
 }
-

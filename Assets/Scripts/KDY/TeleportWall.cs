@@ -27,8 +27,8 @@ public class TeleportWall : MonoBehaviour
     public float mapHeight = 38f;
 
     // 순간이동 쿨타임 설정
-    private float teleportCooldown = 1f;
-    private float lastTeleportTime = -999f;
+    //private float teleportCooldown = 1f;
+    //private float lastTeleportTime = -999f;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -36,7 +36,7 @@ public class TeleportWall : MonoBehaviour
         if (!other.CompareTag("Player")) return;
 
         // 쿨타임 내면 무시
-        if (Time.time - lastTeleportTime < teleportCooldown) return;
+        //if (Time.time - lastTeleportTime < teleportCooldown) return;
 
         // XR Origin 기준으로 처리 (최상위 Transform)
         Transform xrOrigin = other.transform.root;
@@ -103,7 +103,7 @@ public class TeleportWall : MonoBehaviour
         }
 
         // 충돌 반복 방지를 위한 쿨타임 저장
-        lastTeleportTime = Time.time;
+        //lastTeleportTime = Time.time;
 
         // 디버그 출력
         Debug.Log($"{wallType} 벽 충돌: {currentPos} → {newPos} 이동 완료");
