@@ -17,11 +17,22 @@ public class ScaffoldingSpawner : MonoBehaviour
 
             // 랜덤 위치 (중앙 기준)
             Vector3 offset = new Vector3(
-                Random.Range(-120f, 120f),
+                Random.Range(-18f, 18f),
                 0f,
-                Random.Range(-120f, 120f)
+                Random.Range(-18f, 18f)
             );
-            cube.transform.position = centerObject.position + offset;
+
+            Vector3 spawnPos = centerObject.position + offset;
+
+            // Terrain 높이 보정
+            Terrain terrain = Terrain.activeTerrain;
+            if (terrain != null)
+            {
+                float terrainY = terrain.SampleHeight(spawnPos) + terrain.GetPosition().y;
+                spawnPos.y = terrainY;
+            }
+
+            cube.transform.position = spawnPos;
 
             // 랜덤 색상 적용
             Renderer rend = cube.GetComponent<Renderer>();
