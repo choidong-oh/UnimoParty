@@ -1,16 +1,13 @@
 
-public struct FairyType
+public class FairyType
 {
-    public int FairyType1;
-    public int FairyType2;
-    public int FairyType3;
-}
+    public int FairyDataType_1;
+    public int FairyDataType_2;
+    public int FairyDataType_3;
 
-public struct EndFairyCount
-{
-    public int EndFairyType1;
-    public int EndFairyType2;
-    public int EndFairyType3;
+    public int GoalFairyValue_1;
+    public int GoalFairyValue_2;
+    public int GoalFairyValue_3;
 }
 
 public class DataCenter
