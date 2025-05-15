@@ -18,11 +18,9 @@ public class FirebaseLoginMgr : MonoBehaviour
     [SerializeField] private TMP_InputField LoginIdInputField;
     [SerializeField] private TMP_InputField LoginPasswordInputField;
     [SerializeField] TextMeshProUGUI LoginwarningText;
-    [SerializeField] private Button LoginBtn;
 
     //회원가입용
     [Header("회원가입용")]
-    [SerializeField] private Button RegisterBtn;
     [SerializeField] private TMP_InputField CreateIdInputField;
     [SerializeField] private TMP_InputField CreatePasswordInputField;
     [SerializeField] TextMeshProUGUI CreatewarningText;
@@ -33,7 +31,7 @@ public class FirebaseLoginMgr : MonoBehaviour
     [SerializeField] TextMeshProUGUI NickNamewarningText;
 
     [Header("큰테두리Ui")]
-    [SerializeField] private GameObject SceneChanege;
+    //[SerializeField] private GameObject SceneChanege;
     [SerializeField] private GameObject LoginUiPanel;
     [SerializeField] private GameObject CreateUiIdPanel;
     [SerializeField] private GameObject NickNameUiPanel;
@@ -47,10 +45,12 @@ public class FirebaseLoginMgr : MonoBehaviour
         {
             DependencyStatus dependencyStatus = task.Result;
             if (dependencyStatus == Firebase.DependencyStatus.Available)
-            {
+            {                
                 auth = Firebase.Auth.FirebaseAuth.DefaultInstance;
             }
         });
+
+        
         CreatewarningText.text = "";
         LoginwarningText.text = "";
     }
@@ -110,7 +110,6 @@ public class FirebaseLoginMgr : MonoBehaviour
     public void Logout()
     {
         auth.SignOut();
-        Debug.Log("로그 아웃");
     }
 
     public void CreateNickName()
@@ -145,7 +144,7 @@ public class FirebaseLoginMgr : MonoBehaviour
                 if (dd != true)
                 {
                     NickNameUiPanel.gameObject.SetActive(false);
-                    SceneChanege.gameObject.SetActive(true);
+                    //SceneChanege.gameObject.SetActive(true);
                 }
             }
 
@@ -169,16 +168,16 @@ public class FirebaseLoginMgr : MonoBehaviour
             switch (errorCode)
             {
                 case AuthError.MissingEmail:
-                    message = "이메일 누락";
+                    message = "아이디를 입력해주세요";
                     break;
                 case AuthError.MissingPassword:
-                    message = "패스워드 누락";
+                    message = "패스워드를 입력해주세요";
                     break;
                 case AuthError.WeakPassword:
-                    message = "패스워드 약함";
+                    message = "최소 6자리 이상으로 만들어주세요";
                     break;
                 case AuthError.EmailAlreadyInUse:
-                    message = "중복 이메일";
+                    message = "중복된 아이디 입니다";
                     break;
                 default:
                     message = "관리자에게 문의 바랍니다";
@@ -212,19 +211,16 @@ public class FirebaseLoginMgr : MonoBehaviour
             switch (errorCode)
             {
                 case AuthError.MissingEmail:
-                    message = "이메일 누락";
+                    message = "아이디를 입력해주세요";
                     break;
                 case AuthError.MissingPassword:
-                    message = "패스워드 누락";
+                    message = "패스워드를 입력해주세요";
                     break;
                 case AuthError.WrongPassword:
-                    message = "패스워드 틀림";
-                    break;
-                case AuthError.InvalidEmail:
-                    message = "이메일 형식이 옳지 않음";
+                    message = "패스워드가 들렸습니다";
                     break;
                 case AuthError.UserNotFound:
-                    message = "아이디가 존재하지 않음";
+                    message = "아이디를 찾을 수 없습니다";
                     break;
                 default:
                     message = "관리자에게 문의 바랍니다";
@@ -234,7 +230,6 @@ public class FirebaseLoginMgr : MonoBehaviour
         }
         else
         {
-            Debug.Log("로그인 완료");
             user = loginTask.Result.User;
             LoginwarningText.text = "";
             LoginUiPanel.gameObject.SetActive(false);
@@ -251,7 +246,7 @@ public class FirebaseLoginMgr : MonoBehaviour
             }
             else
             {
-                SceneChanege.gameObject.SetActive(true);
+                //SceneChanege.gameObject.SetActive(true);
             }
         }
     }
