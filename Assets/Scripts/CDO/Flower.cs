@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -25,21 +24,34 @@ public class Flower : MonoBehaviour
     [SerializeField] private InputActionReference activateAction;
 
     public int SpiritVisagePoint;
-
-    //테스트
     HandHarvest handHarvest;
-
     public float HarvestTime => harvestTime;
+
+
+    [Header("FairyDataType Value값")]
+    [SerializeField] int FairyDataType1;
+    [SerializeField] int FairyDataType2;
+    [SerializeField] int FairyDataType3;
+
+    FairyType fairyType;
 
     private void Start()
     {
         //체크포인트
         checkPoints.Add(harvestTime / 3f);
         checkPoints.Add(harvestTime / 3f * 2f);
-        
+
+        ChangeValueFairyDataType(FairyDataType1, FairyDataType2, FairyDataType3);
     }
 
-   
+
+    void ChangeValueFairyDataType(int value1, int value2, int value3)
+    {
+        fairyType.FairyDataType_1 = value1;
+        fairyType.FairyDataType_2 = value2;
+        fairyType.FairyDataType_3 = value3;
+    }
+
     public void StartHarvest()
     {
         if (decreaseRoutine != null)
@@ -80,7 +92,7 @@ public class Flower : MonoBehaviour
 
         CompleteHarvest();
     }
- 
+
 
     //수확 감소(중간 놓았을때)
     private IEnumerator DecreaseCoroutine()
@@ -126,6 +138,9 @@ public class Flower : MonoBehaviour
             Debug.LogWarning("handHarvest가 설정되지 않았습니다.");
         }
 
+        //매니저랑 상호작용
+        Manager.Instance.observer.GetFairy(fairyType);
+
         this.gameObject.SetActive(false);
 
         Debug.Log("채집 완료!");
@@ -144,7 +159,7 @@ public class Flower : MonoBehaviour
 
 }
 
-    
+
 
 
 

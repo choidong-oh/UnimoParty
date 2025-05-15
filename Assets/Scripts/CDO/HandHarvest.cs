@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.XR.Interaction.Toolkit;
@@ -7,8 +6,8 @@ public partial class HandHarvest : MonoBehaviour
 {
     [SerializeField] XRRayInteractor RayInteractor;
 
-    [SerializeField]int SpiritPoint = 0; //
-    public int spiritPoint {  get { return SpiritPoint; } set { if (value < 0) { Debug.Log("정령음수됨");value = 0; } SpiritPoint = value; }}
+    [SerializeField] int SpiritPoint = 0; //
+    public int spiritPoint { get { return SpiritPoint; } set { if (value < 0) { Debug.Log("정령음수됨"); value = 0; } SpiritPoint = value; } }
 
     [SerializeField] private InputActionReference activateAction;
     Flower flower;
@@ -60,14 +59,15 @@ public partial class HandHarvest : MonoBehaviour
         }
     }
 
-    //정령 전달
-    public int DeliverySpirit()
-    {
-        int SpiritReturnPoint = spiritPoint;
-        spiritPoint = 0;
-        return SpiritReturnPoint;
-    }
 
+    //정령 전달
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Player")
+        {
+            Manager.Instance.observer.DeliveryFairy();
+        }
+    }
 
 }
 
