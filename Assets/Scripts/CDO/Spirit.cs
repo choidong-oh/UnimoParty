@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Spirit : MonoBehaviour
+public partial class Spirit : MonoBehaviour
 {
     public int SpiritPointRepository;
 
@@ -8,8 +8,12 @@ public class Spirit : MonoBehaviour
     {
         if(collision.collider.gameObject.tag == "Player")
         {
-            Debug.Log("콜라이더");
-            SpiritPointRepository++;
+            Debug.Log("콜라이더1");
+            if (collision.gameObject.TryGetComponent<HandHarvest>(out HandHarvest player))
+            {
+                Debug.Log("콜라이더2");
+                SpiritPointRepository += player.DeliverySpirit();
+            }
         }
     }
 
@@ -17,6 +21,14 @@ public class Spirit : MonoBehaviour
     {
         
     }
+}
+
+public partial class Spirit : MonoBehaviour
+{
+        
+
+
+
 
 
 }

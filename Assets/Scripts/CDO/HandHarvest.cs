@@ -7,8 +7,8 @@ public class HandHarvest : MonoBehaviour
 {
     [SerializeField] XRRayInteractor RayInteractor;
 
-    [SerializeField]int SpiritPoint = 0;  
-    public int spiritPoint {  get { return SpiritPoint; } set { if (value < 0) { Debug.Log("정령음수됨"); } SpiritPoint = value; }}
+    [SerializeField]int SpiritPoint = 0; //
+    public int spiritPoint {  get { return SpiritPoint; } set { if (value < 0) { Debug.Log("정령음수됨");value = 0; } SpiritPoint = value; }}
 
     [SerializeField] private InputActionReference activateAction;
     Flower flower;
@@ -44,19 +44,28 @@ public class HandHarvest : MonoBehaviour
             //더 안전한 코드
             if (flower != null)
             {
+                flower.Init(this);
                 flower.StartHarvest();
                 Debug.Log("Flower 수확 시작!");
             }
         }
     }
 
-    private void OnTriggerReleased(InputAction.CallbackContext context)
+    void OnTriggerReleased(InputAction.CallbackContext context)
     {
         Debug.Log("Trigger 뗌");
-        if (flower.gameObject.activeSelf == true && flower !=null)
+        if (flower != null && flower.gameObject.activeSelf == true)
         {
             flower.StopHarvest();
         }
+    }
+
+    //정령 전달
+    public int DeliverySpirit()
+    {
+        int SpiritReturnPoint = spiritPoint;
+        spiritPoint = 0;
+        return SpiritReturnPoint;
     }
 
 
