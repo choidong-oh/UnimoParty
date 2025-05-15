@@ -4,6 +4,7 @@ using System.Collections;
 using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class FirebaseLoginMgr : MonoBehaviour
@@ -233,7 +234,6 @@ public class FirebaseLoginMgr : MonoBehaviour
             user = loginTask.Result.User;
             LoginwarningText.text = "";
             LoginUiPanel.gameObject.SetActive(false);
-            Debug.Log(user.DisplayName);
 
 
             //닉네임이 없을경우 닉네임 생성
@@ -246,7 +246,7 @@ public class FirebaseLoginMgr : MonoBehaviour
             }
             else
             {
-                //SceneChanege.gameObject.SetActive(true);
+                SceneManager.LoadScene(1);  
             }
         }
     }
