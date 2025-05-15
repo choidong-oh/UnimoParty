@@ -16,6 +16,7 @@ public class SpawnManager : MonoBehaviour
     [Header("스폰 포인트 리스트")]
     public List<Transform> spawnPoints = new List<Transform>();
 
+    private int currentSpawnIndex = 0; // 현재까지 스폰한 인덱스 번호
 
     // 게임 시작시 테스트용으로 스폰실행 (삭제해도 상관없음)
     private void Start()
@@ -29,6 +30,25 @@ public class SpawnManager : MonoBehaviour
         //    SpawnAtIndex(i);      
         //}
     }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            // 인덱스가 유효할 경우에만 스폰
+            if (currentSpawnIndex < spawnPoints.Count)
+            {
+                SpawnAtIndex(currentSpawnIndex);
+                currentSpawnIndex++;
+            }
+            else
+            {
+                Debug.Log("모든 스폰 포인트에 이미 플레이어가 생성됨");
+            }
+        }
+    }
+
+
 
     // 지정된 인덱스에 플레이어를 스폰하는 메서드
     // index: 스폰할 위치의 인덱스 번호 (인스펙터에서 설정한 순서)
