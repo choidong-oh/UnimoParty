@@ -27,7 +27,9 @@ public class Flower : MonoBehaviour
     public int SpiritVisagePoint;
 
     //테스트
-    [SerializeField] HandHarvest handHarvest;
+    HandHarvest handHarvest;
+
+    public float HarvestTime => harvestTime;
 
     private void Start()
     {
@@ -114,13 +116,26 @@ public class Flower : MonoBehaviour
         harvestingRoutine = null;
         currentProgress = 0f;
 
-        //player
-        handHarvest.spiritPoint++;
+        if (handHarvest != null)
+        {
+            handHarvest.spiritPoint++;
+            Debug.Log("spiritPoint 증가!");
+        }
+        else
+        {
+            Debug.LogWarning("handHarvest가 설정되지 않았습니다.");
+        }
 
         this.gameObject.SetActive(false);
 
         Debug.Log("채집 완료!");
     }
+
+    public void Init(HandHarvest handHarvest)
+    {
+        this.handHarvest = handHarvest;
+    }
+
 
     private void ResetFlower()
     {
