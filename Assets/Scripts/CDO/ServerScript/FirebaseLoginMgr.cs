@@ -4,6 +4,7 @@ using System.Collections;
 using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class FirebaseLoginMgr : MonoBehaviour
 {
@@ -17,9 +18,11 @@ public class FirebaseLoginMgr : MonoBehaviour
     [SerializeField] private TMP_InputField LoginIdInputField;
     [SerializeField] private TMP_InputField LoginPasswordInputField;
     [SerializeField] TextMeshProUGUI LoginwarningText;
+    [SerializeField] private Button LoginBtn;
 
     //회원가입용
     [Header("회원가입용")]
+    [SerializeField] private Button RegisterBtn;
     [SerializeField] private TMP_InputField CreateIdInputField;
     [SerializeField] private TMP_InputField CreatePasswordInputField;
     [SerializeField] TextMeshProUGUI CreatewarningText;
@@ -152,9 +155,9 @@ public class FirebaseLoginMgr : MonoBehaviour
 
 
     //동기식 회원가입 코루틴
-    IEnumerator CreateIdCor(string email, string password)
+    IEnumerator CreateIdCor(string ID, string password)
     {
-        var createIdTask = auth.CreateUserWithEmailAndPasswordAsync(email, password);
+        var createIdTask = auth.CreateUserWithEmailAndPasswordAsync(ID+"@unimo.com", password);
         //회원가입 성공할때 까지
         yield return new WaitUntil(predicate: () => createIdTask.IsCompleted);
         if (createIdTask.Exception != null)
@@ -197,7 +200,7 @@ public class FirebaseLoginMgr : MonoBehaviour
     //동기식 로그인 코루틴 
     IEnumerator LoginCor(string email, string password)
     {
-        var loginTask = auth.SignInWithEmailAndPasswordAsync(email, password);
+        var loginTask = auth.SignInWithEmailAndPasswordAsync(email + "@unimo.com", password);
         //로그인 성공할때 까지
         yield return new WaitUntil(predicate: () => loginTask.IsCompleted);
         if (loginTask.Exception != null)
