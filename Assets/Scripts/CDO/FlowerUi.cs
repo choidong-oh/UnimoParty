@@ -2,14 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class FlowerUi : MonoBehaviour
 {
-    [SerializeField] TextMeshProUGUI GaugeText;
-
-    public void UpdateGauge(float Gauge)
+    [SerializeField] private Image GatheringImage; // Radial Fill 이미지 (Filled로 설정)
+    [SerializeField] private Flower flower;
+    public void UpdateGauge(float currentGauge)
     {
-        GaugeText.text = Gauge.ToString();
+        float fillAmount = Mathf.Clamp01(currentGauge / flower.HarvestTime);
+        GatheringImage.fillAmount = fillAmount;
     }
-   
 }

@@ -1,11 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.XR.Interaction.Toolkit;
+using UnityEngine.InputSystem;
 
 public class Flower : MonoBehaviour
 {
-    [SerializeField] XRGrabInteractable grabInteractable;
 
     [SerializeField] FlowerUi flowerUi;
 
@@ -16,47 +16,32 @@ public class Flower : MonoBehaviour
     //쿨타임 게이지
     [Header("게이지 속도 관련")]
     [SerializeField] float currentProgress = 0f; // 현재게이지
-    [SerializeField] float harvestTime = 2f; // 게이지 쿨타임
+    [SerializeField] float harvestTime = 3f; // 게이지 쿨타임
     [SerializeField] float decreaseSpeed = 0.5f; // 줄어드는 속도
     List<float> checkPoints = new List<float>(); // 체크포인트 목록
 
-    void OnEnable()
-    {
-        grabInteractable.selectEntered.AddListener(OnGrabbed);
-        grabInteractable.selectExited.AddListener(OnReleased);
-    }
+    //인풋액션
+    [Header("InputSystem")]
+    [SerializeField] private InputActionReference activateAction;
 
-    void OnDisable()
-    {
-        StopAllCoroutines();
-        grabInteractable.selectEntered.RemoveListener(OnGrabbed);
-        grabInteractable.selectExited.RemoveListener(OnReleased);
-    }
+    public int SpiritVisagePoint;
+
+    //테스트
+    HandHarvest handHarvest;
+
+    public float HarvestTime => harvestTime;
+
+    public float HarvestTime => harvestTime;
 
     private void Start()
     {
-        grabInteractable = GetComponent<XRGrabInteractable>();
         //체크포인트
         checkPoints.Add(harvestTime / 3f);
         checkPoints.Add(harvestTime / 3f * 2f);
+        
     }
 
-
-
-    private void OnGrabbed(SelectEnterEventArgs args)
-    {
-        Debug.Log("잡혔다!");
-        StartHarvest();
-    }
-
-    private void OnReleased(SelectExitEventArgs args)
-    {
-        Debug.Log("놓았다!");
-        if (this.gameObject.activeSelf == true)
-        {
-            StopHarvest();
-        }
-    }
+   
     public void StartHarvest()
     {
         if (decreaseRoutine != null)
@@ -128,15 +113,37 @@ public class Flower : MonoBehaviour
 
 
     //채집 결과
-    private void CompleteHarvest()
+    void CompleteHarvest()
     {
         harvestingRoutine = null;
         currentProgress = 0f;
+
+        if (handHarvest != null)
+        {
+            handHarvest.spiritPoint++;
+            Debug.Log("spiritPoint 증가!");
+        }
+        else
+        {
+            Debug.LogWarning("handHarvest가 설정되지 않았습니다.");
+        }
 
         this.gameObject.SetActive(false);
 
         Debug.Log("채집 완료!");
     }
+
+    public void Init(HandHarvest handHarvest)
+    {
+        this.handHarvest = handHarvest;
+    }
+
+
+    private void ResetFlower()
+    {
+        currentProgress = 0;
+    }
+
 }
 
     

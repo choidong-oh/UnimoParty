@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class PlayerRotateSet : MonoBehaviour
 {
-    
-    [Header("References")]
     public Transform cameraTF;     // HMD 카메라
     public Transform spaceShip;    // 회전 기준 오브젝트
     public Transform leftLimit;    // -60도 위치
@@ -31,10 +29,8 @@ public class PlayerRotateSet : MonoBehaviour
 
         if (!isRotating && !isInLimitRange)
         {
-            // 기준 범위를 벗어나면 회전 시작
             rotateDirection = GetTurnDirection(camDir, spaceShip.forward);
             isRotating = true;
-            Debug.Log("회전 시작: " + (rotateDirection > 0 ? "오른쪽" : "왼쪽"));
         }
 
         if (isRotating)

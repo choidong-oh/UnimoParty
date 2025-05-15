@@ -3,26 +3,44 @@ using UnityEngine;
 using UnityEngine.XR.Content.Interaction;
 using UnityEngine.XR.Interaction.Toolkit;
 
-
 public class LeftHandController : MonoBehaviour
 {
-    public GameObject leftHand;
-
-    public XRJoystick joystick;
     public GameObject xrOriginObject;     // XROrigin 오브젝트
+    [Space]
+    [Header("조이스틱 이동속도")]
     public float moveSpeed = 1.0f;        // 이동 속도
-    public Transform stickPos;
+    [Space]
+    public XRJoystick joystick;
+
+
+    [Header("왼쪽 컨트롤러")]
+    public ActionBasedController leftController;
+    private Renderer[] handRenderers;
+
+    [Header("손 모양 프리팹")]
+    public GameObject controllerPrefab;
+    [Space]
+
+    [Header("손 위치")]
+    public Transform joystickTF;
+    [Space]
 
     private Transform xrOriginTransform;
 
-    bool select= false;
+    GameObject LC;
     void Start()
     {
+        handRenderers = leftController.GetComponentsInChildren<Renderer>();
+
+        LC = Instantiate(controllerPrefab, joystickTF);         
+        LC.SetActive(false);
+
         xrOriginTransform = xrOriginObject.transform;
 
         joystick.onValueChangeY.AddListener(OnJoystickMoveY);
         joystick.onValueChangeX.AddListener(OnJoystickMoveX);
     }
+
     void OnDestroy()
     {
         joystick.onValueChangeY.RemoveListener(OnJoystickMoveY);
@@ -43,23 +61,25 @@ public class LeftHandController : MonoBehaviour
 
     public void OnSelectEnter()
     {
-        Debug.Log("+");
-        select = true;
-        StartCoroutine(FreezeHand());
+        LC.SetActive(true);
+        SetHandVisible(false);
+
+        leftController.model.gameObject.SetActive(false);
     }
     public void OnSelectExit()
     {
-        Debug.Log("-");
-        select = false;
+        LC.SetActive(false);
+        SetHandVisible(true);
+        leftController.model.gameObject.SetActive(true);
     }
 
-    private IEnumerator FreezeHand()
+    void SetHandVisible(bool visible)
     {
-        while (select)
-        {
-            yield return new WaitForEndOfFrame(); // XR이 다 끝나고 나서 강제로 적용
-            leftHand.transform.position = stickPos.position;
-            leftHand.transform.rotation = stickPos.rotation;
+        foreach (var renderer in handRenderers)
+        {      
+            renderer.enabled = visible;
+                     
         }
+
     }
 }

@@ -9,6 +9,7 @@ public class IngameObserver
     public event Action OnGameEnd;
 
     public UserPlayer UserPlayer { get; set; }
+    private FairyType tempPlayerFairy;
     private int gameoverTargetScore = 100;
 
     private bool isGameOver = false;
@@ -41,12 +42,11 @@ public class IngameObserver
         OnGameDataChange?.Invoke(tempfairy);
     }
 
-    public void RetrunFairy()
+    public void DeliveryFairy(int fairytype1, int fairytype2, int fairytype3)
     {
-        FairyType tempPlayerFairy;
-        tempPlayerFairy.FairyType1 = 0;
-        tempPlayerFairy.FairyType2 = 0;
-        tempPlayerFairy.FairyType3 = 0;
+        tempPlayerFairy.FairyDataType_1 = fairytype1;
+        tempPlayerFairy.FairyDataType_2 = fairytype2;
+        tempPlayerFairy.FairyDataType_3 = fairytype3;
 
         UserPlayer.gamedata.playerFairyType = tempPlayerFairy;
         var tempfairy = UserPlayer.gamedata;
@@ -74,7 +74,10 @@ public class IngameObserver
 
     public void ResetPlayer()
     {
+        var tempPlayer = UserPlayer.gamedata.Clone();
 
+        //여기에 포톤 추가.
+        OnGameDataChange?.Invoke(tempPlayer);
     }
 
     public void EndGame()
