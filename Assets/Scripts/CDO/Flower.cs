@@ -2,8 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Photon;
+using Photon.Pun;
+using Photon.Realtime;
 
-public class Flower : MonoBehaviour
+public class Flower : MonoBehaviourPun
 {
 
     [SerializeField] FlowerUi flowerUi;
@@ -143,6 +146,8 @@ public class Flower : MonoBehaviour
 
         this.gameObject.SetActive(false);
 
+        photonView.RPC("FlowerSetAcive", RpcTarget.All,false);
+
         Debug.Log("채집 완료!");
     }
 
@@ -151,6 +156,11 @@ public class Flower : MonoBehaviour
         this.handHarvest = handHarvest;
     }
 
+    [PunRPC]
+    void FlowerSetAcive(bool isTrue)
+    {
+        this.gameObject.SetActive(isTrue);
+    }
 
     private void ResetFlower()
     {
