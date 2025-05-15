@@ -294,12 +294,12 @@ PrefabInstance:
       insertIndex: 0
       addedObject: {fileID: 8549640461562716991}
     m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 7313654230448209575, guid: 895f6f3c2d334633b5800312285058d2, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 5065598793798701131}
     - targetCorrespondingSourceObject: {fileID: 7696548424635294048, guid: 895f6f3c2d334633b5800312285058d2, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6395293177243321781}
+    - targetCorrespondingSourceObject: {fileID: 7696548424635294048, guid: 895f6f3c2d334633b5800312285058d2, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2995381334743392640}
     - targetCorrespondingSourceObject: {fileID: 9014170783809206332, guid: 895f6f3c2d334633b5800312285058d2, type: 3}
       insertIndex: -1
       addedObject: {fileID: 3953153175458904892}
@@ -343,29 +343,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 9014170783809206335, guid: 895f6f3c2d334633b5800312285058d2, type: 3}
   m_PrefabInstance: {fileID: 1582426809760196016}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &8109497528567356183 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7313654230448209575, guid: 895f6f3c2d334633b5800312285058d2, type: 3}
-  m_PrefabInstance: {fileID: 1582426809760196016}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &5065598793798701131
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8109497528567356183}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f40c6407cd2433d4bb0a4fe8438a61c3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  RayInteractor: {fileID: 7543132570412813937}
-  currentProgress: 0
-  harvestTime: 3
-  decreaseSpeed: 0.5
-  SpiritVisagePoint: 0
-  activateAction: {fileID: 83097790271614945, guid: c348712bda248c246b8c49b3db54643f, type: 3}
 --- !u!1 &9167722245327750352 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7696548424635294048, guid: 895f6f3c2d334633b5800312285058d2, type: 3}
@@ -386,6 +363,21 @@ MonoBehaviour:
   cameraTF: {fileID: 7560748128432381327}
   spaceShip: {fileID: 8549640461562716991}
   rotateSpeed: 60
+--- !u!114 &2995381334743392640
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9167722245327750352}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f40c6407cd2433d4bb0a4fe8438a61c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  RayInteractor: {fileID: 7543132570412813937}
+  SpiritPoint: 0
+  activateAction: {fileID: 83097790271614945, guid: c348712bda248c246b8c49b3db54643f, type: 3}
 --- !u!4 &9167722245327750355 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7696548424635294051, guid: 895f6f3c2d334633b5800312285058d2, type: 3}
