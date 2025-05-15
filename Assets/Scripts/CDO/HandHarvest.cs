@@ -44,6 +44,7 @@ public class HandHarvest : MonoBehaviour
             //더 안전한 코드
             if (flower != null)
             {
+                flower.Init(this);
                 flower.StartHarvest();
                 Debug.Log("Flower 수확 시작!");
             }
@@ -53,7 +54,7 @@ public class HandHarvest : MonoBehaviour
     void OnTriggerReleased(InputAction.CallbackContext context)
     {
         Debug.Log("Trigger 뗌");
-        if (flower.gameObject.activeSelf == true && flower !=null)
+        if (flower != null && flower.gameObject.activeSelf == true)
         {
             flower.StopHarvest();
         }
