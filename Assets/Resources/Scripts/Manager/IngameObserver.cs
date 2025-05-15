@@ -42,11 +42,11 @@ public class IngameObserver
         OnGameDataChange?.Invoke(tempfairy);
     }
 
-    public void RetrunFairy()
+    public void DeliveryFairy(int fairytype1, int fairytype2, int fairytype3)
     {
-        tempPlayerFairy.FairyDataType_1 = 0;
-        tempPlayerFairy.FairyDataType_2 = 0;
-        tempPlayerFairy.FairyDataType_3 = 0;
+        tempPlayerFairy.FairyDataType_1 = fairytype1;
+        tempPlayerFairy.FairyDataType_2 = fairytype2;
+        tempPlayerFairy.FairyDataType_3 = fairytype3;
 
         UserPlayer.gamedata.playerFairyType = tempPlayerFairy;
         var tempfairy = UserPlayer.gamedata;
