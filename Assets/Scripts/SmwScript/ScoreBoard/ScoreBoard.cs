@@ -12,11 +12,17 @@ public class ScoreBoard : MonoBehaviour
     int MaxRedScore;
     int MaxYellowScore;
 
+    private void Start()
+    {
+        Manager.Instance.observer.OnGameDataChange += HpPoint;
+    }
 
-    public void HpPoint(int HpPoint)
+
+    public void HpPoint(DataCenter HpPoint)
     {
         texts[0].text = $"{HpPoint}";
     }
+
     public void BlueScore(int score)
     {
         texts[1].text = $"{score} / {MaxBlueScore}";
