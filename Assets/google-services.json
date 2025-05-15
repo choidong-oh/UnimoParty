@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "972071526167",
+    "firebase_url": "https://unimopartyteamproject-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "unimopartyteamproject",
+    "storage_bucket": "unimopartyteamproject.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:972071526167:android:eeb828e2f444a7bdd76152",
+        "android_client_info": {
+          "package_name": "com.cdo.firebasedb"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDPDK6jGH6ytzRPonOXPGgzTjRzixvAe9A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
