@@ -53,7 +53,7 @@ public class HandHarvest : MonoBehaviour
     void OnTriggerReleased(InputAction.CallbackContext context)
     {
         Debug.Log("Trigger ¶À");
-        if (flower.gameObject.activeSelf == true && flower !=null)
+        if (flower != null && flower.gameObject.activeSelf == true)
         {
             flower.StopHarvest();
         }
