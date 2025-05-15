@@ -44,9 +44,9 @@ public class IngameObserver
 
     public void DeliveryFairy()
     {
-        Manager.Instance.goalCount.GoalFairyValue_1 = UserPlayer.gamedata.playerFairyType.FairyDataType_1;
-        Manager.Instance.goalCount.GoalFairyValue_2 = UserPlayer.gamedata.playerFairyType.FairyDataType_2;
-        Manager.Instance.goalCount.GoalFairyValue_2 = UserPlayer.gamedata.playerFairyType.FairyDataType_3;
+        Manager.Instance.goalCount.GoalFairyValue_1 += UserPlayer.gamedata.playerFairyType.FairyDataType_1;
+        Manager.Instance.goalCount.GoalFairyValue_2 += UserPlayer.gamedata.playerFairyType.FairyDataType_2;
+        Manager.Instance.goalCount.GoalFairyValue_2 += UserPlayer.gamedata.playerFairyType.FairyDataType_3;
 
         tempPlayerFairy.FairyDataType_1 = 0;
         tempPlayerFairy.FairyDataType_2 = 0;
