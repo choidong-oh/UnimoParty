@@ -31,8 +31,6 @@ public class Flower : MonoBehaviour
 
     public float HarvestTime => harvestTime;
 
-    public float HarvestTime => harvestTime;
-
     private void Start()
     {
         //체크포인트

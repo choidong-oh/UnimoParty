@@ -1,10 +1,13 @@
 
-public class FairyType
+public struct FairyType
 {
     public int FairyDataType_1;
     public int FairyDataType_2;
     public int FairyDataType_3;
+}
 
+public struct GoalFairyCount
+{
     public int GoalFairyValue_1;
     public int GoalFairyValue_2;
     public int GoalFairyValue_3;
