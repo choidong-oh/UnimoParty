@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.XR;
 using UnityEngine.XR.Interaction.Toolkit;
 
 public partial class HandHarvest : MonoBehaviour
@@ -19,6 +20,7 @@ public partial class HandHarvest : MonoBehaviour
     {
         activateAction.action.performed += OnTriggerPressed;
         activateAction.action.canceled += OnTriggerReleased;
+
     }
 
     void OnDisable()
@@ -30,6 +32,7 @@ public partial class HandHarvest : MonoBehaviour
     //안전코드 써야댐 flower가없을수있음
     private void OnTriggerPressed(InputAction.CallbackContext context)
     {
+        RayInteractor.xrController.SendHapticImpulse(0.5f, 0.2f);
         flower = null;
 
         if (RayInteractor.TryGetCurrent3DRaycastHit(out RaycastHit hit))
