@@ -145,6 +145,7 @@ public class FirebaseLoginMgr : MonoBehaviour
                 if (dd != true)
                 {
                     NickNameUiPanel.gameObject.SetActive(false);
+                    SceneManager.LoadScene(1);
                     //SceneChanege.gameObject.SetActive(true);
                 }
             }
