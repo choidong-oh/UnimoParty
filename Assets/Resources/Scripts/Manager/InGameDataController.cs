@@ -5,4 +5,7 @@ using UnityEngine;
 public class InGameDataController : MonoBehaviour
 {
     public bool IsTestMode = false;
+    public bool DontSpwanEnemy = false;
+    public bool DontSpwanFlower = false;
+
 }
