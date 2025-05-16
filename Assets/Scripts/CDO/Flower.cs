@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 public class Flower : MonoBehaviour
 {
-
+    private InGameDataController controller;
     [SerializeField] FlowerUi flowerUi;
 
     //코루틴변수
@@ -37,6 +37,7 @@ public class Flower : MonoBehaviour
 
     private void Start()
     {
+        controller = GameObject.Find("InGameDataController").GetComponent<InGameDataController>();
         //체크포인트
         checkPoints.Add(harvestTime / 3f);
         checkPoints.Add(harvestTime / 3f * 2f);
@@ -138,8 +139,11 @@ public class Flower : MonoBehaviour
             Debug.LogWarning("handHarvest가 설정되지 않았습니다.");
         }
 
-        //매니저랑 상호작용
-        Manager.Instance.observer.GetFairy(fairyType);
+        if(controller.IsTestMode == false)
+        {
+            //매니저랑 상호작용
+            Manager.Instance.observer.GetFairy(fairyType);
+        }
 
         this.gameObject.SetActive(false);
 

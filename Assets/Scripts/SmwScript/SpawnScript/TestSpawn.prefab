@@ -121,3 +121,4 @@ MonoBehaviour:
   moveSpeed: 5
   fixedY: 0
   DirectionAngle: 90
+  tempMonsterlifeTime: 10
