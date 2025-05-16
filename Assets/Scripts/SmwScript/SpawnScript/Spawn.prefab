@@ -9,7 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2647536940531626318}
-  - component: {fileID: 6901506225243640038}
+  - component: {fileID: 3307918376569263237}
+  - component: {fileID: 4952722595331546395}
   m_Layer: 0
   m_Name: Spawn
   m_TagString: Untagged
@@ -32,7 +33,26 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6901506225243640038
+--- !u!114 &3307918376569263237
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4161913315024943559}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56df67410912d1d4ab50e4bdeaa0637b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyPrefab: {fileID: 5976860578115879252, guid: 5331569896cfc3b48910720ef27eda7f, type: 3}
+  maxEnemies: 10
+  spawnTimer: 20
+  innerRadius: 5
+  outerRadius: 20
+  spawnY: 0.5
+  showGizmos: 1
+--- !u!114 &4952722595331546395
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -44,8 +64,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28a52d62998a3714f80e30eeabea848c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyPrefab:
-  - {fileID: 8071508922361288179, guid: ac7a63f20cd038140b5a0fce2efde74b, type: 3}
+  enemyPrefab: {fileID: 8071508922361288179, guid: ac7a63f20cd038140b5a0fce2efde74b, type: 3}
   spawnRadius: 20
   SpawnTimer: 3
   maxEnemies: 10
