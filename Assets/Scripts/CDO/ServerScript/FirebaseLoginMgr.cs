@@ -4,6 +4,8 @@ using System.Collections;
 using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class FirebaseLoginMgr : MonoBehaviour
 {
@@ -30,7 +32,7 @@ public class FirebaseLoginMgr : MonoBehaviour
     [SerializeField] TextMeshProUGUI NickNamewarningText;
 
     [Header("큰테두리Ui")]
-    [SerializeField] private GameObject SceneChanege;
+    //[SerializeField] private GameObject SceneChanege;
     [SerializeField] private GameObject LoginUiPanel;
     [SerializeField] private GameObject CreateUiIdPanel;
     [SerializeField] private GameObject NickNameUiPanel;
@@ -44,10 +46,12 @@ public class FirebaseLoginMgr : MonoBehaviour
         {
             DependencyStatus dependencyStatus = task.Result;
             if (dependencyStatus == Firebase.DependencyStatus.Available)
-            {
+            {                
                 auth = Firebase.Auth.FirebaseAuth.DefaultInstance;
             }
         });
+
+        
         CreatewarningText.text = "";
         LoginwarningText.text = "";
     }
@@ -107,7 +111,6 @@ public class FirebaseLoginMgr : MonoBehaviour
     public void Logout()
     {
         auth.SignOut();
-        Debug.Log("로그 아웃");
     }
 
     public void CreateNickName()
@@ -142,7 +145,8 @@ public class FirebaseLoginMgr : MonoBehaviour
                 if (dd != true)
                 {
                     NickNameUiPanel.gameObject.SetActive(false);
-                    SceneChanege.gameObject.SetActive(true);
+                    SceneManager.LoadScene(1);
+                    //SceneChanege.gameObject.SetActive(true);
                 }
             }
 
@@ -152,9 +156,9 @@ public class FirebaseLoginMgr : MonoBehaviour
 
 
     //동기식 회원가입 코루틴
-    IEnumerator CreateIdCor(string email, string password)
+    IEnumerator CreateIdCor(string ID, string password)
     {
-        var createIdTask = auth.CreateUserWithEmailAndPasswordAsync(email, password);
+        var createIdTask = auth.CreateUserWithEmailAndPasswordAsync(ID+"@unimo.com", password);
         //회원가입 성공할때 까지
         yield return new WaitUntil(predicate: () => createIdTask.IsCompleted);
         if (createIdTask.Exception != null)
@@ -166,16 +170,16 @@ public class FirebaseLoginMgr : MonoBehaviour
             switch (errorCode)
             {
                 case AuthError.MissingEmail:
-                    message = "이메일 누락";
+                    message = "아이디를 입력해주세요";
                     break;
                 case AuthError.MissingPassword:
-                    message = "패스워드 누락";
+                    message = "패스워드를 입력해주세요";
                     break;
                 case AuthError.WeakPassword:
-                    message = "패스워드 약함";
+                    message = "최소 6자리 이상으로 만들어주세요";
                     break;
                 case AuthError.EmailAlreadyInUse:
-                    message = "중복 이메일";
+                    message = "중복된 아이디 입니다";
                     break;
                 default:
                     message = "관리자에게 문의 바랍니다";
@@ -197,7 +201,7 @@ public class FirebaseLoginMgr : MonoBehaviour
     //동기식 로그인 코루틴 
     IEnumerator LoginCor(string email, string password)
     {
-        var loginTask = auth.SignInWithEmailAndPasswordAsync(email, password);
+        var loginTask = auth.SignInWithEmailAndPasswordAsync(email + "@unimo.com", password);
         //로그인 성공할때 까지
         yield return new WaitUntil(predicate: () => loginTask.IsCompleted);
         if (loginTask.Exception != null)
@@ -209,19 +213,16 @@ public class FirebaseLoginMgr : MonoBehaviour
             switch (errorCode)
             {
                 case AuthError.MissingEmail:
-                    message = "이메일 누락";
+                    message = "아이디를 입력해주세요";
                     break;
                 case AuthError.MissingPassword:
-                    message = "패스워드 누락";
+                    message = "패스워드를 입력해주세요";
                     break;
                 case AuthError.WrongPassword:
-                    message = "패스워드 틀림";
-                    break;
-                case AuthError.InvalidEmail:
-                    message = "이메일 형식이 옳지 않음";
+                    message = "패스워드가 들렸습니다";
                     break;
                 case AuthError.UserNotFound:
-                    message = "아이디가 존재하지 않음";
+                    message = "아이디를 찾을 수 없습니다";
                     break;
                 default:
                     message = "관리자에게 문의 바랍니다";
@@ -231,11 +232,9 @@ public class FirebaseLoginMgr : MonoBehaviour
         }
         else
         {
-            Debug.Log("로그인 완료");
             user = loginTask.Result.User;
             LoginwarningText.text = "";
             LoginUiPanel.gameObject.SetActive(false);
-            Debug.Log(user.DisplayName);
 
 
             //닉네임이 없을경우 닉네임 생성
@@ -248,7 +247,7 @@ public class FirebaseLoginMgr : MonoBehaviour
             }
             else
             {
-                SceneChanege.gameObject.SetActive(true);
+                SceneManager.LoadScene(1);  
             }
         }
     }
