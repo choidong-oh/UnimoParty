@@ -54,7 +54,7 @@ public class pupu : MonoBehaviour
 
             transform.position = targetPos;
 
-            yield return null;
+            yield return new WaitForFixedUpdate();
         }
     }
 

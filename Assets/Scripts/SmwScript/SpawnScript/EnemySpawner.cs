@@ -69,7 +69,7 @@ public class EnemySpawner : MonoBehaviour
     {
         if (!showGizmos || SpawerCenter == null) return;
 
-        Gizmos.color = Color.red;
+        Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(SpawerCenter.position, spawnRadius);
 
         if (lastSpawnPositions != null)
@@ -78,7 +78,7 @@ public class EnemySpawner : MonoBehaviour
             {
                 if (pos == Vector3.zero) continue;
 
-                Gizmos.color = Color.yellow;
+                Gizmos.color = Color.blue;
                 Gizmos.DrawSphere(pos, 0.5f);
             }
         }

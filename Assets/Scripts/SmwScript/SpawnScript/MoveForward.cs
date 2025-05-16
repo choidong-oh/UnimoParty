@@ -27,7 +27,6 @@ public class MoveForward : MonoBehaviour
 
     void Start()
     {
-        myCollider = GetComponent<Collider>(); // 내 콜라이더 미리 저장
 
         // 시작 위치 기록 및 높이 고정
         Vector3 startPos = transform.position;
