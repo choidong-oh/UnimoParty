@@ -122,6 +122,63 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1001 &84770768
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 6598815579406187027, guid: 18ddb545287c546e19cc77dc9fbb2189, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6598815579406187027, guid: 18ddb545287c546e19cc77dc9fbb2189, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6598815579406187027, guid: 18ddb545287c546e19cc77dc9fbb2189, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6598815579406187027, guid: 18ddb545287c546e19cc77dc9fbb2189, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6598815579406187027, guid: 18ddb545287c546e19cc77dc9fbb2189, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6598815579406187027, guid: 18ddb545287c546e19cc77dc9fbb2189, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6598815579406187027, guid: 18ddb545287c546e19cc77dc9fbb2189, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6598815579406187027, guid: 18ddb545287c546e19cc77dc9fbb2189, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6598815579406187027, guid: 18ddb545287c546e19cc77dc9fbb2189, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6598815579406187027, guid: 18ddb545287c546e19cc77dc9fbb2189, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6598815579406187037, guid: 18ddb545287c546e19cc77dc9fbb2189, type: 3}
+      propertyPath: m_Name
+      value: XR Device Simulator
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 18ddb545287c546e19cc77dc9fbb2189, type: 3}
 --- !u!1001 &282483027
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -501,6 +558,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6904511494459151782, guid: 966bc0a092b89c4468fa9a4c467e78fa, type: 3}
   m_PrefabInstance: {fileID: 428935255}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1054053135 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5065598793798701131, guid: 966bc0a092b89c4468fa9a4c467e78fa, type: 3}
+  m_PrefabInstance: {fileID: 428935255}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f40c6407cd2433d4bb0a4fe8438a61c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1187339770
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -517,6 +585,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Flower (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 6617873011636352024, guid: c85d512691b3ff54bb3250febbf0d505, type: 3}
+      propertyPath: handHarvest
+      value: 
+      objectReference: {fileID: 1054053135}
     - target: {fileID: 7454987095103486290, guid: c85d512691b3ff54bb3250febbf0d505, type: 3}
       propertyPath: m_LocalPosition.x
       value: 25.68
@@ -787,6 +859,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Flower
       objectReference: {fileID: 0}
+    - target: {fileID: 6617873011636352024, guid: c85d512691b3ff54bb3250febbf0d505, type: 3}
+      propertyPath: handHarvest
+      value: 
+      objectReference: {fileID: 1054053135}
     - target: {fileID: 7454987095103486290, guid: c85d512691b3ff54bb3250febbf0d505, type: 3}
       propertyPath: m_LocalPosition.x
       value: 22.64
@@ -853,6 +929,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Flower (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 6617873011636352024, guid: c85d512691b3ff54bb3250febbf0d505, type: 3}
+      propertyPath: handHarvest
+      value: 
+      objectReference: {fileID: 1054053135}
     - target: {fileID: 7454987095103486290, guid: c85d512691b3ff54bb3250febbf0d505, type: 3}
       propertyPath: m_LocalPosition.x
       value: 19.5
@@ -1456,3 +1536,4 @@ SceneRoots:
   - {fileID: 1922684858}
   - {fileID: 428935255}
   - {fileID: 1952313129}
+  - {fileID: 84770768}

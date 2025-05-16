@@ -85,8 +85,8 @@ public class EnemySpawner : MonoBehaviour
 
                 Gizmos.color = Color.yellow;
                 Gizmos.DrawSphere(pos, 0.5f);
-                Gizmos.color = Color.green;
-                Gizmos.DrawLine(pos, SpawerCenter.position);
+                //Gizmos.color = Color.green;
+                //Gizmos.DrawLine(pos, SpawerCenter.position);
             }
         }
     }
