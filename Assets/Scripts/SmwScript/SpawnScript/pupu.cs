@@ -77,7 +77,7 @@ public class pupu : MonoBehaviour
 
         Vector3 oldPos = drawCenter + new Vector3(Mathf.Cos(0f) * drawRadius, y, Mathf.Sin(0f) * drawRadius);
 
-        Gizmos.color = Color.cyan;
+        Gizmos.color = Color.white;
         for (int i = 1; i <= segments; i++)
         {
             theta += deltaTheta;

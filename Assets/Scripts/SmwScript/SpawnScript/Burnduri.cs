@@ -101,6 +101,7 @@ public class Burnduri : MonoBehaviour
         }
 
         // 돌진 끝, 오브젝트 비활성화!
-        gameObject.SetActive(false);
+        //gameObject.SetActive(false);
+        Destroy(gameObject);
     }
 }
