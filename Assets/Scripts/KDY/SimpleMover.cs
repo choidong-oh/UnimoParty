@@ -3,7 +3,7 @@ using UnityEngine.InputSystem;  // Áß¿ä
 
 public class SimpleMover : MonoBehaviour
 {
-    public float moveSpeed = 3f;
+    public float moveSpeed = 300f;
 
     void Update()
     {
