@@ -370,7 +370,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &1569491209
+--- !u!1001 &1960966888
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -380,7 +380,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2647536940531626318, guid: 59678f487835152439e874c9a82892bd, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 17.8
+      value: 18.6
       objectReference: {fileID: 0}
     - target: {fileID: 2647536940531626318, guid: 59678f487835152439e874c9a82892bd, type: 3}
       propertyPath: m_LocalPosition.y
@@ -388,7 +388,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2647536940531626318, guid: 59678f487835152439e874c9a82892bd, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 21.47
+      value: 21.42
       objectReference: {fileID: 0}
     - target: {fileID: 2647536940531626318, guid: 59678f487835152439e874c9a82892bd, type: 3}
       propertyPath: m_LocalRotation.w
@@ -419,20 +419,12 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3307918376569263237, guid: 59678f487835152439e874c9a82892bd, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3307918376569263237, guid: 59678f487835152439e874c9a82892bd, type: 3}
       propertyPath: spawnTimer
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4161913315024943559, guid: 59678f487835152439e874c9a82892bd, type: 3}
       propertyPath: m_Name
       value: Spawn
-      objectReference: {fileID: 0}
-    - target: {fileID: 4952722595331546395, guid: 59678f487835152439e874c9a82892bd, type: 3}
-      propertyPath: m_Enabled
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -508,4 +500,4 @@ SceneRoots:
   - {fileID: 2084052392}
   - {fileID: 895886733}
   - {fileID: 1083522868}
-  - {fileID: 1569491209}
+  - {fileID: 1960966888}

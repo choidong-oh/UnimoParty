@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using Unity.VisualScripting;
 
 public class pupu : MonoBehaviour
 {
@@ -27,6 +28,9 @@ public class pupu : MonoBehaviour
 
         StartCoroutine(RotateOnCircle());
     }
+
+
+
 
     IEnumerator RotateOnCircle()
     {
