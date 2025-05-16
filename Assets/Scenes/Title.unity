@@ -2965,6 +2965,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4067f26a342a06f4d9dfb968e7f06771, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tempFairyValue_1: 10
+  tempFairyValue_2: 10
+  tempFairyValue_3: 10
 --- !u!1 &1562900241
 GameObject:
   m_ObjectHideFlags: 0
