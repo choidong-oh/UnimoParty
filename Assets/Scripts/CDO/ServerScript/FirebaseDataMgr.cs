@@ -1,9 +1,9 @@
-using Firebase.Database;
-using Firebase;
 using System;
 using System.Threading.Tasks;
-using UnityEngine;
+using Firebase;
+using Firebase.Database;
 using Firebase.Extensions;
+using UnityEngine;
 
 public class FirebaseDataMgr : MonoBehaviour
 {
@@ -13,6 +13,7 @@ public class FirebaseDataMgr : MonoBehaviour
 
     private void Awake()
     {
+        Debug.Log("2");
         if (Instance == null)
         {
             Instance = this;
@@ -26,30 +27,42 @@ public class FirebaseDataMgr : MonoBehaviour
 
     private void Start()
     {
-        FirebaseApp.CheckAndFixDependenciesAsync().ContinueWithOnMainThread(async task =>
-        {
-            FirebaseApp app = FirebaseApp.DefaultInstance;
-            dbReference = FirebaseDatabase.DefaultInstance.RootReference;
 
-            if (FirebaseLoginMgr.user != null)
-            {
-                //TODO:초기 저장 바꾸기 12000
-                //SaveUserData(FirebaseLoginMgr.user.DisplayName, "money", 12000);
-                userMoney = await LoadUserDataAsync(FirebaseLoginMgr.user.DisplayName, "money", userMoney);
-                if (userMoney == -1)
-                {
-                    SaveUserData(FirebaseLoginMgr.user.DisplayName, "money", 10000);
-                    userMoney = 10000;
-                }
-                Debug.Log("유저 닉네임 : " + FirebaseLoginMgr.user.DisplayName);
-                Debug.Log("유저 돈 : " + userMoney);
-            }
-            else
-            {
-                Debug.LogError("파이어베이스 문제");
-            }
-        });
+        try
+        {
+            FirebaseApp.CheckAndFixDependenciesAsync().ContinueWithOnMainThread(async task =>
+           {
+
+               Debug.Log("1");
+               FirebaseApp app = FirebaseApp.DefaultInstance;
+               dbReference = FirebaseDatabase.DefaultInstance.RootReference;
+               if (FirebaseLoginMgr.user != null)
+               {
+               Debug.Log("3");
+                   //TODO:초기 저장 바꾸기 12000
+                   SaveUserData(FirebaseLoginMgr.user.DisplayName, "money", 12000);
+                   userMoney = await LoadUserDataAsync(FirebaseLoginMgr.user.DisplayName, "money", userMoney);
+                   if (userMoney == -1)
+                   {
+                       SaveUserData(FirebaseLoginMgr.user.DisplayName, "money", 10000);
+                       userMoney = 10000;
+                   }
+                   Debug.Log("유저 닉네임 : " + FirebaseLoginMgr.user.DisplayName);
+                   Debug.Log("유저 돈 : " + userMoney);
+               }
+               else
+               {
+                   Debug.LogError("파이어베이스 문제");
+               }
+           });
+        }
+        catch (Exception dd)
+        {
+            Debug.Log(dd);
+        }
     }
+
+
 
     //데이터 저장 함수
     //SaveUserData(id,"level",5);
