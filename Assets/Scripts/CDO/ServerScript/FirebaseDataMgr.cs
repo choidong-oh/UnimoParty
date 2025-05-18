@@ -13,7 +13,6 @@ public class FirebaseDataMgr : MonoBehaviour
 
     private void Awake()
     {
-        Debug.Log("2");
         if (Instance == null)
         {
             Instance = this;
@@ -27,20 +26,14 @@ public class FirebaseDataMgr : MonoBehaviour
 
     private void Start()
     {
-
-        try
-        {
             FirebaseApp.CheckAndFixDependenciesAsync().ContinueWithOnMainThread(async task =>
            {
 
-               Debug.Log("1");
                FirebaseApp app = FirebaseApp.DefaultInstance;
                dbReference = FirebaseDatabase.DefaultInstance.RootReference;
                if (FirebaseLoginMgr.user != null)
                {
-               Debug.Log("3");
                    //TODO:초기 저장 바꾸기 12000
-                   SaveUserData(FirebaseLoginMgr.user.DisplayName, "money", 12000);
                    userMoney = await LoadUserDataAsync(FirebaseLoginMgr.user.DisplayName, "money", userMoney);
                    if (userMoney == -1)
                    {
@@ -55,11 +48,6 @@ public class FirebaseDataMgr : MonoBehaviour
                    Debug.LogError("파이어베이스 문제");
                }
            });
-        }
-        catch (Exception dd)
-        {
-            Debug.Log(dd);
-        }
     }
 
 
