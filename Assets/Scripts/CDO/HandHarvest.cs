@@ -13,6 +13,10 @@ public partial class HandHarvest : MonoBehaviour
     [SerializeField] private InputActionReference activateAction;
     Flower flower;
 
+    [Header("Haptic 진동 관련")]
+    [SerializeField] float HapticAmplitude;
+    [SerializeField] float HapticDuraiton;
+
     //콜백은 OnEnable 안댐
     //player은 안사라지니깐 awake, start에 넣으면 댈듯 
     //콜백 쓸만한건없긴함
@@ -32,7 +36,6 @@ public partial class HandHarvest : MonoBehaviour
     //안전코드 써야댐 flower가없을수있음
     private void OnTriggerPressed(InputAction.CallbackContext context)
     {
-        RayInteractor.xrController.SendHapticImpulse(0.5f, 0.2f);
         flower = null;
 
         if (RayInteractor.TryGetCurrent3DRaycastHit(out RaycastHit hit))
@@ -46,6 +49,11 @@ public partial class HandHarvest : MonoBehaviour
             //더 안전한 코드
             if (flower != null)
             {
+                //진동
+                //*인스펙터창에서 다른진동 Haptic 0으로 줄여야댐
+                //그래야 애만 진동됌
+                RayInteractor.xrController.SendHapticImpulse(HapticAmplitude, HapticDuraiton);
+
                 flower.Init(this);
                 flower.StartHarvest();
                 Debug.Log("Flower 수확 시작!");

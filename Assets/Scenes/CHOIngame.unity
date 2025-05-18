@@ -623,6 +623,8 @@ MonoBehaviour:
   RayInteractor: {fileID: 1451502041}
   SpiritPoint: 0
   activateAction: {fileID: 0}
+  HapticAmplitude: 0.2
+  HapticDuraiton: 0.5
 --- !u!1 &1396045733 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7696548424635294048, guid: 895f6f3c2d334633b5800312285058d2, type: 3}
@@ -643,6 +645,8 @@ MonoBehaviour:
   RayInteractor: {fileID: 1451502041}
   SpiritPoint: 0
   activateAction: {fileID: 83097790271614945, guid: c348712bda248c246b8c49b3db54643f, type: 3}
+  HapticAmplitude: 0.2
+  HapticDuraiton: 0.5
 --- !u!114 &1451502041 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 9032954039820430273, guid: 895f6f3c2d334633b5800312285058d2, type: 3}
