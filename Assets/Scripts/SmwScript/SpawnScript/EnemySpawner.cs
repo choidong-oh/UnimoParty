@@ -4,11 +4,9 @@ using UnityEngine;
 public class EnemySpawner : MonoBehaviour
 {
     [Header("기본 설정")]
-    Transform SpawerCenter;//스포너 중심
+    Transform SpawerCenter;//스포너 중심    
 
-    [SerializeField] int Enemytype = 0;      
-
-    [SerializeField] GameObject[] enemyPrefab;//적 프리팹 넣기 
+    [SerializeField] GameObject enemyPrefab;//적 프리팹 넣기 
     [SerializeField] float spawnRadius = 20f;//생성범위
 
     [Header("스폰 설정")]
@@ -35,14 +33,11 @@ public class EnemySpawner : MonoBehaviour
         {
             Vector3 spawnPos = SpawnEnemyOnHorizontalEdge();
 
-            //Enemytype = Random.Range(0, enemyPrefab.Length);//이거는 만약 몬스터 종류가 많을때 랜덤생성하게 하고싶으면 키기
-
-            GameObject enemy = Instantiate(enemyPrefab[Enemytype], spawnPos, transform.rotation);
+            GameObject enemy = Instantiate(enemyPrefab, spawnPos, transform.rotation);
             MoveForward move = enemy.GetComponent<MoveForward>();
             if (move != null)
             {
                 move.Benchmark(SpawerCenter); //원의중심을 적에게 알려줌
-                move.SetEnemytype(Enemytype); //적이 무슨종류인지 알려줌
             }
             lastSpawnPositions[currentEnemyCount] = spawnPos;
             currentEnemyCount++;
@@ -74,7 +69,7 @@ public class EnemySpawner : MonoBehaviour
     {
         if (!showGizmos || SpawerCenter == null) return;
 
-        Gizmos.color = Color.red;
+        Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(SpawerCenter.position, spawnRadius);
 
         if (lastSpawnPositions != null)
@@ -83,10 +78,8 @@ public class EnemySpawner : MonoBehaviour
             {
                 if (pos == Vector3.zero) continue;
 
-                Gizmos.color = Color.yellow;
+                Gizmos.color = Color.blue;
                 Gizmos.DrawSphere(pos, 0.5f);
-                //Gizmos.color = Color.green;
-                //Gizmos.DrawLine(pos, SpawerCenter.position);
             }
         }
     }
