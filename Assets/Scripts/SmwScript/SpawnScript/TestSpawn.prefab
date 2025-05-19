@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8091773899090677898}
   - component: {fileID: 6087979887937685323}
   - component: {fileID: 8237635228070509784}
-  - component: {fileID: 1287368349969990008}
+  - component: {fileID: 4419372955393714042}
   m_Layer: 0
   m_Name: TestSpawn
   m_TagString: Untagged
@@ -106,7 +106,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1287368349969990008
+--- !u!114 &4419372955393714042
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -119,5 +119,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 5
-  fixedY: 0.5
-  RandomMoveAngle: 180
+  fixedY: 0
+  DirectionAngle: 90
+  tempMonsterlifeTime: 10
