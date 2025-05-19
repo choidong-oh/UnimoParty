@@ -150,7 +150,7 @@ public class Flower : MonoBehaviourPun
 
         this.gameObject.SetActive(false);
 
-        photonView.RPC("FlowerSetAcive", RpcTarget.All,false);
+        //photonView.RPC("FlowerSetAcive", RpcTarget.All,false);
 
         Debug.Log("채집 완료!");
     }
