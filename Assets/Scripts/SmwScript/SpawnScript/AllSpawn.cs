@@ -7,7 +7,11 @@ public class AllSpawn : MonoBehaviour
     [Header("스폰 설정")]
     [SerializeField] GameObject enemyPrefab;
     [SerializeField] int maxEnemies = 10;
-    [SerializeField] float spawnInterval = 3f;
+    [SerializeField] float spawnTimer = 3f;
+    [SerializeField] int poolSize = 20;
+    [SerializeField] int minSpawn = 1;      // 한 번에 최소 스폰 수
+    [SerializeField] int maxSpawn = 4;      // 한 번에 최대 스폰 수 (n 값)
+
 
     [Header("박스 영역")]
     [SerializeField] float rectWidth = 30f;
@@ -19,7 +23,7 @@ public class AllSpawn : MonoBehaviour
     [Header("디버그")]
     [SerializeField] bool showGizmos = true;
 
-    private int currentEnemyCount = 0;
+    private List<GameObject> enemyPool = new List<GameObject>();
     private bool isQuitting = false;
 
     // 스폰 위치 기록용 (기즈모 표시용)
@@ -27,6 +31,14 @@ public class AllSpawn : MonoBehaviour
 
     void Start()
     {
+        // 풀 미리 생성
+        for (int i = 0; i < poolSize; i++)
+        {
+            GameObject obj = Instantiate(enemyPrefab, Vector3.one * 9999, Quaternion.identity);
+            obj.SetActive(false);
+            enemyPool.Add(obj);
+        }
+
         StartCoroutine(SpawnRoutine());
     }
 
@@ -34,34 +46,60 @@ public class AllSpawn : MonoBehaviour
     {
         while (true)
         {
-            int spawnable = maxEnemies - currentEnemyCount;
+            int activeCount = GetActiveEnemyCount();
+            int spawnable = maxEnemies - activeCount;
             if (spawnable > 0)
             {
-                int toSpawn = Mathf.Min(Random.Range(1, 3), spawnable);
+                int wantToSpawn = Random.Range(minSpawn, maxSpawn + 1);
+
+                // 비활성화된 적의 수
+                int available = 0;
+                foreach (var obj in enemyPool)
+                    if (!obj.activeInHierarchy) available++;
+
+                int toSpawn = Mathf.Min(wantToSpawn, spawnable, available);
+
                 for (int i = 0; i < toSpawn; i++)
                 {
                     SpawnOneEnemy();
                 }
             }
-            yield return new WaitForSeconds(spawnInterval);
+            yield return new WaitForSeconds(spawnTimer);
         }
     }
 
     void SpawnOneEnemy()
     {
+        GameObject enemy = GetPooledEnemy();
+        if (enemy == null) return; // 풀에 여유 없음
+
         Vector3 spawnPos = GetBoxDonutSpawnPosition();
-        GameObject enemy = Instantiate(enemyPrefab, spawnPos, Quaternion.identity);
-        currentEnemyCount++;
+        enemy.transform.position = spawnPos;
+        enemy.transform.rotation = Quaternion.identity;
+        enemy.SetActive(true);
 
-        // 스폰 위치 저장(기즈모 표시용)
         spawnPositions.Add(spawnPos);
-
     }
 
-    public void OnEnemyRemoved()
+    GameObject GetPooledEnemy()
     {
-        currentEnemyCount--;
-        if (isQuitting) return;
+        foreach (var obj in enemyPool)
+        {
+            if (!obj.activeInHierarchy)
+                return obj;
+        }
+        return null; // 모두 사용중
+    }
+
+    int GetActiveEnemyCount()
+    {
+        int count = 0;
+        foreach (var obj in enemyPool)
+        {
+            if (obj.activeInHierarchy)
+                count++;
+        }
+        return count;
     }
 
     void OnApplicationQuit()
@@ -83,13 +121,12 @@ public class AllSpawn : MonoBehaviour
             float x = Random.Range(center.x - halfWidth, center.x + halfWidth);
             float z = Random.Range(center.z - halfHeight, center.z + halfHeight);
             pos = new Vector3(x, 0, z);
-            if (++safety > 20) break; // 무한루프 방지
+            if (++safety > 20) break;
         } while (Vector2.Distance(new Vector2(pos.x, pos.z), new Vector2(center.x, center.z)) < innerRadius);
 
         return pos;
     }
 
-    // 기즈모
     void OnDrawGizmosSelected()
     {
         if (!showGizmos) return;
@@ -103,7 +140,7 @@ public class AllSpawn : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, innerRadius);
 
         // 스폰 위치(노랑)
-        Gizmos.color = Color.red;
+        Gizmos.color = Color.yellow;
         foreach (var pos in spawnPositions)
         {
             Gizmos.DrawSphere(pos + Vector3.up * 0.2f, 0.5f);

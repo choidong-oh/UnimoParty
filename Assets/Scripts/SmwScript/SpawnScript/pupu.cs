@@ -2,7 +2,12 @@ using UnityEngine;
 using System.Collections;
 using Unity.VisualScripting;
 
-public class pupu : MonoBehaviour
+public class EnemyType : MonoBehaviour
+{
+    //좀 알아보기 편하라고 애네들 적이라고 알려줌
+}
+
+public class pupu : EnemyType
 {
     [HideInInspector] public EnemyDonutSpawner spawner;
     Vector3 center;
@@ -12,10 +17,12 @@ public class pupu : MonoBehaviour
 
     [Header("원 둘레 이동속도(m/s)")]
     [SerializeField] float moveSpeed = 2.0f;
-    [SerializeField] float fixedY = 0.5f; // Terrain에서 띄울 높이
+    [SerializeField] float fixedY = 0.5f;
 
-    void Start()
+
+    void OnEnable()
     {
+        // 매번 다시 계산 (재사용될 때 초기화)
         if (spawner != null)
             center = spawner.transform.position;
         else
@@ -29,8 +36,12 @@ public class pupu : MonoBehaviour
         StartCoroutine(RotateOnCircle());
     }
 
-
-
+    void OnDisable()
+    {
+        StopAllCoroutines();
+        if (spawner != null)
+            spawner.OnEnemyRemoved();
+    }
 
     IEnumerator RotateOnCircle()
     {
@@ -38,30 +49,20 @@ public class pupu : MonoBehaviour
         {
             if (radius < 0.01f) yield break;
 
-            // 선속도 일정하게: 각속도 = 선속도 / 반지름
             float angularSpeed = moveSpeed / radius;
             angle -= angularSpeed * Time.deltaTime * rotateDirection;
 
             float x = Mathf.Cos(angle) * radius;
             float z = Mathf.Sin(angle) * radius;
 
-            // Terrain 높이 샘플링
             Vector3 targetPos = new Vector3(center.x + x, 0, center.z + z);
             float terrainY = Terrain.activeTerrain.SampleHeight(targetPos);
 
-            // y좌표는 Terrain 높이 + 오프셋
             targetPos.y = terrainY + fixedY;
-
             transform.position = targetPos;
 
             yield return new WaitForFixedUpdate();
         }
-    }
-
-    void OnDisable()
-    {
-        if (spawner != null)
-            spawner.OnEnemyRemoved();
     }
 
     void OnDrawGizmos()
@@ -71,8 +72,6 @@ public class pupu : MonoBehaviour
         int segments = 60;
         float theta = 0f;
         float deltaTheta = (2f * Mathf.PI) / segments;
-
-        // 현재 y좌표로 원 그리기(참고: 궤도는 평면에서 그림)
         float y = Application.isPlaying ? transform.position.y : drawCenter.y;
 
         Vector3 oldPos = drawCenter + new Vector3(Mathf.Cos(0f) * drawRadius, y, Mathf.Sin(0f) * drawRadius);

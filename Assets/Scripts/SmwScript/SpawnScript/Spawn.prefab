@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3307918376569263237}
   - component: {fileID: 4952722595331546395}
   - component: {fileID: 8003115557643127239}
+  - component: {fileID: -8385307159099017613}
   m_Layer: 0
   m_Name: Spawn
   m_TagString: Untagged
@@ -49,8 +50,9 @@ MonoBehaviour:
   enemyPrefab: {fileID: 5976860578115879252, guid: 5331569896cfc3b48910720ef27eda7f, type: 3}
   maxEnemies: 10
   spawnTimer: 20
+  poolSize: 15
   innerRadius: 5
-  outerRadius: 20
+  outerRadius: 25
   showGizmos: 1
 --- !u!114 &4952722595331546395
 MonoBehaviour:
@@ -76,15 +78,37 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4161913315024943559}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: df37246c1cd58ae498d05f0729ceb81e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   enemyPrefab: {fileID: 7417410410337076666, guid: 09504338020ecb34d93b15a793bd8ae6, type: 3}
   maxEnemies: 10
-  spawnInterval: 10
+  spawnTimer: 3
+  poolSize: 15
+  minSpawn: 1
+  maxSpawn: 4
   rectWidth: 50
   rectHeight: 50
   innerRadius: 5
+  showGizmos: 1
+--- !u!114 &-8385307159099017613
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4161913315024943559}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5dbd2dec62a66324bb991a791e8ca47c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyPrefab: {fileID: 1015300691221689703, guid: 8df16e5e434b10e4998af9b60cca4713, type: 3}
+  maxEnemies: 10
+  spawnInterval: 3
+  poolSize: 20
+  rectWidth: 50
+  rectHeight: 50
   showGizmos: 1
