@@ -17,7 +17,7 @@ public class pupu : EnemyType
 
     [Header("원 둘레 이동속도(m/s)")]
     [SerializeField] float moveSpeed = 2.0f;
-    [SerializeField] float fixedY = 0.5f;
+    [SerializeField] float fixedY = 0.0f;
 
 
     void OnEnable()

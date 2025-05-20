@@ -1,53 +1,56 @@
-using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
-using UnityEngine.SocialPlatforms.Impl;
+using UnityEngine;
 
 public class ScoreBoard : MonoBehaviour
 {
     [Header("텍스트")]
     [SerializeField] private TextMeshProUGUI[] texts = new TextMeshProUGUI[4];
 
-    int MaxBlueScore;
-    int MaxRedScore;
-    int MaxYellowScore;
+    // 목표값은 GoalFairyCount를 참조 (Manager에서 가져온다고 가정)
+    private GoalFairyCount goalCount
+    {
+        get { return Manager.Instance.goalCount; }
+    }
 
     private void Start()
     {
         Manager.Instance.observer.OnGameDataChange += HpPoint;
+        Manager.Instance.observer.OnGameDataChange += FairyType1Score;
+        Manager.Instance.observer.OnGameDataChange += FairyType2Score;
+        Manager.Instance.observer.OnGameDataChange += FairyType3Score;
     }
 
-
-    public void HpPoint(DataCenter HpPoint)
+    private void OnDestroy()//이거는 안전코드
     {
-        texts[0].text = $"{HpPoint}";
+        Manager.Instance.observer.OnGameDataChange -= HpPoint;
+        Manager.Instance.observer.OnGameDataChange -= FairyType1Score;
+        Manager.Instance.observer.OnGameDataChange -= FairyType2Score;
+        Manager.Instance.observer.OnGameDataChange -= FairyType3Score;
     }
 
-    public void BlueScore(int score)
+    // 체력 표시 (texts[0])
+    public void HpPoint(DataCenter data)
     {
-        texts[1].text = $"{score} / {MaxBlueScore}";
-        
+        texts[0].text = $"HP: {data.life}";
     }
 
-    public void RedScore(int score)
+    // 각 FairyType별 점수 표시 (목표값은 goalCount에서 바로 가져옴)
+    public void FairyType1Score(DataCenter data)
     {
-        texts[2].text = $"{score} / {MaxRedScore}";
+        texts[1].text = $"{data.playerFairyType.FairyDataType_1} / {goalCount.GoalFairyValue_1}";
     }
-
-    public void YellowScore(int score)
+    public void FairyType2Score(DataCenter data)
     {
-        texts[3].text = $"{score} / {MaxYellowScore}";
+        texts[2].text = $"{data.playerFairyType.FairyDataType_2} / {goalCount.GoalFairyValue_2}";
+    }
+    public void FairyType3Score(DataCenter data)
+    {
+        texts[3].text = $"{data.playerFairyType.FairyDataType_3} / {goalCount.GoalFairyValue_3}";
     }
 
     public void ResetScore()
     {
-        for (int i = 0; i > texts.Length; i++)
-        {
+        for (int i = 0; i < texts.Length; i++)
             texts[i].text = $"0 / 0";
-        }
-        MaxBlueScore = 0;
-        MaxRedScore = 0;
-        MaxYellowScore = 0;
     }
-
 }

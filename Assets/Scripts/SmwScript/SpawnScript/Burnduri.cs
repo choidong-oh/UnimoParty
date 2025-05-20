@@ -38,6 +38,7 @@ public class Burnduri : EnemyType
         StartCoroutine(MoveRoutine());
     }
 
+
     void OnDisable()
     {
         StopAllCoroutines();
