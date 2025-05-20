@@ -10,5 +10,6 @@ public abstract class EnemyBase : MonoBehaviour
     public float health = 100f;
 
     public abstract void Move(Vector3 direction);
+   
 }
 
