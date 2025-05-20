@@ -123,4 +123,4 @@ MonoBehaviour:
   chargeSpeed: 15
   chargeDistance: 20
   triggerDistance: 10
-  fixedY: 0
+  fixedY: 1
