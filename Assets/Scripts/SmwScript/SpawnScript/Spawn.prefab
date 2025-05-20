@@ -85,10 +85,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyPrefab: {fileID: 7417410410337076666, guid: 09504338020ecb34d93b15a793bd8ae6, type: 3}
   maxEnemies: 10
-  spawnTimer: 3
+  spawnTimer: 10
   poolSize: 15
   minSpawn: 1
-  maxSpawn: 4
+  maxSpawn: 2
   rectWidth: 50
   rectHeight: 50
   innerRadius: 5
@@ -107,8 +107,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyPrefab: {fileID: 1015300691221689703, guid: 8df16e5e434b10e4998af9b60cca4713, type: 3}
   maxEnemies: 10
-  spawnInterval: 3
-  poolSize: 20
+  spawnInterval: 15
+  poolSize: 15
   rectWidth: 50
   rectHeight: 50
   showGizmos: 1
