@@ -6,35 +6,22 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public class TEST : MonoBehaviour
 {
-    [SerializeField] private InputActionReference activateAction;
+    public CommandReplay commandReplay;
 
-    private void OnEnable()
+
+    private void Start()
     {
-        activateAction.action.performed += OnTriggerPressed;
-        activateAction.action.canceled += OnTriggerReleased;
-        activateAction.action.Enable();
+        commandReplay = new CommandReplay();
+    }
+    public void replay()
+    {
+        StartCoroutine(cor());
     }
 
-    private void OnDisable()
+    IEnumerator cor()
     {
-        activateAction.action.performed -= OnTriggerPressed;
-        activateAction.action.canceled -= OnTriggerReleased;
-        activateAction.action.Disable();
+        yield return StartCoroutine(commandReplay.ReplayCommandsCoroutine());
     }
-
-    private void OnTriggerPressed(InputAction.CallbackContext context)
-    {
-        Debug.Log("Trigger ´­¸²");
-    }
-
-    private void OnTriggerReleased(InputAction.CallbackContext context)
-    {
-        Debug.Log("Trigger ¶À");
-    }
-
-
-
-
 
 
 }
