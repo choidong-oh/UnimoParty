@@ -30,6 +30,7 @@ public class CommandReplay
 
     public IEnumerator ReplayCommandsCoroutine()
     {
+        Debug.Log("리플레이 들어옴");
         foreach (var cmd in commandHistory)
         {
             yield return new WaitForSeconds(cmd.DelayTime); 
