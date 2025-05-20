@@ -7,6 +7,7 @@ public class MoveForward : MonoBehaviour
     [SerializeField] float moveSpeed = 5f; // 앞으로 나가는 스피드
     [SerializeField] float fixedY = -0.5f;  // 바닥에서 띄울 높이
     [SerializeField] float DirectionAngle = 90; // 방향 퍼짐 각도
+    [SerializeField] float tempMonsterlifeTime;
 
     float pointRecordInterval = 0.2f; // 경로 기록 간격
     Transform Spwner;                 // 원 중심 기준점
@@ -27,8 +28,6 @@ public class MoveForward : MonoBehaviour
 
     void Start()
     {
-        myCollider = GetComponent<Collider>(); // 내 콜라이더 미리 저장
-
         // 시작 위치 기록 및 높이 고정
         Vector3 startPos = transform.position;
         startPos.y = fixedY;
@@ -44,7 +43,7 @@ public class MoveForward : MonoBehaviour
             StartCoroutine(MoveForwardRoutine());
 
         StartCoroutine(RecordPathRoutine());
-        StartCoroutine(LifeTime(30f));
+        StartCoroutine(LifeTime(tempMonsterlifeTime));
     }
 
     void SetInitialDirection()

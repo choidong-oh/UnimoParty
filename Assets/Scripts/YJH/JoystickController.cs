@@ -1,4 +1,5 @@
 using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.XR.Content.Interaction;
 using UnityEngine.XR.Interaction.Toolkit;
@@ -27,9 +28,13 @@ public class LeftHandController : MonoBehaviour
 
     private Transform xrOriginTransform;
 
+    [Header("유저 닉네임")]
+    [SerializeField] TextMeshProUGUI userName;
     GameObject LC;
     void Start()
     {
+        //userName.text = FirebaseLoginMgr.user.DisplayName;
+
         handRenderers = leftController.GetComponentsInChildren<Renderer>();
 
         LC = Instantiate(controllerPrefab, joystickTF);         

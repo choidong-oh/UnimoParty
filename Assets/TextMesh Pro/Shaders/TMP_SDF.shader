@@ -1,4 +1,4 @@
-Shader "TextMeshPro/Distance Field" {
+Shader "TextMeshPro/Distance Field1" {
 
 Properties {
 	_FaceTex			("Face Texture", 2D) = "white" {}
