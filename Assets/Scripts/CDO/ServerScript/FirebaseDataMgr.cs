@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Firebase;
 using Firebase.Database;
@@ -11,9 +12,11 @@ public class FirebaseDataMgr : MonoBehaviour
     private DatabaseReference dbReference;
     public int userMoney = -1;
 
+    // 추가: 친구 목록 리스트
+    public List<string> friendList = new List<string>();
+
     private void Awake()
     {
-        Debug.Log("2");
         if (Instance == null)
         {
             Instance = this;
@@ -27,42 +30,32 @@ public class FirebaseDataMgr : MonoBehaviour
 
     private void Start()
     {
-
-        try
+        FirebaseApp.CheckAndFixDependenciesAsync().ContinueWithOnMainThread(async task =>
         {
-            FirebaseApp.CheckAndFixDependenciesAsync().ContinueWithOnMainThread(async task =>
-           {
+            FirebaseApp app = FirebaseApp.DefaultInstance;
+            dbReference = FirebaseDatabase.DefaultInstance.RootReference;
+            if (FirebaseLoginMgr.user != null)
+            {
+                //TODO:초기 저장 바꾸기 12000
+                userMoney = await LoadUserDataAsync(FirebaseLoginMgr.user.DisplayName, "money", userMoney);
+                if (userMoney == -1)
+                {
+                    SaveUserData(FirebaseLoginMgr.user.DisplayName, "money", 10000);
+                    userMoney = 10000;
+                }
 
-               Debug.Log("1");
-               FirebaseApp app = FirebaseApp.DefaultInstance;
-               dbReference = FirebaseDatabase.DefaultInstance.RootReference;
-               if (FirebaseLoginMgr.user != null)
-               {
-               Debug.Log("3");
-                   //TODO:초기 저장 바꾸기 12000
-                   SaveUserData(FirebaseLoginMgr.user.DisplayName, "money", 12000);
-                   userMoney = await LoadUserDataAsync(FirebaseLoginMgr.user.DisplayName, "money", userMoney);
-                   if (userMoney == -1)
-                   {
-                       SaveUserData(FirebaseLoginMgr.user.DisplayName, "money", 10000);
-                       userMoney = 10000;
-                   }
-                   Debug.Log("유저 닉네임 : " + FirebaseLoginMgr.user.DisplayName);
-                   Debug.Log("유저 돈 : " + userMoney);
-               }
-               else
-               {
-                   Debug.LogError("파이어베이스 문제");
-               }
-           });
-        }
-        catch (Exception dd)
-        {
-            Debug.Log(dd);
-        }
+                // 친구 목록 불러오기
+                await LoadFriends(FirebaseLoginMgr.user.DisplayName);
+
+                Debug.Log("유저 닉네임 : " + FirebaseLoginMgr.user.DisplayName);
+                Debug.Log("유저 돈 : " + userMoney);
+            }
+            else
+            {
+                Debug.LogError("파이어베이스 문제");
+            }
+        });
     }
-
-
 
     //데이터 저장 함수
     //SaveUserData(id,"level",5);
@@ -96,27 +89,63 @@ public class FirebaseDataMgr : MonoBehaviour
         DataSnapshot snapshot = await dbReference.Child("users").Child(userId).Child(dataName).GetValueAsync();
         T Tvalue;
 
-        try
+        Tvalue = type;
+        if (snapshot.Exists)
         {
-            Tvalue = type;
-            if (snapshot.Exists)
-            {
-                //타입을 바꿔서 집어넣음
-                Tvalue = (T)Convert.ChangeType(snapshot.Value, typeof(T));
-                Debug.Log(userId + "의 " + dataName + "불러옴");
-                Debug.Log("Tvalue : " + Tvalue);
-            }
-            else
-            {
-                Debug.Log("저장된 데이터 없음");
-            }
+            //타입을 바꿔서 집어넣음
+            Tvalue = (T)Convert.ChangeType(snapshot.Value, typeof(T));
+            Debug.Log(userId + "의 " + dataName + "불러옴");
+            Debug.Log("Tvalue : " + Tvalue);
         }
-        catch (System.Exception dd)
+        else
         {
-            Debug.Log(dd);
-            Tvalue = type;
+            Debug.Log("저장된 데이터 없음");
         }
-
         return Tvalue;
+    }
+
+    // 친구 추가 함수
+    public void AddFriend(string friendNickname)
+    {
+        if (!friendList.Contains(friendNickname))
+        {
+            friendList.Add(friendNickname);
+            SaveFriends(FirebaseLoginMgr.user.DisplayName);
+        }
+    }
+
+    // 친구 저장 함수 (리스트를 전부 저장)
+    public void SaveFriends(string userId)
+    {
+        for (int i = 0; i < friendList.Count; i++)
+        {
+            dbReference.Child("users").Child(userId).Child("friends").Child(i.ToString())
+                .SetValueAsync(friendList[i]);
+        }
+    }
+
+    // 친구 목록 불러오기 함수 (시작 시 불러옴)
+    public async Task LoadFriends(string userId)
+    {
+        friendList.Clear();
+        DataSnapshot snapshot = await dbReference.Child("users").Child(userId).Child("friends").GetValueAsync();
+        if (snapshot.Exists)
+        {
+            foreach (DataSnapshot child in snapshot.Children)
+            {
+                friendList.Add(child.Value.ToString());
+            }
+            Debug.Log(userId + "의 친구 목록 불러옴: " + string.Join(", ", friendList));
+        }
+        else
+        {
+            Debug.Log(userId + "의 친구 목록 없음");
+        }
+    }
+
+    // 특정 닉네임이 친구인지 확인
+    public bool IsFriend(string nickname)
+    {
+        return friendList.Contains(nickname);
     }
 }

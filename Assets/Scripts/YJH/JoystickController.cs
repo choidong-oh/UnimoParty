@@ -30,15 +30,16 @@ public class LeftHandController : MonoBehaviour
 
     [Header("유저 닉네임")]
     [SerializeField] TextMeshProUGUI userName;
-    GameObject LC;
+    //LeftController
+    GameObject LController;
     void Start()
     {
         //userName.text = FirebaseLoginMgr.user.DisplayName;
 
         handRenderers = leftController.GetComponentsInChildren<Renderer>();
 
-        LC = Instantiate(controllerPrefab, joystickTF);         
-        LC.SetActive(false);
+        LController = Instantiate(controllerPrefab, joystickTF);         
+        LController.SetActive(false);
 
         xrOriginTransform = xrOriginObject.transform;
 
@@ -66,14 +67,14 @@ public class LeftHandController : MonoBehaviour
 
     public void OnSelectEnter()
     {
-        LC.SetActive(true);
+        LController.SetActive(true);
         SetHandVisible(false);
 
         leftController.model.gameObject.SetActive(false);
     }
     public void OnSelectExit()
     {
-        LC.SetActive(false);
+        LController.SetActive(false);
         SetHandVisible(true);
         leftController.model.gameObject.SetActive(true);
     }
