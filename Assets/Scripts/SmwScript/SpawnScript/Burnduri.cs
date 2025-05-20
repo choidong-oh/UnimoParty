@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Burnduri : EnemyType
+public class Burnduri : EnemyBase
 {
     [Header("플레이어 리스트")]
     public List<Transform> players = new List<Transform>(); // 인스펙터에 등록!
@@ -30,9 +30,16 @@ public class Burnduri : EnemyType
         }
     }
 
-    void OnEnable()
-    {
+    //void OnEnable()
+    //{
 
+    //    isCharging = false;
+    //    StartCoroutine(UpdateClosestPlayerRoutine());
+    //    StartCoroutine(MoveRoutine());
+    //}
+
+    public override void Move(Vector3 direction)
+    {
         isCharging = false;
         StartCoroutine(UpdateClosestPlayerRoutine());
         StartCoroutine(MoveRoutine());
@@ -143,4 +150,5 @@ public class Burnduri : EnemyType
         }
         gameObject.SetActive(false);
     }
+
 }
