@@ -3,10 +3,15 @@ using Photon.Pun;
 using Photon.Realtime;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class LobbyManager : MonoBehaviourPunCallbacks
 {
+    [SerializeField] GameObject LobbyCanvas;
+    [SerializeField] GameObject PVECanvas;
+
+
     public Transform contentParent;
     public GameObject userButtonPrefab;
 
@@ -14,10 +19,13 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     void Start()
     {
+        LobbyCanvas.SetActive(true);
+        PVECanvas.SetActive(false);
+
         PhotonNetwork.AutomaticallySyncScene = true;
         Screen.SetResolution(1920, 1080, false);
 
-        PhotonNetwork.NickName = "Player" + Random.Range(1000, 9999);
+        PhotonNetwork.NickName = FirebaseLoginMgr.user.DisplayName;
         PhotonNetwork.ConnectUsingSettings();
     }
 
@@ -72,5 +80,22 @@ public class LobbyManager : MonoBehaviourPunCallbacks
             Destroy(btn);
             playerButtons.Remove(p.NickName);
         }
+    }
+
+    public void OnClickPVESceneButton()
+    {
+        LobbyCanvas.SetActive(false);
+        PVECanvas.SetActive(true);
+    }
+
+    public void OnClickBackButton()
+    {
+        LobbyCanvas.SetActive(true);
+        PVECanvas.SetActive(false);
+    }
+
+    public void GameStartButton()
+    {
+        SceneManager.LoadScene(2);
     }
 }
