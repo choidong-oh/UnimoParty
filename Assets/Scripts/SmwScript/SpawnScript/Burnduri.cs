@@ -20,6 +20,7 @@ public class Burnduri : EnemyBase
     private Transform currentTarget;
     private bool isCharging = false;
 
+
     private void Awake()
     {
         if (players.Count == 0)
@@ -30,13 +31,16 @@ public class Burnduri : EnemyBase
         }
     }
 
-    //void OnEnable()
-    //{
-
-    //    isCharging = false;
-    //    StartCoroutine(UpdateClosestPlayerRoutine());
-    //    StartCoroutine(MoveRoutine());
-    //}
+    public override void CsvEnemyInfo()
+    {
+        enemyName = "Burnduri";
+        spawnStartTime = 0;
+        spawnCycle = 20;
+        damage = 1;
+        enemyMoveSpeed = 0.5f;
+        sizeScale = 1;//1~3
+        spawnCount = 1;
+    }
 
     public override void Move(Vector3 direction)
     {
@@ -44,6 +48,14 @@ public class Burnduri : EnemyBase
         StartCoroutine(UpdateClosestPlayerRoutine());
         StartCoroutine(MoveRoutine());
     }
+
+    //void OnEnable()
+    //{
+
+    //    isCharging = false;
+    //    StartCoroutine(UpdateClosestPlayerRoutine());
+    //    StartCoroutine(MoveRoutine());
+    //}
 
 
     void OnDisable()

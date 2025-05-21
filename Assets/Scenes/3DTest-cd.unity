@@ -508,12 +508,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 478245137}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1782966839}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &478245140
 MonoBehaviour:
@@ -530,7 +530,6 @@ MonoBehaviour:
   enemyPrefab: {fileID: 7417410410337076666, guid: 09504338020ecb34d93b15a793bd8ae6, type: 3}
   maxEnemies: 10
   spawnTimer: 3
-  poolSize: 20
   minSpawn: 1
   maxSpawn: 4
   rectWidth: 30
@@ -1123,7 +1122,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 478245139}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2110603195
@@ -1245,4 +1245,3 @@ SceneRoots:
   - {fileID: 161961740}
   - {fileID: 803423278}
   - {fileID: 1782966839}
-  - {fileID: 478245139}
