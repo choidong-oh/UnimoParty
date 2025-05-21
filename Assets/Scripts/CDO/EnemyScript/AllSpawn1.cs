@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditorInternal.Profiling.Memory.Experimental.FileFormat;
 
 public class AllSpawn1 : MonoBehaviour
 {
@@ -21,7 +22,7 @@ public class AllSpawn1 : MonoBehaviour
     [Header("디버그")]
     [SerializeField] bool showGizmos = true;
 
-    private List<GameObject> activeEnemies = new List<GameObject>();
+    private List<EnemyBase> activeEnemies = new List<EnemyBase>();
     private List<Vector3> spawnPositions = new List<Vector3>();
 
     void Start()
@@ -48,19 +49,24 @@ public class AllSpawn1 : MonoBehaviour
             }
             yield return new WaitForSeconds(spawnTimer);
         }
+
     }
 
+    public EnemySpawnerCommand enemySpawnerCommand;
     void SpawnOneEnemy()
     {
         Vector3 spawnPos = GetBoxDonutSpawnPosition();
-        GameObject enemy = Instantiate(enemyPrefab, spawnPos, Quaternion.identity);
-        activeEnemies.Add(enemy);
+        //GameObject enemy = Instantiate(enemyPrefab, spawnPos, Quaternion.identity);
+        var tempEnemy = enemySpawnerCommand.SpawnEnemy("Burnduri", GetBoxDonutSpawnPosition(), 5);
+        activeEnemies.Add(tempEnemy);
         spawnPositions.Add(spawnPos);
+
+
     }
 
     void CleanDeadEnemies()
     {
-        activeEnemies.RemoveAll(e => e == null); // 죽어서 사라진 오브젝트 정리
+        activeEnemies.RemoveAll(e => e == null || !e.gameObject.activeInHierarchy);
     }
 
     Vector3 GetBoxDonutSpawnPosition()

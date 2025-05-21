@@ -104,7 +104,7 @@ public class Flower : MonoBehaviourPun
         while (currentProgress > 0f)
         {
             // 진행도 감소
-            float progressChange = Time.deltaTime * decreaseSpeed;
+            float progressChange = decreaseSpeed * 0.01f;
             currentProgress = Mathf.Max(0f, currentProgress - progressChange);
 
             foreach (float checkPoint in checkPoints)

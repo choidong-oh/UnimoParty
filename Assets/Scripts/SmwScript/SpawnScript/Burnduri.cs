@@ -45,6 +45,7 @@ public class Burnduri : EnemyBase
     public override void Move(Vector3 direction)
     {
         isCharging = false;
+        transform.position = direction;
         StartCoroutine(UpdateClosestPlayerRoutine());
         StartCoroutine(MoveRoutine());
     }
@@ -160,7 +161,9 @@ public class Burnduri : EnemyBase
 
             yield return null;
         }
-        gameObject.SetActive(false);
+
+        Destroy(gameObject);
+       // gameObject.SetActive(false);
     }
 
 }

@@ -480,6 +480,7 @@ GameObject:
   - component: {fileID: 478245139}
   - component: {fileID: 478245138}
   - component: {fileID: 478245140}
+  - component: {fileID: 478245141}
   m_Layer: 0
   m_Name: TestSpawnMgr
   m_TagString: Untagged
@@ -522,7 +523,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 478245137}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: df37246c1cd58ae498d05f0729ceb81e, type: 3}
   m_Name: 
@@ -530,12 +531,35 @@ MonoBehaviour:
   enemyPrefab: {fileID: 7417410410337076666, guid: 09504338020ecb34d93b15a793bd8ae6, type: 3}
   maxEnemies: 10
   spawnTimer: 3
+  poolSize: 20
   minSpawn: 1
   maxSpawn: 4
   rectWidth: 30
   rectHeight: 30
   innerRadius: 5
   showGizmos: 1
+--- !u!114 &478245141
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 478245137}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83be175d623d59443abaae5472bd1f31, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyPrefab: {fileID: 0}
+  maxEnemies: 10
+  spawnTimer: 1
+  minSpawn: 1
+  maxSpawn: 10
+  rectWidth: 30
+  rectHeight: 30
+  innerRadius: 5
+  showGizmos: 1
+  enemySpawnerCommand: {fileID: 1782966838}
 --- !u!1 &537361228
 GameObject:
   m_ObjectHideFlags: 0

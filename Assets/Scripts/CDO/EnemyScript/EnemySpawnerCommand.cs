@@ -11,7 +11,7 @@ public class EnemySpawnerCommand : MonoBehaviour
     private GameController gameController;
 
     // 利 积己 棺 目盖靛 且寸
-    public void SpawnEnemy(string enemyType, Vector3 direction, float speed )
+    public EnemyBase SpawnEnemy(string enemyType, Vector3 direction, float speed )
     {
         EnemyBase enemyObject = null;
         ICommand command = null;
@@ -36,6 +36,13 @@ public class EnemySpawnerCommand : MonoBehaviour
             command.Execute();
         }
 
+
+        if(enemyObject == null)
+        {
+            return null;
+        }
+
+        return enemyObject;
         // 积己等 利俊 目盖靛 角青
         //gameController.SetCommand(command);
         //gameController.ExecuteCommand();
