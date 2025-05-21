@@ -545,7 +545,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9014170783809206330, guid: 895f6f3c2d334633b5800312285058d2, type: 3}
       propertyPath: m_CullingMask.m_Bits
-      value: 32
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: 9014170783809206330, guid: 895f6f3c2d334633b5800312285058d2, type: 3}
       propertyPath: m_projectionMatrixMode
@@ -1047,6 +1047,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1234872361441610848, guid: 55cc9623736065f40b1d3e8709325a55, type: 3}
+      propertyPath: m_Color.a
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3071719167562161731, guid: 55cc9623736065f40b1d3e8709325a55, type: 3}
       propertyPath: m_Name
       value: InGameUICanvas
@@ -1265,7 +1269,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9220484297830323137, guid: 55cc9623736065f40b1d3e8709325a55, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1.15
+      value: 0.83
       objectReference: {fileID: 0}
     - target: {fileID: 9220484297830323137, guid: 55cc9623736065f40b1d3e8709325a55, type: 3}
       propertyPath: m_AnchoredPosition.x
