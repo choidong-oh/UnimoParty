@@ -481,6 +481,7 @@ GameObject:
   - component: {fileID: 478245138}
   - component: {fileID: 478245140}
   - component: {fileID: 478245141}
+  - component: {fileID: 478245142}
   m_Layer: 0
   m_Name: TestSpawnMgr
   m_TagString: Untagged
@@ -545,7 +546,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 478245137}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 83be175d623d59443abaae5472bd1f31, type: 3}
   m_Name: 
@@ -560,6 +561,20 @@ MonoBehaviour:
   innerRadius: 5
   showGizmos: 1
   enemySpawnerCommand: {fileID: 1782966838}
+--- !u!114 &478245142
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 478245137}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a197856229d5be44b1d0260914c7cab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemySpawnerCommand: {fileID: 0}
+  testPrefab: {fileID: 6611467085071980272, guid: c0b2678ed623b144a9cac71214bb7487, type: 3}
 --- !u!1 &537361228
 GameObject:
   m_ObjectHideFlags: 0
