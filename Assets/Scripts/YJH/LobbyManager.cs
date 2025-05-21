@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Photon.Pun;
 using Photon.Realtime;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,7 +14,10 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     void Start()
     {
-        PhotonNetwork.NickName = FirebaseLoginMgr.user.DisplayName;
+        PhotonNetwork.AutomaticallySyncScene = true;
+        Screen.SetResolution(1920, 1080, false);
+
+        PhotonNetwork.NickName = "Player" + Random.Range(1000, 9999);
         PhotonNetwork.ConnectUsingSettings();
     }
 
@@ -30,7 +34,10 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     public override void OnJoinedRoom()
     {
-        RefreshPlayerList();
+        foreach (Player p in PhotonNetwork.PlayerList)
+        {
+            AddPlayerButton(p);
+        }
     }
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
@@ -43,28 +50,19 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         RemovePlayerButton(otherPlayer);
     }
 
-    void RefreshPlayerList()
-    {
-        foreach (var btn in playerButtons.Values)
-        {
-            Destroy(btn);
-        }
-        playerButtons.Clear();
-
-        foreach (Player p in PhotonNetwork.PlayerList)
-        {
-            AddPlayerButton(p);
-        }
-    }
-
     void AddPlayerButton(Player p)
     {
         if (playerButtons.ContainsKey(p.NickName))
             return;
 
         GameObject button = Instantiate(userButtonPrefab, contentParent);
-        button.GetComponentInChildren<Text>().text = p.NickName;
+        button.GetComponentInChildren<TextMeshProUGUI>().text = p.NickName;
         playerButtons.Add(p.NickName, button);
+
+        if (p.IsLocal)
+        {
+            button.transform.SetAsFirstSibling();
+        }
     }
 
     void RemovePlayerButton(Player p)
