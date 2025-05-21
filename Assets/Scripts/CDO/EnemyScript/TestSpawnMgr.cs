@@ -15,16 +15,8 @@ public class TestSpawnMgr : MonoBehaviour
     // 랜덤으로 적을 스폰하는 메서드
     void SpawnRandomEnemy()
     {
-        string enemyType = "";
-
-        if(Random.Range(0, 2) == 0)
-        {
-            enemyType = "Up";
-        }
-        else if(Random.Range (0, 2) == 1)
-        {
-            enemyType = "Right";
-        }
+        string enemyType = "Burnduri";
+        //string enemyType = "pupu";
 
         enemySpawnerCommand.SpawnEnemy(enemyType, Vector3.forward, 5);
     }
