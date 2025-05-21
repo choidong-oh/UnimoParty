@@ -780,7 +780,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9167722245327750355, guid: 966bc0a092b89c4468fa9a4c467e78fa, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.9
+      value: -0.93
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1332,6 +1332,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   wallType: 0
   teleportReference: {fileID: 2314889498610183629}
+  lookAtTarget: {fileID: 718748185}
 --- !u!1001 &1278787499
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1709,6 +1710,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   wallType: 2
   teleportReference: {fileID: 6376855538144703175}
+  lookAtTarget: {fileID: 718748185}
 --- !u!1 &1822777708 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7560748128432381324, guid: 966bc0a092b89c4468fa9a4c467e78fa, type: 3}
@@ -1840,7 +1842,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5807318123482298335, guid: 9a6d782d55e150d4bacd8b3ce0ec9a1c, type: 3}
       propertyPath: m_Size.x
-      value: 30
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 5807318123482298335, guid: 9a6d782d55e150d4bacd8b3ce0ec9a1c, type: 3}
       propertyPath: m_Size.y
@@ -1889,6 +1891,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   wallType: 1
   teleportReference: {fileID: 1810999890643904445}
+  lookAtTarget: {fileID: 718748185}
 --- !u!1001 &1952313129
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2008,6 +2011,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   wallType: 3
   teleportReference: {fileID: 3263255769032091728}
+  lookAtTarget: {fileID: 718748185}
 --- !u!4 &1810999890643904445 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1327193640664155674, guid: 34fcab6d956b9e14691cdb3c77f8bcb5, type: 3}
