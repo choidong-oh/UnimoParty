@@ -344,6 +344,10 @@ PrefabInstance:
       value: ScaffSpawner
       objectReference: {fileID: 0}
     - target: {fileID: 3132521309283916604, guid: 688994b758e53ee448c92419b5423d4b, type: 3}
+      propertyPath: cubePrefab
+      value: 
+      objectReference: {fileID: 3477442797691105170, guid: c85d512691b3ff54bb3250febbf0d505, type: 3}
+    - target: {fileID: 3132521309283916604, guid: 688994b758e53ee448c92419b5423d4b, type: 3}
       propertyPath: centerObject
       value: 
       objectReference: {fileID: 718748185}
@@ -504,7 +508,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &361420780
 Transform:
   m_ObjectHideFlags: 0
