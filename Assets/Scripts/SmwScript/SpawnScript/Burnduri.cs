@@ -52,10 +52,12 @@ public class Burnduri : EnemyBase
 
     private void OnTriggerEnter(Collider other)
     {
+        Debug.Log("sdsd");
         if (other.gameObject.tag == "Player")
         {
-            Manager.Instance.observer.HitPlayer(damage);
+            Debug.Log("sdsd2");
             Debug.Log(Manager.Instance.observer.UserPlayer.gamedata.life);
+            Manager.Instance.observer.HitPlayer(damage);
         }
 
     }
@@ -173,7 +175,7 @@ public class Burnduri : EnemyBase
         }
 
         Destroy(gameObject);
-       // gameObject.SetActive(false);
+        // gameObject.SetActive(false);
     }
 
 }
