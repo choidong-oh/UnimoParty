@@ -52,10 +52,30 @@ public class WallTeleporter : MonoBehaviour
         player.position = newPos;
 
 
-        // LookAt 대상이 할당되어 있다면, 바라보도록 처리
+        // LookAt 대상이 설정되어 있는 경우에만 회전 처리 실행
         if (lookAtTarget != null)
         {
-            player.LookAt(lookAtTarget);
+            // LookAt 대상과 플레이어 사이의 방향 벡터 계산
+            // 단, 수직 방향(Y축)은 무시하여 XZ 평면 상에서의 방향만 사용
+            Vector3 direction = lookAtTarget.position - player.position;
+            direction.y = 0f; // Y축을 0으로 만들어 기울어진 회전(Pitch, Roll) 제거
+
+            // 방향 벡터가 너무 작으면 회전할 필요가 없으므로 무시
+            if (direction.sqrMagnitude > 0.001f)
+            {
+                // 대상 방향을 바라보기 위한 회전 값(Quaternion) 계산
+                Quaternion targetRot = Quaternion.LookRotation(direction);
+
+                // 현재 플레이어의 회전값을 Euler(각도) 형태로 가져옴
+                Vector3 currentEuler = player.eulerAngles;
+
+                // 목표 회전값을 Euler 각도로 변환
+                Vector3 targetEuler = targetRot.eulerAngles;
+
+                // 최종 회전 적용: 현재 X(고개 기울기)와 Z(몸 기울기)는 그대로 유지하고,
+                // Y(좌우 회전)만 목표 방향으로 덮어씀
+                player.rotation = Quaternion.Euler(currentEuler.x, targetEuler.y, currentEuler.z);
+            }
         }
     }
 
