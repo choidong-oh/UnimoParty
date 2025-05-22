@@ -1,11 +1,11 @@
-using Firebase;
-using Firebase.Auth;
 using System.Collections;
 using System.Threading.Tasks;
+using Firebase;
+using Firebase.Auth;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
+using UnityEngine.XR.Management;
 
 public class FirebaseLoginMgr : MonoBehaviour
 {
@@ -46,14 +46,18 @@ public class FirebaseLoginMgr : MonoBehaviour
         {
             DependencyStatus dependencyStatus = task.Result;
             if (dependencyStatus == Firebase.DependencyStatus.Available)
-            {                
+            {
                 auth = Firebase.Auth.FirebaseAuth.DefaultInstance;
             }
         });
 
-        
+
         CreatewarningText.text = "";
         LoginwarningText.text = "";
+
+        CreateUiIdPanel.gameObject.SetActive(false);
+        LoginUiPanel.gameObject.SetActive(true);
+        NickNameUiPanel.gameObject.SetActive(false);
     }
 
     //회원가입패널로 넘어감
@@ -138,16 +142,9 @@ public class FirebaseLoginMgr : MonoBehaviour
             }
             else
             {
-                NickNamewarningText.text = "";
-                Debug.Log("닉네임 : " + user.DisplayName);
-                var dd = string.IsNullOrEmpty(user.DisplayName);
-                //닉네임이 있으면
-                if (dd != true)
-                {
-                    NickNameUiPanel.gameObject.SetActive(false);
-                    SceneManager.LoadScene(1);
-                    //SceneChanege.gameObject.SetActive(true);
-                }
+                yield return new WaitUntil(() => XRGeneralSettings.Instance.Manager.isInitializationComplete);
+                //yield return new WaitForSeconds(2);
+                SceneManager.LoadScene("Lobby");
             }
 
         }
@@ -158,7 +155,7 @@ public class FirebaseLoginMgr : MonoBehaviour
     //동기식 회원가입 코루틴
     IEnumerator CreateIdCor(string ID, string password)
     {
-        var createIdTask = auth.CreateUserWithEmailAndPasswordAsync(ID+"@unimo.com", password);
+        var createIdTask = auth.CreateUserWithEmailAndPasswordAsync(ID + "@unimo.com", password);
         //회원가입 성공할때 까지
         yield return new WaitUntil(predicate: () => createIdTask.IsCompleted);
         if (createIdTask.Exception != null)
@@ -242,12 +239,11 @@ public class FirebaseLoginMgr : MonoBehaviour
             {
                 Debug.Log("닉네임이 없습니다");
                 NickNamePanel();
-                CreateNickName();
                 //ServerPanel.gameObject.SetActive(true);
             }
             else
             {
-                SceneManager.LoadScene(1);  
+                SceneManager.LoadScene("Lobby");
             }
         }
     }

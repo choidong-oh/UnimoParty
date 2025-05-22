@@ -1,7 +1,6 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditorInternal.Profiling.Memory.Experimental.FileFormat;
 
 public class AllSpawn1 : MonoBehaviour
 {
@@ -83,7 +82,8 @@ public class AllSpawn1 : MonoBehaviour
             float z = Random.Range(center.z - halfHeight, center.z + halfHeight);
             pos = new Vector3(x, 0, z);
             if (++safety > 20) break;
-        } while (Vector2.Distance(new Vector2(pos.x, pos.z), new Vector2(center.x, center.z)) < innerRadius);
+        }
+        while (Vector2.Distance(new Vector2(pos.x, pos.z), new Vector2(center.x, center.z)) < innerRadius);
 
         return pos;
     }
