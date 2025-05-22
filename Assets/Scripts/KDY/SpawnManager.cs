@@ -69,7 +69,7 @@ public class SpawnManager : MonoBehaviour
             // 플레이어 생성
             //Instantiate(playerPrefab, spawnPos, yRotationOnly);
 
-            Debug.Log($"플레이어가 스폰됨: 인덱스 {index}, 위치:{spawnPos}");
+            //Debug.Log($"플레이어가 스폰됨: 인덱스 {index}, 위치:{spawnPos}");
         }
         else
         {
