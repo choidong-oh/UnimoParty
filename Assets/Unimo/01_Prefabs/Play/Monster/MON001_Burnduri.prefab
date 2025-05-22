@@ -797,7 +797,7 @@ MonoBehaviour:
   spawnCount: 0
   players: []
   normalSpeed: 1
-  chargeSpeed: 5
+  chargeSpeed: 10
   chargeDistance: 10
   triggerDistance: 5
   fixedY: 0
