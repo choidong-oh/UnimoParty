@@ -32,5 +32,4 @@ public class Manager : MonoBehaviour
             Destroy(gameObject);
         }
     }
-
 }
