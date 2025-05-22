@@ -37,6 +37,9 @@ public class FirebaseLoginMgr : MonoBehaviour
     [SerializeField] private GameObject CreateUiIdPanel;
     [SerializeField] private GameObject NickNameUiPanel;
 
+
+    [SerializeField] GameObject dd;
+    [SerializeField] GameObject df;
     private void Awake()
     {
         //안전코드 auth연결
@@ -126,31 +129,82 @@ public class FirebaseLoginMgr : MonoBehaviour
     {
         if (user != null)
         {
-            //닉네임
             UserProfile profile = new UserProfile { DisplayName = NickName };
-            //파이어베이스에 닉네임 정보 올림
-            Task ProfileTask = user.UpdateUserProfileAsync(profile);
 
-            yield return new WaitUntil(predicate: () => ProfileTask.IsCompleted);
-
-            if (ProfileTask.Exception != null)
+            Task profileTask = user.UpdateUserProfileAsync(profile);
+            while (profileTask.IsCompleted ==false)
             {
-                Debug.LogWarning(message: "닉네임 설정 실패" + ProfileTask.Exception);
-                FirebaseException firebaseEx = ProfileTask.Exception.GetBaseException() as FirebaseException;
+                NickNamewarningText.text += "1";
+                yield return null;
+            }
+
+            yield return new WaitUntil(() => profileTask.IsCompleted);
+
+
+            if (profileTask.Exception != null)
+            {
+                Debug.LogWarning("닉네임 설정 실패: " + profileTask.Exception);
+                FirebaseException firebaseEx = profileTask.Exception.GetBaseException() as FirebaseException;
                 AuthError errorCode = (AuthError)firebaseEx.ErrorCode;
                 NickNamewarningText.text = "닉네임 설정 실패";
             }
             else
             {
-                yield return new WaitUntil(() => XRGeneralSettings.Instance.Manager.isInitializationComplete);
-                //yield return new WaitForSeconds(2);
+                int delay = 0;
+                while (user.DisplayName==null || user.DisplayName != NickName)
+                {
+                    yield return new WaitForSeconds(0.2f);
+                    delay++;
+                    //NickNamewarningText.text = $"닉네임 저장... {delay}";
+                }
+
+                //yield return new WaitUntil(() => XRGeneralSettings.Instance.Manager.isInitializationComplete);
                 SceneManager.LoadScene("Lobby");
             }
-
         }
-
     }
 
+    //IEnumerator CreateNickNameCor(string nickName)
+    //{
+    //    if (user != null)
+    //    {
+    //        UserProfile profile = new UserProfile { DisplayName = nickName };
+    //        var updateTask = user.UpdateUserProfileAsync(profile);
+    //        yield return new WaitUntil(() => updateTask.IsCompleted);
+
+    //        if (updateTask.Exception != null)
+    //        {
+    //            NickNamewarningText.text = "닉네임 설정 실패";
+    //            yield break;
+    //        }
+
+    //        // 최대 5초(10회)까지 닉네임 반영 기다리기
+    //        int retry = 0;
+    //        while (retry < 10)
+    //        {
+    //            var reloadTask = user.ReloadAsync();
+    //            yield return new WaitUntil(() => reloadTask.IsCompleted);
+    //            yield return new WaitForSeconds(0.3f);
+
+    //            if (!string.IsNullOrEmpty(user.DisplayName) && user.DisplayName == nickName)
+    //                break;
+
+    //            retry++;
+    //        }
+
+    //        if (user.DisplayName != nickName)
+    //        {
+    //            NickNamewarningText.text = "닉네임 적용 지연. 다시 시도해주세요";
+    //            yield break;
+    //        }
+
+    //        // VR용 XR 초기화 대기
+    //        yield return new WaitUntil(() => XRGeneralSettings.Instance.Manager.isInitializationComplete);
+
+    //        // 닉네임 정상 반영 후 씬 이동
+    //        SceneManager.LoadScene("Lobby");
+    //    }
+    //}
 
     //동기식 회원가입 코루틴
     IEnumerator CreateIdCor(string ID, string password)
@@ -233,18 +287,7 @@ public class FirebaseLoginMgr : MonoBehaviour
             LoginwarningText.text = "";
             LoginUiPanel.gameObject.SetActive(false);
 
-
-            //닉네임이 없을경우 닉네임 생성
-            if (string.IsNullOrEmpty(user.DisplayName) == true)
-            {
-                Debug.Log("닉네임이 없습니다");
-                NickNamePanel();
-                //ServerPanel.gameObject.SetActive(true);
-            }
-            else
-            {
-                SceneManager.LoadScene("Lobby");
-            }
+            SceneManager.LoadScene("Lobby");
         }
     }
 }
