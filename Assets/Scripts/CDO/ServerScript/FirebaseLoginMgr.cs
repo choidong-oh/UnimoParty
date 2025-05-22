@@ -37,9 +37,6 @@ public class FirebaseLoginMgr : MonoBehaviour
     [SerializeField] private GameObject CreateUiIdPanel;
     [SerializeField] private GameObject NickNameUiPanel;
 
-
-    [SerializeField] GameObject dd;
-    [SerializeField] GameObject df;
     private void Awake()
     {
         //안전코드 auth연결

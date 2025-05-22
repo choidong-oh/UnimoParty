@@ -2289,8 +2289,6 @@ MonoBehaviour:
   LoginUiPanel: {fileID: 2135627865}
   CreateUiIdPanel: {fileID: 1337055334}
   NickNameUiPanel: {fileID: 199380901}
-  dd: {fileID: 0}
-  df: {fileID: 0}
 --- !u!4 &888793465
 Transform:
   m_ObjectHideFlags: 0
@@ -3613,7 +3611,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: asdfasdf
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: e29a69e0b954b234a83c0f82141c788b, type: 2}
   m_sharedMaterial: {fileID: -4611146595656123925, guid: e29a69e0b954b234a83c0f82141c788b, type: 2}
