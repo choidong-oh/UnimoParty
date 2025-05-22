@@ -32,9 +32,9 @@ public class EnemyDonutSpawner : MonoBehaviour
             enemyPool.Add(obj);
 
             // 스포너 참조 넘기기
-            pupu enemyScript = obj.GetComponent<pupu>();
-            if (enemyScript != null)
-                enemyScript.spawner = this;
+            //pupu enemyScript = obj.GetComponent<pupu>();
+            //if (enemyScript != null)
+                //enemyScript.spawner = this;
         }
 
         // 2. 최초 maxEnemies만큼 스폰
