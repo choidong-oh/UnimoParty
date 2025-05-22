@@ -3,12 +3,11 @@ using UnityEngine;
 public class BurnduriSpawn : MonoBehaviour
 {
     public EnemySpawnerCommand enemySpawnerCommand;
-    public GameObject testPrefab;
     Vector3 spawnPosition;
 
     [SerializeField] Transform player;
     [SerializeField] Transform donutTransform;
-    [SerializeField] float distanceGap; 
+    [SerializeField] float distanceGap;
     float angle; // 각도
     int r = 15; //반지름
 
@@ -34,10 +33,11 @@ public class BurnduriSpawn : MonoBehaviour
 
     Vector3 DonutPostion()
     {
+        var tempPostion = new Vector3(20, 0, 16);
         angle = UnityEngine.Random.Range(0, 360);
-        float x = Mathf.Cos(angle) * r;
-        float y = donutTransform.transform.position.y;
-        float z = Mathf.Sin(angle) * r;
+        float x = Mathf.Cos(angle) * r+ tempPostion.x;
+        float y = donutTransform.transform.position.y+ tempPostion.y;
+        float z = Mathf.Sin(angle) * r + tempPostion.z;
         donutTransform.position = new Vector3(x, y, z);
 
         return donutTransform.position;
