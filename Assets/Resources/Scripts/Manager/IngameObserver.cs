@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.SearchService;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class IngameObserver
 {
@@ -25,8 +27,11 @@ public class IngameObserver
 
         if (UserPlayer.gamedata.life <= 0)
         {
-            UserPlayer.transform.parent.gameObject.SetActive(false);
+
+            UserPlayer.gamedata.life = 20;
             isGameOver = true;
+
+            SceneManager.LoadScene(1);
 
             // 여기에 포톤 추가.
             // OnGameEnd.Invoke();
