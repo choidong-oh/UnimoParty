@@ -29,7 +29,6 @@ public class Burnduri : EnemyBase
             foreach (var obj in objs)
                 players.Add(obj.transform);
         }
-
     }
 
     public override void CsvEnemyInfo()
@@ -51,13 +50,23 @@ public class Burnduri : EnemyBase
         StartCoroutine(MoveRoutine());
     }
 
-    void OnEnable()
+    private void OnTriggerEnter(Collider other)
     {
+        if (other.gameObject.tag == "Player")
+        {
+            Manager.Instance.observer.HitPlayer(damage);
+            Debug.Log(Manager.Instance.observer.UserPlayer.gamedata.life);
+        }
 
-        isCharging = false;
-        StartCoroutine(UpdateClosestPlayerRoutine());
-        StartCoroutine(MoveRoutine());
     }
+
+    //void OnEnable()
+    //{
+
+    //    isCharging = false;
+    //    StartCoroutine(UpdateClosestPlayerRoutine());
+    //    StartCoroutine(MoveRoutine());
+    //}
 
 
     void OnDisable()
@@ -163,8 +172,8 @@ public class Burnduri : EnemyBase
             yield return null;
         }
 
-        //Destroy(gameObject);
-        gameObject.SetActive(false);
+        Destroy(gameObject);
+       // gameObject.SetActive(false);
     }
 
 }

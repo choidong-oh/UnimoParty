@@ -25,10 +25,11 @@ public class IngameObserver
 
         if (UserPlayer.gamedata.life <= 0)
         {
+            UserPlayer.gameObject.SetActive(false);
             isGameOver = true;
 
             // 여기에 포톤 추가.
-            OnGameEnd.Invoke();
+            // OnGameEnd.Invoke();
         }
     }
 

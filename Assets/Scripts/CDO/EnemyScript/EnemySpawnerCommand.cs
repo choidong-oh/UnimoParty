@@ -39,6 +39,7 @@ public class EnemySpawnerCommand : MonoBehaviour
 
         if(enemyObject == null)
         {
+            Debug.Log("SpawnEnemy null¶ä");
             return null;
         }
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public abstract class EnemyBase : MonoBehaviour, IDamageable
+public abstract class EnemyBase : MonoBehaviour
 {
     //csv
     //아래 변수 사용하세요~
@@ -19,6 +19,6 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable
 
     //base
     public abstract void CsvEnemyInfo();
-
+   
 }
 
