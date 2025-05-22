@@ -120,4 +120,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawner: {fileID: 0}
   moveSpeed: 20
-  fixedY: 0
+  fixedY: 1

@@ -119,6 +119,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 5
-  fixedY: 0
+  fixedY: 1
   DirectionAngle: 90
   tempMonsterlifeTime: 10
