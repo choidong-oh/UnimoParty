@@ -1287,7 +1287,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &383042523
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1304,7 +1304,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -0.37999994}
+  m_AnchoredPosition: {x: 0, y: -1.112}
   m_SizeDelta: {x: 1.83, y: 0.41}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &383042524
@@ -1341,7 +1341,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 
+  m_text: dafsdfasdf
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: e29a69e0b954b234a83c0f82141c788b, type: 2}
   m_sharedMaterial: {fileID: -4611146595656123925, guid: e29a69e0b954b234a83c0f82141c788b, type: 2}
@@ -2289,6 +2289,8 @@ MonoBehaviour:
   LoginUiPanel: {fileID: 2135627865}
   CreateUiIdPanel: {fileID: 1337055334}
   NickNameUiPanel: {fileID: 199380901}
+  dd: {fileID: 0}
+  df: {fileID: 0}
 --- !u!4 &888793465
 Transform:
   m_ObjectHideFlags: 0

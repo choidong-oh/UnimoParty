@@ -3,9 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Firebase;
+using Firebase.Auth;
 using Firebase.Database;
 using Firebase.Extensions;
+using Photon.Realtime;
 using UnityEngine;
+
+using Random = UnityEngine.Random;
 
 public class FirebaseDataMgr : MonoBehaviour
 {
@@ -29,8 +33,15 @@ public class FirebaseDataMgr : MonoBehaviour
         }
     }
 
-    private void Start()
+    private IEnumerator Start()
     {
+        if (FirebaseLoginMgr.user != null && FirebaseLoginMgr.user.DisplayName == null)
+        {
+            UserProfile profile = new UserProfile { DisplayName = "Player" + Random.Range(1000,9999)};
+            Task profileTask = FirebaseLoginMgr.user.UpdateUserProfileAsync(profile);
+            yield return new WaitUntil(() => profileTask.IsCompleted);         
+        }
+
         FirebaseApp.CheckAndFixDependenciesAsync().ContinueWithOnMainThread(async task =>
         {
             FirebaseApp app = FirebaseApp.DefaultInstance;
@@ -150,8 +161,4 @@ public class FirebaseDataMgr : MonoBehaviour
         return friendList.Contains(nickname);
     }
 
-    IEnumerator WaitSceneChange()
-    {
-        yield return FirebaseDataMgr.Instance.WaitSceneChange();
-    }
 }

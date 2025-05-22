@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using Photon.Pun;
 using Photon.Realtime;
@@ -16,13 +17,16 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     private Dictionary<string, GameObject> playerButtons = new Dictionary<string, GameObject>();
 
-    void Start()
+    IEnumerator Start()
     {
         LobbyCanvas.SetActive(true);
         PVECanvas.SetActive(false);
 
-        PhotonNetwork.NickName = FirebaseLoginMgr.user.DisplayName;
         PhotonNetwork.ConnectUsingSettings();
+
+        yield return new WaitUntil(() => PhotonNetwork.IsConnected);
+
+        PhotonNetwork.NickName = FirebaseLoginMgr.user.DisplayName;
     }
 
     public override void OnConnectedToMaster()
