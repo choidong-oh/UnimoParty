@@ -34,7 +34,7 @@ public class LeftHandController : MonoBehaviour
     GameObject LController;
     void Start()
     {
-        userName.text = FirebaseLoginMgr.user.DisplayName;
+        //userName.text = FirebaseLoginMgr.user.DisplayName;
 
         handRenderers = leftController.GetComponentsInChildren<Renderer>();
 

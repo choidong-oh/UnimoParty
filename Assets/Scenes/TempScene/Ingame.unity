@@ -905,6 +905,10 @@ PrefabInstance:
       propertyPath: m_SelectEntered.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1952313130}
+    - target: {fileID: 6395293177243321781, guid: 966bc0a092b89c4468fa9a4c467e78fa, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7543132570412813937, guid: 966bc0a092b89c4468fa9a4c467e78fa, type: 3}
       propertyPath: m_HapticHoverExitDuration
       value: 0
