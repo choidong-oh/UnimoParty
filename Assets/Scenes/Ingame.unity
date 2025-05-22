@@ -2369,7 +2369,7 @@ PrefabInstance:
       objectReference: {fileID: 1532170852}
     - target: {fileID: 8331521490147963328, guid: d942c463627ddf340b55a680ec850ade, type: 3}
       propertyPath: moveSpeed
-      value: 15
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8331521490147963328, guid: d942c463627ddf340b55a680ec850ade, type: 3}
       propertyPath: joystickTF
