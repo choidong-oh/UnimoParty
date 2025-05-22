@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Firebase;
@@ -147,5 +148,10 @@ public class FirebaseDataMgr : MonoBehaviour
     public bool IsFriend(string nickname)
     {
         return friendList.Contains(nickname);
+    }
+
+    IEnumerator WaitSceneChange()
+    {
+        yield return FirebaseDataMgr.Instance.WaitSceneChange();
     }
 }

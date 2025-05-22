@@ -4,7 +4,6 @@ using Photon.Realtime;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 public class LobbyManager : MonoBehaviourPunCallbacks
 {
@@ -21,9 +20,6 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     {
         LobbyCanvas.SetActive(true);
         PVECanvas.SetActive(false);
-
-        PhotonNetwork.AutomaticallySyncScene = true;
-        Screen.SetResolution(1920, 1080, false);
 
         PhotonNetwork.NickName = FirebaseLoginMgr.user.DisplayName;
         PhotonNetwork.ConnectUsingSettings();
