@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public class Pupu : MonoBehaviour
+public class PuwPuw : MonoBehaviour
 {
     Vector3 Postion;
 
@@ -28,10 +28,10 @@ public class Pupu : MonoBehaviour
         rotateDirection = Random.value < 0.5f ? 1 : -1;
 
         //원을 따라 도는 코루틴 시작
-        rotateCoroutine = StartCoroutine(RotateOnCircle());//굳이 변수 선언한건 값 초기화 때문
+        rotateCoroutine = StartCoroutine(GoPewPew());//굳이 변수 선언한건 값 초기화 때문
     }
 
-    IEnumerator RotateOnCircle()
+    IEnumerator GoPewPew()
     {
         while (true)
         {
