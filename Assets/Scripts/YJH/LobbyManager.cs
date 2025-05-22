@@ -1,11 +1,17 @@
 using System.Collections.Generic;
 using Photon.Pun;
 using Photon.Realtime;
+using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class LobbyManager : MonoBehaviourPunCallbacks
 {
+    [SerializeField] GameObject LobbyCanvas;
+    [SerializeField] GameObject PVECanvas;
+
+
     public Transform contentParent;
     public GameObject userButtonPrefab;
 
@@ -13,6 +19,12 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     void Start()
     {
+        LobbyCanvas.SetActive(true);
+        PVECanvas.SetActive(false);
+
+        PhotonNetwork.AutomaticallySyncScene = true;
+        Screen.SetResolution(1920, 1080, false);
+
         PhotonNetwork.NickName = FirebaseLoginMgr.user.DisplayName;
         PhotonNetwork.ConnectUsingSettings();
     }
@@ -30,7 +42,10 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     public override void OnJoinedRoom()
     {
-        RefreshPlayerList();
+        foreach (Player p in PhotonNetwork.PlayerList)
+        {
+            AddPlayerButton(p);
+        }
     }
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
@@ -43,28 +58,19 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         RemovePlayerButton(otherPlayer);
     }
 
-    void RefreshPlayerList()
-    {
-        foreach (var btn in playerButtons.Values)
-        {
-            Destroy(btn);
-        }
-        playerButtons.Clear();
-
-        foreach (Player p in PhotonNetwork.PlayerList)
-        {
-            AddPlayerButton(p);
-        }
-    }
-
     void AddPlayerButton(Player p)
     {
         if (playerButtons.ContainsKey(p.NickName))
             return;
 
         GameObject button = Instantiate(userButtonPrefab, contentParent);
-        button.GetComponentInChildren<Text>().text = p.NickName;
+        button.GetComponentInChildren<TextMeshProUGUI>().text = p.NickName;
         playerButtons.Add(p.NickName, button);
+
+        if (p.IsLocal)
+        {
+            button.transform.SetAsFirstSibling();
+        }
     }
 
     void RemovePlayerButton(Player p)
@@ -74,5 +80,22 @@ public class LobbyManager : MonoBehaviourPunCallbacks
             Destroy(btn);
             playerButtons.Remove(p.NickName);
         }
+    }
+
+    public void OnClickPVESceneButton()
+    {
+        LobbyCanvas.SetActive(false);
+        PVECanvas.SetActive(true);
+    }
+
+    public void OnClickBackButton()
+    {
+        LobbyCanvas.SetActive(true);
+        PVECanvas.SetActive(false);
+    }
+
+    public void GameStartButton()
+    {
+        SceneManager.LoadScene(2);
     }
 }

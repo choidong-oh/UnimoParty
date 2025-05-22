@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Burnduri : EnemyType
+public class Burnduri : EnemyBase
 {
     [Header("플레이어 리스트")]
     public List<Transform> players = new List<Transform>(); // 인스펙터에 등록!
@@ -20,6 +20,7 @@ public class Burnduri : EnemyType
     private Transform currentTarget;
     private bool isCharging = false;
 
+
     private void Awake()
     {
         if (players.Count == 0)
@@ -30,13 +31,32 @@ public class Burnduri : EnemyType
         }
     }
 
-    void OnEnable()
+    public override void CsvEnemyInfo()
     {
+        enemyName = "Burnduri";
+        spawnStartTime = 0;
+        spawnCycle = 20;
+        damage = 1;
+        enemyMoveSpeed = 0.5f;
+        sizeScale = 1;//1~3
+        spawnCount = 1;
+    }
 
+    public override void Move(Vector3 direction)
+    {
         isCharging = false;
+        transform.position = direction;
         StartCoroutine(UpdateClosestPlayerRoutine());
         StartCoroutine(MoveRoutine());
     }
+
+    //void OnEnable()
+    //{
+
+    //    isCharging = false;
+    //    StartCoroutine(UpdateClosestPlayerRoutine());
+    //    StartCoroutine(MoveRoutine());
+    //}
 
 
     void OnDisable()
@@ -141,6 +161,9 @@ public class Burnduri : EnemyType
 
             yield return null;
         }
-        gameObject.SetActive(false);
+
+        Destroy(gameObject);
+       // gameObject.SetActive(false);
     }
+
 }
