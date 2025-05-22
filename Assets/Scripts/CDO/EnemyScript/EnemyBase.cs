@@ -29,5 +29,11 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable
         sizeScale = 1;//1~3
         spawnCount = 1;
     }
+
+    public virtual void TakeDamage(int hp)
+    {
+        hp -= damage;
+
+    }
 }
 

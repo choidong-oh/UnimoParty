@@ -71,7 +71,7 @@ public class BurnduriSpawn : MonoBehaviour
     Vector3 IsDoWhile()
     {
         Vector3 dd;
-        int roof = 0;
+        int roof = 0; // loop
         do 
         { dd = DonutPostion();roof++; } 
         while ((Vector3.Distance(dd, player.position) >= distanceGap)&&roof>=10);

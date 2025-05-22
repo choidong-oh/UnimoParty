@@ -12,9 +12,10 @@ GameObject:
   - component: {fileID: 4069486091025545568}
   - component: {fileID: 8882195709871154349}
   - component: {fileID: 4977088229230213604}
+  - component: {fileID: 4527207859547471681}
   m_Layer: 0
-  m_Name: TestPrefab
-  m_TagString: Untagged
+  m_Name: TestPlayer-CDO
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -105,3 +106,16 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &4527207859547471681
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6611467085071980272}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04ce48a001344354a82d1095d0c20f6d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hp: 10

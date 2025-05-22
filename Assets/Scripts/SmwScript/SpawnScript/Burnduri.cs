@@ -50,6 +50,16 @@ public class Burnduri : EnemyBase
         StartCoroutine(MoveRoutine());
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Player")
+        {
+            Debug.Log("dsdsds");
+            IDamageable Player = other.gameObject.GetComponent<IDamageable>();
+            Player.TakeDamage(damage);
+        }
+    }
+
     //void OnEnable()
     //{
 
