@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class TestSpawn : MonoBehaviour
 {
-    int maxEnemies=10;
-    int spawnTimer=3;
+    public int maxEnemies = 10;
+    public int spawnTimer = 3;
     [SerializeField] GameObject Enemy;
     Vector3 spawnPos = new Vector3(25, 0, 25);
 
