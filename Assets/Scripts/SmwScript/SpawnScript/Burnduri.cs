@@ -54,10 +54,10 @@ public class Burnduri : EnemyBase
     {
         if (other.gameObject.tag == "Player")
         {
-            Debug.Log("dsdsds");
-            IDamageable Player = other.gameObject.GetComponent<IDamageable>();
-            Player.TakeDamage(damage);
+            Manager.Instance.observer.HitPlayer(damage);
+            Debug.Log(Manager.Instance.observer.UserPlayer.gamedata.life);
         }
+
     }
 
     //void OnEnable()
