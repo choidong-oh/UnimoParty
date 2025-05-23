@@ -25,7 +25,8 @@ public class IngameObserver
 
         if (UserPlayer.gamedata.life <= 0)
         {
-            UserPlayer.transform.parent.gameObject.SetActive(false);
+            //UserPlayer.transform.parent.gameObject.SetActive(false);
+            UserPlayer.gameObject.SetActive(false);
             isGameOver = true;
 
             // 여기에 포톤 추가.

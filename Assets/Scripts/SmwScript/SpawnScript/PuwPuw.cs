@@ -14,8 +14,11 @@ public class PuwPuw : EnemyBase
 
     Coroutine rotateCoroutine;
 
+    Transform center;
+
     private void Start()
     {
+        //center.position = Vector3.zero;
     }
 
     public override void Move(Vector3 direction)
