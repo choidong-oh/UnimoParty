@@ -1,10 +1,10 @@
+using System.Collections;
 using System.Collections.Generic;
 using Photon.Pun;
 using Photon.Realtime;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 public class LobbyManager : MonoBehaviourPunCallbacks
 {
@@ -17,16 +17,17 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     private Dictionary<string, GameObject> playerButtons = new Dictionary<string, GameObject>();
 
-    void Start()
+    IEnumerator Start()
     {
         LobbyCanvas.SetActive(true);
         PVECanvas.SetActive(false);
 
-        PhotonNetwork.AutomaticallySyncScene = true;
-        Screen.SetResolution(1920, 1080, false);
-
-        PhotonNetwork.NickName = FirebaseLoginMgr.user.DisplayName;
         PhotonNetwork.ConnectUsingSettings();
+
+        yield return new WaitUntil(() => PhotonNetwork.IsConnected);
+
+        PhotonNetwork.NickName = "Player" + Random.Range(1000, 9999);
+        //PhotonNetwork.NickName = FirebaseLoginMgr.user.DisplayName;
     }
 
     public override void OnConnectedToMaster()

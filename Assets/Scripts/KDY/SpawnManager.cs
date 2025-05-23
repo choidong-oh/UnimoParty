@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class SpawnManager : MonoBehaviour
 {
-    [Header("스폰할 플레이어 프리팹")]
-    public GameObject playerPrefab;
+    //[Header("스폰할 플레이어 프리팹")]
+    //public GameObject playerPrefab;
 
     [Header("스폰 포인트 리스트 (인스펙터에서 수동으로 설정)")]
     public List<Transform> spawnPoints = new List<Transform>();
@@ -67,9 +67,9 @@ public class SpawnManager : MonoBehaviour
             Quaternion yRotationOnly = Quaternion.Euler(0, spawnPoint.rotation.eulerAngles.y, 0);
 
             // 플레이어 생성
-            Instantiate(playerPrefab, spawnPos, yRotationOnly);
+            //Instantiate(playerPrefab, spawnPos, yRotationOnly);
 
-            Debug.Log($"플레이어가 스폰됨: 인덱스 {index}, 위치:{spawnPos}");
+            //Debug.Log($"플레이어가 스폰됨: 인덱스 {index}, 위치:{spawnPos}");
         }
         else
         {
