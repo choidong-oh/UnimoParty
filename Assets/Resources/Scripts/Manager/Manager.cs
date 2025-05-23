@@ -6,7 +6,9 @@ public class Manager : MonoBehaviour
 {
     static Manager instance;
     public GoalFairyCount goalCount;
+    public GameObject _XRDeviceSimulator;
     private bool isMaster = false;
+    [SerializeField] private bool isTestMode = false;
 
     // 인스펙터로 테스트를 한 후 해당 값을 Sprit의 private 변수로 변경하여 노출을 막아야함.
     public int tempFairyValue_1 = 10;
@@ -31,6 +33,19 @@ public class Manager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        _XRDeviceSimulator.SetActive(false);
     }
 
+    private void Start()
+    {
+        if(isTestMode)
+        {
+            _XRDeviceSimulator.SetActive(true);
+        }
+        else
+        {
+            _XRDeviceSimulator.SetActive(false);
+        }
+    }
 }
