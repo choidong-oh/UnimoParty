@@ -16,17 +16,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     [Header("판넬들")]
     [SerializeField] GameObject LobbyCanvas;
     [SerializeField] GameObject PVECanvas;
-    [SerializeField] GameObject NickNamePanel;
-
-    [Space]
-    [Header("닉네임 적는칸")]
-    [SerializeField] InputField nickInputField;
-
-    [Space]
-    [Header("닉네임 경고창")]
-    [SerializeField] TextMeshProUGUI NickNamewarningText;
-
-
+    
 
     [Space]
     public Transform contentParent;
@@ -36,21 +26,23 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     IEnumerator Start()
     {
-        LobbyCanvas.SetActive(true);
+        LobbyCanvas.SetActive(false);
         PVECanvas.SetActive(false);
 
+
+        yield return new WaitUntil(() => !string.IsNullOrEmpty(FirebaseLoginMgr.user.DisplayName));
+
         PhotonNetwork.ConnectUsingSettings();
+        LobbyCanvas.SetActive(true);
 
-        yield return new WaitUntil(() => PhotonNetwork.IsConnected);
-
-        PhotonNetwork.NickName = "Player" + Random.Range(1000, 9999);
-        //PhotonNetwork.NickName = FirebaseLoginMgr.user.DisplayName;
+        PhotonNetwork.NickName = FirebaseLoginMgr.user.DisplayName;
     }
 
     public override void OnConnectedToMaster()
     {
         PhotonNetwork.JoinRandomRoom();
     }
+
 
     public override void OnJoinRandomFailed(short returnCode, string message)
     {
@@ -75,6 +67,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     {
         RemovePlayerButton(otherPlayer);
     }
+
 
     void AddPlayerButton(Player p)
     {
@@ -117,46 +110,4 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         SceneManager.LoadScene(2);
     }
 
-    public void CreateNickName()
-    {
-        StartCoroutine(CreateNickNameCor(nickInputField.text));
-    }
-
-    IEnumerator CreateNickNameCor(string NickName)
-    {
-        if (FirebaseLoginMgr.user != null)
-        {
-            UserProfile profile = new UserProfile { DisplayName = NickName };
-
-            Task profileTask = FirebaseLoginMgr.user.UpdateUserProfileAsync(profile);
-            while (profileTask.IsCompleted == false)
-            {
-                NickNamewarningText.text += "1";
-                yield return null;
-            }
-
-            yield return new WaitUntil(() => profileTask.IsCompleted);
-
-
-            if (profileTask.Exception != null)
-            {
-                Debug.LogWarning("닉네임 설정 실패: " + profileTask.Exception);
-                FirebaseException firebaseEx = profileTask.Exception.GetBaseException() as FirebaseException;
-                AuthError errorCode = (AuthError)firebaseEx.ErrorCode;
-                NickNamewarningText.text = "닉네임 설정 실패";
-            }
-            else
-            {
-                int delay = 0;
-                while (FirebaseLoginMgr.user.DisplayName == null || FirebaseLoginMgr.user.DisplayName != NickName)
-                {
-                    yield return new WaitForSeconds(0.2f);
-                    delay++;
-                    //NickNamewarningText.text = $"닉네임 저장... {delay}";
-                }
-                
-                //yield return new WaitUntil(() => XRGeneralSettings.Instance.Manager.isInitializationComplete);
-            }
-        }
-    }
 }

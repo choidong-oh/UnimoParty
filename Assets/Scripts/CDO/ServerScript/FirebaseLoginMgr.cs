@@ -26,16 +26,11 @@ public class FirebaseLoginMgr : MonoBehaviour
     [SerializeField] private TMP_InputField CreatePasswordInputField;
     [SerializeField] TextMeshProUGUI CreatewarningText;
 
-    //닉네임 설정용
-    [Header("닉네임 설정용")]
-    [SerializeField] private TMP_InputField NickNameInputField;
-    [SerializeField] TextMeshProUGUI NickNamewarningText;
 
     [Header("큰테두리Ui")]
     //[SerializeField] private GameObject SceneChanege;
     [SerializeField] private GameObject LoginUiPanel;
     [SerializeField] private GameObject CreateUiIdPanel;
-    [SerializeField] private GameObject NickNameUiPanel;
 
     private void Awake()
     {
@@ -57,7 +52,6 @@ public class FirebaseLoginMgr : MonoBehaviour
 
         CreateUiIdPanel.gameObject.SetActive(false);
         LoginUiPanel.gameObject.SetActive(true);
-        NickNameUiPanel.gameObject.SetActive(false);
     }
 
     //회원가입패널로 넘어감
@@ -67,7 +61,6 @@ public class FirebaseLoginMgr : MonoBehaviour
         //회원가입패널
         CreateUiIdPanel.gameObject.SetActive(true);
         LoginUiPanel.gameObject.SetActive(false);
-        NickNameUiPanel.gameObject.SetActive(false);
 
     }
 
@@ -77,23 +70,12 @@ public class FirebaseLoginMgr : MonoBehaviour
         CreateUiIdPanel.gameObject.SetActive(false);
     }
 
-    //닉네임패널로 넘어감
-    public void NickNamePanel()
-    {
-        //회원가입패널
-        CreateUiIdPanel.gameObject.SetActive(false);
-        LoginUiPanel.gameObject.SetActive(false);
-        NickNameUiPanel.gameObject.SetActive(true);
-
-    }
-
     //로그인패널로 넘어감
     public void LoginPanel()
     {
         //회원가입패널
         CreateUiIdPanel.gameObject.SetActive(false);
         LoginUiPanel.gameObject.SetActive(true);
-        NickNameUiPanel.gameObject.SetActive(false);
 
     }
 
