@@ -33,15 +33,8 @@ public class FirebaseDataMgr : MonoBehaviour
         }
     }
 
-    private IEnumerator Start()
+    private void Start()
     {
-        if (FirebaseLoginMgr.user != null && FirebaseLoginMgr.user.DisplayName == null)
-        {
-            UserProfile profile = new UserProfile { DisplayName = "Player" + Random.Range(1000,9999)};
-            Task profileTask = FirebaseLoginMgr.user.UpdateUserProfileAsync(profile);
-            yield return new WaitUntil(() => profileTask.IsCompleted);         
-        }
-
         FirebaseApp.CheckAndFixDependenciesAsync().ContinueWithOnMainThread(async task =>
         {
             FirebaseApp app = FirebaseApp.DefaultInstance;

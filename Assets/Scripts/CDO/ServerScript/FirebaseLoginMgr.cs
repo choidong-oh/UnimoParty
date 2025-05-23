@@ -117,49 +117,49 @@ public class FirebaseLoginMgr : MonoBehaviour
         auth.SignOut();
     }
 
-    public void CreateNickName()
-    {
-        StartCoroutine(CreateNickNameCor(NickNameInputField.text));
-    }
+    //public void CreateNickName()
+    //{
+    //    StartCoroutine(CreateNickNameCor(NickNameInputField.text));
+    //}
 
-    IEnumerator CreateNickNameCor(string NickName)
-    {
-        if (user != null)
-        {
-            UserProfile profile = new UserProfile { DisplayName = NickName };
+    //IEnumerator CreateNickNameCor(string NickName)
+    //{
+    //    if (user != null)
+    //    {
+    //        UserProfile profile = new UserProfile { DisplayName = NickName };
 
-            Task profileTask = user.UpdateUserProfileAsync(profile);
-            while (profileTask.IsCompleted ==false)
-            {
-                NickNamewarningText.text += "1";
-                yield return null;
-            }
+    //        Task profileTask = user.UpdateUserProfileAsync(profile);
+    //        while (profileTask.IsCompleted ==false)
+    //        {
+    //            NickNamewarningText.text += "1";
+    //            yield return null;
+    //        }
 
-            yield return new WaitUntil(() => profileTask.IsCompleted);
+    //        yield return new WaitUntil(() => profileTask.IsCompleted);
 
 
-            if (profileTask.Exception != null)
-            {
-                Debug.LogWarning("닉네임 설정 실패: " + profileTask.Exception);
-                FirebaseException firebaseEx = profileTask.Exception.GetBaseException() as FirebaseException;
-                AuthError errorCode = (AuthError)firebaseEx.ErrorCode;
-                NickNamewarningText.text = "닉네임 설정 실패";
-            }
-            else
-            {
-                int delay = 0;
-                while (user.DisplayName==null || user.DisplayName != NickName)
-                {
-                    yield return new WaitForSeconds(0.2f);
-                    delay++;
-                    //NickNamewarningText.text = $"닉네임 저장... {delay}";
-                }
+    //        if (profileTask.Exception != null)
+    //        {
+    //            Debug.LogWarning("닉네임 설정 실패: " + profileTask.Exception);
+    //            FirebaseException firebaseEx = profileTask.Exception.GetBaseException() as FirebaseException;
+    //            AuthError errorCode = (AuthError)firebaseEx.ErrorCode;
+    //            NickNamewarningText.text = "닉네임 설정 실패";
+    //        }
+    //        else
+    //        {
+    //            int delay = 0;
+    //            while (user.DisplayName==null || user.DisplayName != NickName)
+    //            {
+    //                yield return new WaitForSeconds(0.2f);
+    //                delay++;
+    //                //NickNamewarningText.text = $"닉네임 저장... {delay}";
+    //            }
 
-                //yield return new WaitUntil(() => XRGeneralSettings.Instance.Manager.isInitializationComplete);
-                SceneManager.LoadScene("Lobby");
-            }
-        }
-    }
+    //            //yield return new WaitUntil(() => XRGeneralSettings.Instance.Manager.isInitializationComplete);
+    //            SceneManager.LoadScene("Lobby");
+    //        }
+    //    }
+    //}
 
     //IEnumerator CreateNickNameCor(string nickName)
     //{
