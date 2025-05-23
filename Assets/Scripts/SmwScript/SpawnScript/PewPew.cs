@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public class PuwPuw : EnemyBase
+public class PewPew : EnemyBase
 {
     Vector3 Position;
 
@@ -35,8 +35,11 @@ public class PuwPuw : EnemyBase
     void OnDisable()
     {
         if (rotateCoroutine != null)
+        {
             StopCoroutine(rotateCoroutine);
-        rotateCoroutine = null;
+            rotateCoroutine = null;
+        }
+
     }
 
     IEnumerator GoPewPew()
@@ -71,6 +74,7 @@ public class PuwPuw : EnemyBase
         {
             damage = 1;
             Manager.Instance.observer.HitPlayer(damage);
+            Destroy(gameObject);//юс╫ц 
             //Debug.Log(Manager.Instance.observer.UserPlayer.gamedata.life);
         }
 

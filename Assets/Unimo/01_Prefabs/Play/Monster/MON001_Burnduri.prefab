@@ -796,10 +796,10 @@ MonoBehaviour:
   sizeScale: 0
   spawnCount: 0
   players: []
-  normalSpeed: 1
+  MoveSpeed: 1
   chargeSpeed: 10
-  chargeDistance: 10
-  triggerDistance: 5
+  chargeDistance: 3
+  triggerDistance: 10
   fixedY: 0
 --- !u!1001 &148879231885707354
 PrefabInstance:

@@ -1,25 +1,32 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.PlayerSettings;
 
 public class Burnduri : EnemyBase
 {
     [Header("플레이어 리스트")]
     public List<Transform> players = new List<Transform>(); // 인스펙터에 등록!
 
+    Vector3 Target;
+
     [Header("이동 설정")]
-    public float normalSpeed = 10f;
-    public float chargeSpeed = 60f;
-    public float chargeDistance = 6f;
+    public float MoveSpeed = 1f;
+    public float chargeSpeed = 10f;
+    public float chargeDistance = 3f;
 
     [Header("거리 조건")]
-    public float triggerDistance = 3f;
+    public float triggerDistance = 10f;
     public float fixedY = 0f;
 
-    private int targetIdx = -1;
     private Transform currentTarget;
     private bool isCharging = false;
 
+
+    Terrain terrain;
+
+    private Coroutine updateRoutine;
+    private Coroutine moveRoutine;
 
     private void Awake()
     {
@@ -27,48 +34,39 @@ public class Burnduri : EnemyBase
         {
             var objs = GameObject.FindGameObjectsWithTag("Player");
             foreach (var obj in objs)
+            {
                 players.Add(obj.transform);
+            }
         }
     }
 
     public override void CsvEnemyInfo()
     {
-        enemyName = "Burnduri";
-        spawnStartTime = 0;
-        spawnCycle = 20;
-        damage = 1;
-        enemyMoveSpeed = 0.5f;
-        sizeScale = 1;//1~3
-        spawnCount = 1;
+
     }
 
     public override void Move(Vector3 direction)
     {
-        isCharging = false;
-        transform.position = direction;
-        StartCoroutine(UpdateClosestPlayerRoutine());
-        StartCoroutine(MoveRoutine());
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        Debug.Log("sdsd");
-        if (other.gameObject.tag == "Player")
-        {
-            Debug.Log("sdsd2");
-            Debug.Log(Manager.Instance.observer.UserPlayer.gamedata.life);
-            Manager.Instance.observer.HitPlayer(damage);
-        }
 
     }
 
-    //void OnEnable()
+    //private void OnTriggerEnter(Collider other)
     //{
-
-    //    isCharging = false;
-    //    StartCoroutine(UpdateClosestPlayerRoutine());
-    //    StartCoroutine(MoveRoutine());
+    //    if (other.gameObject.tag == "Player")
+    //    {
+    //        Debug.Log(Manager.Instance.observer.UserPlayer.gamedata.life);
+    //        Manager.Instance.observer.HitPlayer(damage);
+    //    }
     //}
+
+    void OnEnable()
+    {
+        currentTarget = transform;
+        terrain = Terrain.activeTerrain;
+        isCharging = false;
+        updateRoutine = StartCoroutine(UpdateDistance());
+        moveRoutine = StartCoroutine(MoveRoutine());
+    }
 
 
     void OnDisable()
@@ -77,31 +75,40 @@ public class Burnduri : EnemyBase
     }
 
 
-    IEnumerator UpdateClosestPlayerRoutine()
+    IEnumerator UpdateDistance()
     {
         while (true)
         {
-            float minDist = float.MaxValue;
-            int idx = -1;
+            players.RemoveAll(p => p == null || !p.gameObject.activeInHierarchy);
+
             Vector3 myPos = transform.position;
+            Transform nearestPlayer = null;
+            float minDistance = Mathf.Infinity;// 일단 제일 큰값
 
-            for (int i = 0; i < players.Count; i++)
+
+            foreach (var player in players)
             {
-                var tr = players[i];
-                if (tr == null) continue;
 
-                // 여기서 오브젝트가 비활성화면 무시
-                if (!tr.gameObject.activeInHierarchy) continue;
+                // 거리계산
+                float Distance = Vector3.Distance(myPos, player.position);
 
-                float dist = Vector3.Distance(myPos, tr.position);
-                if (dist < minDist)
+                //이전까지 찾았던 최소 거리보다 작으면 갱신
+                if (Distance < minDistance)
                 {
-                    minDist = dist;
-                    idx = i;
+                    minDistance = Distance;
+                    nearestPlayer = player;
                 }
             }
-            targetIdx = idx;
-            currentTarget = (targetIdx >= 0 && targetIdx < players.Count) ? players[targetIdx] : null;
+
+            if (nearestPlayer != null)
+            {
+                currentTarget = nearestPlayer;
+                Target = nearestPlayer.position;
+
+                transform.LookAt(Target);
+            }
+
+
             yield return new WaitForSeconds(0.5f);
         }
     }
@@ -111,71 +118,50 @@ public class Burnduri : EnemyBase
     {
         while (true)
         {
-            if (currentTarget == null)
-            {
-                yield return null;
-                continue;
-            }
-
             if (!isCharging)
             {
-                Vector3 target = currentTarget.position;
-                target.y = 0;
-                Vector3 pos = transform.position;
-                pos.y = 0;
-                Vector3 dir = (target - pos).normalized;
+                Vector3 myPos = transform.position;
+                float CheckNear = Vector3.Distance(myPos, Target);
 
-                if (dir != Vector3.zero)
-                    transform.forward = dir;
-
-                transform.Translate(Vector3.forward * normalSpeed * Time.deltaTime);
-
-                // 높이 보정
-                Vector3 temp = transform.position;
-                if (Terrain.activeTerrain)
-                    temp.y = Terrain.activeTerrain.SampleHeight(temp) + fixedY;
-                else
-                    temp.y = fixedY;
-                transform.position = temp;
-
-                float dist = Vector3.Distance(transform.position, currentTarget.position);
-                if (dist <= triggerDistance)
+                if (CheckNear < chargeDistance)
                 {
-                    StartCoroutine(ChargeRoutine(currentTarget));
                     isCharging = true;
-                    yield break; // 돌진 중엔 이동 중지
+                    StopCoroutine(updateRoutine);
+                    StopCoroutine(moveRoutine);
+                    StartCoroutine(ChargeRoutine());
+                    yield break;
+                }
+                else
+                {
+                    float terrainY = terrain.SampleHeight(transform.position) + transform.localScale.y / 2f + fixedY;
+                    transform.position = new Vector3(myPos.x, terrainY, myPos.z);
+                    transform.position += transform.forward * MoveSpeed * Time.fixedDeltaTime;
                 }
             }
-            yield return null;
+            yield return new WaitForFixedUpdate();
         }
     }
 
-    IEnumerator ChargeRoutine(Transform chargeTarget)
+    IEnumerator ChargeRoutine()
     {
-        Vector3 start = transform.position;
-        Vector3 toPlayer = (chargeTarget.position - start);
-        toPlayer.y = 0;
-        Vector3 dir = toPlayer.normalized;
+        StopCoroutine(updateRoutine);
+        StopCoroutine(moveRoutine);
 
-        float moved = 0f;
-        while (moved < chargeDistance)
+        yield return new WaitForSeconds(1f);
+
+        Vector3 startPos = transform.position;
+        Vector3 dir = transform.forward;  // 이 순간의 방향을 저장
+
+        while (Vector3.Distance(transform.position, startPos) < triggerDistance)
         {
-            float step = chargeSpeed * Time.deltaTime;
-            transform.position += dir * step;
-            moved += step;
-
-            Vector3 temp = transform.position;
-            if (Terrain.activeTerrain)
-                temp.y = Terrain.activeTerrain.SampleHeight(temp) + fixedY;
-            else
-                temp.y = fixedY;
-            transform.position = temp;
-
-            yield return null;
+            float terrainY = terrain.SampleHeight(transform.position);
+            terrainY += transform.localScale.y / 2f;
+            dir.y = terrainY + fixedY;
+            transform.position += dir * chargeSpeed * Time.fixedDeltaTime;
+            yield return new WaitForFixedUpdate();
         }
-
+        enabled = false;
         Destroy(gameObject);
-        // gameObject.SetActive(false);
     }
 
 }

@@ -118,6 +118,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98deb07145de43d44bfbde2d50fcdff4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawner: {fileID: 0}
-  moveSpeed: 20
-  fixedY: 1
+  enemyName: 
+  spawnStartTime: 0
+  spawnCycle: 0
+  damage: 0
+  enemyMoveSpeed: 0
+  sizeScale: 0
+  spawnCount: 0
+  fixedY: 0

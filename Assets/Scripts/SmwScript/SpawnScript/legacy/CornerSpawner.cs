@@ -31,8 +31,8 @@ public class CornerSpawner : MonoBehaviour
 
             // CornerEnemy에 스포너 참조 연결
             var enemyScript = obj.GetComponent<ShookShook>();
-            if (enemyScript != null)
-                enemyScript.spawner = this;
+            //if (enemyScript != null)
+                //enemyScript.spawner = this;
         }
 
         StartCoroutine(SpawnRoutine());
@@ -70,7 +70,7 @@ public class CornerSpawner : MonoBehaviour
 
         var enemyScript = enemy.GetComponent<ShookShook>();
         if (enemyScript != null)
-            enemyScript.Init(spawnPos, targetPos);
+            //enemyScript.Init(spawnPos, targetPos);
 
         currentEnemyCount++;
     }
