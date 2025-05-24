@@ -26,7 +26,8 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
         yield return new WaitUntil(() => PhotonNetwork.IsConnected);
 
-        PhotonNetwork.NickName = FirebaseLoginMgr.user.DisplayName;
+        PhotonNetwork.NickName = "Player" + Random.Range(1000, 9999);
+        //PhotonNetwork.NickName = FirebaseLoginMgr.user.DisplayName;
     }
 
     public override void OnConnectedToMaster()

@@ -118,6 +118,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6204615249e7a8d45839b617dcba7b03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawner: {fileID: 0}
-  moveSpeed: 5
-  fixedY: 1
+  fixedY: 10

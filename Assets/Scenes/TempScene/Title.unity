@@ -2746,6 +2746,11 @@ RectTransform:
   m_AnchoredPosition: {x: 0.02, y: 0.0906}
   m_SizeDelta: {x: 2.7804, y: 0.4993}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &1215707457 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6598815579406187037, guid: 18ddb545287c546e19cc77dc9fbb2189, type: 3}
+  m_PrefabInstance: {fileID: 2012017021}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1298397170
 GameObject:
   m_ObjectHideFlags: 0
@@ -3721,6 +3726,55 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -0.5958002}
   m_SizeDelta: {x: 1.83, y: 0.41}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &1429595231
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1429595233}
+  - component: {fileID: 1429595232}
+  m_Layer: 0
+  m_Name: Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1429595232
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1429595231}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4067f26a342a06f4d9dfb968e7f06771, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _XRDeviceSimulator: {fileID: 1215707457}
+  isTestMode: 0
+  tempFairyValue_1: 10
+  tempFairyValue_2: 10
+  tempFairyValue_3: 10
+--- !u!4 &1429595233
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1429595231}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1455299498
 GameObject:
   m_ObjectHideFlags: 0
@@ -5261,7 +5315,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6598815579406187037, guid: 18ddb545287c546e19cc77dc9fbb2189, type: 3}
       propertyPath: m_Name
-      value: XR Device Simulator (1)
+      value: XR Device Simulator
       objectReference: {fileID: 0}
     - target: {fileID: 6598815579406187037, guid: 18ddb545287c546e19cc77dc9fbb2189, type: 3}
       propertyPath: m_IsActive
@@ -5498,3 +5552,4 @@ SceneRoots:
   - {fileID: 573389646}
   - {fileID: 2012017021}
   - {fileID: 888793465}
+  - {fileID: 1429595233}

@@ -30,7 +30,7 @@ public class IngameObserver
             SceneManager.LoadScene(1);
 
             // 여기에 포톤 추가.
-            // OnGameEnd.Invoke();
+            // OnGameEnd?.Invoke();
         }
     }
 
@@ -79,7 +79,7 @@ public class IngameObserver
             isGameOver = true;
 
             // 여기에 포톤 추가.
-            OnGameEnd.Invoke();
+            OnGameEnd?.Invoke();
         }
     }
 
@@ -97,7 +97,7 @@ public class IngameObserver
         if(isGameOver == true)
         {
             //여기에 포톤 추가.
-            OnGameEnd.Invoke();
+            OnGameEnd?.Invoke();
         }
     }
 }
