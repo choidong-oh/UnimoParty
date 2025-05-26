@@ -98,7 +98,7 @@ public class WallTeleporter : MonoBehaviour
         //Transform player = other.transform;    몬스터로 변경
         //Transform player = other.transform;    몬스터로 변경
          
-        // 현재 위치 저장
+        // 현재 위치 저장//
         Vector3 currentPos = player.position;
 
         // 새로운 위치는 현재 위치를 기본으로 하되, 일부 축만 변경함
