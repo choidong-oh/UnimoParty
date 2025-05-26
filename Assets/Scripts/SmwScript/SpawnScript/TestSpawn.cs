@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class TestSpawn : MonoBehaviour
 {
-    public int x = 25;
-    public int y = 25;
+    public float x = 25f;
+    public float y = 25f;
 
     public int maxEnemies = 10;
     public int spawnTimer = 3;
