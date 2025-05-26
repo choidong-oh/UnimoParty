@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public class PuwPuw : EnemyBase
+public class PewPew : EnemyBase
 {
     Vector3 Position;
 
@@ -35,8 +35,11 @@ public class PuwPuw : EnemyBase
     void OnDisable()
     {
         if (rotateCoroutine != null)
+        {
             StopCoroutine(rotateCoroutine);
-        rotateCoroutine = null;
+            rotateCoroutine = null;
+        }
+
     }
 
     IEnumerator GoPewPew()
@@ -71,6 +74,7 @@ public class PuwPuw : EnemyBase
         {
             damage = 1;
             Manager.Instance.observer.HitPlayer(damage);
+            Destroy(gameObject);//임시 
             //Debug.Log(Manager.Instance.observer.UserPlayer.gamedata.life);
         }
 
@@ -78,7 +82,18 @@ public class PuwPuw : EnemyBase
 
     public override void Move(Vector3 direction)
     {
-        throw new System.NotImplementedException();
+        Position = transform.position;
+        //랜덤 몬스터 크기
+        int RandomScale = Random.Range(1, 4);
+        transform.localScale = new Vector3(RandomScale, RandomScale, RandomScale);
+
+        //랜덤 각도에서 시작
+        Angle = Random.Range(0f, Mathf.PI * 2f);
+        //랜덤반지름 위치 
+        Radius = Random.Range(3f, 20f);
+        //랜덤 회전 방향(1 or -1)
+        rotateDirection = Random.value < 0.5f ? 1 : -1;
+        rotateCoroutine = StartCoroutine(GoPewPew());//굳이 변수 선언한건 값 초기화 때문
     }
 
     public override void CsvEnemyInfo()

@@ -523,7 +523,7 @@ GameObject:
   - component: {fileID: 3389187268223202056}
   - component: {fileID: -5146211747824840565}
   m_Layer: 9
-  m_Name: MON001_Burnduri
+  m_Name: Burnduri Test
   m_TagString: Monster
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -561,7 +561,7 @@ Animator:
   m_GameObject: {fileID: 8470377270446183419}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: a876d9e5cf360d54685992abd96cb235, type: 3}
-  m_Controller: {fileID: 9100000, guid: 2c5b87d07db89fe46a20832a57a46c63, type: 2}
+  m_Controller: {fileID: 9100000, guid: affd517514e44de43aaa2cefbc295726, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -587,7 +587,7 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2

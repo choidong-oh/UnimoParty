@@ -1,56 +1,175 @@
-using UnityEngine;
 using System.Collections;
+using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
-public class ShookShook : MonoBehaviour
+public class ShookShook : EnemyBase
 {
-    [HideInInspector] public CornerSpawner spawner;
+    Vector3 Position;
+    Vector3 Terrainpos;
+    Vector3 Terrainsize;
 
-    public float moveSpeed = 10f;
-    public float fixedY = 0.5f; // 지면 높이 오프셋
+    Vector3 Target;
 
-    private Vector3 targetPos;
+    float MoveSpeed = 5f;
+    Terrain terrain;
 
-    public void Init(Vector3 startPos, Vector3 endPos)
+    float minX;
+    float maxX;
+    float minZ;
+    float maxZ;
+    public float fixedY;
+
+    Coroutine Coroutine;
+
+
+
+    private void OnEnable()
     {
-        transform.position = startPos;
-        targetPos = endPos;
-        StopAllCoroutines();
-        StartCoroutine(MoveToTarget());
-    }
+        terrain = Terrain.activeTerrain;
+        Terrainsize = terrain.terrainData.size;
+        Terrainpos = terrain.transform.position;
 
-    IEnumerator MoveToTarget()
-    {
-        Vector3 dir = (targetPos - transform.position).normalized;
-        if (dir != Vector3.zero)
-            transform.forward = dir;
+        Position = transform.position;
 
-        // 평면(xz) 거리로 체크
-        while (Vector2.Distance(
-            new Vector2(transform.position.x, transform.position.z),
-            new Vector2(targetPos.x, targetPos.z)
-        ) > 0.1f)
+        minX = Terrainpos.x;
+        maxX = Terrainpos.x + Terrainsize.x;
+        minZ = Terrainpos.z;
+        maxZ = Terrainpos.z + Terrainsize.z;
+
+
+
+        Position = transform.position;
+        Target = transform.position;
+
+        float Left = Mathf.Abs(Position.x - minX);
+        float Right = Mathf.Abs(Position.x - maxX);
+        float Bottom = Mathf.Abs(Position.z - minZ);
+        float Top = Mathf.Abs(Position.z - maxZ);
+
+        float NearPos = Mathf.Min(Left, Right, Bottom, Top);
+
+        if (NearPos == Left)
         {
-            transform.position = Vector3.MoveTowards(transform.position, targetPos, moveSpeed * Time.deltaTime);
+            Position.x = minX;
+            Target.x = maxX;
 
-            // Terrain 높이 적용
-            Vector3 temp = transform.position;
-            if (Terrain.activeTerrain)
-                temp.y = Terrain.activeTerrain.SampleHeight(temp) + fixedY;
-            else
-                temp.y = fixedY;
-            transform.position = temp;
-
-            yield return null;
         }
-        // 도착점에 정확히 위치 보정
-        transform.position = targetPos;
-        gameObject.SetActive(false);
+        else if (NearPos == Right)
+        {
+            Position.x = maxX;
+            Target.x = minX;
+
+        }
+        else if (NearPos == Bottom)
+        {
+            Position.z = minZ;
+            Target.z = maxZ;
+
+        }
+        else if (NearPos == Top)
+        {
+            Position.z = maxZ;
+            Target.z = minZ;
+
+        }
+        else
+        {
+            Debug.Log("너는 왜 오류임?");
+        }
+        transform.position = Position;
+
+        Coroutine = StartCoroutine(GoShookShook());
     }
 
-    void OnDisable()
+    private void OnDisable()
     {
-        StopAllCoroutines();
-        if (spawner != null)
-            spawner.OnEnemyRemoved();
+        if (Coroutine != null)
+        {
+            StopCoroutine(Coroutine);
+            Coroutine = null;
+        }
+    }
+
+    IEnumerator GoShookShook()
+    {
+        while (Vector3.Distance(transform.position, Target) > 0.5f)
+        {
+            transform.LookAt(Target);
+            transform.position += transform.forward * MoveSpeed * Time.fixedDeltaTime;
+            float terrainY = terrain.SampleHeight(transform.position);
+            terrainY += transform.localScale.y / 2f;
+            Vector3 pos = transform.position;
+            pos.y = terrainY + fixedY;
+            transform.position = pos;
+            Target.y = pos.y;
+            yield return new WaitForFixedUpdate();
+        }
+        transform.position = Target;
+        Destroy(gameObject);//임시
+    }
+
+
+
+    public override void Move(Vector3 direction)
+    {
+        terrain = Terrain.activeTerrain;
+        Terrainsize = terrain.terrainData.size;
+        Terrainpos = terrain.transform.position;
+
+        Position = transform.position;
+
+        minX = Terrainpos.x;
+        maxX = Terrainpos.x + Terrainsize.x;
+        minZ = Terrainpos.z;
+        maxZ = Terrainpos.z + Terrainsize.z;
+
+
+
+        Position = transform.position;
+        Target = transform.position;
+
+        float Left = Mathf.Abs(Position.x - minX);
+        float Right = Mathf.Abs(Position.x - maxX);
+        float Bottom = Mathf.Abs(Position.z - minZ);
+        float Top = Mathf.Abs(Position.z - maxZ);
+
+        float NearPos = Mathf.Min(Left, Right, Bottom, Top);
+
+        if (NearPos == Left)
+        {
+            Position.x = minX;
+            Target.x = maxX;
+
+        }
+        else if (NearPos == Right)
+        {
+            Position.x = maxX;
+            Target.x = minX;
+
+        }
+        else if (NearPos == Bottom)
+        {
+            Position.z = minZ;
+            Target.z = maxZ;
+
+        }
+        else if (NearPos == Top)
+        {
+            Position.z = maxZ;
+            Target.z = minZ;
+
+        }
+        else
+        {
+            Debug.Log("너는 왜 오류임?");
+        }
+        transform.position = Position;
+
+        Coroutine = StartCoroutine(GoShookShook());
+    }
+
+    public override void CsvEnemyInfo()
+    {
+        throw new System.NotImplementedException();
     }
 }
