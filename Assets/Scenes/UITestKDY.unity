@@ -569,7 +569,7 @@ PrefabInstance:
     - target: {fileID: 664449528051359860, guid: 966bc0a092b89c4468fa9a4c467e78fa, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: a9d4cecc53b6784439a0d87170ce091e, type: 3}
+      objectReference: {fileID: 1371589259, guid: a9d4cecc53b6784439a0d87170ce091e, type: 3}
     - target: {fileID: 664449528051359860, guid: 966bc0a092b89c4468fa9a4c467e78fa, type: 3}
       propertyPath: m_Color.a
       value: 1
@@ -761,6 +761,18 @@ PrefabInstance:
     - target: {fileID: 2995381334743392640, guid: 966bc0a092b89c4468fa9a4c467e78fa, type: 3}
       propertyPath: HapticAmplitude
       value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3030861107465581612, guid: 966bc0a092b89c4468fa9a4c467e78fa, type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3030861107465581612, guid: 966bc0a092b89c4468fa9a4c467e78fa, type: 3}
+      propertyPath: m_Color.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3030861107465581612, guid: 966bc0a092b89c4468fa9a4c467e78fa, type: 3}
+      propertyPath: m_Color.r
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3212577677110866569, guid: 966bc0a092b89c4468fa9a4c467e78fa, type: 3}
       propertyPath: m_LocalPosition.x
@@ -963,6 +975,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 7560748128432381324, guid: 966bc0a092b89c4468fa9a4c467e78fa, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1822777714}
+    - targetCorrespondingSourceObject: {fileID: 333515511911316456, guid: 966bc0a092b89c4468fa9a4c467e78fa, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1246423734}
     - targetCorrespondingSourceObject: {fileID: 3288283075543605508, guid: 966bc0a092b89c4468fa9a4c467e78fa, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1031132365}
@@ -1125,6 +1140,17 @@ MonoBehaviour:
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 0
+--- !u!114 &495264789 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 332854917176300426, guid: 966bc0a092b89c4468fa9a4c467e78fa, type: 3}
+  m_PrefabInstance: {fileID: 428935255}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &509567756 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6904511494459151782, guid: 966bc0a092b89c4468fa9a4c467e78fa, type: 3}
@@ -1537,6 +1563,25 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6376855537194804678, guid: 507b4fefbf7c9224a9e0276dcf2a844b, type: 3}
   m_PrefabInstance: {fileID: 1210142215}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1246423732 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 333515511911316456, guid: 966bc0a092b89c4468fa9a4c467e78fa, type: 3}
+  m_PrefabInstance: {fileID: 428935255}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1246423734
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1246423732}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a65eb020f766204ea72354b13c4e75e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameDuration: 120
+  timeText: {fileID: 495264789}
 --- !u!1001 &1277185757
 PrefabInstance:
   m_ObjectHideFlags: 0
