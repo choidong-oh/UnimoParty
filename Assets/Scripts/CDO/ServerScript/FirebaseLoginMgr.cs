@@ -32,6 +32,8 @@ public class FirebaseLoginMgr : MonoBehaviour
     [SerializeField] private GameObject LoginUiPanel;
     [SerializeField] private GameObject CreateUiIdPanel;
 
+
+    bool test = false;
     private void Awake()
     {
         //안전코드 auth연결
@@ -266,7 +268,23 @@ public class FirebaseLoginMgr : MonoBehaviour
             LoginwarningText.text = "";
             LoginUiPanel.gameObject.SetActive(false);
 
-            SceneManager.LoadScene("Lobby");
+            if(test)
+            {
+                SceneManager.LoadScene(2);
+            }
+            else
+            {
+                SceneManager.LoadScene("Lobby");
+
+            }
         }
+    }
+
+    public void TestButton() 
+    {
+        LoginIdInputField.text = "111";
+        LoginPasswordInputField.text = "111111";
+        test = true;
+        Login();
     }
 }
