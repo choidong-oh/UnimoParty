@@ -9,8 +9,8 @@ public class LifeUI : MonoBehaviour
 
     public void Start()
     {
-        Manager.Instance.observer.OnGameDataChange += OnChangeLife;
-        //textmeshpro.text = "　x 100";
+        //Manager.Instance.observer.OnGameDataChange += OnChangeLife;
+        textmeshpro.text = "　x 100";
         Debug.Log("적용된 텍스트: " + textmeshpro.text);
         DefaultSeting();
     }
