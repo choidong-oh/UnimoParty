@@ -14,7 +14,7 @@ public class IngameObserver
 
     public void Setting()
     {
-        UserPlayer.gamedata.life = 100;
+        //UserPlayer.gamedata.life = 100;
         var tempUser = UserPlayer.gamedata;
 
         OnGameDataChange.Invoke(tempUser);

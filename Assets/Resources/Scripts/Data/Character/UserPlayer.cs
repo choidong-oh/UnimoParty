@@ -9,6 +9,7 @@ public class UserPlayer : MonoBehaviour, InterfaceMethod.TableData
     FairyType fairyType;
     public DataCenter gamedata = new DataCenter(100, 0);
     List<Item> _items;
+    Inventory _inventory;
 
     void Start()
     {
