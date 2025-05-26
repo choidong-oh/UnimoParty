@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-//15rm 반지름안에 생성
-//20초마다 1마리 생성
+//퓨퓨
+// - 15r 원에 랜덤 생성
+// - 20초마다 1마리 생성
+// - 최대 개체수
 //기존 생생된 객체 사라지면 1마리 바로 생성
 public class PewpewSpawn : EnemySpawnBase
 {
@@ -20,6 +22,10 @@ public class PewpewSpawn : EnemySpawnBase
 
     }
 
+    public override void StopSpawnCor()
+    {
+        StopAllCoroutines();
+    }
 
 
     IEnumerator PewpewSpawnInstantiateCor(float CycleSecond)
@@ -59,9 +65,5 @@ public class PewpewSpawn : EnemySpawnBase
 
     }
 
-    void PewpewSpawnStopCor()
-    {
-        StopAllCoroutines();
-    }
-
+   
 }

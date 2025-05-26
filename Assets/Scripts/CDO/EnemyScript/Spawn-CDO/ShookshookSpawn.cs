@@ -1,23 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
-//번두리
-// - 랜덤 생성 (r바꾸면댐)
-// - 10초마다 1~2마리 생성
+//슉슉
+// - 맵 모서리
+// - 15초마다 1~2마리 생성
 // - 최대 개체수
-public  class BurnduriSpawn : EnemySpawnBase
+public class ShookshookSpawn : EnemySpawnBase
 {
+    [SerializeField] List<Transform> corners;
     int enemyMaxCount = 5; //최대 몇 마리
     int currentEnemyCount = 0; //현재 몇마리 소환 됏는지
     float cycleSecond = 2f; //생성주기
     int maxRandomSpawnCount = 2; //한번에 랜덤으로 몇마리 소환하는지 
-    LinkedList<EnemyBase> Burnduri = new LinkedList<EnemyBase>();
+    LinkedList<EnemyBase> Shookshook = new LinkedList<EnemyBase>();
 
     public override void Spawn()
     {
-        StartCoroutine(BurnduriSpawnInstantiateCor(cycleSecond));
+        StartCoroutine(ShookshookSpawnInstantiateCor(cycleSecond));
         StartCoroutine(isSetactiveFalse());
 
     }
@@ -26,17 +26,17 @@ public  class BurnduriSpawn : EnemySpawnBase
         StopAllCoroutines();
     }
 
-    IEnumerator BurnduriSpawnInstantiateCor(float CycleSecond)
+    IEnumerator ShookshookSpawnInstantiateCor(float CycleSecond)
     {
         while (true)
         {
             //현재 생성 수 == 최대 생성 마리수
-            if (currentEnemyCount>=enemyMaxCount)
+            if (currentEnemyCount >= enemyMaxCount)
             {
-               yield return null;
+                yield return null;
             }
 
-            for (int i = 0; i < enemyMaxCount- currentEnemyCount; i++)
+            for (int i = 0; i < enemyMaxCount - currentEnemyCount; i++)
             {
                 var randomInstantiateNum = Random.Range(0, maxRandomSpawnCount); //0~2
 
@@ -50,7 +50,11 @@ public  class BurnduriSpawn : EnemySpawnBase
                     }
 
                     currentEnemyCount++;
-                    Burnduri.AddFirst(enemySpawnerCommand.SpawnEnemy("Burnduri", isPlayerHere(), 5));
+                    var Enemy = enemySpawnerCommand.SpawnEnemy("Shookshook", isPlayerHere(), 5);
+                    Enemy.transform.position = corners[0].position;
+                    yield return new WaitForSeconds(1f);
+
+                    Shookshook.AddFirst(Enemy);
                 }
 
 
@@ -63,12 +67,13 @@ public  class BurnduriSpawn : EnemySpawnBase
     }
 
 
+
     IEnumerator isSetactiveFalse()
     {
 
         while (true)
         {
-            var node = Burnduri.First;
+            var node = Shookshook.First;
 
             while (node != null)
             {
@@ -76,7 +81,7 @@ public  class BurnduriSpawn : EnemySpawnBase
                 //if (node.Value == null)
                 if (node.Value.gameObject.activeInHierarchy == false)
                 {
-                    Burnduri.Remove(node);
+                    Shookshook.Remove(node);
                     currentEnemyCount--;
                 }
 
@@ -88,7 +93,6 @@ public  class BurnduriSpawn : EnemySpawnBase
 
 
     }
-
 
 
 }

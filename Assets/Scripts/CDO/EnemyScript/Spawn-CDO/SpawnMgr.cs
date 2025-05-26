@@ -9,8 +9,6 @@ public class SpawnMgr : MonoBehaviour
 
     private void Start()
     {
-        //InvokeRepeating("AllSpawn", 1, 2);
-
         AllSpawn();
     }
 
@@ -18,6 +16,13 @@ public class SpawnMgr : MonoBehaviour
     {
         enemySpawnBase[0].Spawn();
         enemySpawnBase[1].Spawn();
+        enemySpawnBase[2].Spawn();
     }
 
+    void StopAllCor()
+    {
+        enemySpawnBase[0].StopAllCoroutines();
+        enemySpawnBase[1].StopAllCoroutines();
+        enemySpawnBase[2].StopAllCoroutines();
+    }
 }

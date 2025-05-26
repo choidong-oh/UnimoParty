@@ -6,6 +6,7 @@ using UnityEngine;
 public abstract class EnemySpawnBase : MonoBehaviour 
 {
     public abstract void Spawn();
+    public abstract void StopSpawnCor();
 
     [SerializeField] protected EnemySpawnerCommand enemySpawnerCommand; //생성커맨드패턴
     [SerializeField] protected Transform centerTransform; //맵중앙

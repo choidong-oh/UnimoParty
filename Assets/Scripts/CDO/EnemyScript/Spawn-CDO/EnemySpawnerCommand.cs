@@ -6,6 +6,7 @@ public class EnemySpawnerCommand : MonoBehaviour
 {
     public EnemyBase burnduriEnemyPrefab;
     public EnemyBase pewpewEnemyPrefab;
+    public EnemyBase shookshookEnemyPrefab;
     private GameController gameController;
 
     // 적 생성 및 커맨드 할당
@@ -27,7 +28,12 @@ public class EnemySpawnerCommand : MonoBehaviour
             command = new MoveCommand(enemyObject, direction, speed);
             command.Execute();
         }
-
+        else if(enemyType == "Shookshook")
+        {
+            enemyObject = Instantiate(shookshookEnemyPrefab, transform.position, Quaternion.identity);
+            command = new MoveCommand(enemyObject, direction, speed);
+            command.Execute();
+        }
 
 
 
