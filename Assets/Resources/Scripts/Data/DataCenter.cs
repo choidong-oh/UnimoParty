@@ -13,11 +13,17 @@ public struct GoalFairyCount
     public int GoalFairyValue_3;
 }
 
+public enum PlayerState
+{
+    None, Invincible
+}
+
 public class DataCenter
 {
     public int life;
     public int score;
     public FairyType playerFairyType;
+    public PlayerState _playerState;
 
     public DataCenter(DataCenter gamedata) : this(gamedata.life, gamedata.score, gamedata.playerFairyType) { }
 
@@ -28,10 +34,11 @@ public class DataCenter
         playerFairyType = initfairy;
     }
 
-    public DataCenter(int initLife, int initSocre)
+    public DataCenter(int initLife, int initSocre , PlayerState playerState)
     {
         life = initLife;
         score = initSocre;
+        _playerState = playerState;
     }
 
     public DataCenter Clone()

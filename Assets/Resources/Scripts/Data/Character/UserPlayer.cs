@@ -7,7 +7,7 @@ public class UserPlayer : MonoBehaviour, InterfaceMethod.TableData
 {
     public int INDEX { get; set; }
     FairyType fairyType;
-    public DataCenter gamedata = new DataCenter(100, 0);
+    public DataCenter gamedata = new DataCenter(100, 0, PlayerState.None);
     List<Item> _items;
     Inventory _inventory;
 
