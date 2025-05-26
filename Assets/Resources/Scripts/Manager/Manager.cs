@@ -19,6 +19,7 @@ public class Manager : MonoBehaviour
     }
 
     public IngameObserver observer = new IngameObserver();
+    Shop shop = new Shop();
 
     void Awake()
     {
@@ -31,10 +32,5 @@ public class Manager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-    }
-
-    private void Start()
-    {
-        observer.Setting();
     }
 }
