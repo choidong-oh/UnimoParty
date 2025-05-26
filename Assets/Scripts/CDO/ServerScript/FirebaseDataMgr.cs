@@ -38,18 +38,17 @@ public class FirebaseDataMgr : MonoBehaviour
         {
             FirebaseApp app = FirebaseApp.DefaultInstance;
             dbReference = FirebaseDatabase.DefaultInstance.RootReference;
-            if (FirebaseLoginMgr.user != null)
+            if (FirebaseAuthMgr.user != null)
             {
                 //TODO:초기 저장 바꾸기 12000
-                userMoney = await LoadUserDataAsync(FirebaseLoginMgr.user.DisplayName, "gold", userMoney);
                 if (userMoney == -1)
                 {
-                    StartCoroutine(SaveUserData(FirebaseLoginMgr.user.DisplayName, "gold", 10000));
+                    //StartCoroutine(SaveUserData(FirebaseAuthMgr.user.DisplayName, "gold", 10000));
                     userMoney = 10000;
                 }
 
                 // 친구 목록 불러오기
-                //await LoadFriends(FirebaseLoginMgr.user.DisplayName);
+                //await LoadFriends(FirebaseAuthMgr.user.DisplayName);
 
             }
             else

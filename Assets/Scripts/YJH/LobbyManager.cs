@@ -23,10 +23,10 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     {
         PVECanvas.SetActive(false);
 
-        yield return new WaitUntil(() => !string.IsNullOrEmpty(FirebaseLoginMgr.user.DisplayName));
+        yield return new WaitUntil(() => !string.IsNullOrEmpty(FirebaseAuthMgr.user.DisplayName));
         PhotonNetwork.ConnectUsingSettings();
 
-        PhotonNetwork.NickName = FirebaseLoginMgr.user.DisplayName;
+        PhotonNetwork.NickName = FirebaseAuthMgr.user.DisplayName;
     }
 
     public override void OnConnectedToMaster()
