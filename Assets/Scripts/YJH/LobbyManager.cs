@@ -1,15 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
-using Firebase.Auth;
-using Firebase;
-using Oculus.Platform.Models;
 using Photon.Pun;
 using Photon.Realtime;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using System.Threading.Tasks;
-using UnityEngine.UI;
 
 public class LobbyManager : MonoBehaviourPunCallbacks
 {

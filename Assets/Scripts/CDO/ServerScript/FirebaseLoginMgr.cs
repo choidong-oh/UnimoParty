@@ -1,11 +1,9 @@
 using System.Collections;
-using System.Threading.Tasks;
 using Firebase;
 using Firebase.Auth;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.XR.Management;
 
 public class FirebaseLoginMgr : MonoBehaviour
 {
