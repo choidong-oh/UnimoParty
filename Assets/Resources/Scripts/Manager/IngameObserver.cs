@@ -12,6 +12,14 @@ public class IngameObserver
 
     private bool isGameOver = false;
 
+    public void Setting()
+    {
+        //UserPlayer.gamedata.life = 100;
+        var tempUser = UserPlayer.gamedata;
+
+        OnGameDataChange.Invoke(tempUser);
+    }
+
 
     public void HitPlayer(int damage)
     {
@@ -30,7 +38,7 @@ public class IngameObserver
             SceneManager.LoadScene(1);
 
             // 여기에 포톤 추가.
-            // OnGameEnd.Invoke();
+            // OnGameEnd?.Invoke();
         }
     }
 
@@ -79,7 +87,7 @@ public class IngameObserver
             isGameOver = true;
 
             // 여기에 포톤 추가.
-            OnGameEnd.Invoke();
+            OnGameEnd?.Invoke();
         }
     }
 
@@ -97,7 +105,7 @@ public class IngameObserver
         if(isGameOver == true)
         {
             //여기에 포톤 추가.
-            OnGameEnd.Invoke();
+            OnGameEnd?.Invoke();
         }
     }
 }

@@ -15,17 +15,7 @@ public class FirebaseDataMgr : MonoBehaviour
     public static FirebaseDataMgr Instance { get; private set; }
     private DatabaseReference dbReference;
     public int userMoney = -1;
-
-    [SerializeField] GameObject NickNamePanel;
-
-    [Space]
-    [Header("닉네임 적는칸")]
-    [SerializeField] TMP_InputField nickInputField;
-
-    [Space]
-    [Header("닉네임 경고창")]
-    [SerializeField] TextMeshProUGUI NickNamewarningText;
-
+   
     // 추가: 친구 목록 리스트
     public List<string> friendList = new List<string>();
 
@@ -42,23 +32,8 @@ public class FirebaseDataMgr : MonoBehaviour
         }
     }
 
-    private IEnumerator Start()
+    private void Start()
     {
-
-
-        yield return new WaitUntil(() => FirebaseApp.DefaultInstance != null);
-
-        yield return new WaitUntil(() => FirebaseLoginMgr.user != null);
-
-        if (string.IsNullOrWhiteSpace(FirebaseLoginMgr.user.DisplayName))
-        {
-            NickNamePanel.SetActive(true);
-            yield return new WaitUntil(() => !string.IsNullOrEmpty(FirebaseLoginMgr.user.DisplayName));
-        }
-
-
-        NickNamePanel.SetActive(false);
-
         FirebaseApp.CheckAndFixDependenciesAsync().ContinueWithOnMainThread(async task =>
         {
             FirebaseApp app = FirebaseApp.DefaultInstance;
@@ -82,44 +57,6 @@ public class FirebaseDataMgr : MonoBehaviour
                 Debug.LogError("파이어베이스 문제");
             }
         });
-    }
-
-    public void CreateNickName()
-    {
-        StartCoroutine(CreateNickNameCor());
-    }
-    IEnumerator CreateNickNameCor()
-    {
-        if (FirebaseLoginMgr.user != null)
-        {
-            UserProfile profile = new UserProfile
-            {
-                DisplayName = nickInputField.text
-            };
-
-            Task profileTask = FirebaseLoginMgr.user.UpdateUserProfileAsync(profile);
-
-            yield return new WaitUntil(() => profileTask.IsCompleted);
-
-            if (profileTask.Exception != null)
-            {
-                Debug.LogWarning("닉네임 설정 실패: " + profileTask.Exception);
-                FirebaseException firebaseEx = profileTask.Exception.GetBaseException() as FirebaseException;
-                AuthError errorCode = (AuthError)firebaseEx.ErrorCode;
-                NickNamewarningText.text = "닉네임 설정 실패";
-            }
-            else
-            {
-                if (!string.IsNullOrEmpty(FirebaseLoginMgr.user.DisplayName))
-                {
-                    NickNamewarningText.text = "닉네임 설정 완료!";
-                }
-                else
-                {
-                    NickNamewarningText.text = "닉네임 정보 로드 실패";
-                }
-            }
-        }
     }
 
     //데이터 저장 함수
@@ -160,50 +97,4 @@ public class FirebaseDataMgr : MonoBehaviour
         }
         return Tvalue;
     }
-
-    //// 친구 추가 함수
-    //public void AddFriend(string friendNickname)
-    //{
-    //    if (!friendList.Contains(friendNickname))
-    //    {
-    //        friendList.Add(friendNickname);
-    //        SaveFriends(FirebaseLoginMgr.user.DisplayName);
-    //    }
-    //}
-
-    //// 친구 저장 함수 (리스트를 전부 저장)
-    //public void SaveFriends(string userId)
-    //{
-    //    for (int i = 0; i < friendList.Count; i++)
-    //    {
-    //        dbReference.Child("users").Child(userId).Child("friends").Child(i.ToString())
-    //            .SetValueAsync(friendList[i]);
-    //    }
-    //}
-
-    //// 친구 목록 불러오기 함수 (시작 시 불러옴)
-    //public async Task LoadFriends(string userId)
-    //{
-    //    friendList.Clear();
-    //    DataSnapshot snapshot = await dbReference.Child("users").Child(userId).Child("friends").GetValueAsync();
-    //    if (snapshot.Exists)
-    //    {
-    //        foreach (DataSnapshot child in snapshot.Children)
-    //        {
-    //            friendList.Add(child.Value.ToString());
-    //        }
-    //        Debug.Log(userId + "의 친구 목록 불러옴: " + string.Join(", ", friendList));
-    //    }
-    //    else
-    //    {
-    //        Debug.Log(userId + "의 친구 목록 없음");
-    //    }
-    //}
-
-    //// 특정 닉네임이 친구인지 확인
-    //public bool IsFriend(string nickname)
-    //{
-    //    return friendList.Contains(nickname);
-    //}
-
 }

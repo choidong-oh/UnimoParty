@@ -21,14 +21,10 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     IEnumerator Start()
     {
-        LobbyCanvas.SetActive(false);
         PVECanvas.SetActive(false);
 
-
         yield return new WaitUntil(() => !string.IsNullOrEmpty(FirebaseLoginMgr.user.DisplayName));
-
         PhotonNetwork.ConnectUsingSettings();
-        LobbyCanvas.SetActive(true);
 
         PhotonNetwork.NickName = FirebaseLoginMgr.user.DisplayName;
     }
