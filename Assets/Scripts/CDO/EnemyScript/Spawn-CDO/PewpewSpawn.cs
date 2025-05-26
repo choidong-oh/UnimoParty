@@ -8,52 +8,60 @@ using UnityEngine;
 //기존 생생된 객체 사라지면 1마리 바로 생성
 public class PewpewSpawn : EnemySpawnBase
 {
-    int EnemyMaxCount = 5;
-    List<EnemyBase> pewpew =new List<EnemyBase>();
+    int enemyMaxCount = 5; //최대 몇 마리
+    float cycleSecond = 20f; //생성주기
+    LinkedList<EnemyBase> pewpew = new LinkedList<EnemyBase>();
+
 
     public override void Spawn()
     {
-        dsdsd();
+        StartCoroutine(PewpewSpawnInstantiateCor(cycleSecond));
+        StartCoroutine(isSetactiveFalse());
 
     }
 
-    void dsdsd()
+
+
+    IEnumerator PewpewSpawnInstantiateCor(float CycleSecond)
     {
-        StartCoroutine(SpawnCor());
-
-
-
+        for (int i = 0; i < enemyMaxCount; i++)
+        {
+            pewpew.AddFirst(enemySpawnerCommand.SpawnEnemy("Pewpew", isPlayerHere(), 5));
+            yield return new WaitForSeconds(CycleSecond);
+        }
     }
 
-    IEnumerator SpawnCor()
+
+    IEnumerator isSetactiveFalse()
     {
+
         while (true)
         {
+            var node = pewpew.First;
 
-                oneSpawn();
-            for (int i = 0; i < EnemyMaxCount; i++)
+            while (node != null)
             {
-                pewpew.Add(enemySpawnerCommand.SpawnEnemy("Pewpew", isPlayerHere(), 5));
-                yield return new WaitForSeconds(2);
-            }
-            yield return null;  
+                var next = node.Next;
 
+                if (node.Value.gameObject.activeInHierarchy == false)
+                {
+                    pewpew.Remove(node);
+                    var enemy = enemySpawnerCommand.SpawnEnemy("Pewpew", isPlayerHere(), 5);
+                    pewpew.AddAfter(pewpew.First, enemy);
+                }
+
+                node = next;
+            }
+
+            yield return null;
         }
 
 
     }
 
-    void oneSpawn()
+    void PewpewSpawnStopCor()
     {
-        foreach (EnemyBase p in pewpew)
-        {
-            if (p.gameObject.activeInHierarchy == false)
-            {
-                pewpew.Add(enemySpawnerCommand.SpawnEnemy("Pewpew", isPlayerHere(), 5));
-            }
-        }
+        StopAllCoroutines();
     }
-
-
 
 }
