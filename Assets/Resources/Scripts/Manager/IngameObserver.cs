@@ -23,7 +23,15 @@ public class IngameObserver
 
     public void HitPlayer(int damage)
     {
-        UserPlayer.gamedata.life = UserPlayer.gamedata.life - damage;
+        if (UserPlayer.gamedata._playerState == PlayerState.None)
+        {
+            UserPlayer.gamedata.life = UserPlayer.gamedata.life - damage;
+        }
+        else if (UserPlayer.gamedata._playerState == PlayerState.Invincible)
+        {
+            UserPlayer.gamedata.life = UserPlayer.gamedata.life = 0;
+        }
+
         var templife = UserPlayer.gamedata;
 
         //여기에 포톤 추가.
@@ -102,10 +110,9 @@ public class IngameObserver
     //강제로 게임을 종료시키는 메소드.
     public void EndGame()
     {
-        if(isGameOver == true)
-        {
-            //여기에 포톤 추가.
-            OnGameEnd?.Invoke();
-        }
+        isGameOver = true;
+        //여기에 포톤 추가.
+        OnGameEnd?.Invoke();
+
     }
 }
