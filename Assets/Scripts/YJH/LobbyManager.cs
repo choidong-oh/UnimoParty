@@ -1,17 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
+using Firebase.Auth;
+using Firebase;
+using Oculus.Platform.Models;
 using Photon.Pun;
 using Photon.Realtime;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Threading.Tasks;
+using UnityEngine.UI;
 
 public class LobbyManager : MonoBehaviourPunCallbacks
 {
+    [Header("ÆÇ³Úµé")]
     [SerializeField] GameObject LobbyCanvas;
     [SerializeField] GameObject PVECanvas;
+    
 
-
+    [Space]
     public Transform contentParent;
     public GameObject userButtonPrefab;
 
@@ -19,21 +26,23 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     IEnumerator Start()
     {
-        LobbyCanvas.SetActive(true);
+        LobbyCanvas.SetActive(false);
         PVECanvas.SetActive(false);
 
+
+        yield return new WaitUntil(() => !string.IsNullOrEmpty(FirebaseLoginMgr.user.DisplayName));
+
         PhotonNetwork.ConnectUsingSettings();
+        LobbyCanvas.SetActive(true);
 
-        yield return new WaitUntil(() => PhotonNetwork.IsConnected);
-
-        PhotonNetwork.NickName = "Player" + Random.Range(1000, 9999);
-        //PhotonNetwork.NickName = FirebaseLoginMgr.user.DisplayName;
+        PhotonNetwork.NickName = FirebaseLoginMgr.user.DisplayName;
     }
 
     public override void OnConnectedToMaster()
     {
         PhotonNetwork.JoinRandomRoom();
     }
+
 
     public override void OnJoinRandomFailed(short returnCode, string message)
     {
@@ -58,6 +67,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     {
         RemovePlayerButton(otherPlayer);
     }
+
 
     void AddPlayerButton(Player p)
     {
@@ -99,4 +109,5 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     {
         SceneManager.LoadScene(2);
     }
+
 }

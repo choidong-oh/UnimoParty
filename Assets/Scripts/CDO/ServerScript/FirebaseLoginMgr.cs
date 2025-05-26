@@ -26,17 +26,14 @@ public class FirebaseLoginMgr : MonoBehaviour
     [SerializeField] private TMP_InputField CreatePasswordInputField;
     [SerializeField] TextMeshProUGUI CreatewarningText;
 
-    //닉네임 설정용
-    [Header("닉네임 설정용")]
-    [SerializeField] private TMP_InputField NickNameInputField;
-    [SerializeField] TextMeshProUGUI NickNamewarningText;
 
     [Header("큰테두리Ui")]
     //[SerializeField] private GameObject SceneChanege;
     [SerializeField] private GameObject LoginUiPanel;
     [SerializeField] private GameObject CreateUiIdPanel;
-    [SerializeField] private GameObject NickNameUiPanel;
 
+
+    bool test = false;
     private void Awake()
     {
         //안전코드 auth연결
@@ -57,7 +54,6 @@ public class FirebaseLoginMgr : MonoBehaviour
 
         CreateUiIdPanel.gameObject.SetActive(false);
         LoginUiPanel.gameObject.SetActive(true);
-        NickNameUiPanel.gameObject.SetActive(false);
     }
 
     //회원가입패널로 넘어감
@@ -67,7 +63,6 @@ public class FirebaseLoginMgr : MonoBehaviour
         //회원가입패널
         CreateUiIdPanel.gameObject.SetActive(true);
         LoginUiPanel.gameObject.SetActive(false);
-        NickNameUiPanel.gameObject.SetActive(false);
 
     }
 
@@ -77,23 +72,12 @@ public class FirebaseLoginMgr : MonoBehaviour
         CreateUiIdPanel.gameObject.SetActive(false);
     }
 
-    //닉네임패널로 넘어감
-    public void NickNamePanel()
-    {
-        //회원가입패널
-        CreateUiIdPanel.gameObject.SetActive(false);
-        LoginUiPanel.gameObject.SetActive(false);
-        NickNameUiPanel.gameObject.SetActive(true);
-
-    }
-
     //로그인패널로 넘어감
     public void LoginPanel()
     {
         //회원가입패널
         CreateUiIdPanel.gameObject.SetActive(false);
         LoginUiPanel.gameObject.SetActive(true);
-        NickNameUiPanel.gameObject.SetActive(false);
 
     }
 
@@ -117,49 +101,49 @@ public class FirebaseLoginMgr : MonoBehaviour
         auth.SignOut();
     }
 
-    public void CreateNickName()
-    {
-        StartCoroutine(CreateNickNameCor(NickNameInputField.text));
-    }
+    //public void CreateNickName()
+    //{
+    //    StartCoroutine(CreateNickNameCor(NickNameInputField.text));
+    //}
 
-    IEnumerator CreateNickNameCor(string NickName)
-    {
-        if (user != null)
-        {
-            UserProfile profile = new UserProfile { DisplayName = NickName };
+    //IEnumerator CreateNickNameCor(string NickName)
+    //{
+    //    if (user != null)
+    //    {
+    //        UserProfile profile = new UserProfile { DisplayName = NickName };
 
-            Task profileTask = user.UpdateUserProfileAsync(profile);
-            while (profileTask.IsCompleted ==false)
-            {
-                NickNamewarningText.text += "1";
-                yield return null;
-            }
+    //        Task profileTask = user.UpdateUserProfileAsync(profile);
+    //        while (profileTask.IsCompleted ==false)
+    //        {
+    //            NickNamewarningText.text += "1";
+    //            yield return null;
+    //        }
 
-            yield return new WaitUntil(() => profileTask.IsCompleted);
+    //        yield return new WaitUntil(() => profileTask.IsCompleted);
 
 
-            if (profileTask.Exception != null)
-            {
-                Debug.LogWarning("닉네임 설정 실패: " + profileTask.Exception);
-                FirebaseException firebaseEx = profileTask.Exception.GetBaseException() as FirebaseException;
-                AuthError errorCode = (AuthError)firebaseEx.ErrorCode;
-                NickNamewarningText.text = "닉네임 설정 실패";
-            }
-            else
-            {
-                int delay = 0;
-                while (user.DisplayName==null || user.DisplayName != NickName)
-                {
-                    yield return new WaitForSeconds(0.2f);
-                    delay++;
-                    //NickNamewarningText.text = $"닉네임 저장... {delay}";
-                }
+    //        if (profileTask.Exception != null)
+    //        {
+    //            Debug.LogWarning("닉네임 설정 실패: " + profileTask.Exception);
+    //            FirebaseException firebaseEx = profileTask.Exception.GetBaseException() as FirebaseException;
+    //            AuthError errorCode = (AuthError)firebaseEx.ErrorCode;
+    //            NickNamewarningText.text = "닉네임 설정 실패";
+    //        }
+    //        else
+    //        {
+    //            int delay = 0;
+    //            while (user.DisplayName==null || user.DisplayName != NickName)
+    //            {
+    //                yield return new WaitForSeconds(0.2f);
+    //                delay++;
+    //                //NickNamewarningText.text = $"닉네임 저장... {delay}";
+    //            }
 
-                //yield return new WaitUntil(() => XRGeneralSettings.Instance.Manager.isInitializationComplete);
-                SceneManager.LoadScene("Lobby");
-            }
-        }
-    }
+    //            //yield return new WaitUntil(() => XRGeneralSettings.Instance.Manager.isInitializationComplete);
+    //            SceneManager.LoadScene("Lobby");
+    //        }
+    //    }
+    //}
 
     //IEnumerator CreateNickNameCor(string nickName)
     //{
@@ -284,7 +268,23 @@ public class FirebaseLoginMgr : MonoBehaviour
             LoginwarningText.text = "";
             LoginUiPanel.gameObject.SetActive(false);
 
-            SceneManager.LoadScene("Lobby");
+            if(test)
+            {
+                SceneManager.LoadScene(2);
+            }
+            else
+            {
+                SceneManager.LoadScene("Lobby");
+
+            }
         }
+    }
+
+    public void TestButton() 
+    {
+        LoginIdInputField.text = "111";
+        LoginPasswordInputField.text = "111111";
+        test = true;
+        Login();
     }
 }
