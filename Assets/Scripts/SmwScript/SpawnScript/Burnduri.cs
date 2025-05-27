@@ -42,15 +42,26 @@ public class Burnduri : EnemyBase
     private AnimationClip encounterClip;
     private AnimationClip disappearClip;
 
+    [SerializeField] GameObject CrashBurnduri;
+
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Player")
         {
+
+            Vector3 hitPoint = other.ClosestPoint(transform.position);//충돌지점에 최대한 가깝게
+
+            Vector3 normal = (hitPoint - transform.position).normalized;// 방향계산
+            Quaternion rot = Quaternion.LookRotation(normal);// 방향계산
+
+            GameObject inst = Instantiate(CrashBurnduri, hitPoint, rot);
+
+
             //Debug.Log(Manager.Instance.observer.UserPlayer.gamedata.life);
             //Manager.Instance.observer.HitPlayer(damage);
             StopAllCoroutines();
-            StartCoroutine(DieBurnduri());
+            gameObject.SetActive(false);
         }
     }
 
