@@ -6,9 +6,8 @@ using Firebase;
 using Firebase.Auth;
 using Firebase.Database;
 using Firebase.Extensions;
-using Photon.Realtime;
+using TMPro;
 using UnityEngine;
-
 using Random = UnityEngine.Random;
 
 public class FirebaseDataMgr : MonoBehaviour
@@ -16,7 +15,7 @@ public class FirebaseDataMgr : MonoBehaviour
     public static FirebaseDataMgr Instance { get; private set; }
     private DatabaseReference dbReference;
     public int userMoney = -1;
-
+   
     // 추가: 친구 목록 리스트
     public List<string> friendList = new List<string>();
 
@@ -33,34 +32,24 @@ public class FirebaseDataMgr : MonoBehaviour
         }
     }
 
-    private IEnumerator Start()
+    private void Start()
     {
-        if (FirebaseLoginMgr.user != null && FirebaseLoginMgr.user.DisplayName == null)
-        {
-            UserProfile profile = new UserProfile { DisplayName = "Player" + Random.Range(1000,9999)};
-            Task profileTask = FirebaseLoginMgr.user.UpdateUserProfileAsync(profile);
-            yield return new WaitUntil(() => profileTask.IsCompleted);         
-        }
-
         FirebaseApp.CheckAndFixDependenciesAsync().ContinueWithOnMainThread(async task =>
         {
             FirebaseApp app = FirebaseApp.DefaultInstance;
             dbReference = FirebaseDatabase.DefaultInstance.RootReference;
-            if (FirebaseLoginMgr.user != null)
+            if (FirebaseAuthMgr.user != null)
             {
                 //TODO:초기 저장 바꾸기 12000
-                userMoney = await LoadUserDataAsync(FirebaseLoginMgr.user.DisplayName, "money", userMoney);
                 if (userMoney == -1)
                 {
-                    SaveUserData(FirebaseLoginMgr.user.DisplayName, "money", 10000);
+                    //StartCoroutine(SaveUserData(FirebaseAuthMgr.user.DisplayName, "gold", 10000));
                     userMoney = 10000;
                 }
 
                 // 친구 목록 불러오기
-                await LoadFriends(FirebaseLoginMgr.user.DisplayName);
+                //await LoadFriends(FirebaseAuthMgr.user.DisplayName);
 
-                Debug.Log("유저 닉네임 : " + FirebaseLoginMgr.user.DisplayName);
-                Debug.Log("유저 돈 : " + userMoney);
             }
             else
             {
@@ -73,19 +62,11 @@ public class FirebaseDataMgr : MonoBehaviour
     //SaveUserData(id,"level",5);
     //id의 레벨은 5 추가?
     //ContinueWithOnMainThread 메인쓰레드에서 함
-    public void SaveUserData<T>(string userId, string dataName, T value)
+    public IEnumerator SaveUserData<T>(string userId, string dataName, T value)
     {
-        dbReference.Child("users").Child(userId).Child(dataName).SetValueAsync(value).ContinueWithOnMainThread(task =>
-        {
-            if (task.IsCompleted)
-            {
-                Debug.Log(userId + "의" + dataName + value + "추가됨");
-            }
-            else
-            {
-                Debug.LogError("실패함");
-            }
-        });
+        var task = dbReference.Child("users").Child(userId).Child(dataName).SetValueAsync(value);
+
+        yield return new WaitUntil(()=> task.IsCompleted);
     }
 
     //데이터 불러오기 함수
@@ -115,50 +96,4 @@ public class FirebaseDataMgr : MonoBehaviour
         }
         return Tvalue;
     }
-
-    // 친구 추가 함수
-    public void AddFriend(string friendNickname)
-    {
-        if (!friendList.Contains(friendNickname))
-        {
-            friendList.Add(friendNickname);
-            SaveFriends(FirebaseLoginMgr.user.DisplayName);
-        }
-    }
-
-    // 친구 저장 함수 (리스트를 전부 저장)
-    public void SaveFriends(string userId)
-    {
-        for (int i = 0; i < friendList.Count; i++)
-        {
-            dbReference.Child("users").Child(userId).Child("friends").Child(i.ToString())
-                .SetValueAsync(friendList[i]);
-        }
-    }
-
-    // 친구 목록 불러오기 함수 (시작 시 불러옴)
-    public async Task LoadFriends(string userId)
-    {
-        friendList.Clear();
-        DataSnapshot snapshot = await dbReference.Child("users").Child(userId).Child("friends").GetValueAsync();
-        if (snapshot.Exists)
-        {
-            foreach (DataSnapshot child in snapshot.Children)
-            {
-                friendList.Add(child.Value.ToString());
-            }
-            Debug.Log(userId + "의 친구 목록 불러옴: " + string.Join(", ", friendList));
-        }
-        else
-        {
-            Debug.Log(userId + "의 친구 목록 없음");
-        }
-    }
-
-    // 특정 닉네임이 친구인지 확인
-    public bool IsFriend(string nickname)
-    {
-        return friendList.Contains(nickname);
-    }
-
 }

@@ -50,7 +50,9 @@ public  class BurnduriSpawn : EnemySpawnBase
                     }
 
                     currentEnemyCount++;
-                    Burnduri.AddFirst(enemySpawnerCommand.SpawnEnemy("Burnduri", isPlayerHere(), 5));
+                    var enemy = enemySpawnerCommand.SpawnEnemy("Burnduri", isPlayerHere(), 5);
+                    Burnduri.AddFirst(enemy);
+
                 }
 
 

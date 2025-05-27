@@ -32,7 +32,7 @@ public abstract class EnemySpawnBase : MonoBehaviour
         var tempPostion = centerTransform.position;
         angle = UnityEngine.Random.Range(0, 360);
         float x = Mathf.Cos(angle) * r + tempPostion.x;
-        float y = SpawnTransform.transform.position.y + tempPostion.y;
+        float y = SpawnTransform.transform.position.y ;
         float z = Mathf.Sin(angle) * r + tempPostion.z;
         SpawnTransform.position = new Vector3(x, y, z);
 

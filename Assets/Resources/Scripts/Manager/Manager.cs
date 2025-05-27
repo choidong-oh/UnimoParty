@@ -19,6 +19,7 @@ public class Manager : MonoBehaviour
     }
 
     public IngameObserver observer = new IngameObserver();
+    Shop shop = new Shop();
 
     void Awake()
     {

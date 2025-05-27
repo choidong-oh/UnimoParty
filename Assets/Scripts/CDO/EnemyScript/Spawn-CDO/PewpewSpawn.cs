@@ -11,7 +11,7 @@ using UnityEngine;
 public class PewpewSpawn : EnemySpawnBase
 {
     int enemyMaxCount = 5; //弥措 割 付府
-    float cycleSecond = 20f; //积己林扁
+    float cycleSecond = 2f; //积己林扁
     LinkedList<EnemyBase> pewpew = new LinkedList<EnemyBase>();
 
 
@@ -32,7 +32,8 @@ public class PewpewSpawn : EnemySpawnBase
     {
         for (int i = 0; i < enemyMaxCount; i++)
         {
-            pewpew.AddFirst(enemySpawnerCommand.SpawnEnemy("Pewpew", isPlayerHere(), 5));
+            var enemy = enemySpawnerCommand.SpawnEnemy("Pewpew", isPlayerHere(), 5);
+            pewpew.AddFirst(enemy);
             yield return new WaitForSeconds(CycleSecond);
         }
     }
@@ -53,6 +54,7 @@ public class PewpewSpawn : EnemySpawnBase
                 {
                     pewpew.Remove(node);
                     var enemy = enemySpawnerCommand.SpawnEnemy("Pewpew", isPlayerHere(), 5);
+
                     pewpew.AddAfter(pewpew.First, enemy);
                 }
 

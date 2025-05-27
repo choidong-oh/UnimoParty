@@ -18,19 +18,19 @@ public class EnemySpawnerCommand : MonoBehaviour
         // 적의 종류에 따라 프리팹과 커맨드 설정
         if (enemyType == "Burnduri")
         {
-            enemyObject = Instantiate(burnduriEnemyPrefab, transform.position, Quaternion.identity);
+            enemyObject = Instantiate(burnduriEnemyPrefab, direction, Quaternion.identity);
             command = new MoveCommand(enemyObject, direction, speed);
             command.Execute();
         }
         else if (enemyType == "Pewpew")
         {
-            enemyObject = Instantiate(pewpewEnemyPrefab, transform.position, Quaternion.identity);
+            enemyObject = Instantiate(pewpewEnemyPrefab, direction, Quaternion.identity);
             command = new MoveCommand(enemyObject, direction, speed);
             command.Execute();
         }
         else if(enemyType == "Shookshook")
         {
-            enemyObject = Instantiate(shookshookEnemyPrefab, transform.position, Quaternion.identity);
+            enemyObject = Instantiate(shookshookEnemyPrefab, direction, Quaternion.identity);
             command = new MoveCommand(enemyObject, direction, speed);
             command.Execute();
         }

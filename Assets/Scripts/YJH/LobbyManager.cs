@@ -5,34 +5,36 @@ using Photon.Realtime;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class LobbyManager : MonoBehaviourPunCallbacks
 {
+    [Header("ÆÇ³Úµé")]
     [SerializeField] GameObject LobbyCanvas;
     [SerializeField] GameObject PVECanvas;
+    [SerializeField] GameObject invitePlayerPanel;
 
-
+    [Space]
     public Transform contentParent;
-    public GameObject userButtonPrefab;
+    public Button userButtonPrefab;
 
-    private Dictionary<string, GameObject> playerButtons = new Dictionary<string, GameObject>();
+    private Dictionary<string, Button> playerButtons = new Dictionary<string, Button>();
 
     IEnumerator Start()
     {
-        LobbyCanvas.SetActive(true);
         PVECanvas.SetActive(false);
 
+        yield return new WaitUntil(() => !string.IsNullOrEmpty(FirebaseAuthMgr.user.DisplayName));
         PhotonNetwork.ConnectUsingSettings();
 
-        yield return new WaitUntil(() => PhotonNetwork.IsConnected);
-
-        PhotonNetwork.NickName = FirebaseLoginMgr.user.DisplayName;
+        PhotonNetwork.NickName = FirebaseAuthMgr.user.DisplayName;
     }
 
     public override void OnConnectedToMaster()
     {
         PhotonNetwork.JoinRandomRoom();
     }
+
 
     public override void OnJoinRandomFailed(short returnCode, string message)
     {
@@ -58,24 +60,27 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         RemovePlayerButton(otherPlayer);
     }
 
+
     void AddPlayerButton(Player p)
     {
-        if (playerButtons.ContainsKey(p.NickName))
-            return;
-
-        GameObject button = Instantiate(userButtonPrefab, contentParent);
+        Button button = Instantiate(userButtonPrefab, contentParent);
         button.GetComponentInChildren<TextMeshProUGUI>().text = p.NickName;
         playerButtons.Add(p.NickName, button);
 
         if (p.IsLocal)
         {
             button.transform.SetAsFirstSibling();
+            button.interactable = false;
+        }
+        else
+        {
+            button.onClick.AddListener(InvitePlayer);
         }
     }
 
     void RemovePlayerButton(Player p)
     {
-        if (playerButtons.TryGetValue(p.NickName, out GameObject btn))
+        if (playerButtons.TryGetValue(p.NickName, out Button btn))
         {
             Destroy(btn);
             playerButtons.Remove(p.NickName);
@@ -98,4 +103,12 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     {
         SceneManager.LoadScene(2);
     }
+
+
+    public void InvitePlayer()
+    {
+        invitePlayerPanel.SetActive(true);
+    }
+
+
 }

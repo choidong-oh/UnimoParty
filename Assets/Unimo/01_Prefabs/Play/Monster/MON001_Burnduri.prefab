@@ -539,7 +539,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.9, y: 0.9, z: 0.9}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 4586729287890237080}
@@ -796,10 +796,10 @@ MonoBehaviour:
   sizeScale: 0
   spawnCount: 0
   players: []
-  normalSpeed: 1
+  MoveSpeed: 1
   chargeSpeed: 10
-  chargeDistance: 10
-  triggerDistance: 5
+  chargeDistance: 3
+  triggerDistance: 10
   fixedY: 0
 --- !u!1001 &148879231885707354
 PrefabInstance:

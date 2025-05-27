@@ -1,7 +1,5 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class IngameObserver
 {
@@ -14,10 +12,26 @@ public class IngameObserver
 
     private bool isGameOver = false;
 
+    public void Setting()
+    {
+        //UserPlayer.gamedata.life = 100;
+        var tempUser = UserPlayer.gamedata;
+
+        OnGameDataChange.Invoke(tempUser);
+    }
+
 
     public void HitPlayer(int damage)
     {
-        UserPlayer.gamedata.life = UserPlayer.gamedata.life - damage;
+        if (UserPlayer.gamedata._playerState == PlayerState.None)
+        {
+            UserPlayer.gamedata.life = UserPlayer.gamedata.life - damage;
+        }
+        else if (UserPlayer.gamedata._playerState == PlayerState.Invincible)
+        {
+            UserPlayer.gamedata.life = UserPlayer.gamedata.life = 0;
+        }
+
         var templife = UserPlayer.gamedata;
 
         //여기에 포톤 추가.
@@ -25,12 +39,14 @@ public class IngameObserver
 
         if (UserPlayer.gamedata.life <= 0)
         {
-            //UserPlayer.transform.parent.gameObject.SetActive(false);
-            UserPlayer.gameObject.SetActive(false);
+
+            UserPlayer.gamedata.life = 20;
             isGameOver = true;
 
+            SceneManager.LoadScene(1);
+
             // 여기에 포톤 추가.
-            // OnGameEnd.Invoke();
+            // OnGameEnd?.Invoke();
         }
     }
 
@@ -79,7 +95,7 @@ public class IngameObserver
             isGameOver = true;
 
             // 여기에 포톤 추가.
-            OnGameEnd.Invoke();
+            OnGameEnd?.Invoke();
         }
     }
 
@@ -94,10 +110,9 @@ public class IngameObserver
     //강제로 게임을 종료시키는 메소드.
     public void EndGame()
     {
-        if(isGameOver == true)
-        {
-            //여기에 포톤 추가.
-            OnGameEnd.Invoke();
-        }
+        isGameOver = true;
+        //여기에 포톤 추가.
+        OnGameEnd?.Invoke();
+
     }
 }
