@@ -35,9 +35,9 @@ public class DataLoader
 
                         string[] values = lines[i].Split(',');
                         //EnemyBase.INDEX = int.Parse(values[0]);
-                        EnemyBase.enemyName = values[1].ToString();
-                        EnemyBase.damage = int.Parse(values[3]);
-                        EnemyBase.enemyMoveSpeed = float.Parse(values[4]);
+                        //EnemyBase.enemyName = values[1].ToString();
+                        //EnemyBase.damage = int.Parse(values[3]);
+                        //EnemyBase.enemyMoveSpeed = float.Parse(values[4]);
 
                         //item.Value.Add(enemyData);
                     }
