@@ -15,7 +15,8 @@ public struct GoalFairyCount
 
 public enum PlayerState
 {
-    None, Invincible
+    None, 
+    Invincible
 }
 
 public class DataCenter

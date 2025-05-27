@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 161884057928842083}
   - component: {fileID: 3132521309283916604}
   m_Layer: 0
-  m_Name: ScaffSpawner
+  m_Name: FlowerSpawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -44,6 +44,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0bb217cce59a9064088b440a91c59b05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cubePrefab: {fileID: 4069621930622226805, guid: 5d76255a5bfcef94a90ee5720fe1a33a, type: 3}
+  cubePrefab: {fileID: 3477442797691105170, guid: c85d512691b3ff54bb3250febbf0d505, type: 3}
   centerObject: {fileID: 0}
   cubeCount: 10

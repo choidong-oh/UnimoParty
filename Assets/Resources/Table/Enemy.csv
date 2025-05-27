@@ -1,0 +1,7 @@
+﻿MON_idx,MON_name_kor,MON_name_eng,MON_damage,MON_move_speed,MON_min_size,MON_max_size,skill_idx
+001,퓨퓨,Pewpew,1,0.5,0.5,1.5,skill_mon_0000
+002,번두리,Bunduri,1,1,0.5,0.5,skill_mon_0001
+003,슉슉,Shookshook,1,2,0.5,0.5,skill_mon_0002
+004,빅빈,Bigbin,1,0.5,1.5,1.5,skill_mon_0003
+005,벙퍼,Bungpeo,1,0,1,1,skill_mon_0004
+006,레이콕,Laycock,1,0,0.25,0.25,skill_mon_0005
