@@ -756,6 +756,10 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 60
       objectReference: {fileID: 0}
+    - target: {fileID: 1522098608891935231, guid: 966bc0a092b89c4468fa9a4c467e78fa, type: 3}
+      propertyPath: m_CullTransparentMesh
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1684404946108334360, guid: 966bc0a092b89c4468fa9a4c467e78fa, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: -14
@@ -855,6 +859,10 @@ PrefabInstance:
     - target: {fileID: 2636420666006440491, guid: 966bc0a092b89c4468fa9a4c467e78fa, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2693888140702483652, guid: 966bc0a092b89c4468fa9a4c467e78fa, type: 3}
+      propertyPath: m_Name
+      value: RadarDot_Monster2
       objectReference: {fileID: 0}
     - target: {fileID: 2767063861356850786, guid: 966bc0a092b89c4468fa9a4c467e78fa, type: 3}
       propertyPath: m_IsActive
@@ -1100,6 +1108,10 @@ PrefabInstance:
       propertyPath: m_text
       value: 00/00
       objectReference: {fileID: 0}
+    - target: {fileID: 6134317680898633322, guid: 966bc0a092b89c4468fa9a4c467e78fa, type: 3}
+      propertyPath: m_Name
+      value: RadarDot_OtherUser
+      objectReference: {fileID: 0}
     - target: {fileID: 6187025226128246077, guid: 966bc0a092b89c4468fa9a4c467e78fa, type: 3}
       propertyPath: m_RaycastTarget
       value: 0
@@ -1136,6 +1148,10 @@ PrefabInstance:
       propertyPath: rotatingRoot
       value: 
       objectReference: {fileID: 1053935326}
+    - target: {fileID: 6602795080885435235, guid: 966bc0a092b89c4468fa9a4c467e78fa, type: 3}
+      propertyPath: applyRotation
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6686346285531167650, guid: 966bc0a092b89c4468fa9a4c467e78fa, type: 3}
       propertyPath: m_RaycastTarget
       value: 0
@@ -1167,6 +1183,10 @@ PrefabInstance:
     - target: {fileID: 7183846568169071544, guid: 966bc0a092b89c4468fa9a4c467e78fa, type: 3}
       propertyPath: m_RaycastTarget
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7419978540011565594, guid: 966bc0a092b89c4468fa9a4c467e78fa, type: 3}
+      propertyPath: m_Name
+      value: RadarDot_Object
       objectReference: {fileID: 0}
     - target: {fileID: 7543132570412813937, guid: 966bc0a092b89c4468fa9a4c467e78fa, type: 3}
       propertyPath: m_HapticHoverExitIntensity
@@ -1264,6 +1284,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8628350294964393775, guid: 966bc0a092b89c4468fa9a4c467e78fa, type: 3}
+      propertyPath: m_Name
+      value: RotatingContainer
+      objectReference: {fileID: 0}
     - target: {fileID: 8647203408077216609, guid: 966bc0a092b89c4468fa9a4c467e78fa, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -1315,6 +1339,14 @@ PrefabInstance:
     - target: {fileID: 9057997154074426342, guid: 966bc0a092b89c4468fa9a4c467e78fa, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9062507750547564150, guid: 966bc0a092b89c4468fa9a4c467e78fa, type: 3}
+      propertyPath: m_Name
+      value: RadarDot_Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 9129007898862185408, guid: 966bc0a092b89c4468fa9a4c467e78fa, type: 3}
+      propertyPath: m_Name
+      value: RadarDot_Monster1
       objectReference: {fileID: 0}
     - target: {fileID: 9167722245327750355, guid: 966bc0a092b89c4468fa9a4c467e78fa, type: 3}
       propertyPath: m_LocalPosition.x

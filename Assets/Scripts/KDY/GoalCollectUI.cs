@@ -10,7 +10,7 @@ public class GoalCollectUI : MonoBehaviour
     private void Start()
     {
         // 게임시작 초기값
-        UpdateCollectUI(Manager.Instance.observer.UserPlayer.gamedata);
+        //UpdateCollectUI(Manager.Instance.observer.UserPlayer.gamedata);
 
         // 채집 수가 바뀔 때마다 UI 업데이트
         Manager.Instance.observer.OnGameDataChange += UpdateCollectUI;
