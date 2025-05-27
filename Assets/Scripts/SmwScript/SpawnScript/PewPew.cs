@@ -94,6 +94,7 @@ public class PewPew : EnemyBase
             damage = 1;
             Manager.Instance.observer.HitPlayer(damage);
             //Debug.Log(Manager.Instance.observer.UserPlayer.gamedata.life);
+            
 
             gameObject.SetActive(false);
         }

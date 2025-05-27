@@ -104,7 +104,7 @@ public class ShookShook : EnemyBase
             yield return new WaitForFixedUpdate();
         }
         transform.position = Target;
-        Destroy(gameObject);//юс╫ц
+        gameObject.SetActive(false);
     }
 
     private void OnTriggerEnter(Collider other)
