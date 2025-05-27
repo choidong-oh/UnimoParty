@@ -63,7 +63,6 @@ public abstract class EnemySpawnBase : MonoBehaviour
             }
             else
             {
-                Debug.Log("플레이어가 근처 아님ㅋ");
                 return dd;
             }
            
