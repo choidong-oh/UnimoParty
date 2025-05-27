@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.PlayerSettings;
 
 public class Burnduri : EnemyBase
 {
@@ -8,6 +9,7 @@ public class Burnduri : EnemyBase
     public List<Transform> players = new List<Transform>();//플레이어 여기에 등록함
 
     Vector3 Target;
+    Vector3 myPos;
 
     [Header("이동 설정")]
     public float MoveSpeed = 1f;
@@ -18,7 +20,7 @@ public class Burnduri : EnemyBase
     public float triggerDistance = 10f;
     public float fixedY = 0f;
 
-    private Transform currentTarget;
+
     private bool isCharging = false;
 
 
@@ -27,31 +29,12 @@ public class Burnduri : EnemyBase
     private Coroutine updateRoutine;
     private Coroutine moveRoutine;
 
-    Animator animator;
-    Collider col;
+    Transform nearestPlayer;
 
-    private void Awake()
-    {
-        //한번만 찾을꺼임
-        if (players.Count == 0)
-        {
-            var objs = GameObject.FindGameObjectsWithTag("Player");
-            foreach (var obj in objs)
-            {
-                players.Add(obj.transform);
-            }
-        }
-    }
+    int dashStateHash;
 
-    public override void CsvEnemyInfo()
-    {
 
-    }
 
-    public override void Move(Vector3 direction)
-    {
-
-    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -59,47 +42,34 @@ public class Burnduri : EnemyBase
         {
             Debug.Log(Manager.Instance.observer.UserPlayer.gamedata.life);
             Manager.Instance.observer.HitPlayer(damage);
-            animator.SetTrigger("disappear");
+            gameObject.SetActive(false);
         }
     }
 
-    void OnEnable()
-    {
-        animator = GetComponent<Animator>();
-        col = GetComponent<Collider>();
-        col.enabled = false;
-        currentTarget = transform;
-        terrain = Terrain.activeTerrain;
-        isCharging = false;
+    //void OnEnable()
+    //{
+    //    //한번만 찾을꺼임
+    //    if (players.Count == 0)
+    //    {
+    //        var objs = GameObject.FindGameObjectsWithTag("Player");
+    //        foreach (var obj in objs)
+    //        {
+    //            players.Add(obj.transform);
+    //        }
+    //    }
 
-        StartCoroutine(SpawnBurnduiri());
+    //    terrain = Terrain.activeTerrain;
+    //    isCharging = false;
 
-        //updateRoutine = StartCoroutine(UpdateDistance());
-        //moveRoutine = StartCoroutine(MoveRoutine());
-    }
+    //    updateRoutine = StartCoroutine(UpdateDistance());
+    //    moveRoutine = StartCoroutine(MoveRoutine());
+    //}
 
 
     void OnDisable()
     {
         StopAllCoroutines();
     }
-
-
-    IEnumerator SpawnBurnduiri()
-    {
-        while (animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1f)
-
-            yield return null;
-
-        animator.SetTrigger("Move");
-
-        updateRoutine = StartCoroutine(UpdateDistance());
-        moveRoutine = StartCoroutine(MoveRoutine());
-
-        yield return null;
-    }
-
-
 
 
     IEnumerator UpdateDistance()
@@ -116,8 +86,7 @@ public class Burnduri : EnemyBase
                 }
             }
 
-            Vector3 myPos = transform.position;
-            Transform nearestPlayer = null;
+            myPos = transform.position;
             float minDistance = Mathf.Infinity;// 일단 제일 큰값으로함 
 
 
@@ -137,7 +106,6 @@ public class Burnduri : EnemyBase
 
             if (nearestPlayer != null)
             {
-                currentTarget = nearestPlayer;
                 Target = nearestPlayer.position;
 
                 transform.LookAt(Target);
@@ -155,19 +123,25 @@ public class Burnduri : EnemyBase
         {
             if (!isCharging)
             {
-                Vector3 myPos = transform.position;
                 float CheckNear = Vector3.Distance(myPos, Target);
 
                 if (CheckNear < chargeDistance)
                 {
+
+                    if (updateRoutine != null)
+                    {
+                        StopCoroutine(updateRoutine);
+                    }
                     isCharging = true;
-                    StopCoroutine(updateRoutine);
-                    StopCoroutine(moveRoutine);
+
+
                     StartCoroutine(ChargeRoutine());
+
                     yield break;
                 }
                 else
                 {
+                    myPos = transform.position;
                     float terrainY = terrain.SampleHeight(transform.position) + transform.localScale.y / 2f + fixedY;
                     transform.position = new Vector3(myPos.x, terrainY, myPos.z);
                     transform.position += transform.forward * MoveSpeed * Time.fixedDeltaTime;
@@ -179,36 +153,59 @@ public class Burnduri : EnemyBase
 
     IEnumerator ChargeRoutine()
     {
-        StopCoroutine(updateRoutine);
-        StopCoroutine(moveRoutine);
-
-        animator.SetTrigger("ChargeStart");
 
         yield return new WaitForSeconds(1f);
 
         Vector3 startPos = transform.position;
-        Vector3 dir = transform.forward;  // 이 순간의 방향을 저장
 
-        animator.SetTrigger("Charge");
+
+        float yAngle = transform.eulerAngles.y;
+        float zAngle = transform.eulerAngles.z;
+
+        Quaternion Rot = Quaternion.Euler(0f, yAngle, zAngle);
+
+        transform.rotation = Rot;
 
         while (Vector3.Distance(transform.position, startPos) < triggerDistance)
         {
-            float terrainY = terrain.SampleHeight(transform.position);
-            terrainY += transform.localScale.y / 2f;
-            dir.y = terrainY + fixedY;
-            transform.position += dir * chargeSpeed * Time.fixedDeltaTime;
+            myPos = transform.position;
+            float terrainY = terrain.SampleHeight(transform.position) + transform.localScale.y / 2f + fixedY;
+            transform.position = new Vector3(myPos.x, terrainY, myPos.z);
+            transform.position += transform.forward * chargeSpeed * Time.fixedDeltaTime;
             yield return new WaitForFixedUpdate();
         }
 
-        animator.SetTrigger("disappear");
 
-        while (animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1f)
 
-            yield return null;
+        gameObject.SetActive(false);
+    }
 
-        enabled = false;
 
-        Destroy(gameObject);
+
+
+
+    public override void CsvEnemyInfo()
+    {
+
+    }
+
+    public override void Move(Vector3 direction)
+    {
+        //한번만 찾을꺼임
+        if (players.Count == 0)
+        {
+            var objs = GameObject.FindGameObjectsWithTag("Player");
+            foreach (var obj in objs)
+            {
+                players.Add(obj.transform);
+            }
+        }
+
+        terrain = Terrain.activeTerrain;
+        isCharging = false;
+
+        updateRoutine = StartCoroutine(UpdateDistance());
+        moveRoutine = StartCoroutine(MoveRoutine());
     }
 
 }
