@@ -4,17 +4,7 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour, InterfaceMethod.TableData
 {
-    public int INDEX { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
+    public int INDEX { get; set; }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

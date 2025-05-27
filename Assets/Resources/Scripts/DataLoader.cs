@@ -3,25 +3,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DataLoader : MonoBehaviour
+public class DataLoader
 {
-
     public Dictionary<string, List<InterfaceMethod.TableData>> data = new Dictionary<string, List<InterfaceMethod.TableData>>()
     {
         { "Enemy", new List<InterfaceMethod.TableData>()},
-        { "UserPlayer", new List<InterfaceMethod.TableData>()},
+        { "ItemData", new List<InterfaceMethod.TableData>()},
     };
 
-    void Awake()
-    {
-        //DataLoad();
-    }
-
-    void DataLoad()
+    public void DataLoad()
     {
         foreach (var item in data)
         {
-            TextAsset csvFIles = Resources.Load<TextAsset>($"Tables/{item.Key}");
+            Debug.Log(item.Key);
+            TextAsset csvFIles = Resources.Load<TextAsset>($"Table/{item.Key}");
 
             if (csvFIles == null)
             {
@@ -33,22 +28,30 @@ public class DataLoader : MonoBehaviour
             switch (csvFIles.name)
             {
                 case "Enemy":
+                    Debug.Log("에너미 csv  로드");
                     for (int i = 1; i < lines.Length - 1; i++)
                     {
-                        string[] values = lines[i].Split(',');
-                        Enemy enemyData = new Enemy();
+                        EnemyBase enemyData;
 
-                        item.Value.Add(enemyData);
+                        string[] values = lines[i].Split(',');
+                        //EnemyBase.INDEX = int.Parse(values[0]);
+                        EnemyBase.enemyName = values[1].ToString();
+                        EnemyBase.damage = int.Parse(values[3]);
+                        EnemyBase.enemyMoveSpeed = float.Parse(values[4]);
+
+                        //item.Value.Add(enemyData);
                     }
                     break;
 
-                case "UserPlayer":
+                case "ItemData":
+                    Debug.Log(" csv 로드");
                     for (int i = 1; i < lines.Length - 1; i++)
                     {
                         string[] values = lines[i].Split(',');
-                        UserPlayer characterData = new UserPlayer();
+                        ItemData itemData = new ItemData();
+                        itemData.INDEX = int.Parse(values[0]);
 
-                        item.Value.Add(characterData);
+                        item.Value.Add(itemData);
                     }
                     break;
             }

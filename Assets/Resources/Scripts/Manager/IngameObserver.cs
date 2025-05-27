@@ -50,6 +50,19 @@ public class IngameObserver
         }
     }
 
+    public void RecoveryPlayerHP(int RecoveryHP)
+    {
+        UserPlayer.gamedata.life += RecoveryHP;
+
+        if (UserPlayer.gamedata.life >= 100)
+        {
+            UserPlayer.gamedata.life = 100;
+        }
+
+        var templife = UserPlayer.gamedata;
+        OnGameDataChange?.Invoke(templife);
+    }
+
     public void GetFairy(FairyType fairytype)
     {
         //페어리 타입을 이미 받은 상태에서 유저 페어리에 대입함.
