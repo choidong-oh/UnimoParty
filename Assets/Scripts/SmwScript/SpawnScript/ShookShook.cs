@@ -23,6 +23,7 @@ public class ShookShook : EnemyBase
 
 
 
+
     //private void OnEnable()
     //{
     //    terrain = Terrain.activeTerrain;
