@@ -8,6 +8,7 @@ using Firebase;
 using Firebase.Auth;
 using Firebase.Database;
 using UnityEngine.SceneManagement;
+using Photon.Pun;
 
 public class FirebaseAuthMgr : MonoBehaviour
 {
@@ -171,4 +172,6 @@ public class FirebaseAuthMgr : MonoBehaviour
         test = true;
         Login();
     }
+
+    
 }
