@@ -9,20 +9,20 @@ public class LifeUI : MonoBehaviour
 
     public void Start()
     {
-        //Manager.Instance.observer.OnGameDataChange += OnChangeLife;
+        Manager.Instance.observer.OnGameDataChange += OnChangeLife;
         textmeshpro.text = "　x 100";
         Debug.Log("적용된 텍스트: " + textmeshpro.text);
-        DefaultSeting();
     }
-
 
     void OnChangeLife(DataCenter damage)
     {
         textmeshpro.text = $"x {damage.life}";
     }
+    
 
-    void DefaultSeting()
+    // LifeUI 오브젝트가 비활성화될 때 호출됨.
+    private void OnDisable()
     {
-        
+        Manager.Instance.observer.OnGameDataChange -= OnChangeLife;
     }
 }

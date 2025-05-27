@@ -19,8 +19,14 @@ public class WallTeleporter : MonoBehaviour
         // 충돌한 객체가 "Player" 태그를 가지고 있지 않으면 무시
         if (!other.CompareTag("Player")) return;
 
+        //if (!other.CompareTag("Player")) return;  몬스터
+        //if (!other.CompareTag("Player")) return;  몬스터
+        
         // 플레이어 Transform 정보 가져오기
         Transform player = other.transform;
+        
+        //Transform player = other.transform;  몬스터
+        //Transform player = other.transform;  몬스터
 
         // 현재 위치 저장
         Vector3 currentPos = player.position;
@@ -79,5 +85,46 @@ public class WallTeleporter : MonoBehaviour
         }
     }
 
+    // 변경 가능 할 수 있음 
+    private void OnTriggerExit(Collider other)
+    {
+        // 충돌한 객체가 "Player" 태그를 가지고 있지 않으면 무시
+        if (!other.CompareTag("Player")) return;
+        //if (!other.CompareTag("Player")) return;  몬스터 태그로 변경
+        //if (!other.CompareTag("Player")) return;  몬스터 태그로 변경
 
+        // 플레이어 Transform 정보 가져오기
+        Transform player = other.transform;
+        //Transform player = other.transform;    몬스터로 변경
+        //Transform player = other.transform;    몬스터로 변경
+         
+        // 현재 위치 저장//
+        Vector3 currentPos = player.position;
+
+        // 새로운 위치는 현재 위치를 기본으로 하되, 일부 축만 변경함
+        Vector3 newPos = currentPos;
+
+        // 벽 방향에 따라 반대편의 해당 축 좌표로 덮어쓰기
+        switch (wallType)
+        {
+            case WallType.Top:    // 위쪽 벽: Z축만 이동
+                newPos.z = teleportReference.position.z;
+                break;
+
+            case WallType.Bottom: // 아래쪽 벽: Z축만 이동
+                newPos.z = teleportReference.position.z;
+                break;
+
+            case WallType.Left:   // 왼쪽 벽: X축만 이동
+                newPos.x = teleportReference.position.x;
+                break;
+
+            case WallType.Right:  // 오른쪽 벽: X축만 이동
+                newPos.x = teleportReference.position.x;
+                break;
+        }
+
+        // 최종 위치 적용
+        player.position = newPos;
+    }
 }
