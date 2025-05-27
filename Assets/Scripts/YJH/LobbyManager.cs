@@ -26,6 +26,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
         yield return new WaitUntil(() => !string.IsNullOrEmpty(FirebaseAuthMgr.user.DisplayName));
         PhotonNetwork.ConnectUsingSettings();
+        PhotonNetwork.AutomaticallySyncScene = true;
 
         PhotonNetwork.NickName = FirebaseAuthMgr.user.DisplayName;
     }
@@ -109,6 +110,9 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     {
         invitePlayerPanel.SetActive(true);
     }
-
+    public void MatchMakingButton()
+    {
+        PhotonNetwork.LoadLevel(3);
+    }
 
 }
