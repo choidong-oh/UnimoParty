@@ -32,9 +32,4 @@ public class Manager : MonoBehaviour
             Destroy(gameObject);
         }
     }
-
-    private void Start()
-    {
-        observer.Setting();
-    }
 }

@@ -12,13 +12,7 @@ public class IngameObserver
 
     private bool isGameOver = false;
 
-    public void Setting()
-    {
-        UserPlayer.gamedata.life = 100;
-        var tempUser = UserPlayer.gamedata;
 
-        OnGameDataChange.Invoke(tempUser);
-    }
 
 
     public void HitPlayer(int damage)
