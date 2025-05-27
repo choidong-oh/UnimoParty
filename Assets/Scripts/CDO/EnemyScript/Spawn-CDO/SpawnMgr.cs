@@ -14,9 +14,9 @@ public class SpawnMgr : MonoBehaviour
 
     void AllSpawn()
     {
-        enemySpawnBase[0].Spawn();
-        enemySpawnBase[1].Spawn();
-        enemySpawnBase[2].Spawn();
+        enemySpawnBase[0].Spawn(); //¹øµå¸®
+        enemySpawnBase[1].Spawn(); //Ç»Ç»
+        enemySpawnBase[2].Spawn(); //½µ½µÀÌ
     }
 
     void StopAllCor()
