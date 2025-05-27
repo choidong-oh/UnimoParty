@@ -1,29 +1,49 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.XR.Interaction.Toolkit;
 
-public class TEST : MonoBehaviour
+public class TEST : EnemyBase
 {
-    public CommandReplay commandReplay;
-
 
     private void Start()
     {
-        commandReplay = new CommandReplay();
+        Move(transform.position);
     }
-    public void replay()
+    public override void Move(Vector3 direction)
     {
-        StartCoroutine(cor());
+        StartCoroutine(moveCor());
     }
-
-    IEnumerator cor()
+    [ContextMenu("¾óÀ½")]
+    public void djfdma()
     {
-        yield return StartCoroutine(commandReplay.ReplayCommandsCoroutine());
+        StopAllCoroutines();
+        var CurrentTransform = transform.position;
+
+        StartCoroutine(djfdmaCor());
+    }
+
+    IEnumerator djfdmaCor()
+    {
+
+        yield return new WaitForSeconds(2);
+        StartCoroutine(moveCor());
     }
 
 
+    IEnumerator moveCor()
+    {
+        while (true)
+        {
+            var dsds = new Vector3(1, 0, 1) * 10 * Time.deltaTime;
+            transform.Translate(dsds);
+            yield return null;
+        }
+
+    }
+
+    public override void CsvEnemyInfo()
+    {
+        throw new System.NotImplementedException();
+    }
 }
 
 
