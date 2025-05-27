@@ -1,49 +1,58 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.XR.Interaction.Toolkit;
 
-public class TEST : EnemyBase
+
+public class TEST : MonoBehaviour
 {
+    public ActionBasedController RightController; //진짜모델
+    private Renderer[] handRenderers;
+
 
     private void Start()
     {
-        Move(transform.position);
+        handRenderers = RightController.GetComponentsInChildren<Renderer>();
+
+        StartCoroutine(WAIT());
     }
-    public override void Move(Vector3 direction)
+  
+    void SetHandVisible(bool visible)
     {
-        StartCoroutine(moveCor());
-    }
-    [ContextMenu("얼음")]
-    public void djfdma()
-    {
-        StopAllCoroutines();
-        var CurrentTransform = transform.position;
-
-        StartCoroutine(djfdmaCor());
-    }
-
-    IEnumerator djfdmaCor()
-    {
-
-        yield return new WaitForSeconds(2);
-        StartCoroutine(moveCor());
-    }
-
-
-    IEnumerator moveCor()
-    {
-        while (true)
+        foreach (var renderer in handRenderers)
         {
-            var dsds = new Vector3(1, 0, 1) * 10 * Time.deltaTime;
-            transform.Translate(dsds);
-            yield return null;
+            renderer.enabled = visible;
         }
 
     }
-
-    public override void CsvEnemyInfo()
+    //[ContextMenu("얼음")]
+    IEnumerator WAIT()
     {
-        throw new System.NotImplementedException();
+        yield return new WaitForSeconds(2);
+
+        RightController.model.gameObject.SetActive(false);
+        SetHandVisible(false);
     }
+
+
+
+    
+
+    //public void OnSelectEnter()
+    //{
+    //    LController.SetActive(true);
+    //    SetHandVisible(false);
+
+    //    leftController.model.gameObject.SetActive(false);
+    //}
+    //public void OnSelectExit()
+    //{
+    //    LController.SetActive(false);
+    //    SetHandVisible(true);
+    //    leftController.model.gameObject.SetActive(true);
+    //}
+
+
+    
 }
 
 

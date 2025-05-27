@@ -84,8 +84,6 @@ public class LeftHandController : MonoBehaviour
         foreach (var renderer in handRenderers)
         {      
             renderer.enabled = visible;
-                     
         }
-
     }
 }
