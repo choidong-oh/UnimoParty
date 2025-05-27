@@ -18,8 +18,9 @@ public class Manager : MonoBehaviour
         get { return instance; }
     }
 
+    public DataLoader dataLoader = new DataLoader();
     public IngameObserver observer = new IngameObserver();
-    Shop shop = new Shop();
+    Shop shop;
 
     void Awake()
     {
@@ -32,5 +33,7 @@ public class Manager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        dataLoader.DataLoad();
     }
 }
