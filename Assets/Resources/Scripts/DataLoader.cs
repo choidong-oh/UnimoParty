@@ -39,7 +39,7 @@ public class DataLoader
                         enemyData.damage = int.Parse(values[3]);
                         enemyData.enemyMoveSpeed = float.Parse(values[4]);
 
-                        item.Value.Add(enemyData);
+                        //item.Value.Add(enemyData);
                     }
                     break;
 
