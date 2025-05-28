@@ -19,10 +19,11 @@ public class TestPvP : MonoBehaviourPunCallbacks
         PhotonNetwork.ConnectUsingSettings(); // °Ê OnConnectedToMaster »£√‚µ 
     }
 
-    public override void OnConnectedToMaster()
+    public override void OnConnected()
     {
-        PhotonNetwork.JoinRandomRoom(); 
+        PhotonNetwork.JoinRandomRoom();
     }
+
 
     public override void OnJoinRandomFailed(short returnCode, string message)
     {
