@@ -14,18 +14,17 @@ public class SpawnManager : MonoBehaviourPunCallbacks
     // 게임이 시작될 때 실행되는 함수
     private void Start()
     {
-
         StartCoroutine(wait());
     }
 
 
     IEnumerator wait()
     {
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(0.1f);
         if (PhotonNetwork.IsConnected && PhotonNetwork.InRoom)
         {
-            yield return new WaitForSeconds(2);
-            PhotonNetwork.Instantiate("PlayerVariant", spawnPoints[1].position, spawnPoints[1].rotation);
+            yield return new WaitForSeconds(0.5f);
+            SpawnAtIndex(PhotonNetwork.LocalPlayer.ActorNumber - 1);
         }
     }
 
