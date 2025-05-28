@@ -14,7 +14,6 @@ public class SpawnManager : MonoBehaviourPunCallbacks
     // 게임이 시작될 때 실행되는 함수
     private void Start()
     {
-
         StartCoroutine(wait());
     }
 
@@ -33,7 +32,7 @@ public class SpawnManager : MonoBehaviourPunCallbacks
     public void SpawnAtIndex(int index)
     {
         // 유효한 인덱스인지 확인
-        if (index >= 0 && index < spawnPoints.Count)
+        if (index >= 0 && index < spawnPoints.Count )
         {
             Transform spawnPoint = spawnPoints[index];
             Vector3 spawnPos = spawnPoint.position;
@@ -41,13 +40,8 @@ public class SpawnManager : MonoBehaviourPunCallbacks
             // Y축 회전만 유지하고 나머지 회전은 제거
             Quaternion yRotationOnly = Quaternion.Euler(0, spawnPoint.rotation.eulerAngles.y, 0);
 
-            GameObject player = PhotonNetwork.Instantiate("PlayerVariant", spawnPoint.position, yRotationOnly);
+            PhotonNetwork.Instantiate("PlayerVariant", spawnPoint.position, yRotationOnly);
 
-            PhotonView playerView = player.GetComponent<PhotonView>();
-            if (!playerView.IsMine)
-            {
-                player.GetComponentInChildren<Camera>(true).gameObject.SetActive(false);
-            }
         }
         else
         {

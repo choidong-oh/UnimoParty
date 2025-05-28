@@ -21,6 +21,13 @@ public class HandHarvest : MonoBehaviourPunCallbacks
     //콜백은 OnEnable 안댐
     //player은 안사라지니깐 awake, start에 넣으면 댈듯 
     //콜백 쓸만한건없긴함
+    private void Start()
+    {
+        if(!photonView.IsMine)
+        {
+            GetComponentInChildren<Camera>().gameObject.SetActive(false);
+        }
+    }
     public override void OnEnable()
     {
         base.OnEnable();
