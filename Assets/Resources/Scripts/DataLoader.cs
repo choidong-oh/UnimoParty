@@ -32,12 +32,12 @@ public class DataLoader
                     Debug.Log("에너미 csv  로드");
                     for (int i = 1; i < lines.Length - 1; i++)
                     {
-                        enemyData = null;
-                        string[] values = lines[i].Split(',');
-                        //EnemyBase.INDEX = int.Parse(values[0]);
-                        enemyData.enemyName = values[1].ToString();
-                        enemyData.damage = int.Parse(values[3]);
-                        enemyData.enemyMoveSpeed = float.Parse(values[4]);
+                        //enemyData = null;
+                        //string[] values = lines[i].Split(',');
+                        ////EnemyBase.INDEX = int.Parse(values[0]);
+                        //enemyData.enemyName = values[1].ToString();
+                        //enemyData.damage = int.Parse(values[3]);
+                        //enemyData.enemyMoveSpeed = float.Parse(values[4]);
 
                         //item.Value.Add(enemyData);
                     }
