@@ -674,6 +674,7 @@ MonoBehaviour:
   spawnTimer: 1
   Enemy:
   - {fileID: 8470377270446183419, guid: 927e35cb881a2ef449423e0b6cb1b1c9, type: 3}
+  - {fileID: 2560127493471256366, guid: d2f351637dd3ff545b15ced3c30fa928, type: 3}
 --- !u!1001 &1999368244
 PrefabInstance:
   m_ObjectHideFlags: 0
