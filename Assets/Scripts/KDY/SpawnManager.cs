@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using System.Collections;
 
 public class SpawnManager : MonoBehaviourPunCallbacks
 {
@@ -13,12 +14,20 @@ public class SpawnManager : MonoBehaviourPunCallbacks
     // 게임이 시작될 때 실행되는 함수
     private void Start()
     {
+
+        StartCoroutine(wait());
+    }
+
+
+    IEnumerator wait()
+    {
+        yield return new WaitForSeconds(2);
         if (PhotonNetwork.IsConnected && PhotonNetwork.InRoom)
         {
+            yield return new WaitForSeconds(2);
             PhotonNetwork.Instantiate("PlayerVariant", spawnPoints[1].position, spawnPoints[1].rotation);
         }
     }
-
 
     // 특정 인덱스 위치에 플레이어를 스폰하는 함수
     public void SpawnAtIndex(int index)
