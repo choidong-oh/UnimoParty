@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.XR.Content.Interaction;
 using UnityEngine.XR.Interaction.Toolkit;
 
-public class LeftHandController : MonoBehaviour
+public class JoystickController : MonoBehaviour
 {
     public GameObject xrOriginObject;     // XROrigin 오브젝트
     [Space]
