@@ -71,16 +71,22 @@ public class LeftHandController : MonoBehaviourPunCallbacks
 
     public void OnSelectEnter()
     {
-        LController.SetActive(true);
-        SetHandVisible(false);
+        if (photonView.IsMine)
+        {
+            LController.SetActive(true);
+            SetHandVisible(false);
 
-        leftController.model.gameObject.SetActive(false);
+            leftController.model.gameObject.SetActive(false);
+        }
     }
     public void OnSelectExit()
     {
-        LController.SetActive(false);
-        SetHandVisible(true);
-        leftController.model.gameObject.SetActive(true);
+        if (photonView.IsMine)
+        {
+            LController.SetActive(false);
+            SetHandVisible(true);
+            leftController.model.gameObject.SetActive(true);
+        }
     }
 
     void SetHandVisible(bool visible)
