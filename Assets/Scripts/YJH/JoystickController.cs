@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.XR.Content.Interaction;
 using UnityEngine.XR.Interaction.Toolkit;
 
-public class LeftHandController : MonoBehaviourPunCallbacks
+public class JoystickController : MonoBehaviourPunCallbacks
 {
     public GameObject xrOriginObject;     // XROrigin 오브젝트
     [Space]
@@ -36,6 +36,7 @@ public class LeftHandController : MonoBehaviourPunCallbacks
     void Start()
     {
         //userName.text = FirebaseLoginMgr.user.DisplayName;
+
         if(photonView.IsMine)
         {
             handRenderers = leftController.GetComponentsInChildren<Renderer>();
