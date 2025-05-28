@@ -10,7 +10,13 @@ public class TestPvP : MonoBehaviourPunCallbacks
     void Start()
     {
         TestStartBtn.interactable = false;
-        TestStartBtn.onClick.AddListener(() => PhotonNetwork.LoadLevel(3));
+        TestStartBtn.onClick.AddListener(() =>
+        {
+            if (PhotonNetwork.IsMasterClient)
+            {
+                PhotonNetwork.LoadLevel(3);
+            }
+        });
     }
 
     public void TestPVPButton()
@@ -19,7 +25,7 @@ public class TestPvP : MonoBehaviourPunCallbacks
         PhotonNetwork.ConnectUsingSettings(); // °Ê OnConnectedToMaster »£√‚µ 
     }
 
-    public override void OnConnected()
+    public override void OnConnectedToMaster()
     {
         PhotonNetwork.JoinRandomRoom();
     }
