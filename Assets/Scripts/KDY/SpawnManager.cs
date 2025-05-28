@@ -13,7 +13,7 @@ public class SpawnManager : MonoBehaviourPunCallbacks
     // 게임이 시작될 때 실행되는 함수
     private void Start()
     {
-        if (PhotonNetwork.IsConnected && PhotonNetwork.InRoom && photonView.IsMine)
+        if (PhotonNetwork.IsConnected && PhotonNetwork.InRoom && PhotonNetwork.LocalPlayer.IsLocal)
         {
             SpawnAtIndex(PhotonNetwork.LocalPlayer.ActorNumber - 1);
         }
