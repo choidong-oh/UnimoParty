@@ -1,29 +1,58 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.XR.Interaction.Toolkit;
+
 
 public class TEST : MonoBehaviour
 {
-    public CommandReplay commandReplay;
+    public ActionBasedController RightController; //진짜모델
+    private Renderer[] handRenderers;
 
 
     private void Start()
     {
-        commandReplay = new CommandReplay();
+        handRenderers = RightController.GetComponentsInChildren<Renderer>();
+
+        StartCoroutine(WAIT());
     }
-    public void replay()
+  
+    void SetHandVisible(bool visible)
     {
-        StartCoroutine(cor());
-    }
+        foreach (var renderer in handRenderers)
+        {
+            renderer.enabled = visible;
+        }
 
-    IEnumerator cor()
+    }
+    //[ContextMenu("얼음")]
+    IEnumerator WAIT()
     {
-        yield return StartCoroutine(commandReplay.ReplayCommandsCoroutine());
+        yield return new WaitForSeconds(2);
+
+        RightController.model.gameObject.SetActive(false);
+        SetHandVisible(false);
     }
 
 
+
+    
+
+    //public void OnSelectEnter()
+    //{
+    //    LController.SetActive(true);
+    //    SetHandVisible(false);
+
+    //    leftController.model.gameObject.SetActive(false);
+    //}
+    //public void OnSelectExit()
+    //{
+    //    LController.SetActive(false);
+    //    SetHandVisible(true);
+    //    leftController.model.gameObject.SetActive(true);
+    //}
+
+
+    
 }
 
 

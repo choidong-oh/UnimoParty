@@ -20,11 +20,10 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     private Dictionary<string, Button> playerButtons = new Dictionary<string, Button>();
 
-    IEnumerator Start()
+    void Start()
     {
         PVECanvas.SetActive(false);
 
-        yield return new WaitUntil(() => !string.IsNullOrEmpty(FirebaseAuthMgr.user.DisplayName));
         PhotonNetwork.ConnectUsingSettings();
         PhotonNetwork.AutomaticallySyncScene = true;
 

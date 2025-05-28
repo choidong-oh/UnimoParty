@@ -1,0 +1,76 @@
+{
+    "name": "XR Custom Controller Controls",
+    "maps": [
+        {
+            "name": "Controller",
+            "id": "11c7c072-283e-4c4f-969d-bea4cb0809cf",
+            "actions": [
+                {
+                    "name": "Secondary Button",
+                    "type": "Button",
+                    "id": "d06853be-e5f5-4f14-934a-512f443ace6c",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Primary Button",
+                    "type": "Button",
+                    "id": "5503a42b-3472-4ed0-89e6-add4676315e4",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "a16fbfb9-7414-4ccf-84f6-f0fea88456a5",
+                    "path": "<XRController>{RightHand}/{SecondaryButton}",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Secondary Button",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6d8065d8-151e-4fa3-b36e-ce5723b3812f",
+                    "path": "<Keyboard>/b",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Secondary Button",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0fe64482-6acd-472a-9a97-6baf72f7b094",
+                    "path": "<XRController>{RightHand}/{PrimaryButton}",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Primary Button",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7a3fea3a-c6ff-4297-88c8-bf48b70e6711",
+                    "path": "<Keyboard>/a",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Primary Button",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

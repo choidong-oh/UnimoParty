@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.PlayerSettings;
 
 public class Burnduri : EnemyBase
 {
@@ -8,6 +9,7 @@ public class Burnduri : EnemyBase
     public List<Transform> players = new List<Transform>();//플레이어 여기에 등록함
 
     Vector3 Target;
+    Vector3 myPos;
 
     [Header("이동 설정")]
     public float MoveSpeed = 1f;
@@ -18,7 +20,7 @@ public class Burnduri : EnemyBase
     public float triggerDistance = 10f;
     public float fixedY = 0f;
 
-    private Transform currentTarget;
+
     private bool isCharging = false;
 
 
@@ -27,11 +29,66 @@ public class Burnduri : EnemyBase
     private Coroutine updateRoutine;
     private Coroutine moveRoutine;
 
-    Animator animator;
-    Collider col;
+    Transform nearestPlayer;
 
-    private void Awake()
+    int dashStateHash;
+
+
+    Animator animator;
+    Collider myCollider;
+
+    // Inspector에서 할당하지 않아도, 런타임에 컨트롤러에서 찾아서 저장합니다.
+    private AnimationClip appearanceClip;
+    private AnimationClip encounterClip;
+    private AnimationClip disappearClip;
+
+    [SerializeField] GameObject CrashBurnduri;
+
+
+    private void OnTriggerEnter(Collider other)
     {
+        if (other.gameObject.tag == "Player")
+        {
+
+            Vector3 hitPoint = other.ClosestPoint(transform.position);//충돌지점에 최대한 가깝게
+
+            Vector3 normal = (hitPoint - transform.position).normalized;// 방향계산
+            Quaternion rot = Quaternion.LookRotation(normal);// 방향계산
+
+            GameObject inst = Instantiate(CrashBurnduri, hitPoint, rot);
+
+
+            //Debug.Log(Manager.Instance.observer.UserPlayer.gamedata.life);
+            //Manager.Instance.observer.HitPlayer(damage);
+            StopAllCoroutines();
+            gameObject.SetActive(false);
+        }
+    }
+
+    void OnEnable()
+    {
+        animator = GetComponent<Animator>();
+        myCollider = GetComponent<Collider>();
+
+        myCollider.enabled = false;
+
+        if (animator != null)
+        {
+            foreach (var clip in animator.runtimeAnimatorController.animationClips)
+            {
+                if (clip.name == "anim_01_MON001_Bduri_Appearance")
+                    appearanceClip = clip;
+                else if (clip.name == "anim_03_MON001_Bduri_Encounter")
+                    encounterClip = clip;
+                else if (clip.name == "anim_01_MON001_Bduri_Disappearance")
+                    disappearClip = clip;
+            }
+        }
+        // 컨트롤러에 등록된 모든 클립을 뒤져서 원하는 이름의 클립을 저장
+
+        if (appearanceClip == null || encounterClip == null || disappearClip == null)
+            Debug.LogWarning("Appearance 또는 Encounter 클립을 찾지 못했습니다.");
+
         //한번만 찾을꺼임
         if (players.Count == 0)
         {
@@ -41,41 +98,21 @@ public class Burnduri : EnemyBase
                 players.Add(obj.transform);
             }
         }
-    }
 
-    public override void CsvEnemyInfo()
-    {
-
-    }
-
-    public override void Move(Vector3 direction)
-    {
-
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.tag == "Player")
-        {
-            Debug.Log(Manager.Instance.observer.UserPlayer.gamedata.life);
-            Manager.Instance.observer.HitPlayer(damage);
-            animator.SetTrigger("disappear");
-        }
-    }
-
-    void OnEnable()
-    {
-        animator = GetComponent<Animator>();
-        col = GetComponent<Collider>();
-        col.enabled = false;
-        currentTarget = transform;
         terrain = Terrain.activeTerrain;
         isCharging = false;
 
-        StartCoroutine(SpawnBurnduiri());
+        StartCoroutine(GoBurnduri());
+    }
 
-        //updateRoutine = StartCoroutine(UpdateDistance());
-        //moveRoutine = StartCoroutine(MoveRoutine());
+    IEnumerator GoBurnduri()
+    {
+        float SpawnCool = appearanceClip != null ? appearanceClip.length / animator.speed : 0f;
+        yield return new WaitForSeconds(SpawnCool);
+        myCollider.enabled = true;
+        updateRoutine = StartCoroutine(UpdateDistance());
+        moveRoutine = StartCoroutine(MoveRoutine());
+        yield return null;
     }
 
 
@@ -83,23 +120,6 @@ public class Burnduri : EnemyBase
     {
         StopAllCoroutines();
     }
-
-
-    IEnumerator SpawnBurnduiri()
-    {
-        while (animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1f)
-
-            yield return null;
-
-        animator.SetTrigger("Move");
-
-        updateRoutine = StartCoroutine(UpdateDistance());
-        moveRoutine = StartCoroutine(MoveRoutine());
-
-        yield return null;
-    }
-
-
 
 
     IEnumerator UpdateDistance()
@@ -116,8 +136,7 @@ public class Burnduri : EnemyBase
                 }
             }
 
-            Vector3 myPos = transform.position;
-            Transform nearestPlayer = null;
+            myPos = transform.position;
             float minDistance = Mathf.Infinity;// 일단 제일 큰값으로함 
 
 
@@ -137,7 +156,6 @@ public class Burnduri : EnemyBase
 
             if (nearestPlayer != null)
             {
-                currentTarget = nearestPlayer;
                 Target = nearestPlayer.position;
 
                 transform.LookAt(Target);
@@ -155,19 +173,25 @@ public class Burnduri : EnemyBase
         {
             if (!isCharging)
             {
-                Vector3 myPos = transform.position;
                 float CheckNear = Vector3.Distance(myPos, Target);
 
                 if (CheckNear < chargeDistance)
                 {
+
+                    if (updateRoutine != null)
+                    {
+                        StopCoroutine(updateRoutine);
+                    }
                     isCharging = true;
-                    StopCoroutine(updateRoutine);
-                    StopCoroutine(moveRoutine);
+
+
                     StartCoroutine(ChargeRoutine());
+
                     yield break;
                 }
                 else
                 {
+                    myPos = transform.position;
                     float terrainY = terrain.SampleHeight(transform.position) + transform.localScale.y / 2f + fixedY;
                     transform.position = new Vector3(myPos.x, terrainY, myPos.z);
                     transform.position += transform.forward * MoveSpeed * Time.fixedDeltaTime;
@@ -179,36 +203,87 @@ public class Burnduri : EnemyBase
 
     IEnumerator ChargeRoutine()
     {
-        StopCoroutine(updateRoutine);
-        StopCoroutine(moveRoutine);
-
         animator.SetTrigger("ChargeStart");
-
-        yield return new WaitForSeconds(1f);
+        float ChargeCool = encounterClip != null ? encounterClip.length / animator.speed : 0f;
+        yield return new WaitForSeconds(ChargeCool);
 
         Vector3 startPos = transform.position;
-        Vector3 dir = transform.forward;  // 이 순간의 방향을 저장
 
-        animator.SetTrigger("Charge");
+
+        float yAngle = transform.eulerAngles.y;
+        float zAngle = transform.eulerAngles.z;
+
+        Quaternion Rot = Quaternion.Euler(0f, yAngle, zAngle);
+
+        transform.rotation = Rot;
 
         while (Vector3.Distance(transform.position, startPos) < triggerDistance)
         {
-            float terrainY = terrain.SampleHeight(transform.position);
-            terrainY += transform.localScale.y / 2f;
-            dir.y = terrainY + fixedY;
-            transform.position += dir * chargeSpeed * Time.fixedDeltaTime;
+            myPos = transform.position;
+            float terrainY = terrain.SampleHeight(transform.position) + transform.localScale.y / 2f + fixedY;
+            transform.position = new Vector3(myPos.x, terrainY, myPos.z);
+            transform.position += transform.forward * chargeSpeed * Time.fixedDeltaTime;
             yield return new WaitForFixedUpdate();
         }
 
+
+        StartCoroutine(DieBurnduri());
+    }
+
+    IEnumerator DieBurnduri()
+    {
         animator.SetTrigger("disappear");
+        float DisappearCool = disappearClip != null ? disappearClip.length / animator.speed : 0f;
+        myCollider.enabled = false;
+        yield return new WaitForSeconds(DisappearCool);
+        gameObject.SetActive(false);
+    }
 
-        while (animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1f)
 
-            yield return null;
 
-        enabled = false;
+    public override void CsvEnemyInfo()
+    {
 
-        Destroy(gameObject);
+    }
+
+    public override void Move(Vector3 direction)
+    {
+        animator = GetComponent<Animator>();
+        myCollider = GetComponent<Collider>();
+
+        myCollider.enabled = false;
+
+        if (animator != null)
+        {
+            foreach (var clip in animator.runtimeAnimatorController.animationClips)
+            {
+                if (clip.name == "anim_01_MON001_Bduri_Appearance")
+                    appearanceClip = clip;
+                else if (clip.name == "anim_03_MON001_Bduri_Encounter")
+                    encounterClip = clip;
+                else if (clip.name == "anim_01_MON001_Bduri_Disappearance")
+                    disappearClip = clip;
+            }
+        }
+        // 컨트롤러에 등록된 모든 클립을 뒤져서 원하는 이름의 클립을 저장
+
+        if (appearanceClip == null || encounterClip == null || disappearClip == null)
+            Debug.LogWarning("Appearance 또는 Encounter 클립을 찾지 못했습니다.");
+
+        //한번만 찾을꺼임
+        if (players.Count == 0)
+        {
+            var objs = GameObject.FindGameObjectsWithTag("Player");
+            foreach (var obj in objs)
+            {
+                players.Add(obj.transform);
+            }
+        }
+
+        terrain = Terrain.activeTerrain;
+        isCharging = false;
+
+        StartCoroutine(GoBurnduri());
     }
 
 }

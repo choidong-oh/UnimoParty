@@ -1,6 +1,6 @@
 using UnityEngine;
 
-//invoke
+//invoker
 //여기서 프리팹 다 넣어서 정리
 public class EnemySpawnerCommand : MonoBehaviour
 {

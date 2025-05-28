@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using UnityEngine.InputSystem;
 using UnityEngine;
 using Photon.Pun;
 
@@ -14,11 +13,13 @@ public class SpawnManager : MonoBehaviourPunCallbacks
     // 게임이 시작될 때 실행되는 함수
     private void Start()
     {
-        SpawnAtIndex(currentSpawnIndex);
-        currentSpawnIndex++;
+        if (PhotonNetwork.IsConnected && PhotonNetwork.InRoom)
+        {
+            SpawnAtIndex(PhotonNetwork.LocalPlayer.ActorNumber - 1);
+        }
     }
 
-   
+
     // 특정 인덱스 위치에 플레이어를 스폰하는 함수
     public void SpawnAtIndex(int index)
     {
