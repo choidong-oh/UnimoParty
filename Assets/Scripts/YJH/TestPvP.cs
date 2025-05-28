@@ -1,5 +1,6 @@
 using Photon.Pun;
 using Photon.Realtime;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -21,12 +22,8 @@ public class TestPvP : MonoBehaviourPunCallbacks
 
     public void TestPVPButton()
     {
+        PhotonNetwork.AutomaticallySyncScene = true;
         PhotonNetwork.ConnectUsingSettings(); // °Ê OnConnectedToMaster »£√‚µ 
-
-        if(PhotonNetwork.IsMasterClient)
-        {
-            PhotonNetwork.AutomaticallySyncScene = true;
-        }
     }
 
     public override void OnConnectedToMaster()
@@ -42,6 +39,13 @@ public class TestPvP : MonoBehaviourPunCallbacks
 
     public override void OnJoinedRoom()
     {
-        TestStartBtn.interactable = true;
+        if(PhotonNetwork.IsMasterClient)
+        {
+            TestStartBtn.interactable = true;
+        }
+        else
+        {
+            TestStartBtn.GetComponentInChildren<TextMeshProUGUI>().text = "IS READY";
+        }
     }
 }
