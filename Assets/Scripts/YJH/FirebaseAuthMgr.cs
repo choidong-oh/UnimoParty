@@ -25,7 +25,6 @@ public class FirebaseAuthMgr : MonoBehaviour
 
     public static FirebaseUser user;
     public static DatabaseReference dbRef;
-    public static bool IsFirebaseReady { get; private set; } = false;
     public static bool HasUser => user != null;
 
     public FirebaseAuth auth;
@@ -47,7 +46,6 @@ public class FirebaseAuthMgr : MonoBehaviour
             {
                 auth = FirebaseAuth.DefaultInstance;
                 dbRef = FirebaseDatabase.DefaultInstance.RootReference;
-                IsFirebaseReady = true;
             }
             else
             {
