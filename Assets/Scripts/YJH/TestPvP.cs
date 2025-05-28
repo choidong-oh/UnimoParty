@@ -21,8 +21,12 @@ public class TestPvP : MonoBehaviourPunCallbacks
 
     public void TestPVPButton()
     {
-        PhotonNetwork.AutomaticallySyncScene = true;
         PhotonNetwork.ConnectUsingSettings(); // °Ê OnConnectedToMaster »£√‚µ 
+
+        if(PhotonNetwork.IsMasterClient)
+        {
+            PhotonNetwork.AutomaticallySyncScene = true;
+        }
     }
 
     public override void OnConnectedToMaster()
