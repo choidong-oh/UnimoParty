@@ -14,6 +14,7 @@ public class SpawnManager : MonoBehaviourPunCallbacks
     // 게임이 시작될 때 실행되는 함수
     private void Start()
     {
+
         StartCoroutine(wait());
     }
 
@@ -23,7 +24,7 @@ public class SpawnManager : MonoBehaviourPunCallbacks
         yield return new WaitForSeconds(0.1f);
         if (PhotonNetwork.IsConnected && PhotonNetwork.InRoom)
         {
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(0.1f);
             SpawnAtIndex(PhotonNetwork.LocalPlayer.ActorNumber - 1);
         }
     }
@@ -41,7 +42,12 @@ public class SpawnManager : MonoBehaviourPunCallbacks
             Quaternion yRotationOnly = Quaternion.Euler(0, spawnPoint.rotation.eulerAngles.y, 0);
 
             // 플레이어 생성
+            var player = PhotonNetwork.Instantiate("PlayerVariant", spawnPoint.position, yRotationOnly);
 
+            if(player !=photonView.IsMine)
+            {
+                player.GetComponentInChildren<Camera>().gameObject.SetActive(false);
+            }
             //Debug.Log($"플레이어가 스폰됨: 인덱스 {index}, 위치:{spawnPos}");
         }
         else
