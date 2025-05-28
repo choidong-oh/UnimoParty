@@ -1,8 +1,9 @@
 using System.Collections;
+using Photon.Pun;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class HeadDash : MonoBehaviour
+public class HeadDash : MonoBehaviourPunCallbacks
 {
     [Header("XR Origin")]
     public Transform xrOrigin;            // XR Origin 오브젝트
@@ -20,42 +21,43 @@ public class HeadDash : MonoBehaviour
 
     void Update()
     {
-        if (isDashing || xrOrigin == null)
-            return;
-
-        float xRot = transform.eulerAngles.x;
-        float zRot = transform.eulerAngles.z;
-
-        // 오일러 각도 보정 (-180 ~ 180)
-        if (xRot > 180f) xRot -= 360f;
-        if (zRot > 180f) zRot -= 360f;
-
-        bool canDash = Time.time - lastDashTime >= dashCooldown;
-
-        // X축: 앞뒤 대시
-        if (canDash)
+        if(photonView.IsMine)
         {
-            if (xRot >= dashAngle)
+            float xRot = transform.eulerAngles.x;
+            float zRot = transform.eulerAngles.z;
+
+            // 오일러 각도 보정 (-180 ~ 180)
+            if (xRot > 180f) xRot -= 360f;
+            if (zRot > 180f) zRot -= 360f;
+
+            bool canDash = Time.time - lastDashTime >= dashCooldown;
+
+            // X축: 앞뒤 대시
+            if (canDash)
             {
-                StartCoroutine(SmoothDash(spaceShip.forward));
-                lastDashTime = Time.time;
-            }
-            else if (xRot <= -dashAngle)
-            {
-                StartCoroutine(SmoothDash(-spaceShip.forward));
-                lastDashTime = Time.time;
-            }
-            else if (zRot >= dashAngle)
-            {
-                StartCoroutine(SmoothDash(-spaceShip.right));
-                lastDashTime = Time.time;
-            }
-            else if (zRot <= -dashAngle)
-            {
-                StartCoroutine(SmoothDash(spaceShip.right));
-                lastDashTime = Time.time;
+                if (xRot >= dashAngle)
+                {
+                    StartCoroutine(SmoothDash(spaceShip.forward));
+                    lastDashTime = Time.time;
+                }
+                else if (xRot <= -dashAngle)
+                {
+                    StartCoroutine(SmoothDash(-spaceShip.forward));
+                    lastDashTime = Time.time;
+                }
+                else if (zRot >= dashAngle)
+                {
+                    StartCoroutine(SmoothDash(-spaceShip.right));
+                    lastDashTime = Time.time;
+                }
+                else if (zRot <= -dashAngle)
+                {
+                    StartCoroutine(SmoothDash(spaceShip.right));
+                    lastDashTime = Time.time;
+                }
             }
         }
+        
     }
 
     private IEnumerator SmoothDash(Vector3 direction)

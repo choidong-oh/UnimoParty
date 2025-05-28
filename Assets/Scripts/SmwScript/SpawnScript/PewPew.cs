@@ -17,37 +17,37 @@ public class PewPew : EnemyBase
 
     Terrain terrain;
 
-    //private void OnEnable()
-    //{
-    //    // 1. Terrain 참조
-    //    terrain = Terrain.activeTerrain;
-    //    if (terrain == null)
-    //    {
-    //        Debug.LogWarning("트레인 없다 트레인쓰세요.");
-    //    }
-    //    else
-    //    {
-    //        Vector3 tPos = terrain.transform.position;
-    //        Vector3 tSize = terrain.terrainData.size;
+    private void OnEnable()
+    {
+        // 1. Terrain 참조
+        terrain = Terrain.activeTerrain;
+        if (terrain == null)
+        {
+            Debug.LogWarning("트레인 없다 트레인쓰세요.");
+        }
+        else
+        {
+            Vector3 tPos = terrain.transform.position;
+            Vector3 tSize = terrain.terrainData.size;
 
-    //        float centerX = tPos.x + tSize.x * 0.5f;
-    //        float centerZ = tPos.z + tSize.z * 0.5f;
+            float centerX = tPos.x + tSize.x * 0.5f;
+            float centerZ = tPos.z + tSize.z * 0.5f;
 
-    //        Position = new Vector3(centerX, 0, centerZ);//트레인기준 중심
-    //    }
+            Position = new Vector3(centerX, 0, centerZ);//트레인기준 중심
+        }
 
-    //    //랜덤 몬스터 크기
-    //    float RandomScale = Random.Range(1, 4) * 0.3f;
-    //    transform.localScale = new Vector3(RandomScale, RandomScale, RandomScale);
+        //랜덤 몬스터 크기
+        float RandomScale = Random.Range(1, 4) * 0.3f;
+        transform.localScale = new Vector3(RandomScale, RandomScale, RandomScale);
 
-    //    //랜덤 각도에서 시작
-    //    Angle = Random.Range(0f, Mathf.PI * 2f);
-    //    //랜덤반지름 위치 
-    //    Radius = Random.Range(3f, 20f);
-    //    //랜덤 회전 방향(1 or -1)
-    //    rotateDirection = Random.value < 0.5f ? 1 : -1;
-    //    rotateCoroutine = StartCoroutine(GoPewPew());//굳이 변수 선언한건 값 초기화 때문
-    //}
+        //랜덤 각도에서 시작
+        Angle = Random.Range(0f, Mathf.PI * 2f);
+        //랜덤반지름 위치 
+        Radius = Random.Range(3f, 20f);
+        //랜덤 회전 방향(1 or -1)
+        rotateDirection = Random.value < 0.5f ? 1 : -1;
+        rotateCoroutine = StartCoroutine(GoPewPew());//굳이 변수 선언한건 값 초기화 때문
+    }
 
 
     // 오브젝트가 꺼질 때 코루틴 정리
@@ -92,8 +92,9 @@ public class PewPew : EnemyBase
         if (other.gameObject.tag == "Player")
         {
             damage = 1;
-            Manager.Instance.observer.HitPlayer(damage);
+            //Manager.Instance.observer.HitPlayer(damage);
             //Debug.Log(Manager.Instance.observer.UserPlayer.gamedata.life);
+            
 
             gameObject.SetActive(false);
         }

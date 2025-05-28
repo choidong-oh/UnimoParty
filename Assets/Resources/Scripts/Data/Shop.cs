@@ -5,6 +5,14 @@ using UnityEngine;
 public class Shop : MonoBehaviour
 {
 
+    private void Start()
+    {
+        GetItemData();
+    }
 
+    void GetItemData()
+    {
+
+    }
 
 }

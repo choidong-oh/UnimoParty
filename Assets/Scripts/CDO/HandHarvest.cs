@@ -1,9 +1,10 @@
+using Photon.Pun;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.XR;
 using UnityEngine.XR.Interaction.Toolkit;
 
-public partial class HandHarvest : MonoBehaviour
+public class HandHarvest : MonoBehaviourPunCallbacks
 {
     [SerializeField] XRRayInteractor RayInteractor;
 
@@ -20,17 +21,31 @@ public partial class HandHarvest : MonoBehaviour
     //콜백은 OnEnable 안댐
     //player은 안사라지니깐 awake, start에 넣으면 댈듯 
     //콜백 쓸만한건없긴함
-    void OnEnable()
+    private void Start()
     {
-        activateAction.action.performed += OnTriggerPressed;
-        activateAction.action.canceled += OnTriggerReleased;
-
+        if(!photonView.IsMine)
+        {
+            GetComponentInChildren<Camera>().gameObject.SetActive(false);
+        }
+    }
+    public override void OnEnable()
+    {
+        base.OnEnable();
+        if (photonView.IsMine)
+        {            
+            activateAction.action.performed += OnTriggerPressed;
+            activateAction.action.canceled += OnTriggerReleased;
+        }        
     }
 
-    void OnDisable()
+    public override void OnDisable()
     {
-        activateAction.action.performed -= OnTriggerPressed;
-        activateAction.action.canceled -= OnTriggerReleased;
+        base.OnDisable();
+        if (photonView.IsMine)
+        {
+            activateAction.action.performed -= OnTriggerPressed;
+            activateAction.action.canceled -= OnTriggerReleased;
+        }
     }
 
     //안전코드 써야댐 flower가없을수있음
@@ -80,8 +95,4 @@ public partial class HandHarvest : MonoBehaviour
         }
     }
 
-}
-
-public partial class HandHarvest : MonoBehaviour
-{
 }

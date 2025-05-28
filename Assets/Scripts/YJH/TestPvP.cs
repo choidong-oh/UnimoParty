@@ -1,6 +1,6 @@
-using System.Collections;
 using Photon.Pun;
 using Photon.Realtime;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,27 +11,41 @@ public class TestPvP : MonoBehaviourPunCallbacks
     void Start()
     {
         TestStartBtn.interactable = false;
-        TestStartBtn.onClick.AddListener(() => PhotonNetwork.LoadLevel(3));
+        TestStartBtn.onClick.AddListener(() =>
+        {
+            if (PhotonNetwork.IsMasterClient)
+            {
+                PhotonNetwork.LoadLevel(3);
+            }
+        });
     }
 
     public void TestPVPButton()
     {
         PhotonNetwork.AutomaticallySyncScene = true;
-        PhotonNetwork.ConnectUsingSettings();
+        PhotonNetwork.ConnectUsingSettings(); // °Ê OnConnectedToMaster »£√‚µ 
     }
 
     public override void OnConnectedToMaster()
     {
-        PhotonNetwork.JoinLobby();
+        PhotonNetwork.JoinRandomRoom();
     }
 
-    public override void OnJoinedLobby()
+
+    public override void OnJoinRandomFailed(short returnCode, string message)
     {
-        PhotonNetwork.CreateRoom(null, null);
+        PhotonNetwork.CreateRoom(null, new RoomOptions { MaxPlayers = 4 });
     }
 
     public override void OnJoinedRoom()
     {
-        TestStartBtn.interactable = true;
+        if(PhotonNetwork.IsMasterClient)
+        {
+            TestStartBtn.interactable = true;
+        }
+        else
+        {
+            TestStartBtn.GetComponentInChildren<TextMeshProUGUI>().text = "IS READY";
+        }
     }
 }

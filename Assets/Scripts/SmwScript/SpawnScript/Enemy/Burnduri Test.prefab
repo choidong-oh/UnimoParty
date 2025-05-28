@@ -801,6 +801,7 @@ MonoBehaviour:
   chargeDistance: 3
   triggerDistance: 10
   fixedY: 0
+  CrashBurnduri: {fileID: 3334270714622040670, guid: 591be72f292aa7a4fba90570ef2e99b4, type: 3}
 --- !u!1001 &148879231885707354
 PrefabInstance:
   m_ObjectHideFlags: 0

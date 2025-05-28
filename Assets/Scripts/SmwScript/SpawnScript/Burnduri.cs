@@ -42,57 +42,68 @@ public class Burnduri : EnemyBase
     private AnimationClip encounterClip;
     private AnimationClip disappearClip;
 
+    [SerializeField] GameObject CrashBurnduri;
+
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Player")
         {
+
+            Vector3 hitPoint = other.ClosestPoint(transform.position);//충돌지점에 최대한 가깝게
+
+            Vector3 normal = (hitPoint - transform.position).normalized;// 방향계산
+            Quaternion rot = Quaternion.LookRotation(normal);// 방향계산
+
+            GameObject inst = Instantiate(CrashBurnduri, hitPoint, rot);
+
+
             //Debug.Log(Manager.Instance.observer.UserPlayer.gamedata.life);
             //Manager.Instance.observer.HitPlayer(damage);
             StopAllCoroutines();
-            StartCoroutine(DieBurnduri());
+            gameObject.SetActive(false);
         }
     }
 
-    //void OnEnable()
-    //{
-    //    animator = GetComponent<Animator>();
-    //    myCollider = GetComponent<Collider>();
+    void OnEnable()
+    {
+        animator = GetComponent<Animator>();
+        myCollider = GetComponent<Collider>();
 
-    //    myCollider.enabled = false;
+        myCollider.enabled = false;
 
-    //    if (animator != null)
-    //    {
-    //        foreach (var clip in animator.runtimeAnimatorController.animationClips)
-    //        {
-    //            if (clip.name == "anim_01_MON001_Bduri_Appearance")
-    //                appearanceClip = clip;
-    //            else if (clip.name == "anim_03_MON001_Bduri_Encounter")
-    //                encounterClip = clip;
-    //            else if (clip.name == "anim_01_MON001_Bduri_Disappearance")
-    //                disappearClip = clip;
-    //        }
-    //    }
-    //    // 컨트롤러에 등록된 모든 클립을 뒤져서 원하는 이름의 클립을 저장
+        if (animator != null)
+        {
+            foreach (var clip in animator.runtimeAnimatorController.animationClips)
+            {
+                if (clip.name == "anim_01_MON001_Bduri_Appearance")
+                    appearanceClip = clip;
+                else if (clip.name == "anim_03_MON001_Bduri_Encounter")
+                    encounterClip = clip;
+                else if (clip.name == "anim_01_MON001_Bduri_Disappearance")
+                    disappearClip = clip;
+            }
+        }
+        // 컨트롤러에 등록된 모든 클립을 뒤져서 원하는 이름의 클립을 저장
 
-    //    if (appearanceClip == null || encounterClip == null || disappearClip == null)
-    //        Debug.LogWarning("Appearance 또는 Encounter 클립을 찾지 못했습니다.");
+        if (appearanceClip == null || encounterClip == null || disappearClip == null)
+            Debug.LogWarning("Appearance 또는 Encounter 클립을 찾지 못했습니다.");
 
-    //    //한번만 찾을꺼임
-    //    if (players.Count == 0)
-    //    {
-    //        var objs = GameObject.FindGameObjectsWithTag("Player");
-    //        foreach (var obj in objs)
-    //        {
-    //            players.Add(obj.transform);
-    //        }
-    //    }
+        //한번만 찾을꺼임
+        if (players.Count == 0)
+        {
+            var objs = GameObject.FindGameObjectsWithTag("Player");
+            foreach (var obj in objs)
+            {
+                players.Add(obj.transform);
+            }
+        }
 
-    //    terrain = Terrain.activeTerrain;
-    //    isCharging = false;
+        terrain = Terrain.activeTerrain;
+        isCharging = false;
 
-    //    StartCoroutine(GoBurnduri());
-    //}
+        StartCoroutine(GoBurnduri());
+    }
 
     IEnumerator GoBurnduri()
     {

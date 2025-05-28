@@ -1,7 +1,7 @@
 using System.Collections.Generic;
-using UnityEngine.InputSystem;
 using UnityEngine;
 using Photon.Pun;
+using System.Collections;
 
 public class SpawnManager : MonoBehaviourPunCallbacks
 {
@@ -14,16 +14,25 @@ public class SpawnManager : MonoBehaviourPunCallbacks
     // 게임이 시작될 때 실행되는 함수
     private void Start()
     {
-        SpawnAtIndex(currentSpawnIndex);
-        currentSpawnIndex++;
+        StartCoroutine(wait());
     }
 
-   
+
+    IEnumerator wait()
+    {
+        yield return new WaitForSeconds(0.1f);
+        if (PhotonNetwork.IsConnected && PhotonNetwork.InRoom)
+        {
+            yield return new WaitForSeconds(0.1f);
+            SpawnAtIndex(PhotonNetwork.LocalPlayer.ActorNumber - 1);
+        }
+    }
+
     // 특정 인덱스 위치에 플레이어를 스폰하는 함수
     public void SpawnAtIndex(int index)
     {
         // 유효한 인덱스인지 확인
-        if (index >= 0 && index < spawnPoints.Count)
+        if (index >= 0 && index < spawnPoints.Count )
         {
             Transform spawnPoint = spawnPoints[index];
             Vector3 spawnPos = spawnPoint.position;
@@ -31,10 +40,8 @@ public class SpawnManager : MonoBehaviourPunCallbacks
             // Y축 회전만 유지하고 나머지 회전은 제거
             Quaternion yRotationOnly = Quaternion.Euler(0, spawnPoint.rotation.eulerAngles.y, 0);
 
-            // 플레이어 생성
-            PhotonNetwork.Instantiate("PlayerVariant", spawnPos, yRotationOnly);
+            PhotonNetwork.Instantiate("PlayerVariant", spawnPoint.position, yRotationOnly);
 
-            //Debug.Log($"플레이어가 스폰됨: 인덱스 {index}, 위치:{spawnPos}");
         }
         else
         {

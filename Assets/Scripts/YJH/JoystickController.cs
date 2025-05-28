@@ -1,10 +1,11 @@
 using System.Collections;
+using Photon.Pun;
 using TMPro;
 using UnityEngine;
 using UnityEngine.XR.Content.Interaction;
 using UnityEngine.XR.Interaction.Toolkit;
 
-public class JoystickController : MonoBehaviour
+public class LeftHandController : MonoBehaviourPunCallbacks
 {
     public GameObject xrOriginObject;     // XROrigin 오브젝트
     [Space]
@@ -35,16 +36,19 @@ public class JoystickController : MonoBehaviour
     void Start()
     {
         //userName.text = FirebaseLoginMgr.user.DisplayName;
+        if(photonView.IsMine)
+        {
+            handRenderers = leftController.GetComponentsInChildren<Renderer>();
 
-        handRenderers = leftController.GetComponentsInChildren<Renderer>();
+            LController = Instantiate(controllerPrefab, joystickTF);
+            LController.SetActive(false);
 
-        LController = Instantiate(controllerPrefab, joystickTF);         
-        LController.SetActive(false);
+            xrOriginTransform = xrOriginObject.transform;
 
-        xrOriginTransform = xrOriginObject.transform;
-
-        joystick.onValueChangeY.AddListener(OnJoystickMoveY);
-        joystick.onValueChangeX.AddListener(OnJoystickMoveX);
+            joystick.onValueChangeY.AddListener(OnJoystickMoveY);
+            joystick.onValueChangeX.AddListener(OnJoystickMoveX);
+        }
+        
     }
 
     void OnDestroy()
@@ -67,16 +71,22 @@ public class JoystickController : MonoBehaviour
 
     public void OnSelectEnter()
     {
-        LController.SetActive(true);
-        SetHandVisible(false);
+        if (photonView.IsMine)
+        {
+            LController.SetActive(true);
+            SetHandVisible(false);
 
-        leftController.model.gameObject.SetActive(false);
+            leftController.model.gameObject.SetActive(false);
+        }
     }
     public void OnSelectExit()
     {
-        LController.SetActive(false);
-        SetHandVisible(true);
-        leftController.model.gameObject.SetActive(true);
+        if (photonView.IsMine)
+        {
+            LController.SetActive(false);
+            SetHandVisible(true);
+            leftController.model.gameObject.SetActive(true);
+        }
     }
 
     void SetHandVisible(bool visible)
