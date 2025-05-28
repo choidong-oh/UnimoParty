@@ -41,14 +41,13 @@ public class SpawnManager : MonoBehaviourPunCallbacks
             // Y축 회전만 유지하고 나머지 회전은 제거
             Quaternion yRotationOnly = Quaternion.Euler(0, spawnPoint.rotation.eulerAngles.y, 0);
 
-            // 플레이어 생성
-            var player = PhotonNetwork.Instantiate("PlayerVariant", spawnPoint.position, yRotationOnly);
+            GameObject player = PhotonNetwork.Instantiate("PlayerVariant", spawnPoint.position, yRotationOnly);
 
-            if(player !=photonView.IsMine)
+            PhotonView playerView = player.GetComponent<PhotonView>();
+            if (!playerView.IsMine)
             {
-                player.GetComponentInChildren<Camera>().gameObject.SetActive(false);
+                player.GetComponentInChildren<Camera>(true).gameObject.SetActive(false);
             }
-            //Debug.Log($"플레이어가 스폰됨: 인덱스 {index}, 위치:{spawnPos}");
         }
         else
         {
