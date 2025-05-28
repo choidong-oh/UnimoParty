@@ -13,9 +13,9 @@ public class SpawnManager : MonoBehaviourPunCallbacks
     // 게임이 시작될 때 실행되는 함수
     private void Start()
     {
-        if (PhotonNetwork.IsConnected && PhotonNetwork.InRoom && PhotonNetwork.LocalPlayer.IsLocal)
+        if (PhotonNetwork.IsConnected && PhotonNetwork.InRoom)
         {
-            SpawnAtIndex(PhotonNetwork.LocalPlayer.ActorNumber - 1);
+            PhotonNetwork.Instantiate("PlayerVariant", spawnPoints[1].position, spawnPoints[1].rotation);
         }
     }
 
@@ -33,7 +33,6 @@ public class SpawnManager : MonoBehaviourPunCallbacks
             Quaternion yRotationOnly = Quaternion.Euler(0, spawnPoint.rotation.eulerAngles.y, 0);
 
             // 플레이어 생성
-            PhotonNetwork.Instantiate("PlayerVariant", spawnPos, yRotationOnly);
 
             //Debug.Log($"플레이어가 스폰됨: 인덱스 {index}, 위치:{spawnPos}");
         }
