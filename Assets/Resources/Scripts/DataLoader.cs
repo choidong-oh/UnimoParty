@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class DataLoader
 {
+    EnemyBase enemyData;
     public Dictionary<string, List<InterfaceMethod.TableData>> data = new Dictionary<string, List<InterfaceMethod.TableData>>()
     {
         { "Enemy", new List<InterfaceMethod.TableData>()},
@@ -31,15 +32,14 @@ public class DataLoader
                     Debug.Log("에너미 csv  로드");
                     for (int i = 1; i < lines.Length - 1; i++)
                     {
-                        EnemyBase enemyData;
-
+                        enemyData = null;
                         string[] values = lines[i].Split(',');
                         //EnemyBase.INDEX = int.Parse(values[0]);
-                        EnemyBase.enemyName = values[1].ToString();
-                        EnemyBase.damage = int.Parse(values[3]);
-                        EnemyBase.enemyMoveSpeed = float.Parse(values[4]);
+                        enemyData.enemyName = values[1].ToString();
+                        enemyData.damage = int.Parse(values[3]);
+                        enemyData.enemyMoveSpeed = float.Parse(values[4]);
 
-                        //item.Value.Add(enemyData);
+                        item.Value.Add(enemyData);
                     }
                     break;
 
