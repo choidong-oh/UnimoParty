@@ -31,7 +31,7 @@ public class EnemySpawnerCommand : MonoBehaviour
         }
         else if(enemyType == "Shookshook")
         {
-            enemyObject = PhotonNetwork.Instantiate("ShookShookTest", direction, Quaternion.identity).GetComponent<EnemyBase>();
+            enemyObject = PhotonNetwork.Instantiate("BurnduriTest", direction, Quaternion.identity).GetComponent<EnemyBase>();
             command = new MoveCommand(enemyObject, direction, speed);
             command.Execute();
         }

@@ -12,13 +12,12 @@ public class FreezeBoom : MonoBehaviourPunCallbacks
     IEnumerator wait()
     {
         yield return new WaitForSeconds(2);
-        photonView.RPC("Explode", RpcTarget.All);
+        Explode();
     }
 
-    [PunRPC]
     void Explode()
     {
-        RaycastHit[] hits = Physics.SphereCastAll(transform.position, 3, Vector3.up, 10f, LayerMask.GetMask("Player", "Enemy", "Water"));
+        RaycastHit[] hits = Physics.SphereCastAll(transform.position, 30, Vector3.up, 100f, LayerMask.GetMask("Player", "Enemy", "Water"));
         foreach (var hitobj in hits)
         {
             Debug.Log("ºù°á ÆøÅº");

@@ -1060,7 +1060,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1625038121
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1068,7 +1068,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1625038120}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 128e9553ae5519f4297d3a83d106d068, type: 3}
   m_Name: 
@@ -1375,6 +1375,10 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 560221612346958600, guid: b0700a97fafc8564c88c1d084dea0bf9, type: 3}
       propertyPath: burnduriEnemyPrefab
+      value: 
+      objectReference: {fileID: -5146211747824840565, guid: 927e35cb881a2ef449423e0b6cb1b1c9, type: 3}
+    - target: {fileID: 560221612346958600, guid: b0700a97fafc8564c88c1d084dea0bf9, type: 3}
+      propertyPath: shookshookEnemyPrefab
       value: 
       objectReference: {fileID: -5146211747824840565, guid: 927e35cb881a2ef449423e0b6cb1b1c9, type: 3}
     - target: {fileID: 2679417459161413165, guid: b0700a97fafc8564c88c1d084dea0bf9, type: 3}
