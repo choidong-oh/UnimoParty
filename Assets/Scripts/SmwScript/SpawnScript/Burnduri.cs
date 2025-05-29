@@ -44,6 +44,19 @@ public class Burnduri : EnemyBase
 
     [SerializeField] GameObject CrashBurnduri;
 
+    public override void Freeze(Vector3 direction)
+    {
+        Debug.Log("얼음ㅋ");
+        StopAllCoroutines();
+        StartCoroutine(wait(direction));
+    }
+
+    //테스트용 나중에 다른곳에서 할당할거임
+    IEnumerator wait(Vector3 direction)
+    {
+        yield return new WaitForSeconds(3);
+        Move(direction);
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -55,7 +68,7 @@ public class Burnduri : EnemyBase
             Vector3 normal = (hitPoint - transform.position).normalized;// 방향계산
             Quaternion rot = Quaternion.LookRotation(normal);// 방향계산
 
-            GameObject inst = Instantiate(CrashBurnduri, hitPoint, rot);
+            //GameObject inst = Instantiate(CrashBurnduri, hitPoint, rot);
 
 
             //Debug.Log(Manager.Instance.observer.UserPlayer.gamedata.life);
@@ -286,4 +299,5 @@ public class Burnduri : EnemyBase
         StartCoroutine(GoBurnduri());
     }
 
+  
 }

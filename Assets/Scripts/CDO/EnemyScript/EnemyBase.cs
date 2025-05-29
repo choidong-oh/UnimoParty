@@ -16,7 +16,7 @@ public abstract class EnemyBase : MonoBehaviour
     public int spawnCount;                
 
     public abstract void Move(Vector3 direction);
-
+    public abstract void Freeze(Vector3 direction);
     //base
     public abstract void CsvEnemyInfo();
    
