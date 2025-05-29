@@ -33,10 +33,10 @@ public class JoystickController : MonoBehaviourPunCallbacks
     [SerializeField] TextMeshProUGUI userName;
     //LeftController
     GameObject LController;
+
     void Start()
     {
         //userName.text = FirebaseLoginMgr.user.DisplayName;
-
         if(photonView.IsMine)
         {
             handRenderers = leftController.GetComponentsInChildren<Renderer>();
@@ -49,7 +49,7 @@ public class JoystickController : MonoBehaviourPunCallbacks
             joystick.onValueChangeY.AddListener(OnJoystickMoveY);
             joystick.onValueChangeX.AddListener(OnJoystickMoveX);
         }
-        
+            
     }
 
     void OnDestroy()
@@ -70,24 +70,18 @@ public class JoystickController : MonoBehaviourPunCallbacks
         xrOriginTransform.position += right * value * moveSpeed * Time.deltaTime;
     }
 
-    public void OnSelectEnter()
+    public void OnSelect()
     {
-        if (photonView.IsMine)
-        {
-            LController.SetActive(true);
-            SetHandVisible(false);
+        LController.SetActive(true);
+        SetHandVisible(false);
 
-            leftController.model.gameObject.SetActive(false);
-        }
+        leftController.model.gameObject.SetActive(false);
     }
     public void OnSelectExit()
     {
-        if (photonView.IsMine)
-        {
-            LController.SetActive(false);
-            SetHandVisible(true);
-            leftController.model.gameObject.SetActive(true);
-        }
+        LController.SetActive(false);
+        SetHandVisible(true);
+        leftController.model.gameObject.SetActive(true);
     }
 
     void SetHandVisible(bool visible)

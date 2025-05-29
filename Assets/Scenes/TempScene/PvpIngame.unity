@@ -1405,6 +1405,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 560221612346958600, guid: b0700a97fafc8564c88c1d084dea0bf9, type: 3}
+      propertyPath: burnduriEnemyPrefab
+      value: 
+      objectReference: {fileID: -5146211747824840565, guid: 927e35cb881a2ef449423e0b6cb1b1c9, type: 3}
     - target: {fileID: 2679417459161413165, guid: b0700a97fafc8564c88c1d084dea0bf9, type: 3}
       propertyPath: m_Name
       value: MonsterSpawnMgr
