@@ -4,7 +4,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.XR;
 using UnityEngine.XR.Interaction.Toolkit;
 
-public class HandHarvest : MonoBehaviourPunCallbacks
+public class HandHarvest : MonoBehaviourPunCallbacks, IFreeze
 {
     [SerializeField] XRRayInteractor RayInteractor;
 
@@ -23,19 +23,20 @@ public class HandHarvest : MonoBehaviourPunCallbacks
     //콜백 쓸만한건없긴함
     private void Start()
     {
-        if(!photonView.IsMine)
+        if (!photonView.IsMine)
         {
             GetComponentInChildren<Camera>().gameObject.SetActive(false);
         }
     }
+
     public override void OnEnable()
     {
         base.OnEnable();
         if (photonView.IsMine)
-        {            
+        {
             activateAction.action.performed += OnTriggerPressed;
             activateAction.action.canceled += OnTriggerReleased;
-        }        
+        }
     }
 
     public override void OnDisable()
@@ -47,6 +48,23 @@ public class HandHarvest : MonoBehaviourPunCallbacks
             activateAction.action.canceled -= OnTriggerReleased;
         }
     }
+
+    public void Freeze(bool isFreeze)
+    {
+        Debug.Log("HandHarvest의 Freeze실행됌");
+        if (isFreeze)
+        {
+            activateAction.action.performed -= OnTriggerPressed;
+            activateAction.action.canceled -= OnTriggerReleased;
+        }
+        else if(!isFreeze)
+        {
+            activateAction.action.performed += OnTriggerPressed;
+            activateAction.action.canceled += OnTriggerReleased;
+        }
+
+    }
+
 
     //안전코드 써야댐 flower가없을수있음
     private void OnTriggerPressed(InputAction.CallbackContext context)

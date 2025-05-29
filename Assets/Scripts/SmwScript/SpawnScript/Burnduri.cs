@@ -44,6 +44,18 @@ public class Burnduri : EnemyBase
 
     [SerializeField] GameObject CrashBurnduri;
 
+    public override void Freeze(Vector3 direction)
+    {
+        Debug.Log("¾óÀ½¤»");
+        StopAllCoroutines();
+        StartCoroutine(wait(direction));
+    }
+
+    IEnumerator wait(Vector3 direction)
+    {
+        yield return new WaitForSeconds(3);
+        Move(direction);
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -286,4 +298,5 @@ public class Burnduri : EnemyBase
         StartCoroutine(GoBurnduri());
     }
 
+  
 }
