@@ -51,6 +51,7 @@ public class Burnduri : EnemyBase
         StartCoroutine(wait(direction));
     }
 
+    //테스트용 나중에 다른곳에서 할당할거임
     IEnumerator wait(Vector3 direction)
     {
         yield return new WaitForSeconds(3);

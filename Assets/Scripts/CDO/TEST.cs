@@ -1,55 +1,33 @@
+using Photon.Pun;
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
 
 public class TEST : MonoBehaviour
 {
-    public ActionBasedController RightController; //진짜모델
-    private Renderer[] handRenderers;
+    [SerializeField] GameObject Boomprefab;
+    [SerializeField] Transform TestBoomTrans;
 
+
+    //[ContextMenu("얼음")]
 
     private void Start()
     {
-        handRenderers = RightController.GetComponentsInChildren<Renderer>();
-
-        StartCoroutine(WAIT());
+        StartCoroutine(test());
     }
-  
-    void SetHandVisible(bool visible)
-    {
-        foreach (var renderer in handRenderers)
-        {
-            renderer.enabled = visible;
-        }
 
-    }
-    //[ContextMenu("얼음")]
-    IEnumerator WAIT()
+    IEnumerator test()
     {
         yield return new WaitForSeconds(2);
-
-        RightController.model.gameObject.SetActive(false);
-        SetHandVisible(false);
+        PhotonNetwork.Instantiate("Boomprefab", TestBoomTrans.position,Quaternion.identity);
     }
 
 
 
-    
 
-    //public void OnSelectEnter()
-    //{
-    //    LController.SetActive(true);
-    //    SetHandVisible(false);
 
-    //    leftController.model.gameObject.SetActive(false);
-    //}
-    //public void OnSelectExit()
-    //{
-    //    LController.SetActive(false);
-    //    SetHandVisible(true);
-    //    leftController.model.gameObject.SetActive(true);
-    //}
 
 
     

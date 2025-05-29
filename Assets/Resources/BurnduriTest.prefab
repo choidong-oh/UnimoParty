@@ -524,7 +524,7 @@ GameObject:
   - component: {fileID: -5146211747824840565}
   - component: {fileID: -598686533152891395}
   - component: {fileID: 5201961080034001827}
-  m_Layer: 9
+  m_Layer: 7
   m_Name: BurnduriTest
   m_TagString: Monster
   m_Icon: {fileID: 0}
@@ -822,7 +822,8 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   observableSearch: 2
-  ObservedComponents: []
+  ObservedComponents:
+  - {fileID: 5201961080034001827}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
