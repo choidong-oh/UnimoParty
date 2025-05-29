@@ -18,6 +18,6 @@ public class FreezeCommand : ICommand
 
     public void Execute()
     {
-        //enemyBase.Freeze(direction);
+        enemyBase.Freeze(direction);
     }
 }

@@ -522,7 +522,7 @@ GameObject:
   - component: {fileID: 8699898694323566944}
   - component: {fileID: 3389187268223202056}
   - component: {fileID: -5146211747824840565}
-  m_Layer: 9
+  m_Layer: 7
   m_Name: Burnduri Test
   m_TagString: Monster
   m_Icon: {fileID: 0}
