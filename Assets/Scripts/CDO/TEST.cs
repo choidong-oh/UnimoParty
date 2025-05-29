@@ -20,8 +20,13 @@ public class TEST : MonoBehaviour
 
     IEnumerator test()
     {
-        yield return new WaitForSeconds(2);
-        PhotonNetwork.Instantiate("Boomprefab", TestBoomTrans.position,Quaternion.identity);
+        while(true)
+        {
+            yield return new WaitForSeconds(2);
+            PhotonNetwork.Instantiate("Boomprefab", TestBoomTrans.position, Quaternion.identity);
+        }
+
+        
     }
 
 

@@ -134,7 +134,7 @@ public class Flower : MonoBehaviourPun
 
         if (handHarvest != null)
         {
-            handHarvest.spiritPoint++;
+            handHarvest.SpiritPoint++;
             Debug.Log("spiritPoint ¡ı∞°!");
         }
         else

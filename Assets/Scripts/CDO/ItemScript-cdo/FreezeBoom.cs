@@ -1,7 +1,8 @@
 using System.Collections;
 using UnityEngine;
+using Photon.Pun;
 
-public class FreezeBoom : MonoBehaviour
+public class FreezeBoom : MonoBehaviourPunCallbacks
 {
 
     private void Start()
@@ -11,9 +12,10 @@ public class FreezeBoom : MonoBehaviour
     IEnumerator wait()
     {
         yield return new WaitForSeconds(2);
-        Explode();
+        photonView.RPC("Explode", RpcTarget.All);
     }
 
+    [PunRPC]
     void Explode()
     {
         RaycastHit[] hits = Physics.SphereCastAll(transform.position, 3, Vector3.up, 10f, LayerMask.GetMask("Player", "Enemy", "Water"));

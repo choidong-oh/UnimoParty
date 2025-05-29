@@ -6,17 +6,19 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public class HandHarvest : MonoBehaviourPunCallbacks, IFreeze
 {
-    [SerializeField] XRRayInteractor RayInteractor;
+    [SerializeField] GameObject cameraOffset;
 
-    [SerializeField] int SpiritPoint = 0; //
-    public int spiritPoint { get { return SpiritPoint; } set { if (value < 0) { Debug.Log("정령음수됨"); value = 0; } SpiritPoint = value; } }
+    [SerializeField] XRRayInteractor rayInteractor;
+
+    [SerializeField] int spiritPoint = 0; //
+    public int SpiritPoint { get { return spiritPoint; } set { if (value < 0) { Debug.Log("정령음수됨"); value = 0; } spiritPoint = value; } }
 
     [SerializeField] private InputActionReference activateAction;
     Flower flower;
 
     [Header("Haptic 진동 관련")]
-    [SerializeField] float HapticAmplitude;
-    [SerializeField] float HapticDuraiton;
+    [SerializeField] float hapticAmplitude;
+    [SerializeField] float hapticDuraiton;
 
     //콜백은 OnEnable 안댐
     //player은 안사라지니깐 awake, start에 넣으면 댈듯 
@@ -25,7 +27,7 @@ public class HandHarvest : MonoBehaviourPunCallbacks, IFreeze
     {
         if (!photonView.IsMine)
         {
-            GetComponentInChildren<Camera>().gameObject.SetActive(false);
+            cameraOffset.gameObject.SetActive(false);
         }
     }
 
@@ -71,7 +73,7 @@ public class HandHarvest : MonoBehaviourPunCallbacks, IFreeze
     {
         flower = null;
 
-        if (RayInteractor.TryGetCurrent3DRaycastHit(out RaycastHit hit))
+        if (rayInteractor.TryGetCurrent3DRaycastHit(out RaycastHit hit))
         {
 
             if (!hit.collider.TryGetComponent<Flower>(out flower))
@@ -85,7 +87,7 @@ public class HandHarvest : MonoBehaviourPunCallbacks, IFreeze
                 //진동
                 //*인스펙터창에서 다른진동 Haptic 0으로 줄여야댐
                 //그래야 애만 진동됌
-                RayInteractor.xrController.SendHapticImpulse(HapticAmplitude, HapticDuraiton);
+                rayInteractor.xrController.SendHapticImpulse(hapticAmplitude, hapticDuraiton);
 
                 flower.Init(this);
                 flower.StartHarvest();
