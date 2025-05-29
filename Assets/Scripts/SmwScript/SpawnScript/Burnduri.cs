@@ -55,7 +55,7 @@ public class Burnduri : EnemyBase
             Vector3 normal = (hitPoint - transform.position).normalized;// 방향계산
             Quaternion rot = Quaternion.LookRotation(normal);// 방향계산
 
-            GameObject inst = Instantiate(CrashBurnduri, hitPoint, rot);
+            //GameObject inst = Instantiate(CrashBurnduri, hitPoint, rot);
 
 
             //Debug.Log(Manager.Instance.observer.UserPlayer.gamedata.life);

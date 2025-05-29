@@ -677,9 +677,6 @@ PrefabInstance:
       addedObject: {fileID: 2995381334743392640}
     - targetCorrespondingSourceObject: {fileID: 7696548424635294048, guid: 895f6f3c2d334633b5800312285058d2, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 6307299756049471390}
-    - targetCorrespondingSourceObject: {fileID: 7696548424635294048, guid: 895f6f3c2d334633b5800312285058d2, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 8555340415063019410}
     - targetCorrespondingSourceObject: {fileID: 9014170783809206332, guid: 895f6f3c2d334633b5800312285058d2, type: 3}
       insertIndex: -1
@@ -864,18 +861,6 @@ MonoBehaviour:
   activateAction: {fileID: 83097790271614945, guid: c348712bda248c246b8c49b3db54643f, type: 3}
   HapticAmplitude: 0.2
   HapticDuraiton: 0.5
---- !u!114 &6307299756049471390
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9167722245327750352}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5efb00a836677547b20969a1aee1bb2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &8555340415063019410
 MonoBehaviour:
   m_ObjectHideFlags: 0

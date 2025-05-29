@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Photon.Pun;
 using UnityEngine;
 
 public class SpawnMgr : MonoBehaviour
@@ -9,7 +10,10 @@ public class SpawnMgr : MonoBehaviour
 
     private void Start()
     {
-        AllSpawn();
+        if(PhotonNetwork.IsMasterClient)
+        {
+            AllSpawn();
+        }
     }
 
     void AllSpawn()
