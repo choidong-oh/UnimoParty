@@ -1532,7 +1532,7 @@ PrefabInstance:
     - target: {fileID: 560221612346958600, guid: b0700a97fafc8564c88c1d084dea0bf9, type: 3}
       propertyPath: shookshookEnemyPrefab
       value: 
-      objectReference: {fileID: -5146211747824840565, guid: 927e35cb881a2ef449423e0b6cb1b1c9, type: 3}
+      objectReference: {fileID: -1612496527784319275, guid: d2f351637dd3ff545b15ced3c30fa928, type: 3}
     - target: {fileID: 2679417459161413165, guid: b0700a97fafc8564c88c1d084dea0bf9, type: 3}
       propertyPath: m_Name
       value: MonsterSpawnMgr

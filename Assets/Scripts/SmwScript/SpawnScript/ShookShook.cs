@@ -1,6 +1,6 @@
 using System.Collections;
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
+using Photon.Pun;
 
 public class ShookShook : EnemyBase
 {
@@ -79,8 +79,9 @@ public class ShookShook : EnemyBase
     //    Coroutine = StartCoroutine(GoShookShook());
     //}
 
-    private void OnDisable()
+    public override void OnDisable()
     {
+        base.OnDisable();
         if (Coroutine != null)
         {
             StopCoroutine(Coroutine);
@@ -90,6 +91,7 @@ public class ShookShook : EnemyBase
 
     IEnumerator GoShookShook()
     {
+        Debug.Log("GoShookShook dasdsadasdas");
         Vector3 pos = transform.position;
         Target.y = pos.y;
         while (Vector3.Distance(transform.position, Target) > 0.5f)
@@ -121,6 +123,12 @@ public class ShookShook : EnemyBase
 
 
     public override void Move(Vector3 direction)
+    {
+        photonView.RPC("Move1",RpcTarget.All, direction);
+    }
+
+    [PunRPC]
+    public  void Move1(Vector3 direction)
     {
         terrain = Terrain.activeTerrain;
         Terrainsize = terrain.terrainData.size;
