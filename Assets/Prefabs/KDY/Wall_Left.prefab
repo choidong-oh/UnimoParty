@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 857371798034989695}
   - component: {fileID: 8084408425165129090}
   - component: {fileID: 1521576320218841852}
+  - component: {fileID: 7817269088021699918}
   m_Layer: 0
   m_Name: Wall_Left
   m_TagString: Untagged
@@ -29,7 +30,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -200.5, y: 2.55, z: 0}
-  m_LocalScale: {x: 0.09774737, y: 5.1, z: 37.872406}
+  m_LocalScale: {x: 0.09774737, y: 5.1, z: 100}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -103,5 +104,20 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0, y: 0, z: 1}
-  m_Center: {x: 0, y: 0, z: -0}
+  m_Size: {x: 30, y: 2, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &7817269088021699918
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5308416631000331404}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00e0739248b38094bb2a14264a87be64, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  wallType: 2
+  teleportReference: {fileID: 0}
+  lookAtTarget: {fileID: 0}
