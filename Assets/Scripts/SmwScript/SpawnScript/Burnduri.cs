@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEditor.PlayerSettings;
 
 public class Burnduri : EnemyBase
 {
@@ -46,7 +45,6 @@ public class Burnduri : EnemyBase
 
     public override void Freeze(Vector3 direction)
     {
-        Debug.Log("¾óÀ½¤»");
         StopAllCoroutines();
         StartCoroutine(wait(direction));
     }
