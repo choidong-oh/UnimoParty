@@ -1,10 +1,8 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using Photon;
-using Photon.Pun;
-using Photon.Realtime;
 
 public class Flower : MonoBehaviourPun
 {
@@ -142,15 +140,15 @@ public class Flower : MonoBehaviourPun
             Debug.LogWarning("handHarvest가 설정되지 않았습니다.");
         }
 
-        if(controller.IsTestMode == false)
+        if (controller.IsTestMode == false)
         {
             //매니저랑 상호작용
             Manager.Instance.observer.GetFairy(fairyType);
         }
 
-        this.gameObject.SetActive(false);
+        //this.gameObject.SetActive(false);
 
-        //photonView.RPC("FlowerSetAcive", RpcTarget.All,false);
+        photonView.RPC("FlowerSetAcive", RpcTarget.All,false);
 
         Debug.Log("채집 완료!");
     }
