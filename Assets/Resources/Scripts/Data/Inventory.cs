@@ -2,17 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Inventory : MonoBehaviour
+public class Inventory
 {
-    // Start is called before the first frame update
-    void Start()
+    public List<InterfaceMethod.IItemData> userItemDatas = new List<InterfaceMethod.IItemData>()
     {
+        new Potion()
         
-    }
+    };
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public List<SpaceShipData> spaceShipDatas = new List<SpaceShipData>();
 }

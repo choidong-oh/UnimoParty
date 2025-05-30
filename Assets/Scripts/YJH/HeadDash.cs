@@ -1,9 +1,8 @@
-using System.Collections;
 using Photon.Pun;
+using System.Collections;
 using UnityEngine;
-using UnityEngine.Events;
 
-public class HeadDash : MonoBehaviourPunCallbacks
+public class HeadDash : MonoBehaviourPunCallbacks, IFreeze
 {
     [Header("XR Origin")]
     public Transform xrOrigin;            // XR Origin 오브젝트
@@ -11,18 +10,21 @@ public class HeadDash : MonoBehaviourPunCallbacks
 
     [Header("Dash Settings")]
     public float dashAngle = 30f;         // 회전 트리거 각도 (X/Z)
-    public float dashDistance = 7f;       // 대시 거리
+    public float dashDistance = 2f;       // 대시 거리
     public float dashCooldown = 5f;       // 쿨타임
     public float dashDuration = 0.5f;     // 대시 지속 시간
-       
+
 
     private float lastDashTime = -999f;
     private bool isDashing = false;
 
+    //freeze 변수
+    float tempDashDistance = 1F;
+    float tempDashCooldown = 5f;
 
     void Update()
     {
-        if(photonView.IsMine)
+        if (photonView.IsMine)
         {
             float xRot = transform.eulerAngles.x;
             float zRot = transform.eulerAngles.z;
@@ -58,7 +60,7 @@ public class HeadDash : MonoBehaviourPunCallbacks
                 }
             }
         }
-        
+
     }
 
     private IEnumerator SmoothDash(Vector3 direction)
@@ -82,4 +84,21 @@ public class HeadDash : MonoBehaviourPunCallbacks
         isDashing = false;
     }
 
+    //어름
+    public void Freeze(bool IsFreeze)
+    {
+        if (IsFreeze == true)
+        {
+            tempDashDistance = dashDistance;
+            tempDashCooldown = dashCooldown;
+            dashDistance = 0;
+            dashCooldown = 0;
+        }
+        else if (IsFreeze == false)
+        {
+            dashDistance = tempDashDistance;
+            dashCooldown = tempDashCooldown;
+        }
+
+    }
 }

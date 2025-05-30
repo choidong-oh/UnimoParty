@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Shop : MonoBehaviour
 {
+    
 
     private void Start()
     {
@@ -11,6 +12,16 @@ public class Shop : MonoBehaviour
     }
 
     void GetItemData()
+    {
+        var tempdatas = Manager.Instance.dataLoader.data;
+    }
+
+    void ShopItemList()
+    {
+
+    }
+
+    void SelectItem()
     {
 
     }
