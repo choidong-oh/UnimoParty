@@ -47,6 +47,8 @@ MonoBehaviour:
   - Explode
   - Move1
   - OnJoinedRoom
+  - DesignerJoinRoom
+  - DeveloperJoinRoom
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

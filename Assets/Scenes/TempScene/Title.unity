@@ -3944,6 +3944,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   developerGameStartBtn: {fileID: 1502850535}
   designerGameStartBtn: {fileID: 730575416}
+  developerCreateRoom: {fileID: 510515729}
+  designerCreateRoom: {fileID: 232268220}
   developerJoinRoomBtn: {fileID: 1263807418}
   designerJoinRoomBtn: {fileID: 1473191043}
 --- !u!4 &1550927053

@@ -10,6 +10,10 @@ public class TestPvP : MonoBehaviourPunCallbacks
     [SerializeField] Button developerGameStartBtn;
     [SerializeField] Button designerGameStartBtn;
 
+    [Header("방 생성 버튼 들")]
+    [SerializeField] Button developerCreateRoom;
+    [SerializeField] Button designerCreateRoom;
+
 
     [Header("방 입장 버튼 들")]
     [SerializeField] Button developerJoinRoomBtn;
@@ -49,14 +53,19 @@ public class TestPvP : MonoBehaviourPunCallbacks
     public void DesignerPVPCreatRoom()
     {
         PhotonNetwork.CreateRoom("Designer", new RoomOptions { MaxPlayers = 8 });
-        photonView.RPC("OnJoinedRoom", RpcTarget.All);
-
+        photonView.RPC("DesignerJoinRoom", RpcTarget.All);
+    }
+    [PunRPC]
+    void DesignerJoinRoom()
+    {
+        designerJoinRoomBtn.interactable = true;
+        designerCreateRoom.interactable = false;        
+        Debug.Log("기획 방 생성 완료");
     }
     //기획 방 들어가기
     public void DesignerPVPJoinRoom()
     {
         PhotonNetwork.JoinRoom("Designer");
-        photonView.RPC("OnJoinedRoom", RpcTarget.All);
     }
 
 
@@ -66,11 +75,21 @@ public class TestPvP : MonoBehaviourPunCallbacks
     public void DeveloperPVPCreatRoom()
     {
         PhotonNetwork.CreateRoom("Developer", new RoomOptions { MaxPlayers = 8 });
+        photonView.RPC("DeveloperJoinRoom", RpcTarget.All);
+
     }
     //개발 방 들어가기
     public void DeveloperPVPJoinRoom()
     {
         PhotonNetwork.JoinRoom("Developer");
+    }
+
+    [PunRPC]
+    void DeveloperJoinRoom()
+    {
+        developerJoinRoomBtn.interactable = true;
+        developerCreateRoom.interactable = false;
+        Debug.Log("개발 방 생성 완료");
     }
 
     public override void OnConnected()
@@ -83,13 +102,11 @@ public class TestPvP : MonoBehaviourPunCallbacks
     //방이 들어가면
     public override void OnJoinedRoom()
     {
-        
         //기획자 방 들어옴
         int designerInRoom = 1;
         if(PhotonNetwork.IsMasterClient && PhotonNetwork.CurrentRoom.Name== "Designer")
         {
             designerGameStartBtn.interactable = true;
-            designerJoinRoomBtn.interactable = true;
             designerGameStartBtn.GetComponentInChildren<TextMeshProUGUI>().text = $"{designerInRoom} 명 준비완료\n게임 시작";
         }
         else if(PhotonNetwork.CurrentRoom.Name == "Designer")
