@@ -14,7 +14,8 @@ public class TestPvP : MonoBehaviourPunCallbacks
     [SerializeField] Button developerCreateRoom;
     [SerializeField] Button designerCreateRoom;
 
-
+    int developerInRoom;
+    int designerInRoom;
     void Start()
     {
         PhotonNetwork.AutomaticallySyncScene = true;
@@ -70,11 +71,11 @@ public class TestPvP : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         //기획자 방 들어옴
-        int designerInRoom = 1;
         if(PhotonNetwork.IsMasterClient && PhotonNetwork.CurrentRoom.Name== "Designer")
         {
+            designerInRoom++;
             designerGameStartBtn.interactable = true;
-            designerGameStartBtn.GetComponentInChildren<TextMeshProUGUI>().text = $"{designerInRoom} 명 준비완료\n게임 시작";
+            designerGameStartBtn.GetComponentInChildren<TextMeshProUGUI>().text = $"게임 시작";
         }
         else if(PhotonNetwork.CurrentRoom.Name == "Designer")
         {
@@ -85,11 +86,11 @@ public class TestPvP : MonoBehaviourPunCallbacks
 
 
         //개발 방 들어옴
-        int developerInRoom = 1;
         if (PhotonNetwork.IsMasterClient && PhotonNetwork.CurrentRoom.Name== "Developer")
         {
+            developerInRoom++;
             developerGameStartBtn.interactable = true;
-            developerGameStartBtn.GetComponentInChildren<TextMeshProUGUI>().text = $"{developerInRoom} 명 준비완료\n게임 시작";
+            developerGameStartBtn.GetComponentInChildren<TextMeshProUGUI>().text = $"게임 시작";
         }
         else if(PhotonNetwork.CurrentRoom.Name == "Developer")
         {
