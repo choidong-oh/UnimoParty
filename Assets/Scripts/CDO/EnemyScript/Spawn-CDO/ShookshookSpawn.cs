@@ -10,7 +10,7 @@ public class ShookshookSpawn : EnemySpawnBase
 {
     [SerializeField] List<Transform> corners;
     int enemyMaxCount = 5; //최대 몇 마리
-    int currentEnemyCount = 0; //현재 몇마리 소환 됏는지
+    [SerializeField] int currentEnemyCount = 0; //현재 몇마리 소환 됏는지
     float cycleSecond = 2f; //생성주기
     int maxRandomSpawnCount = 2; //한번에 랜덤으로 몇마리 소환하는지 
     LinkedList<EnemyBase> Shookshook = new LinkedList<EnemyBase>();
@@ -34,6 +34,7 @@ public class ShookshookSpawn : EnemySpawnBase
             if (currentEnemyCount >= enemyMaxCount)
             {
                 yield return null;
+                continue;
             }
 
             for (int i = 0; i < enemyMaxCount - currentEnemyCount; i++)

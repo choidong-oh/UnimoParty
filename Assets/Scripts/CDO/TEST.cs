@@ -1,29 +1,41 @@
+using Photon.Pun;
 using System.Collections;
-using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.XR.Interaction.Toolkit;
+
 
 public class TEST : MonoBehaviour
 {
-    public CommandReplay commandReplay;
+    [SerializeField] GameObject Boomprefab;
+    [SerializeField] Transform TestBoomTrans;
 
+
+    //[ContextMenu("¾óÀ½")]
 
     private void Start()
     {
-        commandReplay = new CommandReplay();
+        StartCoroutine(test());
     }
-    public void replay()
+
+    IEnumerator test()
     {
-        StartCoroutine(cor());
+        while(true)
+        {
+            yield return new WaitForSeconds(2);
+            PhotonNetwork.Instantiate("Boomprefab", TestBoomTrans.position, Quaternion.identity);
+        }
+
+        
     }
 
-    IEnumerator cor()
-    {
-        yield return StartCoroutine(commandReplay.ReplayCommandsCoroutine());
-    }
 
 
+
+
+
+
+    
 }
 
 

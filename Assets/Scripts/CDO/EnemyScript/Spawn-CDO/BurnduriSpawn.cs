@@ -7,6 +7,7 @@ using UnityEngine;
 // - 랜덤 생성 (r바꾸면댐)
 // - 10초마다 1~2마리 생성
 // - 최대 개체수
+// 테스트
 public  class BurnduriSpawn : EnemySpawnBase
 {
     int enemyMaxCount = 5; //최대 몇 마리

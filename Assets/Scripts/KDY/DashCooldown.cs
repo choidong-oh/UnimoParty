@@ -66,9 +66,4 @@ public class DashCooldown : MonoBehaviour
         cooldownImage.fillAmount = 0f;
         dashIconImage.color = originalColor;
     }
-
-    private void OnDisable() // << 삭제할거임
-    {
-        dashAction.Disable();
-    }
 }

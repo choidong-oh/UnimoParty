@@ -1,6 +1,7 @@
+using Photon.Pun;
 using UnityEngine;
 
-//invoke
+//invoker
 //여기서 프리팹 다 넣어서 정리
 public class EnemySpawnerCommand : MonoBehaviour
 {
@@ -18,19 +19,19 @@ public class EnemySpawnerCommand : MonoBehaviour
         // 적의 종류에 따라 프리팹과 커맨드 설정
         if (enemyType == "Burnduri")
         {
-            enemyObject = Instantiate(burnduriEnemyPrefab, direction, Quaternion.identity);
+            enemyObject = PhotonNetwork.Instantiate("BurnduriTest", direction, Quaternion.identity).GetComponent<EnemyBase>();
             command = new MoveCommand(enemyObject, direction, speed);
             command.Execute();
         }
         else if (enemyType == "Pewpew")
         {
-            enemyObject = Instantiate(pewpewEnemyPrefab, direction, Quaternion.identity);
+            enemyObject = PhotonNetwork.Instantiate("PewPew", direction, Quaternion.identity).GetComponent<EnemyBase>();
             command = new MoveCommand(enemyObject, direction, speed);
             command.Execute();
         }
         else if(enemyType == "Shookshook")
         {
-            enemyObject = Instantiate(shookshookEnemyPrefab, direction, Quaternion.identity);
+            enemyObject = PhotonNetwork.Instantiate("ShookShookTest", direction, Quaternion.identity).GetComponent<EnemyBase>();
             command = new MoveCommand(enemyObject, direction, speed);
             command.Execute();
         }

@@ -1,9 +1,10 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public abstract class EnemyBase : MonoBehaviour
+public abstract class EnemyBase : MonoBehaviourPunCallbacks
 {
     //csv
     //아래 변수 사용하세요~
@@ -16,7 +17,7 @@ public abstract class EnemyBase : MonoBehaviour
     public int spawnCount;                
 
     public abstract void Move(Vector3 direction);
-
+    public abstract void Freeze(Vector3 direction);
     //base
     public abstract void CsvEnemyInfo();
    

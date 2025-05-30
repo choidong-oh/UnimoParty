@@ -176,6 +176,8 @@ GameObject:
   - component: {fileID: 5575382072348001824}
   - component: {fileID: 5687640314124739691}
   - component: {fileID: -1612496527784319275}
+  - component: {fileID: -8131516004819685662}
+  - component: {fileID: 547410790989049250}
   m_Layer: 9
   m_Name: ShookShookTest
   m_TagString: Monster
@@ -242,7 +244,7 @@ SphereCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Radius: 0.55
   m_Center: {x: 0, y: 0.6, z: 0.06}
@@ -474,7 +476,45 @@ MonoBehaviour:
   sizeScale: 0
   spawnCount: 0
   fixedY: 0
-  CrashShookShook: {fileID: 3334270714622040670, guid: 82e464f45bb255b4da1b9565fa50643d, type: 3}
+--- !u!114 &-8131516004819685662
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2560127493471256366}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents:
+  - {fileID: 547410790989049250}
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
+--- !u!114 &547410790989049250
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2560127493471256366}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
 --- !u!1 &3260216871704132355
 GameObject:
   m_ObjectHideFlags: 0

@@ -23,7 +23,7 @@ namespace Ilumisoft.RadarSystem
 
         [Header("UI 연결")]
         [SerializeField]
-        [Tooltip("아이콘이 배치될 컨테이너 (일반적으로 RotatingContainer)")]
+        [Tooltip("아이콘이 배치될 컨테이너 (RotatingContainer)")]
         private RectTransform iconContainer;
 
         [SerializeField]
@@ -41,6 +41,7 @@ namespace Ilumisoft.RadarSystem
 
         [Tooltip("레이더의 기준이 되는 플레이어 오브젝트")]
         public GameObject Player;
+        private float radarUISize;
 
         /// <summary>
         /// 감지 거리 설정
@@ -153,6 +154,18 @@ namespace Ilumisoft.RadarSystem
             float scale = radarSize / range;
 
             iconLocation *= scale;
+
+            //  너무 가까우면 최소 반지름 강제 적용 (중심 과밀 방지)
+            float minRadius = radarUISize * 0.25f; // 최소 거리 UI 단위 (비율로 조절 가능)
+
+            if (iconLocation.magnitude < minRadius)
+            {
+                iconLocation = iconLocation.normalized * minRadius;
+
+
+            }
+
+
 
             // 감지 범위 안에 있는 경우만 위치 적용
             if (iconLocation.sqrMagnitude < radarSize * radarSize || locatable.ClampOnRadar)

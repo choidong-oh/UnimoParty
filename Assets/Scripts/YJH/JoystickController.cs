@@ -1,10 +1,11 @@
 using System.Collections;
+using Photon.Pun;
 using TMPro;
 using UnityEngine;
 using UnityEngine.XR.Content.Interaction;
 using UnityEngine.XR.Interaction.Toolkit;
 
-public class LeftHandController : MonoBehaviour
+public class JoystickController : MonoBehaviourPunCallbacks
 {
     public GameObject xrOriginObject;     // XROrigin 오브젝트
     [Space]
@@ -32,19 +33,23 @@ public class LeftHandController : MonoBehaviour
     [SerializeField] TextMeshProUGUI userName;
     //LeftController
     GameObject LController;
+
     void Start()
     {
         //userName.text = FirebaseLoginMgr.user.DisplayName;
+        if(photonView.IsMine)
+        {
+            handRenderers = leftController.GetComponentsInChildren<Renderer>();
 
-        handRenderers = leftController.GetComponentsInChildren<Renderer>();
+            LController = Instantiate(controllerPrefab, joystickTF);
+            LController.SetActive(false);
 
-        LController = Instantiate(controllerPrefab, joystickTF);         
-        LController.SetActive(false);
+            xrOriginTransform = xrOriginObject.transform;
 
-        xrOriginTransform = xrOriginObject.transform;
-
-        joystick.onValueChangeY.AddListener(OnJoystickMoveY);
-        joystick.onValueChangeX.AddListener(OnJoystickMoveX);
+            joystick.onValueChangeY.AddListener(OnJoystickMoveY);
+            joystick.onValueChangeX.AddListener(OnJoystickMoveX);
+        }
+            
     }
 
     void OnDestroy()
@@ -65,7 +70,7 @@ public class LeftHandController : MonoBehaviour
         xrOriginTransform.position += right * value * moveSpeed * Time.deltaTime;
     }
 
-    public void OnSelectEnter()
+    public void OnSelect()
     {
         LController.SetActive(true);
         SetHandVisible(false);
@@ -84,8 +89,6 @@ public class LeftHandController : MonoBehaviour
         foreach (var renderer in handRenderers)
         {      
             renderer.enabled = visible;
-                     
         }
-
     }
 }
