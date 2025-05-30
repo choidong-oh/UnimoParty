@@ -49,12 +49,14 @@ public class TestPvP : MonoBehaviourPunCallbacks
     public void DesignerPVPCreatRoom()
     {
         PhotonNetwork.CreateRoom("Designer", new RoomOptions { MaxPlayers = 8 });
-        
+        photonView.RPC("OnJoinedRoom", RpcTarget.All);
+
     }
     //기획 방 들어가기
     public void DesignerPVPJoinRoom()
     {
         PhotonNetwork.JoinRoom("Designer");
+        photonView.RPC("OnJoinedRoom", RpcTarget.All);
     }
 
 
@@ -64,16 +66,19 @@ public class TestPvP : MonoBehaviourPunCallbacks
     public void DeveloperPVPCreatRoom()
     {
         PhotonNetwork.CreateRoom("Developer", new RoomOptions { MaxPlayers = 8 });
+        photonView.RPC("OnJoinedRoom", RpcTarget.All);
     }
     //개발 방 들어가기
     public void DeveloperPVPJoinRoom()
     {
         PhotonNetwork.JoinRoom("Developer");
+        photonView.RPC("OnJoinedRoom", RpcTarget.All);
     }
 
 
 
     //방이 들어가면
+    [PunRPC]
     public override void OnJoinedRoom()
     {
         //기획자 방 들어옴
