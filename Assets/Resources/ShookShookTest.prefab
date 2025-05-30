@@ -476,6 +476,7 @@ MonoBehaviour:
   sizeScale: 0
   spawnCount: 0
   fixedY: 0
+  CrashShookShook: {fileID: 0}
 --- !u!114 &-8131516004819685662
 MonoBehaviour:
   m_ObjectHideFlags: 0
