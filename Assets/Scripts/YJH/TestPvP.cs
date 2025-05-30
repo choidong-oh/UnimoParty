@@ -75,6 +75,10 @@ public class TestPvP : MonoBehaviourPunCallbacks
         photonView.RPC("OnJoinedRoom", RpcTarget.All);
     }
 
+    public override void OnConnected()
+    {
+        OnJoinedLobby();
+    }
 
 
     //방이 들어가면
