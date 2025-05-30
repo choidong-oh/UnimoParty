@@ -17,8 +17,14 @@ public class PewPew : EnemyBase
 
     Terrain terrain;
 
+    [SerializeField] GameObject CrashPewPew;
+
+    Collider myCollider;
+
     private void OnEnable()
     {
+        myCollider = GetComponent<Collider>();
+        myCollider.enabled = false;
         // 1. Terrain 참조
         terrain = Terrain.activeTerrain;
         if (terrain == null)
@@ -63,6 +69,7 @@ public class PewPew : EnemyBase
 
     IEnumerator GoPewPew()
     {
+        myCollider.enabled = true;
         while (true)
         {
             float angularSpeed =  MoveSpeed / Radius; //원 둘레를 도는 속도
@@ -91,10 +98,16 @@ public class PewPew : EnemyBase
     {
         if (other.gameObject.tag == "Player")
         {
-            damage = 1;
             //Manager.Instance.observer.HitPlayer(damage);
             //Debug.Log(Manager.Instance.observer.UserPlayer.gamedata.life);
-            
+
+            Vector3 hitPoint = other.ClosestPoint(transform.position);//충돌지점에 최대한 가깝게
+
+            Vector3 normal = (hitPoint - transform.position).normalized;// 방향계산
+            Quaternion rot = Quaternion.LookRotation(normal);// 방향계산
+
+            GameObject inst = Instantiate(CrashPewPew, hitPoint, rot);
+
 
             gameObject.SetActive(false);
         }

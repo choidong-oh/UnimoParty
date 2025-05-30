@@ -1017,6 +1017,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SimpleShadow
       objectReference: {fileID: 0}
+    - target: {fileID: 781232824022357859, guid: 99bb4abd34f45824dbdacc3ef80dca1e, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9001557012747604099, guid: 99bb4abd34f45824dbdacc3ef80dca1e, type: 3}
       propertyPath: m_RootOrder
       value: 6

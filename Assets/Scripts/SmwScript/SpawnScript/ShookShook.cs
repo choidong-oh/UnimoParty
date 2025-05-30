@@ -22,10 +22,12 @@ public class ShookShook : EnemyBase
     Coroutine Coroutine;
 
     [SerializeField] GameObject CrashShookShook;
-
+    Collider myCollider;
 
     private void OnEnable()
     {
+        myCollider = GetComponent<Collider>();
+        myCollider.enabled = false;
         terrain = Terrain.activeTerrain;
         Terrainsize = terrain.terrainData.size;
         Terrainpos = terrain.transform.position;
@@ -93,6 +95,7 @@ public class ShookShook : EnemyBase
     {
         Debug.Log("GoShookShook dasdsadasdas");
         Vector3 pos = transform.position;
+        myCollider.enabled = true;
         Target.y = pos.y;
         while (Vector3.Distance(transform.position, Target) > 0.5f)
         {
@@ -113,6 +116,9 @@ public class ShookShook : EnemyBase
     {
         if (other.gameObject.tag == "Player")
         {
+
+
+
             damage = 1;
             //Manager.Instance.observer.HitPlayer(damage);
             //Debug.Log(Manager.Instance.observer.UserPlayer.gamedata.life);
@@ -140,6 +146,8 @@ public class ShookShook : EnemyBase
     [PunRPC]
     public  void Move1(Vector3 direction)
     {
+        myCollider = GetComponent<Collider>();
+        myCollider.enabled = false;
         terrain = Terrain.activeTerrain;
         Terrainsize = terrain.terrainData.size;
         Terrainpos = terrain.transform.position;
