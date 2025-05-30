@@ -8,7 +8,6 @@ using Firebase;
 using Firebase.Auth;
 using Firebase.Database;
 using UnityEngine.SceneManagement;
-using Photon.Pun;
 
 public class FirebaseAuthMgr : MonoBehaviour
 {
@@ -25,106 +24,12 @@ public class FirebaseAuthMgr : MonoBehaviour
 
     public static FirebaseUser user;
     public static DatabaseReference dbRef;
+    public static bool IsFirebaseReady { get; private set; } = false;
     public static bool HasUser => user != null;
 
     public FirebaseAuth auth;
 
     private bool test = false;
-
-
-    private static bool hasUser;
-
-    bool test = false;
-    public static bool HasUser
-    {
-        get
-        {
-            return hasUser;
-        }
-    }
-
-    public static bool IsFirebaseReady { get; private set; } = false;
-
-    public FirebaseAuth auth; // 인증 진행을 위한 정보
-                IsFirebaseReady = true;
-    [SerializeField]
-    private TMP_InputField emailField;
-
-    [SerializeField]
-    private TMP_InputField passwordField;
-
-    [SerializeField]
-    private TMP_InputField nicknameField;
-
-    [SerializeField]
-    private TextMeshProUGUI warningText;
-
-    [SerializeField]
-    private TextMeshProUGUI confirmText;
-
-
-    private static bool hasUser;
-
-    bool test = false;
-    public static bool HasUser
-    {
-        get
-        {
-            return hasUser;
-        }
-    }
-
-    public static bool IsFirebaseReady { get; private set; } = false;
-
-    public FirebaseAuth auth; // 인증 진행을 위한 정보
-
-                IsFirebaseReady = true;
-    [SerializeField]
-    private TMP_InputField emailField;
-
-    [SerializeField]
-    private TMP_InputField passwordField;
-
-    [SerializeField]
-    private TMP_InputField nicknameField;
-
-    [SerializeField]
-    private TextMeshProUGUI warningText;
-
-    [SerializeField]
-    private TextMeshProUGUI confirmText;
-
-
-    private static bool hasUser;
-
-    bool test = false;
-    public static bool HasUser
-    {
-        get
-        {
-            return hasUser;
-        }
-    }
-
-    public static bool IsFirebaseReady { get; private set; } = false;
-
-    public FirebaseAuth auth; // 인증 진행을 위한 정보
-
-                IsFirebaseReady = true;
-    [SerializeField]
-    private TMP_InputField emailField;
-
-    [SerializeField]
-    private TMP_InputField passwordField;
-
-    [SerializeField]
-    private TMP_InputField nicknameField;
-
-    [SerializeField]
-    private TextMeshProUGUI warningText;
-
-    [SerializeField]
-    private TextMeshProUGUI confirmText;
 
     private void Awake()
     {
@@ -141,7 +46,6 @@ public class FirebaseAuthMgr : MonoBehaviour
             {
                 auth = FirebaseAuth.DefaultInstance;
                 dbRef = FirebaseDatabase.DefaultInstance.RootReference;
-
                 IsFirebaseReady = true;
             }
             else
@@ -149,14 +53,8 @@ public class FirebaseAuthMgr : MonoBehaviour
                 Debug.LogError("Firebase dependency issue.");
             }
         });
-        yield return SaveUserData(user.DisplayName, "rewardIngameCurrency", 0);
-        yield return SaveUserData(user.DisplayName, "rewardMetaCurrency", 0);
     }
 
-    public IEnumerator SaveUserData<T>(string userId, string dataName, T value)
-    {
-        var task = dbRef.Child("users").Child(userId).Child(dataName).SetValueAsync(value);
-        yield return new WaitUntil(() => task.IsCompleted);
     private void Start()
     {
         if (startButton != null) startButton.interactable = false;
@@ -164,16 +62,14 @@ public class FirebaseAuthMgr : MonoBehaviour
         if (confirmText != null) confirmText.text = "";
 
         loginButton.onClick.AddListener(Login);
-
         signUpButton.onClick.AddListener(Register);
     }
 
     private void OnDisable()
     {
         loginButton.onClick.RemoveListener(Login);
-
-    
-
+        signUpButton.onClick.RemoveListener(Register);
+    }
 
     public void Login()
     {
@@ -189,8 +85,8 @@ public class FirebaseAuthMgr : MonoBehaviour
     {
         startButton.interactable = !startButton.interactable;
         loginButton.interactable = !loginButton.interactable;
-        yield return SaveUserData(user.DisplayName, "rewardIngameCurrency", 0);
-        yield return SaveUserData(user.DisplayName, "rewardMetaCurrency", 0);
+        signUpButton.interactable = !signUpButton.interactable;
+    }
 
     private IEnumerator LoginCor(string email, string password)
     {
@@ -205,7 +101,7 @@ public class FirebaseAuthMgr : MonoBehaviour
         else
         {
             user = loginTask.Result.User;
-
+            warningText.text = "";
             nicknameField.text = user.DisplayName;
             confirmText.text = "nickname: " + user.DisplayName;
             SetButtonInteractable();
@@ -221,9 +117,14 @@ public class FirebaseAuthMgr : MonoBehaviour
             warningText.text = "Nickname is missing";
             yield break;
         }
-        yield return SaveUserData(user.DisplayName, "rewardIngameCurrency", 0);
-        yield return SaveUserData(user.DisplayName, "rewardMetaCurrency", 0);
-        yield return new WaitUntil(predicate: () => DBTask.IsCompleted);
+
+        var registerTask = auth.CreateUserWithEmailAndPasswordAsync(email, password);
+        yield return new WaitUntil(() => registerTask.IsCompleted);
+
+        if (registerTask.Exception != null)
+        {
+            var errorCode = (AuthError)((FirebaseException)registerTask.Exception.GetBaseException()).ErrorCode;
+            warningText.text = errorCode.ToString();
         }
         else
         {
@@ -237,7 +138,7 @@ public class FirebaseAuthMgr : MonoBehaviour
                 warningText.text = "Failed to set nickname";
             }
             else
-
+            {
                 warningText.text = "";
                 confirmText.text = "nickname: " + user.DisplayName;
                 SetButtonInteractable();
@@ -248,15 +149,8 @@ public class FirebaseAuthMgr : MonoBehaviour
 
     private IEnumerator InitPlayerCurrency()
     {
-        // 초기 인게임 재화 생성
-        var DBTask = dbRef.Child("users").Child(user.UserId).Child(user.DisplayName).Child("rewardIngameCurrency").SetValueAsync(0);
-
-        yield return new WaitUntil(predicate: () => DBTask.IsCompleted);
-
-        // 초기 메타 재화 생성
-        DBTask = dbRef.Child("users").Child(user.UserId).Child(user.DisplayName).Child("rewardMetaCurrency").SetValueAsync(0);
-
-        yield return new WaitUntil(predicate: () => DBTask.IsCompleted);
+        yield return SaveUserData(user.DisplayName, "rewardIngameCurrency", 0);
+        yield return SaveUserData(user.DisplayName, "rewardMetaCurrency", 0);
     }
 
     public IEnumerator SaveUserData<T>(string userId, string dataName, T value)
@@ -264,6 +158,9 @@ public class FirebaseAuthMgr : MonoBehaviour
         var task = dbRef.Child("users").Child(userId).Child(dataName).SetValueAsync(value);
         yield return new WaitUntil(() => task.IsCompleted);
     }
+
+    public void StartButton() => SceneManager.LoadScene(1);
+
     public void AdminButton()
     {
         emailField.text = "111";
@@ -271,5 +168,4 @@ public class FirebaseAuthMgr : MonoBehaviour
         test = true;
         Login();
     }
-
 }

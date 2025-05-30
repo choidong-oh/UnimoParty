@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using Photon.Pun;
 using Photon.Realtime;
@@ -25,7 +24,6 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     {
         PVECanvas.SetActive(false);
 
-        yield return new WaitUntil(() => !string.IsNullOrEmpty(FirebaseAuthMgr.user.DisplayName));
         PhotonNetwork.ConnectUsingSettings();
         PhotonNetwork.AutomaticallySyncScene = true;
 
@@ -76,7 +74,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         }
         else
         {
-            button.onClick.AddListener(SendInviteButton);
+            //button.onClick.AddListener(()SendInviteButton(Player p));
             button.transform.SetAsFirstSibling();
         }
     }
