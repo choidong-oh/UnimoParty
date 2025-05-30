@@ -11,13 +11,14 @@ public class HeadDash : MonoBehaviourPunCallbacks
 
     [Header("Dash Settings")]
     public float dashAngle = 30f;         // 회전 트리거 각도 (X/Z)
-    public float dashDistance = 2f;       // 대시 거리
+    public float dashDistance = 7f;       // 대시 거리
     public float dashCooldown = 5f;       // 쿨타임
     public float dashDuration = 0.5f;     // 대시 지속 시간
        
 
     private float lastDashTime = -999f;
     private bool isDashing = false;
+
 
     void Update()
     {
@@ -80,4 +81,5 @@ public class HeadDash : MonoBehaviourPunCallbacks
         xrOrigin.position = endPos;
         isDashing = false;
     }
+
 }

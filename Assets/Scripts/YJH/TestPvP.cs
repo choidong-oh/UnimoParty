@@ -15,16 +15,12 @@ public class TestPvP : MonoBehaviourPunCallbacks
     [SerializeField] Button designerCreateRoom;
 
 
-    [Header("방 입장 버튼 들")]
-    [SerializeField] Button developerJoinRoomBtn;
-    [SerializeField] Button designerJoinRoomBtn;
     void Start()
     {
         PhotonNetwork.AutomaticallySyncScene = true;
         PhotonNetwork.ConnectUsingSettings();
 
         designerGameStartBtn.interactable = false;
-        designerJoinRoomBtn.interactable = false;
 
         designerGameStartBtn.onClick.AddListener(() =>
         {
@@ -33,10 +29,8 @@ public class TestPvP : MonoBehaviourPunCallbacks
                 PhotonNetwork.LoadLevel(3);
             }
         });
-        designerJoinRoomBtn.onClick.AddListener(() => DesignerPVPJoinRoom());
 
         developerGameStartBtn.interactable = false;
-        developerJoinRoomBtn.interactable = false;
 
         developerGameStartBtn.onClick.AddListener(() =>
         {
@@ -45,57 +39,30 @@ public class TestPvP : MonoBehaviourPunCallbacks
                 PhotonNetwork.LoadLevel(3);
             }
         });
-        developerJoinRoomBtn.onClick.AddListener(() => DeveloperPVPJoinRoom());
     }
-
-
-    //기획 방 생성
-    public void DesignerPVPCreatRoom()
+    public override void OnJoinRoomFailed(short returnCode, string message)
     {
-        PhotonNetwork.CreateRoom("Designer", new RoomOptions { MaxPlayers = 8 });
-        photonView.RPC("DesignerJoinRoom", RpcTarget.All);
+        Debug.Log("방 생성중");
     }
-    [PunRPC]
-    void DesignerJoinRoom()
+
+
+    //기획 방 생성 및 입장
+    public void DesignerPVPJoinOrCreatRoom()
     {
-        designerJoinRoomBtn.interactable = true;
-        designerCreateRoom.interactable = false;        
-        Debug.Log("기획 방 생성 완료");
+        PhotonNetwork.JoinOrCreateRoom("Designer", new RoomOptions { MaxPlayers = 8 },null);
     }
-    //기획 방 들어가기
-    public void DesignerPVPJoinRoom()
+
+    //개발 방 생성 및 입장
+    public void DeveloperPVPJoinOrCreatRoom()
     {
-        PhotonNetwork.JoinRoom("Designer");
+        PhotonNetwork.JoinOrCreateRoom("Developer", new RoomOptions { MaxPlayers = 8 }, null);
     }
 
 
-
-
-    //개발 방 생성
-    public void DeveloperPVPCreatRoom()
-    {
-        PhotonNetwork.CreateRoom("Developer", new RoomOptions { MaxPlayers = 8 });
-        photonView.RPC("DeveloperJoinRoom", RpcTarget.All);
-
-    }
-    //개발 방 들어가기
-    public void DeveloperPVPJoinRoom()
-    {
-        PhotonNetwork.JoinRoom("Developer");
-    }
-
-    [PunRPC]
-    void DeveloperJoinRoom()
-    {
-        developerJoinRoomBtn.interactable = true;
-        developerCreateRoom.interactable = false;
-        Debug.Log("개발 방 생성 완료");
-    }
 
     public override void OnConnected()
     {
         OnJoinedLobby();
-        Debug.Log("lobby 입장");
     }
 
 
@@ -122,7 +89,6 @@ public class TestPvP : MonoBehaviourPunCallbacks
         if (PhotonNetwork.IsMasterClient && PhotonNetwork.CurrentRoom.Name== "Developer")
         {
             developerGameStartBtn.interactable = true;
-            developerJoinRoomBtn.interactable = true;
             developerGameStartBtn.GetComponentInChildren<TextMeshProUGUI>().text = $"{developerInRoom} 명 준비완료\n게임 시작";
         }
         else if(PhotonNetwork.CurrentRoom.Name == "Developer")
@@ -131,6 +97,5 @@ public class TestPvP : MonoBehaviourPunCallbacks
             developerGameStartBtn.GetComponentInChildren<TextMeshProUGUI>().text = $"{developerInRoom} 명 입장";
         }
 
-        Debug.Log($"기획 방 {designerInRoom} 명 입장 , 개발 방 {developerInRoom} 명 입장");
     }
 }
