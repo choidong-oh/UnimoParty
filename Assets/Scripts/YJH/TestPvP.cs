@@ -51,12 +51,15 @@ public class TestPvP : MonoBehaviourPunCallbacks
     public void DesignerPVPJoinOrCreatRoom()
     {
         PhotonNetwork.JoinOrCreateRoom("Designer", new RoomOptions { MaxPlayers = 8 },null);
+        designerCreateRoom.interactable = false;
+
     }
 
     //개발 방 생성 및 입장
     public void DeveloperPVPJoinOrCreatRoom()
     {
         PhotonNetwork.JoinOrCreateRoom("Developer", new RoomOptions { MaxPlayers = 8 }, null);
+        developerCreateRoom.interactable=false;
     }
 
 
