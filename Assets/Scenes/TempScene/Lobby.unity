@@ -154,6 +154,8 @@ MonoBehaviour:
   LobbyCanvas: {fileID: 1660582811}
   PVECanvas: {fileID: 1190533095}
   invitePlayerPanel: {fileID: 1141864247}
+  sendInvitePanel: {fileID: 1190533095}
+  receiveInvitePopup: {fileID: 1190533095}
   contentParent: {fileID: 1475260043}
   userButtonPrefab: {fileID: 4785922104180958038, guid: f30af22dd96e5d343b91eaa925c98fe1, type: 3}
 --- !u!4 &73048168
@@ -5849,6 +5851,7 @@ MonoBehaviour:
       - m_Target: {fileID: 73048167}
         m_TargetAssemblyTypeName: LobbyManager, Assembly-CSharp
         m_MethodName: GameStartButton
+        m_MethodName: SoloPlayButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

@@ -8,4 +8,13 @@ namespace InterfaceMethod
     {
         public int INDEX { get; set; }
     }
+
+    public interface IItemData
+    {
+        public ItemData ItemData
+        {
+            get;
+            set;
+        }
+    }
 }

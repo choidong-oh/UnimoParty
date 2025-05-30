@@ -12,7 +12,8 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     [Header("판넬들")]
     [SerializeField] GameObject LobbyCanvas;
     [SerializeField] GameObject PVECanvas;
-    [SerializeField] GameObject invitePlayerPanel;
+    [SerializeField] GameObject sendInvitePanel;
+    [SerializeField] GameObject receiveInvitePopup;
 
     [Space]
     public Transform contentParent;
@@ -24,6 +25,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     {
         PVECanvas.SetActive(false);
 
+        yield return new WaitUntil(() => !string.IsNullOrEmpty(FirebaseAuthMgr.user.DisplayName));
         PhotonNetwork.ConnectUsingSettings();
         PhotonNetwork.AutomaticallySyncScene = true;
 
@@ -61,6 +63,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     }
 
 
+    //플레이어 들어올때마다 닉네임을 가진 버튼 생성
     void AddPlayerButton(Player p)
     {
         Button button = Instantiate(userButtonPrefab, contentParent);
@@ -69,15 +72,16 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
         if (p.IsLocal)
         {
-            button.transform.SetAsFirstSibling();
             button.interactable = false;
         }
         else
         {
-            button.onClick.AddListener(InvitePlayer);
+            button.onClick.AddListener(SendInviteButton);
+            button.transform.SetAsFirstSibling();
         }
     }
 
+    //플레이어 나가면 자기 자신 버튼 삭제
     void RemovePlayerButton(Player p)
     {
         if (playerButtons.TryGetValue(p.NickName, out Button btn))
@@ -99,19 +103,23 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         PVECanvas.SetActive(false);
     }
 
-    public void GameStartButton()
+    public void SoloPlayButton()
     {
         SceneManager.LoadScene(2);
     }
-
-
-    public void InvitePlayer()
+    //닉네임이 있는 버튼이 누르면 파티초대 버튼 뜨기
+    public void SendInviteButton(Player p)
     {
-        invitePlayerPanel.SetActive(true);
+        sendInvitePanel.SetActive(true);
+        sendInvitePanel.GetComponentInChildren<TextMeshProUGUI>().text = $"{p.NickName} 님을 초대 하겠습니까?";
     }
-    public void MatchMakingButton()
+
+    //파티초대를 누를 시 상대에게 파티초대 왔다는 코드 보내기
+    [PunRPC]
+    public void PartyInvite()
     {
-        PhotonNetwork.LoadLevel(3);
+        receiveInvitePopup.SetActive(true);
     }
+
 
 }

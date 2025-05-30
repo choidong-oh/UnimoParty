@@ -23,10 +23,12 @@ public class DataCenter
 {
     public int life;
     public int score;
+    public int _money;
     public FairyType playerFairyType;
     public PlayerState _playerState;
+    public Inventory _Inventory = new Inventory();
 
-    public DataCenter(DataCenter gamedata) : this(gamedata.life, gamedata.score, gamedata.playerFairyType) { }
+    public DataCenter(DataCenter gamedata) : this(gamedata.life, gamedata.score, gamedata._money, gamedata.playerFairyType, gamedata._playerState, gamedata._Inventory) { }
 
     public DataCenter(int initLife, int initSocre, FairyType initfairy)
     {
@@ -35,11 +37,22 @@ public class DataCenter
         playerFairyType = initfairy;
     }
 
-    public DataCenter(int initLife, int initSocre , PlayerState playerState)
+    public DataCenter(int initLife, int initSocre, int money, PlayerState playerstate)
     {
         life = initLife;
         score = initSocre;
-        _playerState = playerState;
+        _money = money;
+        _playerState = playerstate;
+    }
+
+    public DataCenter(int initLife, int initSocre , int money, FairyType initfairy, PlayerState playerstate, Inventory inventory)
+    {
+        life = initLife;
+        score = initSocre;
+        _money = money;
+        playerFairyType = initfairy;
+        _playerState = playerstate;
+        _Inventory = inventory;
     }
 
     public DataCenter Clone()
