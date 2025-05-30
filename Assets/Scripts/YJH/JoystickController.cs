@@ -1,11 +1,10 @@
-using System.Collections;
 using Photon.Pun;
 using TMPro;
 using UnityEngine;
 using UnityEngine.XR.Content.Interaction;
 using UnityEngine.XR.Interaction.Toolkit;
 
-public class JoystickController : MonoBehaviourPunCallbacks
+public class JoystickController : MonoBehaviourPunCallbacks, IFreeze
 {
     public GameObject xrOriginObject;     // XROrigin 오브젝트
     [Space]
@@ -34,10 +33,13 @@ public class JoystickController : MonoBehaviourPunCallbacks
     //LeftController
     GameObject LController;
 
+    //Freeze 변수
+    float tempMoveSpeed;
+
     void Start()
     {
         //userName.text = FirebaseLoginMgr.user.DisplayName;
-        if(photonView.IsMine)
+        if (photonView.IsMine)
         {
             handRenderers = leftController.GetComponentsInChildren<Renderer>();
 
@@ -49,7 +51,6 @@ public class JoystickController : MonoBehaviourPunCallbacks
             joystick.onValueChangeY.AddListener(OnJoystickMoveY);
             joystick.onValueChangeX.AddListener(OnJoystickMoveX);
         }
-            
     }
 
     void OnDestroy()
@@ -87,8 +88,22 @@ public class JoystickController : MonoBehaviourPunCallbacks
     void SetHandVisible(bool visible)
     {
         foreach (var renderer in handRenderers)
-        {      
+        {
             renderer.enabled = visible;
+        }
+    }
+
+    //어름
+    public void Freeze(bool IsFreeze)
+    {
+        if (IsFreeze == true)
+        {
+            tempMoveSpeed = moveSpeed;
+            moveSpeed = 0f;
+        }
+        else if (IsFreeze == false)
+        {
+            moveSpeed = tempMoveSpeed;
         }
     }
 }
