@@ -8,7 +8,6 @@ using Firebase;
 using Firebase.Auth;
 using Firebase.Database;
 using UnityEngine.SceneManagement;
-using Photon.Pun;
 
 public class FirebaseAuthMgr : MonoBehaviour
 {
@@ -25,6 +24,7 @@ public class FirebaseAuthMgr : MonoBehaviour
 
     public static FirebaseUser user;
     public static DatabaseReference dbRef;
+    public static bool IsFirebaseReady { get; private set; } = false;
     public static bool HasUser => user != null;
 
     public FirebaseAuth auth;
@@ -46,6 +46,7 @@ public class FirebaseAuthMgr : MonoBehaviour
             {
                 auth = FirebaseAuth.DefaultInstance;
                 dbRef = FirebaseDatabase.DefaultInstance.RootReference;
+                IsFirebaseReady = true;
             }
             else
             {
@@ -158,10 +159,7 @@ public class FirebaseAuthMgr : MonoBehaviour
         yield return new WaitUntil(() => task.IsCompleted);
     }
 
-    public void StartButton()
-    {
-        SceneManager.LoadScene(1);
-    }
+    public void StartButton() => SceneManager.LoadScene(1);
 
     public void AdminButton()
     {
@@ -170,6 +168,4 @@ public class FirebaseAuthMgr : MonoBehaviour
         test = true;
         Login();
     }
-
-    
 }

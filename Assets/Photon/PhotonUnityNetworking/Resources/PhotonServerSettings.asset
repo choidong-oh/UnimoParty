@@ -46,6 +46,10 @@ MonoBehaviour:
   - FlowerSetAcive
   - Explode
   - Move1
+  - OnJoinedRoom
+  - DesignerJoinRoom
+  - DeveloperJoinRoom
+  - 
   DisableAutoOpenWizard: 1
-  ShowSettings: 1
-  DevRegionSetOnce: 1
+  ShowSettings: 0
+  DevRegionSetOnce: 0

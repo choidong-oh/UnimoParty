@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEditor.PlayerSettings;
 
 public class Burnduri : EnemyBase
 {
@@ -46,7 +45,6 @@ public class Burnduri : EnemyBase
 
     public override void Freeze(Vector3 direction)
     {
-        Debug.Log("얼음ㅋ");
         StopAllCoroutines();
         StartCoroutine(wait(direction));
     }
@@ -68,7 +66,7 @@ public class Burnduri : EnemyBase
             Vector3 normal = (hitPoint - transform.position).normalized;// 방향계산
             Quaternion rot = Quaternion.LookRotation(normal);// 방향계산
 
-            //GameObject inst = Instantiate(CrashBurnduri, hitPoint, rot);
+            GameObject inst = Instantiate(CrashBurnduri, hitPoint, rot);
 
 
             //Debug.Log(Manager.Instance.observer.UserPlayer.gamedata.life);
@@ -78,7 +76,7 @@ public class Burnduri : EnemyBase
         }
     }
 
-    void OnEnable()
+    private void OnEnable()
     {
         animator = GetComponent<Animator>();
         myCollider = GetComponent<Collider>();
@@ -261,42 +259,7 @@ public class Burnduri : EnemyBase
 
     public override void Move(Vector3 direction)
     {
-        animator = GetComponent<Animator>();
-        myCollider = GetComponent<Collider>();
 
-        myCollider.enabled = false;
-
-        if (animator != null)
-        {
-            foreach (var clip in animator.runtimeAnimatorController.animationClips)
-            {
-                if (clip.name == "anim_01_MON001_Bduri_Appearance")
-                    appearanceClip = clip;
-                else if (clip.name == "anim_03_MON001_Bduri_Encounter")
-                    encounterClip = clip;
-                else if (clip.name == "anim_01_MON001_Bduri_Disappearance")
-                    disappearClip = clip;
-            }
-        }
-        // 컨트롤러에 등록된 모든 클립을 뒤져서 원하는 이름의 클립을 저장
-
-        if (appearanceClip == null || encounterClip == null || disappearClip == null)
-            Debug.LogWarning("Appearance 또는 Encounter 클립을 찾지 못했습니다.");
-
-        //한번만 찾을꺼임
-        if (players.Count == 0)
-        {
-            var objs = GameObject.FindGameObjectsWithTag("Player");
-            foreach (var obj in objs)
-            {
-                players.Add(obj.transform);
-            }
-        }
-
-        terrain = Terrain.activeTerrain;
-        isCharging = false;
-
-        StartCoroutine(GoBurnduri());
     }
 
   

@@ -2,6 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum ItemName
+{
+    Potion, end
+}
+
 public enum ItemType
 {
 
@@ -10,7 +15,7 @@ public enum ItemType
 public class ItemData : InterfaceMethod.TableData
 {
     public int INDEX { get; set; }
-    ItemType type;
+    public ItemName type;
     float _itemRange;
     int _itemCount;
     int _itemCost;
