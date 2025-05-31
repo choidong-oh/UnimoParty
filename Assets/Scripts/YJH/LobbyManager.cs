@@ -130,7 +130,6 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     public void NoButton()
     {
         sendInvitePanel.SetActive(false);
-        selectedPlayerForInvite = null;
     }
 
     // 상대방에게 초대 UI 띄우기
