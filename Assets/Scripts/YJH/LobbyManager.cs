@@ -19,6 +19,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     public Button userButtonPrefab;
 
     private Dictionary<string, Button> playerButtons = new Dictionary<string, Button>();
+    private Player selectedPlayerForInvite; //초대 대상 저장용
 
     void Start()
     {
@@ -34,7 +35,6 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     {
         PhotonNetwork.JoinRandomRoom();
     }
-
 
     public override void OnJoinRandomFailed(short returnCode, string message)
     {
@@ -60,8 +60,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         RemovePlayerButton(otherPlayer);
     }
 
-
-    //플레이어 들어올때마다 닉네임을 가진 버튼 생성
+    // 플레이어 들어올 때마다 닉네임을 가진 버튼 생성
     void AddPlayerButton(Player p)
     {
         Button button = Instantiate(userButtonPrefab, contentParent);
@@ -74,17 +73,19 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         }
         else
         {
-            //button.onClick.AddListener(()SendInviteButton(Player p));
+            //중복 방지
+            button.onClick.RemoveAllListeners();
+            button.onClick.AddListener(() => SendInviteButton(p));
             button.transform.SetAsFirstSibling();
         }
     }
 
-    //플레이어 나가면 자기 자신 버튼 삭제
+    // 플레이어 나가면 버튼 제거
     void RemovePlayerButton(Player p)
     {
         if (playerButtons.TryGetValue(p.NickName, out Button btn))
         {
-            Destroy(btn);
+            Destroy(btn.gameObject);
             playerButtons.Remove(p.NickName);
         }
     }
@@ -105,19 +106,37 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     {
         SceneManager.LoadScene(2);
     }
-    //닉네임이 있는 버튼이 누르면 파티초대 버튼 뜨기
+
+    // 버튼 클릭 시, 초대 대상 저장
     public void SendInviteButton(Player p)
     {
+        selectedPlayerForInvite = null;
+        selectedPlayerForInvite = p;
+
         sendInvitePanel.SetActive(true);
         sendInvitePanel.GetComponentInChildren<TextMeshProUGUI>().text = $"{p.NickName} 님을 초대 하겠습니까?";
     }
 
-    //파티초대를 누를 시 상대에게 파티초대 왔다는 코드 보내기
+    // "예" 버튼 클릭 시 RPC로 초대 전송
+    public void YesButton()
+    {
+        if (selectedPlayerForInvite != null)
+        {
+            photonView.RPC("PartyInvite", selectedPlayerForInvite);
+        }
+        sendInvitePanel.SetActive(false);
+    }
+
+    public void NoButton()
+    {
+        sendInvitePanel.SetActive(false);
+        selectedPlayerForInvite = null;
+    }
+
+    // 상대방에게 초대 UI 띄우기
     [PunRPC]
     public void PartyInvite()
     {
         receiveInvitePopup.SetActive(true);
     }
-
-
 }
