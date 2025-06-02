@@ -23,6 +23,8 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     private Dictionary<string, Button> playerButtons = new Dictionary<string, Button>();
     private Player selectedPlayerForInvite; //초대 대상 저장용
 
+    
+
     void Start()
     {
         PVECanvas.SetActive(false);
@@ -74,12 +76,13 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         if (p.IsLocal)
         {
             button.interactable = false;
+            button.transform.SetAsFirstSibling();
         }
         else
         {
             button.onClick.RemoveAllListeners();
             button.onClick.AddListener(() => SendInviteButton(p));
-            button.transform.SetAsFirstSibling();
+            
         }
     }
 
@@ -122,18 +125,21 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     // "예" 버튼 클릭 시 RPC로 초대 전송
     public void YesButton()
     {
-        if (selectedPlayerForInvite != null)
+
+        if (selectedPlayerForInvite != null && PhotonNetwork.IsMasterClient)
         {
+            Debug.Log(selectedPlayerForInvite.NickName);
+            Debug.Log(photonView);
             photonView.RPC("PartyInvite", selectedPlayerForInvite);
-            selectedPlayerForInvite = null;
         }
+
         sendInvitePanel.SetActive(false);
     }
 
     public void NoButton()
     {
-        selectedPlayerForInvite = null;
         sendInvitePanel.SetActive(false);
+        selectedPlayerForInvite = null;
     }
 
     // 상대방에게 초대 UI 띄우기
@@ -142,5 +148,6 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     {
         inviteText.text = "초대 받음";
         receiveInvitePopup.SetActive(true);
+        selectedPlayerForInvite = null;
     }
 }
