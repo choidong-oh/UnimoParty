@@ -37,14 +37,22 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         sendInvitePanel.SetActive(false);
     }
 
-    public override void OnConnectedToMaster()
+    public override void OnJoinedLobby()
     {
         PhotonNetwork.JoinOrCreateRoom("LobbyRoom", new RoomOptions { MaxPlayers = 20 }, TypedLobby.Default);
+    }
+
+    public override void OnConnectedToMaster()
+    {
+        PhotonNetwork.JoinLobby(TypedLobby.Default);
     }
 
 
     public override void OnJoinedRoom()
     {
+        Debug.Log("πÊ ¿Ã∏ß : " +PhotonNetwork.CurrentRoom.Name);
+        Debug.Log(PhotonNetwork.PlayerList.Length);
+
         foreach (Player p in PhotonNetwork.PlayerList)
         {
             AddPlayerButton(p);
