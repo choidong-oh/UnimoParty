@@ -29,6 +29,8 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         PhotonNetwork.AutomaticallySyncScene = true;
 
         PhotonNetwork.NickName = FirebaseAuthMgr.user.DisplayName;
+
+        sendInvitePanel.SetActive(false);
     }
 
     public override void OnConnectedToMaster()
