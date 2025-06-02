@@ -39,14 +39,9 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     public override void OnConnectedToMaster()
     {
-        PhotonNetwork.JoinRandomRoom();
+        PhotonNetwork.JoinOrCreateRoom("LobbyRoom", new RoomOptions { MaxPlayers = 20 }, TypedLobby.Default);
     }
 
-    public override void OnJoinRandomFailed(short returnCode, string message)
-    {
-        RoomOptions options = new RoomOptions { MaxPlayers = 20 };
-        PhotonNetwork.CreateRoom("LobbyRoom", options, TypedLobby.Default);
-    }
 
     public override void OnJoinedRoom()
     {
