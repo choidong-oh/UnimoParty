@@ -25,8 +25,8 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     {
         PVECanvas.SetActive(false);
 
-        PhotonNetwork.ConnectUsingSettings();
         PhotonNetwork.AutomaticallySyncScene = true;
+        PhotonNetwork.ConnectUsingSettings();
 
         PhotonNetwork.NickName = FirebaseAuthMgr.user.DisplayName;
 
