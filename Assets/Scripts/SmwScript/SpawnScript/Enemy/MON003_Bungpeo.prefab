@@ -79,7 +79,7 @@ GameObject:
   - component: {fileID: 7804366411722894041}
   - component: {fileID: 807850950759452505}
   - component: {fileID: 807850950759452504}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: StateStorage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -216,7 +216,7 @@ GameObject:
   - component: {fileID: 7332321771827351207}
   - component: {fileID: 6533020907287779115}
   - component: {fileID: -2929386769901427779}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: MON003_Bungpeo
   m_TagString: Monster
   m_Icon: {fileID: 0}
