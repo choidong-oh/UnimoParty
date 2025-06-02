@@ -18,6 +18,8 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     public Transform contentParent;
     public Button userButtonPrefab;
 
+
+    [SerializeField] TextMeshProUGUI inviteText;
     private Dictionary<string, Button> playerButtons = new Dictionary<string, Button>();
     private Player selectedPlayerForInvite; //초대 대상 저장용
 
@@ -75,7 +77,6 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         }
         else
         {
-            //중복 방지
             button.onClick.RemoveAllListeners();
             button.onClick.AddListener(() => SendInviteButton(p));
             button.transform.SetAsFirstSibling();
@@ -112,11 +113,10 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     // 버튼 클릭 시, 초대 대상 저장
     public void SendInviteButton(Player p)
     {
-        selectedPlayerForInvite = null;
         selectedPlayerForInvite = p;
 
         sendInvitePanel.SetActive(true);
-        sendInvitePanel.GetComponentInChildren<TextMeshProUGUI>().text = $"{p.NickName} 님을 초대 하겠습니까?";
+        inviteText.text = $"{p.NickName} 님을 초대 하겠습니까?";
     }
 
     // "예" 버튼 클릭 시 RPC로 초대 전송
@@ -125,12 +125,14 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         if (selectedPlayerForInvite != null)
         {
             photonView.RPC("PartyInvite", selectedPlayerForInvite);
+            selectedPlayerForInvite = null;
         }
         sendInvitePanel.SetActive(false);
     }
 
     public void NoButton()
     {
+        selectedPlayerForInvite = null;
         sendInvitePanel.SetActive(false);
     }
 
@@ -138,6 +140,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     [PunRPC]
     public void PartyInvite()
     {
+        inviteText.text = "초대 받음";
         receiveInvitePopup.SetActive(true);
     }
 }

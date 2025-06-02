@@ -157,6 +157,7 @@ MonoBehaviour:
   receiveInvitePopup: {fileID: 1141864247}
   contentParent: {fileID: 1475260043}
   userButtonPrefab: {fileID: 4785922104180958038, guid: f30af22dd96e5d343b91eaa925c98fe1, type: 3}
+  inviteText: {fileID: 2131655224}
 --- !u!4 &73048168
 Transform:
   m_ObjectHideFlags: 0
