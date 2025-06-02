@@ -4,17 +4,88 @@ using UnityEngine;
 
 public class Bungpeo : MonoBehaviour
 {
-    public float explosionForce = 500f;      // 폭발 힘
-    public float explosionRadius = 5f;       // 폭발 반경
-    public float upwardsModifier = 1f;       // 위로 튀어오르게 하는 힘
-    public LayerMask explosionMask;          // 폭발 대상만 골라서 적용 가능
+    public float explosionForce = 500f;      
+    public float explosionRadius = 5f;    
+    public float upwardsModifier = 1f;       //위로 틔어오름
+    public LayerMask explosionMask;
+
+    public GameObject[] Fragment;
+
+    public GameObject explosionFragment;
+
+    public GameObject Body;
+
+    Animator animator;          
+    string inflateStateName = "anim_MON003_ready01";    // 부풀어오르는 애니메이션 State 이름
+    string explodeStateName = "anim_MON003_ready02"; // 마지막 폭발 전 애니메이션 State 이름
+
+    private void OnEnable()
+    {
+        animator = GetComponentInChildren<Animator>();
+        animator.Play(inflateStateName);
+        StartCoroutine(WaitAndExplode());
+        //Explode();
+    }
+
+    private IEnumerator WaitAndExplode()
+    {
+
+        AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+
+        yield return null;
+        stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+        float inflateLength = stateInfo.length;
+        yield return new WaitForSeconds(inflateLength);
+        animator.Play(explodeStateName);
+
+        yield return null;
+        stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+        float explodeAnimLength = stateInfo.length;
+        yield return new WaitForSeconds(explodeAnimLength);
+
+        Explode();
+    }
+
+
+    private void OnDisable()
+    {
+        foreach (GameObject fragment in Fragment)
+        {
+            Collider col = fragment.GetComponent<Collider>();
+            if (col != null)
+                col.enabled = false;
+
+            Rigidbody rb = fragment.GetComponent<Rigidbody>();
+            if (rb != null)
+            {
+                rb.isKinematic = true;  
+                rb.useGravity = false;    
+            }
+            fragment.transform.position = Vector3.zero;
+        }
+
+    }
 
     public void Explode()
     {
-        // 폭발 중심 위치
+
         Vector3 explosionPosition = transform.position;
 
-        // 해당 반경 안의 콜라이더 검색
+        foreach (GameObject fragment in Fragment)
+        {
+            Collider col = fragment.GetComponent<Collider>();
+            if (col != null)
+                col.enabled = true;
+
+            Rigidbody rb = fragment.GetComponent<Rigidbody>();
+            if (rb != null)
+            {
+                rb.isKinematic = false;  
+                rb.useGravity = true;    
+            }
+        }
+
+
         Collider[] colliders = Physics.OverlapSphere(explosionPosition, explosionRadius, explosionMask);
 
         foreach (Collider hit in colliders)
@@ -26,6 +97,10 @@ public class Bungpeo : MonoBehaviour
                 rb.AddExplosionForce(explosionForce, explosionPosition, explosionRadius, upwardsModifier, ForceMode.Impulse);
             }
         }
+
+        GameObject inst = Instantiate(explosionFragment, transform.position, Quaternion.identity);
+
+        //Body.SetActive(false);
     }
 
 }
