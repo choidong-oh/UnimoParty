@@ -13,6 +13,11 @@ public class Manager : MonoBehaviour
     public int tempFairyValue_2 = 10;
     public int tempFairyValue_3 = 10;
 
+    // 채집물 분류에 따라 얻는 점수
+    public int _FairyScore_1 = 1;
+    public int _FairyScore_2 = 2;
+    public int _FairyScore_3 = 3;
+
     public static Manager Instance
     {
         get { return instance; }
@@ -35,5 +40,10 @@ public class Manager : MonoBehaviour
         }
 
         dataLoader.DataLoad();
+    }
+
+    public void GetPlayerCount(int playercount)
+    {
+        observer.roomInPlayerCount = playercount;
     }
 }
