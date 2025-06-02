@@ -273,7 +273,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1ff67d28fa413242b6efb258ada16de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  InputActionReference: {fileID: -7840984986808251201, guid: 75c98270c91a5e74bba10c83794ab594, type: 3}
+  BInputActionReference: {fileID: 0}
+  triggerInputActionReference: {fileID: 0}
 --- !u!114 &161961743
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -286,7 +287,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1ff67d28fa413242b6efb258ada16de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  InputActionReference: {fileID: -722322437804225622, guid: 75c98270c91a5e74bba10c83794ab594, type: 3}
+  BInputActionReference: {fileID: 0}
+  triggerInputActionReference: {fileID: 0}
 --- !u!114 &161961744
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -299,7 +301,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 128e9553ae5519f4297d3a83d106d068, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RightController: {fileID: 1022126708}
+  Boomprefab: {fileID: 0}
+  TestBoomTrans: {fileID: 0}
 --- !u!1 &221196600
 GameObject:
   m_ObjectHideFlags: 0
@@ -625,6 +628,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -598686533152891395, guid: 927e35cb881a2ef449423e0b6cb1b1c9, type: 3}
+      propertyPath: sceneViewId
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8470377270446183419, guid: 927e35cb881a2ef449423e0b6cb1b1c9, type: 3}
       propertyPath: m_Name
       value: Burnduri Test
@@ -1114,17 +1121,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1022126708 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 9014170783705847993, guid: 895f6f3c2d334633b5800312285058d2, type: 3}
-  m_PrefabInstance: {fileID: 161961740}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: caff514de9b15ad48ab85dcff5508221, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1100266194
 GameObject:
   m_ObjectHideFlags: 0
@@ -1264,11 +1260,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f40c6407cd2433d4bb0a4fe8438a61c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RayInteractor: {fileID: 0}
-  SpiritPoint: 0
+  cameraOffset: {fileID: 0}
+  rayInteractor: {fileID: 0}
+  spiritPoint: 0
   activateAction: {fileID: 0}
-  HapticAmplitude: 0
-  HapticDuraiton: 0
+  hapticAmplitude: 0
+  hapticDuraiton: 0
 --- !u!1 &1115902596
 GameObject:
   m_ObjectHideFlags: 0
