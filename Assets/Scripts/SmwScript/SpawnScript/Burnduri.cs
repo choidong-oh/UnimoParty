@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -69,8 +70,8 @@ public class Burnduri : EnemyBase
             GameObject inst = Instantiate(CrashBurnduri, hitPoint, rot);
 
 
-            //Debug.Log(Manager.Instance.observer.UserPlayer.gamedata.life);
-            //Manager.Instance.observer.HitPlayer(damage);
+            Debug.Log(Manager.Instance.observer.UserPlayer.gamedata.life);
+            Manager.Instance.observer.HitPlayer(damage);
             StopAllCoroutines();
             gameObject.SetActive(false);
         }
@@ -259,7 +260,48 @@ public class Burnduri : EnemyBase
 
     public override void Move(Vector3 direction)
     {
+        photonView.RPC("Move1", RpcTarget.All, direction);
+    }
 
+    [PunRPC]
+    public void Move1(Vector3 direction)
+    {
+        animator = GetComponent<Animator>();
+        myCollider = GetComponent<Collider>();
+
+        myCollider.enabled = false;
+
+        if (animator != null)
+        {
+            foreach (var clip in animator.runtimeAnimatorController.animationClips)
+            {
+                if (clip.name == "anim_01_MON001_Bduri_Appearance")
+                    appearanceClip = clip;
+                else if (clip.name == "anim_03_MON001_Bduri_Encounter")
+                    encounterClip = clip;
+                else if (clip.name == "anim_01_MON001_Bduri_Disappearance")
+                    disappearClip = clip;
+            }
+        }
+        // 컨트롤러에 등록된 모든 클립을 뒤져서 원하는 이름의 클립을 저장
+
+        if (appearanceClip == null || encounterClip == null || disappearClip == null)
+            Debug.LogWarning("Appearance 또는 Encounter 클립을 찾지 못했습니다.");
+
+        //한번만 찾을꺼임
+        if (players.Count == 0)
+        {
+            var objs = GameObject.FindGameObjectsWithTag("Player");
+            foreach (var obj in objs)
+            {
+                players.Add(obj.transform);
+            }
+        }
+
+        terrain = Terrain.activeTerrain;
+        isCharging = false;
+
+        StartCoroutine(GoBurnduri());
     }
 
   
