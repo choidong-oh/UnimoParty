@@ -1,29 +1,40 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+
+//secondaryButton[오른손 XR 컨트롤러] = B 버튼
+//primaryButton[오른손 XR 컨트롤러] = A 버튼
 public class TestA : MonoBehaviour
 {
     [SerializeField]
-    private InputActionReference InputActionReference;
+    private InputActionReference BInputActionReference;
 
     private void OnEnable()
     {
-        InputActionReference.action.Enable(); 
-        InputActionReference.action.performed += dd;
+        BInputActionReference.action.Enable();
+        BInputActionReference.action.performed += ControllerB;
     }
 
     private void OnDisable()
     {
-        InputActionReference.action.performed -= dd;
-        InputActionReference.action.Disable();
+        BInputActionReference.action.performed -= ControllerB;
+        BInputActionReference.action.Disable();
     }
-    private void dd(InputAction.CallbackContext context)
+
+
+
+    //아이템 교체 b
+    private void ControllerB(InputAction.CallbackContext context)
     {
-        Debug.Log("키눌름 뭔지는모름");
+        Debug.Log("컨트롤 b버튼");
     }
-   
+
+
+
+
+
+
+
+
 
 }
