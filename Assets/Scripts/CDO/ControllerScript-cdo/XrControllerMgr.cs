@@ -35,11 +35,13 @@ public class XrControllerMgr : MonoBehaviour
         if (isItemController == true)
         {
             Debug.Log("컨트롤 a버튼 채집총 > 아이템총 교체");
+            isItemController = false;
             IsItemObj(true);
         }
         else if (isItemController == false)
         {
             Debug.Log("컨트롤 a버튼 아이템총 > 채집총 교체");
+            isItemController = true;
             IsItemObj(false);
         }
 
