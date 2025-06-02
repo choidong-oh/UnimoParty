@@ -28,13 +28,13 @@ public class TestA : MonoBehaviour
         BInputActionReference.action.Disable();
     }
 
-    //아이템, 채집총 교체
+    //아이템, 채집총 교체 a
     private void ControllerA(InputAction.CallbackContext context)
     {
         Debug.Log("컨트롤 a버튼");
     }
 
-    //아이템 교체
+    //아이템 교체 b
     private void ControllerB(InputAction.CallbackContext context)
     {
         Debug.Log("컨트롤 b버튼");
