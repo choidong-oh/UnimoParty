@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Potion : MonoBehaviour , InterfaceMethod.IItemData
 {
-    ItemData _itemdata = new ItemData();
+    ItemData _itemdata;
 
     public ItemData ItemData 
     { 

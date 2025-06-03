@@ -8,6 +8,7 @@ public class SpaceShipData
     string _name;
     int _inventorySlotCount;
     float _shipMoveSpeed;
+    string _shipModelName;
     List<ItemData> shipInventory = new List<ItemData>();
 
     public int Index
@@ -32,5 +33,11 @@ public class SpaceShipData
     {
         get { return _shipMoveSpeed; }
         set { _shipMoveSpeed = value; }
+    }
+
+    public string ShipModelName
+    {
+        get { return _shipModelName; }
+        set { _shipModelName = value; }
     }
 }

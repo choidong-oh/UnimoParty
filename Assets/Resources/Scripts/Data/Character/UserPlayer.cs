@@ -6,6 +6,7 @@ using UnityEngine;
 public class UserPlayer : MonoBehaviour
 {
     public FairyType fairyType;
+    public GameObject SpaceShipObj;
     public DataCenter gamedata = new DataCenter(100,0,5000,PlayerState.None);
     SpaceShipData SpaceShip;
 
