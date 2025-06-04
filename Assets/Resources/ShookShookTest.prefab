@@ -178,6 +178,7 @@ GameObject:
   - component: {fileID: -1612496527784319275}
   - component: {fileID: -8131516004819685662}
   - component: {fileID: 547410790989049250}
+  - component: {fileID: 8196372354446775763}
   m_Layer: 9
   m_Name: ShookShookTest
   m_TagString: Monster
@@ -244,7 +245,7 @@ SphereCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
   m_Radius: 0.55
   m_Center: {x: 0, y: 0.6, z: 0.06}
@@ -476,7 +477,7 @@ MonoBehaviour:
   sizeScale: 0
   spawnCount: 0
   fixedY: 0
-  CrashShookShook: {fileID: 0}
+  CrashShookShook: {fileID: 3334270714622040670, guid: 82e464f45bb255b4da1b9565fa50643d, type: 3}
 --- !u!114 &-8131516004819685662
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -516,6 +517,20 @@ MonoBehaviour:
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 0
   m_UseLocal: 1
+--- !u!114 &8196372354446775763
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2560127493471256366}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a35fd54ac079a8b47aa6549789157333, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  iconPrefab: {fileID: 4922837886278913688, guid: 64491c38b1af452409456a53259a0f43, type: 3}
+  clampOnRadar: 1
 --- !u!1 &3260216871704132355
 GameObject:
   m_ObjectHideFlags: 0

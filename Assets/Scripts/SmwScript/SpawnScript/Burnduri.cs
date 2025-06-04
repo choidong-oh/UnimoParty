@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -45,8 +46,18 @@ public class Burnduri : EnemyBase
 
     public override void Freeze(Vector3 direction, bool isFreeze)
     {
-        StopAllCoroutines();
-        StartCoroutine(wait(direction));
+        if (isFreeze == true)
+        {
+            StopAllCoroutines();
+        }
+        else if (isFreeze == false)
+        {
+            //StartCoroutine(Move(direction));
+        }
+        else
+        {
+
+        }
     }
 
     //테스트용 나중에 다른곳에서 할당할거임
@@ -69,14 +80,14 @@ public class Burnduri : EnemyBase
             GameObject inst = Instantiate(CrashBurnduri, hitPoint, rot);
 
 
-            //Debug.Log(Manager.Instance.observer.UserPlayer.gamedata.life);
+            Debug.Log(Manager.Instance.observer.UserPlayer.gamedata.life);
             Manager.Instance.observer.HitPlayer(damage);
             StopAllCoroutines();
             gameObject.SetActive(false);
         }
     }
 
-    private void OnEnable()
+    public override void OnEnable()
     {
         animator = GetComponent<Animator>();
         myCollider = GetComponent<Collider>();
@@ -127,8 +138,9 @@ public class Burnduri : EnemyBase
     }
 
 
-    void OnDisable()
+    public override void OnDisable()
     {
+        base.OnDisable();
         StopAllCoroutines();
     }
 
@@ -259,6 +271,12 @@ public class Burnduri : EnemyBase
 
     public override void Move(Vector3 direction)
     {
+        photonView.RPC("Move1", RpcTarget.All, direction);
+    }
+
+    [PunRPC]
+    public void Move1(Vector3 direction)
+    {
         animator = GetComponent<Animator>();
         myCollider = GetComponent<Collider>();
 
@@ -297,5 +315,5 @@ public class Burnduri : EnemyBase
         StartCoroutine(GoBurnduri());
     }
 
-  
+
 }

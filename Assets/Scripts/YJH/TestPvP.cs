@@ -10,17 +10,18 @@ public class TestPvP : MonoBehaviourPunCallbacks
     [SerializeField] Button developerGameStartBtn;
     [SerializeField] Button designerGameStartBtn;
 
+    [Header("방 생성 버튼 들")]
+    [SerializeField] Button developerCreateRoom;
+    [SerializeField] Button designerCreateRoom;
 
-    [Header("방 입장 버튼 들")]
-    [SerializeField] Button developerJoinRoomBtn;
-    [SerializeField] Button designerJoinRoomBtn;
+    int developerInRoom;
+    int designerInRoom;
     void Start()
     {
         PhotonNetwork.AutomaticallySyncScene = true;
         PhotonNetwork.ConnectUsingSettings();
 
         designerGameStartBtn.interactable = false;
-        designerJoinRoomBtn.interactable = false;
 
         designerGameStartBtn.onClick.AddListener(() =>
         {
@@ -29,10 +30,8 @@ public class TestPvP : MonoBehaviourPunCallbacks
                 PhotonNetwork.LoadLevel(3);
             }
         });
-        designerJoinRoomBtn.onClick.AddListener(() => DesignerPVPJoinRoom());
 
         developerGameStartBtn.interactable = false;
-        developerJoinRoomBtn.interactable = false;
 
         developerGameStartBtn.onClick.AddListener(() =>
         {
@@ -41,56 +40,45 @@ public class TestPvP : MonoBehaviourPunCallbacks
                 PhotonNetwork.LoadLevel(3);
             }
         });
-        developerJoinRoomBtn.onClick.AddListener(() => DeveloperPVPJoinRoom());
     }
-
-
-    //기획 방 생성
-    public void DesignerPVPCreatRoom()
+    public override void OnJoinRoomFailed(short returnCode, string message)
     {
-        PhotonNetwork.CreateRoom("Designer", new RoomOptions { MaxPlayers = 8 });
-        photonView.RPC("OnJoinedRoom", RpcTarget.All);
-
+        Debug.Log("방 생성중");
     }
-    //기획 방 들어가기
-    public void DesignerPVPJoinRoom()
+
+
+    //기획 방 생성 및 입장
+    public void DesignerPVPJoinOrCreatRoom()
     {
-        PhotonNetwork.JoinRoom("Designer");
-        photonView.RPC("OnJoinedRoom", RpcTarget.All);
+        PhotonNetwork.JoinOrCreateRoom("Designer", new RoomOptions { MaxPlayers = 8 },null);
+        designerCreateRoom.interactable = false;
+
     }
 
-
-
-
-    //개발 방 생성
-    public void DeveloperPVPCreatRoom()
+    //개발 방 생성 및 입장
+    public void DeveloperPVPJoinOrCreatRoom()
     {
-        PhotonNetwork.CreateRoom("Developer", new RoomOptions { MaxPlayers = 8 });
+        PhotonNetwork.JoinOrCreateRoom("Developer", new RoomOptions { MaxPlayers = 8 }, null);
+        developerCreateRoom.interactable=false;
     }
-    //개발 방 들어가기
-    public void DeveloperPVPJoinRoom()
-    {
-        PhotonNetwork.JoinRoom("Developer");
-    }
+
+
 
     public override void OnConnected()
     {
         OnJoinedLobby();
-        Debug.Log("lobby 입장");
     }
 
 
     //방이 들어가면
     public override void OnJoinedRoom()
     {
-        
         //기획자 방 들어옴
-        int designerInRoom = 1;
         if(PhotonNetwork.IsMasterClient && PhotonNetwork.CurrentRoom.Name== "Designer")
         {
+            designerInRoom++;
             designerGameStartBtn.interactable = true;
-            designerJoinRoomBtn.interactable = true;
-            designerGameStartBtn.GetComponentInChildren<TextMeshProUGUI>().text = $"{designerInRoom} 명 준비완료\n게임 시작";
+            designerGameStartBtn.GetComponentInChildren<TextMeshProUGUI>().text = $"게임 시작";
         }
         else if(PhotonNetwork.CurrentRoom.Name == "Designer")
         {
@@ -101,12 +89,11 @@ public class TestPvP : MonoBehaviourPunCallbacks
 
 
         //개발 방 들어옴
-        int developerInRoom = 1;
         if (PhotonNetwork.IsMasterClient && PhotonNetwork.CurrentRoom.Name== "Developer")
         {
+            developerInRoom++;
             developerGameStartBtn.interactable = true;
-            developerJoinRoomBtn.interactable = true;
-            developerGameStartBtn.GetComponentInChildren<TextMeshProUGUI>().text = $"{developerInRoom} 명 준비완료\n게임 시작";
+            developerGameStartBtn.GetComponentInChildren<TextMeshProUGUI>().text = $"게임 시작";
         }
         else if(PhotonNetwork.CurrentRoom.Name == "Developer")
         {
@@ -114,6 +101,5 @@ public class TestPvP : MonoBehaviourPunCallbacks
             developerGameStartBtn.GetComponentInChildren<TextMeshProUGUI>().text = $"{developerInRoom} 명 입장";
         }
 
-        Debug.Log($"기획 방 {designerInRoom} 명 입장 , 개발 방 {developerInRoom} 명 입장");
     }
 }

@@ -2,9 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Potion : MonoBehaviour
+public class Potion : MonoBehaviour , InterfaceMethod.IItemData
 {
-    ItemData _itemdata = new ItemData();
+    ItemData _itemdata;
+
+    public ItemData ItemData 
+    { 
+        get
+        { return _itemdata;}
+        set
+        {_itemdata = value;}
+    }
 
     private void Start()
     {

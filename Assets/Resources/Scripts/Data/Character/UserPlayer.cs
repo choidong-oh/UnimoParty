@@ -5,12 +5,13 @@ using UnityEngine;
 
 public class UserPlayer : MonoBehaviour
 {
-    FairyType fairyType;
-    public DataCenter gamedata = new DataCenter(100, 0, PlayerState.None);
+    public FairyType fairyType;
+    public GameObject SpaceShipObj;
+    public DataCenter gamedata = new DataCenter(100,0,5000,PlayerState.None);
+    SpaceShipData SpaceShip;
 
     void Start()
     {
         Manager.Instance.observer.UserPlayer = this;
     }
-
 }

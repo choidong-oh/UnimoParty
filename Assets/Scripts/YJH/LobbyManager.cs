@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using Photon.Pun;
 using Photon.Realtime;
@@ -12,13 +11,15 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     [Header("판넬들")]
     [SerializeField] GameObject LobbyCanvas;
     [SerializeField] GameObject PVECanvas;
-    [SerializeField] GameObject invitePlayerPanel;
+    [SerializeField] GameObject sendInvitePanel;
+    [SerializeField] GameObject receiveInvitePopup;
 
     [Space]
     public Transform contentParent;
     public Button userButtonPrefab;
 
     private Dictionary<string, Button> playerButtons = new Dictionary<string, Button>();
+    private Player selectedPlayerForInvite; //초대 대상 저장용
 
     void Start()
     {
@@ -28,13 +29,14 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         PhotonNetwork.AutomaticallySyncScene = true;
 
         PhotonNetwork.NickName = FirebaseAuthMgr.user.DisplayName;
+
+        sendInvitePanel.SetActive(false);
     }
 
     public override void OnConnectedToMaster()
     {
         PhotonNetwork.JoinRandomRoom();
     }
-
 
     public override void OnJoinRandomFailed(short returnCode, string message)
     {
@@ -60,7 +62,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         RemovePlayerButton(otherPlayer);
     }
 
-
+    // 플레이어 들어올 때마다 닉네임을 가진 버튼 생성
     void AddPlayerButton(Player p)
     {
         Button button = Instantiate(userButtonPrefab, contentParent);
@@ -69,20 +71,23 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
         if (p.IsLocal)
         {
-            button.transform.SetAsFirstSibling();
             button.interactable = false;
         }
         else
         {
-            button.onClick.AddListener(InvitePlayer);
+            //중복 방지
+            button.onClick.RemoveAllListeners();
+            button.onClick.AddListener(() => SendInviteButton(p));
+            button.transform.SetAsFirstSibling();
         }
     }
 
+    // 플레이어 나가면 버튼 제거
     void RemovePlayerButton(Player p)
     {
         if (playerButtons.TryGetValue(p.NickName, out Button btn))
         {
-            Destroy(btn);
+            Destroy(btn.gameObject);
             playerButtons.Remove(p.NickName);
         }
     }
@@ -99,19 +104,40 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         PVECanvas.SetActive(false);
     }
 
-    public void GameStartButton()
+    public void SoloPlayButton()
     {
         SceneManager.LoadScene(2);
     }
 
-
-    public void InvitePlayer()
+    // 버튼 클릭 시, 초대 대상 저장
+    public void SendInviteButton(Player p)
     {
-        invitePlayerPanel.SetActive(true);
-    }
-    public void MatchMakingButton()
-    {
-        PhotonNetwork.LoadLevel(3);
+        selectedPlayerForInvite = null;
+        selectedPlayerForInvite = p;
+
+        sendInvitePanel.SetActive(true);
+        sendInvitePanel.GetComponentInChildren<TextMeshProUGUI>().text = $"{p.NickName} 님을 초대 하겠습니까?";
     }
 
+    // "예" 버튼 클릭 시 RPC로 초대 전송
+    public void YesButton()
+    {
+        if (selectedPlayerForInvite != null)
+        {
+            photonView.RPC("PartyInvite", selectedPlayerForInvite);
+        }
+        sendInvitePanel.SetActive(false);
+    }
+
+    public void NoButton()
+    {
+        sendInvitePanel.SetActive(false);
+    }
+
+    // 상대방에게 초대 UI 띄우기
+    [PunRPC]
+    public void PartyInvite()
+    {
+        receiveInvitePopup.SetActive(true);
+    }
 }
