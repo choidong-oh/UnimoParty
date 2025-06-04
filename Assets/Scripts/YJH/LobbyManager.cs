@@ -9,13 +9,21 @@ using UnityEngine.UI;
 public class LobbyManager : MonoBehaviourPunCallbacks
 {
     [Header("ÆÇ³Úµé")]
-    [SerializeField] GameObject LobbyCanvas;
-    [SerializeField] GameObject PVECanvas;
+    [SerializeField] GameObject LobbyPanel;
+    [SerializeField] GameObject PVEPanel;
+
+
+    private void Start()
+    {
+        
+        PhotonNetwork.ConnectUsingSettings();
+
+    }
 
     public void PVEButton()
     {
-        LobbyCanvas.SetActive(false);
-        PVECanvas.SetActive(true);
+        LobbyPanel.SetActive(false);
+        PVEPanel.SetActive(true);
     }
     public void PVPButton()
     {
@@ -24,8 +32,8 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     public void OnClickBackButton()
     {
-        LobbyCanvas.SetActive(true);
-        PVECanvas.SetActive(false);
+        LobbyPanel.SetActive(true);
+        PVEPanel.SetActive(false);
     }
 
     public void SoloPlayButton()

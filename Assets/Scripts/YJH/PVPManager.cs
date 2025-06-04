@@ -6,11 +6,13 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+
+
 public class PVPManager : MonoBehaviourPunCallbacks
 {
     [Header("판넬들")]
-    [SerializeField] GameObject LobbyCanvas;
-    [SerializeField] GameObject PVECanvas;
+    [SerializeField] GameObject lobbyPanel;
+    [SerializeField] GameObject PVEPanel;
     [SerializeField] GameObject sendInvitePanel;
     [SerializeField] GameObject receiveInvitePopup;
 
@@ -23,11 +25,29 @@ public class PVPManager : MonoBehaviourPunCallbacks
     private Dictionary<string, Button> playerButtons = new Dictionary<string, Button>();
     private Player selectedPlayerForInvite; //초대 대상 저장용
 
-    
+    [Header("Fake룸 관련")]
+    [SerializeField] TextMeshProUGUI roomNameText;
+
+    public void CreateFakeRoom(string rName, string mName, bool isLock)
+    {
+        var fakeRoom = new FakeRoom()
+        {
+            roomName = rName,
+            mapName = mName,
+            isLocked = isLock,
+            isMaster = true
+        };
+
+        roomNameText.text = fakeRoom.roomName;
+
+    }
+    public void OnJoinedFakeRoom()
+    {
+    }
 
     void Start()
     {
-        PVECanvas.SetActive(false);
+        PVEPanel.SetActive(false);
 
         PhotonNetwork.AutomaticallySyncScene = true;
         PhotonNetwork.ConnectUsingSettings();
@@ -46,7 +66,6 @@ public class PVPManager : MonoBehaviourPunCallbacks
     {
         PhotonNetwork.JoinLobby(TypedLobby.Default);
     }
-
 
     public override void OnJoinedRoom()
     {
@@ -100,14 +119,14 @@ public class PVPManager : MonoBehaviourPunCallbacks
 
     public void OnClickPVESceneButton()
     {
-        LobbyCanvas.SetActive(false);
-        PVECanvas.SetActive(true);
+        lobbyPanel.SetActive(false);
+        PVEPanel.SetActive(true);
     }
 
     public void OnClickBackButton()
     {
-        LobbyCanvas.SetActive(true);
-        PVECanvas.SetActive(false);
+        lobbyPanel.SetActive(true);
+        PVEPanel.SetActive(false);
     }
 
     public void SoloPlayButton()
@@ -124,13 +143,11 @@ public class PVPManager : MonoBehaviourPunCallbacks
         inviteText.text = $"{p.NickName} 님을 초대 하겠습니까?";
     }
 
-    // "예" 버튼 클릭 시 RPC로 초대 전송
+    // 예 버튼 클릭 시 RPC로 초대
     public void YesButton()
     {
         if (selectedPlayerForInvite != null)
         {
-            Debug.Log(selectedPlayerForInvite.NickName);
-            Debug.Log(photonView);
             photonView.RPC("PartyInvite", selectedPlayerForInvite);
         }
 
