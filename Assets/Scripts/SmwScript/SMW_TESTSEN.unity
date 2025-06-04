@@ -533,7 +533,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   x: 25
   y: 25
-  maxEnemies: 25
+  maxEnemies: 3
   spawnTimer: 1
   Enemy:
   - {fileID: 2682052996701666488, guid: 4c925edc2ee3a4646816f58583d8100e, type: 3}

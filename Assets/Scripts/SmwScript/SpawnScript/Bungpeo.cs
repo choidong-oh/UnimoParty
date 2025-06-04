@@ -30,46 +30,35 @@ public class Bungpeo : MonoBehaviour
 
     private void OnEnable()
     {
-        // ▶ 변경된 부분: Animator가 키프레임 스케일을 먼저 적용하지 못하도록 비활성화
+        // 1) 애니메이터를 잠시 끈다
         animator.enabled = false;
 
-        // ▶ 변경된 부분: 오브젝트 스케일을 항상 초기 상태(initialScale)로 강제 복원
+        // 2) transform 스케일을 초기값으로 강제 복원
         transform.localScale = initialScale;
 
-        // ▶ 변경된 부분: Animator 내부 상태를 초기화
+        // 3) 애니메이터 내부 상태 완전 초기화
         animator.Rebind();
         animator.Update(0f);
 
-        // ▶ 변경된 부분: 준비가 끝났으면 Animator를 다시 활성화
+        // 4) 진입 상태(Entry)애니메이션을 0초 지점으로 강제 재생
+        //    애니메이터 컨트롤러에서 해당 레이어의 기본 스테이트 이름을 정확히 넣어주자.
+        string entryStateName = "Idle"; // 예시: Entry 상태 이름(Animator Controller에 설정된 첫 스테이트)
+        animator.Play(entryStateName, 0, 0f);
+        animator.Update(0f); // ★여기서 다시 한 번 0초 프레임을 적용해서 transform.localScale=1,1,1이 확실히 반영되도록 함
+
+        // 5) 이제 애니메이터를 켜면, 설정한 첫 프레임 상태(스케일=1,1,1)에서부터 재생된다
         animator.enabled = true;
+
+
 
 
 
         myCollider.enabled = true;
 
 
-
-        for (int i = 0; i < Fragment.Length; i++)
-        {
-
-            if (Fragment[i].GetComponent<Collider>() != null)
-            {
-                Fragment[i].GetComponent<Collider>().enabled = false;
-            }
-
-            if (Fragment[i].GetComponent<Rigidbody>() != null)
-            {
-                Fragment[i].GetComponent<Rigidbody>().isKinematic = true;
-                Fragment[i].GetComponent<Rigidbody>().useGravity = false;
-            }
-            Fragment[i].transform.localPosition = Vector3.zero;
-        }
-
-
         for (int i = 0; i < Body.Length; i++)
         {
             Body[i].SetActive(true);
-            myCollider.enabled = true;
         }
 
         StartCoroutine(WaitAndExplode());
@@ -82,7 +71,7 @@ public class Bungpeo : MonoBehaviour
             yield return null;
         }
 
-        // 2) 해당 상태(State)가 재생되는 순간, 연결된 클립 정보(대개 하나)에서 길이(length) 가져오기
+        // 해당 상태(State)가 재생되는 순간, 연결된 클립 정보(대개 하나)에서 길이(length) 가져오기
         AnimatorClipInfo[] clips = animator.GetCurrentAnimatorClipInfo(0);
         if (clips.Length == 0)
         {

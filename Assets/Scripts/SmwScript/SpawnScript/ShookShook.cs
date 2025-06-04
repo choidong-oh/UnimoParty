@@ -1,6 +1,6 @@
+using Photon.Pun;
 using System.Collections;
 using UnityEngine;
-using Photon.Pun;
 
 public class ShookShook : EnemyBase
 {
@@ -24,7 +24,7 @@ public class ShookShook : EnemyBase
     [SerializeField] GameObject CrashShookShook;
     Collider myCollider;
 
-    int FreezeCount = 0;
+    float MoveSpeedSave;
 
     //public override void OnEnable()
     //{
@@ -91,7 +91,6 @@ public class ShookShook : EnemyBase
         {
             StopCoroutine(Coroutine);
             Coroutine = null;
-            FreezeCount = 0;
         }
     }
 
@@ -134,18 +133,16 @@ public class ShookShook : EnemyBase
             gameObject.SetActive(false);
         }
 
-
-
     }
 
 
     public override void Move(Vector3 direction)
     {
-        photonView.RPC("Move1",RpcTarget.All, direction);
+        photonView.RPC("MoveRPC", RpcTarget.All, direction);
     }
 
     [PunRPC]
-    public  void Move1(Vector3 direction)
+    public void MoveRPC(Vector3 direction)
     {
         myCollider = GetComponent<Collider>();
         myCollider.enabled = false;
@@ -195,20 +192,11 @@ public class ShookShook : EnemyBase
         }
         else
         {
-            Debug.Log("너는 왜 오류임?");
+            Debug.Log("슉슉이 절대값 잡아주는곳 오류임");
         }
 
 
-        if (FreezeCount == 0)
-        {
-            transform.position = Position;
-            FreezeCount++;
-        }
-        else if (FreezeCount >= 1)
-        {
-            Debug.Log("이거는 얼음 폭탄때문에 뜨는 프리즈 카운터임 이거 안쓰면 슉슉이는 멈춘자리에 제일가까운 모서리로 이동해버림");
-        }
-
+        transform.position = Position;
 
         Coroutine = StartCoroutine(GoShookShook());
     }
@@ -220,20 +208,26 @@ public class ShookShook : EnemyBase
 
     public override void Freeze(Vector3 direction, bool isFreeze)
     {
+        photonView.RPC("FreezeRPC", RpcTarget.All, direction);
+    }
+
+    [PunRPC]
+    public void FreezeRPC(Vector3 direction, bool isFreeze)
+    {
         if (isFreeze == true)
         {
-            StopAllCoroutines();
+            MoveSpeedSave = MoveSpeed;
+            MoveSpeed = 0;
+
         }
         else if (isFreeze == false)
         {
-            //StartCoroutine();
+            MoveSpeed = MoveSpeedSave;
         }
         else
         {
-            Debug.Log("슉슉이 프리즈 코루틴고장남");
+            Debug.Log("슉슉이 프리즈 고장남");
         }
-
-
     }
 
 
