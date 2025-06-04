@@ -21,7 +21,7 @@ public class PewPew : EnemyBase
 
     Collider myCollider;
 
-    private void OnEnable()
+    public override void OnEnable()
     {
         myCollider = GetComponent<Collider>();
         myCollider.enabled = false;
@@ -56,9 +56,9 @@ public class PewPew : EnemyBase
     }
 
 
-    // 오브젝트가 꺼질 때 코루틴 정리
-    void OnDisable()
+    public override void OnDisable()
     {
+        base.OnDisable();
         if (rotateCoroutine != null)
         {
             StopCoroutine(rotateCoroutine);
@@ -151,7 +151,7 @@ public class PewPew : EnemyBase
         throw new System.NotImplementedException();
     }
 
-    public override void Freeze(Vector3 direction, bool isFreeze)
+    public override void Freeze(bool isFreeze)
     {
         throw new System.NotImplementedException();
     }
