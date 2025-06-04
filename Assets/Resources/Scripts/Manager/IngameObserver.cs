@@ -1,10 +1,12 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class IngameObserver
 {
     public event Action<DataCenter> OnGameDataChange;
+    public event Action<List<int>> OnGameRankChange;
     public event Action OnGameEnd;
 
     public UserPlayer UserPlayer { get; set; }
@@ -15,8 +17,6 @@ public class IngameObserver
     private bool isGameOver = false;
     ItemData _selectItem;
     System.Random _itemRandomNum;
-
-    
 
     public void Setting()
     {
@@ -68,7 +68,7 @@ public class IngameObserver
 
     void GetItem()
     {
-        var randomrange = _itemRandomNum.Next((int)ItemName.Potion, (int)ItemName.end);
+        var randomrange = _itemRandomNum.Next((int)ItemName.Potion, (int)ItemName.FreezeBoom, (int)ItemName.end);
         switch (randomrange)
         {
             //아이템 enum 크기만큼 case 생성하여 userItemDatas의 같은 값을 대입
@@ -76,7 +76,11 @@ public class IngameObserver
                 Manager.Instance.observer.UserPlayer.gamedata._Inventory.userItemDatas[(int)ItemName.Potion].ItemData.ItemCount++;
                 break;
 
-            case 1:
+            case (int)ItemName.FreezeBoom:
+                Manager.Instance.observer.UserPlayer.gamedata._Inventory.userItemDatas[(int)ItemName.FreezeBoom].ItemData.ItemCount++;
+                break;
+
+            case (int)ItemName.end:
                 break;
         }
 
@@ -94,13 +98,15 @@ public class IngameObserver
                 Manager.Instance.observer.UserPlayer.gamedata._Inventory.userItemDatas[(int)ItemName.Potion].ItemData.ItemCount--;
                 break;
 
-            case ItemName.end:
+            case ItemName.FreezeBoom:
+                Manager.Instance.observer.UserPlayer.gamedata._Inventory.userItemDatas[(int)ItemName.FreezeBoom].ItemData.ItemCount--;
                 break;
 
+            case ItemName.end:
+                break;
         }
 
         var tempUser = Manager.Instance.observer.UserPlayer.gamedata;
-
         OnGameDataChange.Invoke(tempUser);
     }
 

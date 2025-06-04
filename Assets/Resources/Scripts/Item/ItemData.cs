@@ -4,7 +4,7 @@ using UnityEngine;
 
 public enum ItemName
 {
-    Potion, end
+    Potion, FreezeBoom, end
 }
 
 public enum ItemType
