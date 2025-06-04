@@ -44,10 +44,20 @@ public class Burnduri : EnemyBase
 
     [SerializeField] GameObject CrashBurnduri;
 
-    public override void Freeze(Vector3 direction)
+    public override void Freeze(bool isFreeze)
     {
-        StopAllCoroutines();
-        StartCoroutine(wait(direction));
+        if (isFreeze == true)
+        {
+            StopAllCoroutines();
+        }
+        else if (isFreeze == false)
+        {
+            //StartCoroutine(Move(direction));
+        }
+        else
+        {
+
+        }
     }
 
     //테스트용 나중에 다른곳에서 할당할거임
@@ -77,7 +87,7 @@ public class Burnduri : EnemyBase
         }
     }
 
-    private void OnEnable()
+    public override void OnEnable()
     {
         animator = GetComponent<Animator>();
         myCollider = GetComponent<Collider>();
@@ -128,8 +138,9 @@ public class Burnduri : EnemyBase
     }
 
 
-    void OnDisable()
+    public override void OnDisable()
     {
+        base.OnDisable();
         StopAllCoroutines();
     }
 
@@ -304,5 +315,5 @@ public class Burnduri : EnemyBase
         StartCoroutine(GoBurnduri());
     }
 
-  
+
 }
