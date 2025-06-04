@@ -298,6 +298,7 @@ public class Burnduri : EnemyBase
         photonView.RPC("FreezeRPC", RpcTarget.All, direction);
     }
 
+    [PunRPC]
     public void FreezeRPC(Vector3 direction, bool isFreeze)
     {
         if (isFreeze == true)
