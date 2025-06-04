@@ -21,22 +21,6 @@ public class FreezeBoom : MonoBehaviourPunCallbacks
         }
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.tag == "Ground")
-        {
-            photonView.RPC("TriggerEnterRpc",RpcTarget.All);
-        }
-
-    }
-
-    [PunRPC]
-    void TriggerEnterRpc()
-    {
-        Rigidbody rb = GetComponent<Rigidbody>();
-        rb.isKinematic = true;
-    }
-
     [PunRPC]
     void Explode()
     {

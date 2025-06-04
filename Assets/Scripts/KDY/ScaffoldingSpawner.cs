@@ -42,6 +42,7 @@
 //    }
 //}
 
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -76,17 +77,20 @@ public class ScaffoldingSpawner : MonoBehaviour
                 // Terrain이 있다면 해당 위치의 높이 적용
                 //if (terrain != null)
                 //{
-                 //   float terrainY = terrain.SampleHeight(spawnPos) + terrain.GetPosition().y;
-                  //  spawnPos.y = terrainY;
+                //   float terrainY = terrain.SampleHeight(spawnPos) + terrain.GetPosition().y;
+                //  spawnPos.y = terrainY;
                 //}
 
                 // 큐브 생성
-                GameObject cube = Instantiate(cubePrefab, spawnPos, Quaternion.identity);
+                if (PhotonNetwork.IsMasterClient)
+                {
+                    GameObject cube = PhotonNetwork.Instantiate("Flower", spawnPos, Quaternion.identity);
+                    Renderer rend = cube.GetComponent<Renderer>();
+                    if (rend != null)
+                        rend.material.color = new Color(Random.value, Random.value, Random.value);
+                }
 
                 // 랜덤 색상 적용
-                Renderer rend = cube.GetComponent<Renderer>();
-                if (rend != null)
-                    rend.material.color = new Color(Random.value, Random.value, Random.value);
             }
         }
     }

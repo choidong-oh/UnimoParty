@@ -10,13 +10,14 @@ GameObject:
   m_Component:
   - component: {fileID: 5279143952552728203}
   - component: {fileID: 4414192712401531367}
+  - component: {fileID: 9097946719516881756}
   m_Layer: 0
   m_Name: ItemController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5279143952552728203
 Transform:
   m_ObjectHideFlags: 0
@@ -45,6 +46,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   BInputActionReference: {fileID: -7840984986808251201, guid: 75c98270c91a5e74bba10c83794ab594, type: 3}
+  triggerInputActionReference: {fileID: 83097790271614945, guid: c348712bda248c246b8c49b3db54643f, type: 3}
+  rightController: {fileID: 7560748128269401356}
+--- !u!114 &9097946719516881756
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 621761742234676228}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &2493099370687313462
 GameObject:
   m_ObjectHideFlags: 0
@@ -147,6 +172,7 @@ MonoBehaviour:
   AInputActionReference: {fileID: -722322437804225622, guid: 75c98270c91a5e74bba10c83794ab594, type: 3}
   HandHarvestObj: {fileID: 3339427171508547215}
   ItemObj: {fileID: 621761742234676228}
+  itemInputB: {fileID: 4414192712401531367}
 --- !u!1 &3339427171508547215
 GameObject:
   m_ObjectHideFlags: 0
@@ -1013,6 +1039,10 @@ PrefabInstance:
       propertyPath: m_Parameters.widthMultiplier
       value: 0.001
       objectReference: {fileID: 0}
+    - target: {fileID: 9014170783705847993, guid: 895f6f3c2d334633b5800312285058d2, type: 3}
+      propertyPath: m_ModelPrefab
+      value: 
+      objectReference: {fileID: 251685742273046401, guid: 6df06eda25e3cca46aa64bf61dfbfb27, type: 3}
     - target: {fileID: 9014170783728641055, guid: 895f6f3c2d334633b5800312285058d2, type: 3}
       propertyPath: m_Layer
       value: 8
@@ -1171,6 +1201,11 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 9014170783728641055, guid: 895f6f3c2d334633b5800312285058d2, type: 3}
   m_PrefabInstance: {fileID: 1582426809760196016}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &7560748128269401356 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 9014170783705847996, guid: 895f6f3c2d334633b5800312285058d2, type: 3}
+  m_PrefabInstance: {fileID: 1582426809760196016}
+  m_PrefabAsset: {fileID: 0}
 --- !u!20 &7560748128432381322 stripped
 Camera:
   m_CorrespondingSourceObject: {fileID: 9014170783809206330, guid: 895f6f3c2d334633b5800312285058d2, type: 3}
@@ -1299,6 +1334,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5efb00a836677547b20969a1aee1bb2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SpaceShipObj: {fileID: 0}
 --- !u!114 &2667375515628183349
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1345,6 +1381,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5efb00a836677547b20969a1aee1bb2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SpaceShipObj: {fileID: 0}
 --- !u!114 &8555340415063019410
 MonoBehaviour:
   m_ObjectHideFlags: 0

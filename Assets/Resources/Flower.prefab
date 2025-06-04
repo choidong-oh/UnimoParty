@@ -214,6 +214,7 @@ GameObject:
   - component: {fileID: 2509635859069451052}
   - component: {fileID: 6617873011636352024}
   - component: {fileID: -3836480637052131136}
+  - component: {fileID: 7794598289152759205}
   m_Layer: 0
   m_Name: Flower
   m_TagString: Untagged
@@ -536,3 +537,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   iconPrefab: {fileID: 4922837886278913688, guid: 64381564ba6c40a41bc90c17ead96308, type: 3}
   clampOnRadar: 1
+--- !u!114 &7794598289152759205
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3477442797691105170}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
