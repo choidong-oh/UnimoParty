@@ -44,7 +44,7 @@ public class Burnduri : EnemyBase
 
     [SerializeField] GameObject CrashBurnduri;
 
-    public override void Freeze(bool isFreeze)
+    public override void Freeze(Vector3 direction, bool isFreeze)
     {
         if (isFreeze == true)
         {
