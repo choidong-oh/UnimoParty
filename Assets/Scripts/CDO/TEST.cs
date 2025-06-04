@@ -1,30 +1,26 @@
-using Photon.Pun;
-using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.XR.Interaction.Toolkit;
 
 
 public class TEST : MonoBehaviour
 {
-    [SerializeField] GameObject GunPostion;
+    public GameObject grenadePrefab;
+    public Transform firePoint;
 
-    Rigidbody rb;
 
     private void Start()
     {
-        rb = GetComponent<Rigidbody>();
+        ThrowGrenade1();
     }
 
-    private void FixedUpdate()
+    Rigidbody rb;
+    Vector3 throwDirection;
+    void ThrowGrenade1()
     {
-        rb.AddForce(GunPostion.transform.forward * 1f);
-
-
-
-
+        GameObject grenade = Instantiate(grenadePrefab, firePoint.position, firePoint.rotation);
+        rb = grenade.GetComponent<Rigidbody>();
+        throwDirection = firePoint.transform.forward;
+        rb.AddForce(throwDirection * 10,ForceMode.VelocityChange);
     }
-
 
 
 
