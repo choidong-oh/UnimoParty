@@ -7,26 +7,22 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public class TEST : MonoBehaviour
 {
-    [SerializeField] GameObject Boomprefab;
-    [SerializeField] Transform TestBoomTrans;
+    [SerializeField] GameObject GunPostion;
 
-
-    //[ContextMenu("¾óÀ½")]
+    Rigidbody rb;
 
     private void Start()
     {
-        StartCoroutine(test());
+        rb = GetComponent<Rigidbody>();
     }
 
-    IEnumerator test()
+    private void FixedUpdate()
     {
-        while(true)
-        {
-            yield return new WaitForSeconds(2);
-            PhotonNetwork.Instantiate("Boomprefab", TestBoomTrans.position, Quaternion.identity);
-        }
+        rb.AddForce(GunPostion.transform.forward * 1f);
 
-        
+
+
+
     }
 
 
@@ -35,7 +31,6 @@ public class TEST : MonoBehaviour
 
 
 
-    
 }
 
 

@@ -74,7 +74,7 @@ public class FreezeBoom : MonoBehaviourPunCallbacks
                 if (target.TryGetComponent<EnemyBase>(out EnemyBase Enemy))
                 {
                     ICommand command = null;
-                    command = new FreezeCommand(Enemy, transform.position);
+                    command = new FreezeCommand(Enemy, transform.position, true);
                     command.Execute();
 
 
@@ -83,7 +83,7 @@ public class FreezeBoom : MonoBehaviourPunCallbacks
                 }
                 if (target.TryGetComponent<TestEnemybase>(out TestEnemybase TestEnemy))
                 {
-                    TestEnemy.Freeze(transform.position);
+                    TestEnemy.Freeze(transform.position,true);
 
 
                     Debug.Log("TestEnemy ¾î¸§");
