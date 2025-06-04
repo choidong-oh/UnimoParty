@@ -335,6 +335,9 @@ MonoBehaviour:
   tempFairyValue_1: 10
   tempFairyValue_2: 10
   tempFairyValue_3: 10
+  _FairyScore_1: 1
+  _FairyScore_2: 2
+  _FairyScore_3: 3
 --- !u!4 &221196602
 Transform:
   m_ObjectHideFlags: 0
@@ -1150,7 +1153,7 @@ GameObject:
   - component: {fileID: 982506289}
   m_Layer: 0
   m_Name: Terrain
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
