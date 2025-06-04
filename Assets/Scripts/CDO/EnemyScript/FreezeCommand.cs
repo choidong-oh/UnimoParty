@@ -6,18 +6,21 @@ public class FreezeCommand : ICommand
 {
     EnemyBase enemyBase;
     Vector3 direction;
+    bool isFreeze;
     public float DelayTime => throw new System.NotImplementedException();
 
 
-    public FreezeCommand(EnemyBase enemyBase, Vector3 direction)
+    public FreezeCommand(EnemyBase enemyBase, Vector3 direction, bool isFreeze)
     {
         this.enemyBase = enemyBase;
         this.direction = direction;
+        this.isFreeze = isFreeze;   
+        
     }
 
 
     public void Execute()
     {
-        enemyBase.Freeze(direction);
+        enemyBase.Freeze(direction,isFreeze);
     }
 }

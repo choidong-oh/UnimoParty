@@ -206,7 +206,7 @@ public class ShookShook : EnemyBase
         throw new System.NotImplementedException();
     }
 
-    public override void Freeze(Vector3 direction)
+    public override void Freeze(Vector3 direction, bool isFreeze)
     {
         throw new System.NotImplementedException();
     }

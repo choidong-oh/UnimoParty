@@ -17,7 +17,7 @@ public abstract class EnemyBase : MonoBehaviourPunCallbacks
     public int spawnCount;                
 
     public abstract void Move(Vector3 direction);
-    public abstract void Freeze(Vector3 direction);
+    public abstract void Freeze(Vector3 direction, bool isFreeze);
     //base
     public abstract void CsvEnemyInfo();
    
