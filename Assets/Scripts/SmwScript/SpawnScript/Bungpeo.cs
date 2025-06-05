@@ -49,31 +49,32 @@ public class Bungpeo : EnemyBase
 
     }
 
-    public override void OnEnable()
-    {
-        animator = GetComponent<Animator>();
-        myCollider = GetComponent<Collider>();
+    //public override void OnEnable()
+    //{
+    //    base.OnEnable();
+    //    animator = GetComponent<Animator>();
+    //    myCollider = GetComponent<Collider>();
 
-        myCollider.enabled = true;
+    //    myCollider.enabled = true;
 
-        terrain = Terrain.activeTerrain;
+    //    terrain = Terrain.activeTerrain;
 
-        float terrainY = terrain.SampleHeight(transform.position) + transform.localScale.y / 2f;
-        transform.position = new Vector3(transform.position.x, terrainY, transform.position.z);
+    //    float terrainY = terrain.SampleHeight(transform.position) + transform.localScale.y / 2f;
+    //    transform.position = new Vector3(transform.position.x, terrainY, transform.position.z);
 
-        for (int i = 0; i < Body.Length; i++)
-        {
-            Body[i].SetActive(true);
-        }
+    //    for (int i = 0; i < Body.Length; i++)
+    //    {
+    //        Body[i].SetActive(true);
+    //    }
 
 
-        for (int i = 0; i < Fragment.Length; i++)
-        {
-            Fragment[i].SetActive(true);
-        }
+    //    for (int i = 0; i < Fragment.Length; i++)
+    //    {
+    //        Fragment[i].SetActive(true);
+    //    }
 
-        StartCoroutine(WaitAndExplode());
-    }
+    //    StartCoroutine(WaitAndExplode());
+    //}
 
     private IEnumerator WaitAndExplode()
     {
