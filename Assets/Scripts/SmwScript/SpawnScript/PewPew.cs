@@ -123,7 +123,7 @@ public class PewPew : EnemyBase
         photonView.RPC("MoveRPC", RpcTarget.All, direction);
     }
 
-
+    [PunRPC]
     public void MoveRPC(Vector3 direction)
     {
         // 1. Terrain ÂüÁ¶
