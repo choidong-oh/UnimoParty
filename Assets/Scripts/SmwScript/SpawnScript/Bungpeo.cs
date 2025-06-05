@@ -2,19 +2,20 @@ using Photon.Pun;
 using System.Collections;
 using UnityEngine;
 using static UnityEditor.PlayerSettings;
+using static UnityEngine.ParticleSystem;
 
 public class Bungpeo : EnemyBase
 {
-    public float explosionForce = 20f;
-    public float explosionRadius = 20f;
-    public float upwardsModifier = 1f;
-    public LayerMask explosionMask;
+    [SerializeField] float explosionForce = 20f;
+    [SerializeField] float explosionRadius = 20f;
+    [SerializeField] float upwardsModifier = 1f;
+    [SerializeField] LayerMask explosionMask;
 
-    public GameObject[] Fragment;
+    [SerializeField] GameObject[] Fragment;
 
-    public GameObject explosionFragment;
+    [SerializeField] GameObject explosionPartycle;
 
-    public GameObject[] Body;
+    [SerializeField] GameObject[] Body;
 
     Animator animator;
 
@@ -25,6 +26,8 @@ public class Bungpeo : EnemyBase
     [SerializeField] GameObject CrashBunpeo;
 
     Terrain terrain;
+
+    int IsActivateFragment = 0;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -61,6 +64,12 @@ public class Bungpeo : EnemyBase
         for (int i = 0; i < Body.Length; i++)
         {
             Body[i].SetActive(true);
+        }
+
+
+        for (int i = 0; i < Fragment.Length; i++)
+        {
+            Fragment[i].SetActive(true);
         }
 
         StartCoroutine(WaitAndExplode());
@@ -149,7 +158,7 @@ public class Bungpeo : EnemyBase
             }
         }
 
-        GameObject inst = Instantiate(explosionFragment, transform.position, Quaternion.identity);
+        GameObject inst = Instantiate(explosionPartycle, transform.position, Quaternion.identity);
 
         for (int i = 0; i < Body.Length; i++)
         {
@@ -158,6 +167,23 @@ public class Bungpeo : EnemyBase
         }
 
 
+    }
+
+    [PunRPC]
+    public void IsActivateRPC()
+    {
+        IsActivateFragment++;
+        if (IsActivateFragment == 4)
+        {
+            Debug.Log("완료");
+            IsActivateFragment = 0;
+            gameObject.SetActive(false);
+        }
+        Debug.Log(IsActivateFragment + "일단 작동함 ");
+    }
+    public void IsActivate()
+    {
+        photonView.RPC("IsActivateRPC", RpcTarget.All);
     }
 
     public override void Move(Vector3 direction)
@@ -192,6 +218,12 @@ public class Bungpeo : EnemyBase
         for (int i = 0; i < Body.Length; i++)
         {
             Body[i].SetActive(true);
+        }
+
+
+        for (int i = 0; i < Fragment.Length; i++)
+        {
+            Fragment[i].SetActive(true);
         }
 
         StartCoroutine(WaitAndExplode());

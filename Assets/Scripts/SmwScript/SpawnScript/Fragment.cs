@@ -1,48 +1,24 @@
-using System.Collections;
 using UnityEngine;
 
 public class Fragment : MonoBehaviour
 {
-    int damage = 1;
-
-    float ExplosionRadius = 1;
-    float FirstRadius;
-
-    SphereCollider myCollider;
-
-
-
+    [SerializeField] Bungpeo Parents;
     [SerializeField] GameObject CrashBunpeoFragment;
 
-    private void Start()
-    {
-        myCollider = GetComponent<SphereCollider>();
-        FirstRadius = myCollider.radius;
-    }
-
-    private void OnDisable()
-    {
-        myCollider.radius = FirstRadius;
-
-
-    }
 
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.tag == "Ground")
         {
-
             Instantiate(CrashBunpeoFragment, transform.position, Quaternion.identity);
         }
         if (collision.gameObject.tag == "Player")
         {
             Instantiate(CrashBunpeoFragment, transform.position, Quaternion.identity);
-            Manager.Instance.observer.HitPlayer(damage);
-            Debug.Log(Manager.Instance.observer.UserPlayer.gamedata.life);
-
         }
+        Parents.IsActivate();//나중엔 이걸로 써야함
+        //Parents.IsActivateRPC();//이거는 테스트용
+        gameObject.SetActive(false);
     }
-
-
 
 }

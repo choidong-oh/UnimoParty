@@ -498,7 +498,7 @@ MonoBehaviour:
   - {fileID: 344372904790074149}
   - {fileID: 344372906186602329}
   - {fileID: 344372905956939332}
-  explosionFragment: {fileID: 2845618596426184591, guid: 0d4308366fdaf2344afe5f8528daa6c6, type: 3}
+  explosionPartycle: {fileID: 2845618596426184591, guid: 0d4308366fdaf2344afe5f8528daa6c6, type: 3}
   Body:
   - {fileID: 7753017148272010490}
   - {fileID: 2774577515815760134}
@@ -1089,7 +1089,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b95cac92e882db64dbc2873d12665dfd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ExplosionRadius: 2
+  Parents: {fileID: -2929386769901427779}
   CrashBunpeoFragment: {fileID: 5628999584652162784, guid: 5872c3b03d20e754ba4334ac68ef6055, type: 3}
 --- !u!114 &878872204082521460 stripped
 MonoBehaviour:
@@ -1212,7 +1212,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b95cac92e882db64dbc2873d12665dfd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ExplosionRadius: 2
+  Parents: {fileID: -2929386769901427779}
   CrashBunpeoFragment: {fileID: 5628999584652162784, guid: 5872c3b03d20e754ba4334ac68ef6055, type: 3}
 --- !u!114 &878872203307631721 stripped
 MonoBehaviour:
@@ -1339,7 +1339,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b95cac92e882db64dbc2873d12665dfd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ExplosionRadius: 5
+  Parents: {fileID: -2929386769901427779}
   CrashBunpeoFragment: {fileID: 5628999584652162784, guid: 5872c3b03d20e754ba4334ac68ef6055, type: 3}
 --- !u!114 &878872202919454926 stripped
 MonoBehaviour:
@@ -1462,7 +1462,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b95cac92e882db64dbc2873d12665dfd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ExplosionRadius: 2
+  Parents: {fileID: -2929386769901427779}
   CrashBunpeoFragment: {fileID: 5628999584652162784, guid: 5872c3b03d20e754ba4334ac68ef6055, type: 3}
 --- !u!114 &878872203067691029 stripped
 MonoBehaviour:

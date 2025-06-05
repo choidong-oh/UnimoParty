@@ -14676,7 +14676,8 @@ GameObject:
   - component: {fileID: 2460024219500326015}
   - component: {fileID: 8414048989797850558}
   - component: {fileID: -8153757935837384148}
-  - component: {fileID: 1322251061603050316}
+  - component: {fileID: 6650490022118424137}
+  - component: {fileID: 8331119141140367048}
   m_Layer: 0
   m_Name: VFX_MON003_Action_Missile
   m_TagString: Untagged
@@ -14693,7 +14694,7 @@ Transform:
   m_GameObject: {fileID: 5628999584652162784}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0.185, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -19615,8 +19616,8 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!135 &1322251061603050316
-SphereCollider:
+--- !u!136 &6650490022118424137
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -19633,9 +19634,23 @@ SphereCollider:
   m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 5
-  m_Center: {x: 0, y: 0, z: 0}
+  serializedVersion: 2
+  m_Radius: 1
+  m_Height: 3
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.71, z: 0}
+--- !u!114 &8331119141140367048
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5628999584652162784}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81a52b5275f0b42488d9d2ffde5282ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6298577677745500948
 GameObject:
   m_ObjectHideFlags: 0
