@@ -46,30 +46,18 @@ public class ItemInputB : MonoBehaviourPunCallbacks, IFreeze
     //트리거 함
     private void OnTriggerPressed(InputAction.CallbackContext context)
     {
-        photonView.RPC("Item1Rpc",RpcTarget.All);
+        //photonView.RPC("Item1Rpc",RpcTarget.All);
         //아이템 사용
-        //Rigidbody rb = Item1.gameObject.GetComponent<Rigidbody>();
-        //Vector3 throwDirection = firepos.transform.forward + firepos.transform.up;
-        //Item1.transform.parent = null;
-        //rb.useGravity = true;
-        //rb.AddForce(throwDirection * grenadePower, ForceMode.VelocityChange);
-
-    }
-
-    [PunRPC]
-    void Item1Rpc()
-    {
-        Debug.Log("정상 작동");
-        //아이템 사용
+      
         Rigidbody rb = Item1.gameObject.GetComponent<Rigidbody>();
         Vector3 throwDirection = firepos.transform.forward + firepos.transform.up;
         Item1.transform.parent = null;
         rb.useGravity = true;
         rb.AddForce(throwDirection * grenadePower, ForceMode.VelocityChange);
 
-
     }
 
+   
 
 
     //트리거 뗌

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class XrControllerMgr : MonoBehaviour
+public class XrControllerMgr : MonoBehaviourPunCallbacks
 {
     [SerializeField] //아이템 > 채집총 교체 a
     InputActionReference AInputActionReference; 
@@ -35,19 +35,23 @@ public class XrControllerMgr : MonoBehaviour
     //아이템, 채집총 교체 a
     private void ControllerA(InputAction.CallbackContext context)
     {
-        if (isItemController == false)
+        if (photonView.IsMine)
         {
-            Debug.Log("컨트롤 a버튼 채집총 > 아이템총 교체");
-            isItemController = true;
-            IsItemObj(true);
-            itemInputB.StateItem(true);
-        }
-        else if (isItemController == true)
-        {
-            Debug.Log("컨트롤 a버튼 아이템총 > 채집총 교체");
-            isItemController = false;
-            itemInputB.StateItem(false);
-            IsItemObj(false);
+
+            if (isItemController == false)
+            {
+                Debug.Log("컨트롤 a버튼 채집총 > 아이템총 교체");
+                isItemController = true;
+                IsItemObj(true);
+                itemInputB.StateItem(true);
+            }
+            else if (isItemController == true)
+            {
+                Debug.Log("컨트롤 a버튼 아이템총 > 채집총 교체");
+                isItemController = false;
+                itemInputB.StateItem(false);
+                IsItemObj(false);
+            }
         }
 
     }
