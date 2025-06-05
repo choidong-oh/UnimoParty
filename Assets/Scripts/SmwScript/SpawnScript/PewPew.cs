@@ -73,6 +73,7 @@ public class PewPew : EnemyBase
 
     IEnumerator GoPewPew()
     {
+        myCollider = GetComponent<Collider>();
         myCollider.enabled = true;
         while (true)
         {
@@ -123,7 +124,7 @@ public class PewPew : EnemyBase
         photonView.RPC("MoveRPC", RpcTarget.All, direction);
     }
 
-
+    [PunRPC]
     public void MoveRPC(Vector3 direction)
     {
         // 1. Terrain ÂüÁ¶
