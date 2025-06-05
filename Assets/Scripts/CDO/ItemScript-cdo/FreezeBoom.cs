@@ -3,7 +3,7 @@ using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class FreezeBoom : MonoBehaviourPunCallbacks
+public class FreezeBoom : MonoBehaviourPunCallbacks, IItemUse
 {
 
    
@@ -101,6 +101,15 @@ public class FreezeBoom : MonoBehaviourPunCallbacks
 
 
         }
+    }
+
+    public void Use(Transform firepos,int power)
+    {
+        Rigidbody rb = gameObject.GetComponent<Rigidbody>();
+        Vector3 throwDirection = firepos.transform.forward + firepos.transform.up;
+        transform.parent = null;
+        rb.useGravity = true;
+        rb.AddForce(throwDirection * power, ForceMode.VelocityChange);
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////
 

@@ -17,9 +17,25 @@ public class ItemInputB : MonoBehaviourPunCallbacks, IFreeze
 
     [SerializeField] Transform rightController; //오른쪽 컨트롤러
 
-    GameObject Item1 = null;
-
     int grenadePower = 5;
+
+    GameObject Item1 = null;
+    Queue<GameObject> itemQueue = new Queue<GameObject>();
+
+    GameObject currentItem;
+    GameObject newItem;
+
+
+    //임시
+    void ItemAdd()
+    {
+        //아이템 추가
+        itemQueue.Enqueue(newItem);
+        //교체할때
+        currentItem = itemQueue.Dequeue();
+        itemQueue.Enqueue(currentItem);  
+        
+    }
 
 
 
