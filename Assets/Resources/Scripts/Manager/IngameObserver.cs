@@ -13,6 +13,7 @@ public class IngameObserver
     private FairyType tempPlayerFairy;
     private int gameoverTargetScore = 100;
     public int roomInPlayerCount;
+    public List<int> ranks;
 
     private bool isGameOver = false;
     ItemData _selectItem;
@@ -68,7 +69,7 @@ public class IngameObserver
 
     void GetItem()
     {
-        var randomrange = _itemRandomNum.Next((int)ItemName.Potion, (int)ItemName.FreezeBoom, (int)ItemName.end);
+        var randomrange = _itemRandomNum.Next((int)ItemName.Potion, (int)ItemName.end);
         switch (randomrange)
         {
             //아이템 enum 크기만큼 case 생성하여 userItemDatas의 같은 값을 대입
