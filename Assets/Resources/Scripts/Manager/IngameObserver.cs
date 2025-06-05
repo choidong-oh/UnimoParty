@@ -13,6 +13,7 @@ public class IngameObserver
     private FairyType tempPlayerFairy;
     private int gameoverTargetScore = 100;
     public int roomInPlayerCount;
+    public List<int> ranks;
 
     private bool isGameOver = false;
     ItemData _selectItem;
