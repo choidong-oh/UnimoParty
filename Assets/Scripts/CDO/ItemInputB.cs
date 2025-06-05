@@ -1,17 +1,47 @@
+using Photon.Pun;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.XR.Interaction.Toolkit;
 
 
 //secondaryButton[오른손 XR 컨트롤러] = B 버튼
 //primaryButton[오른손 XR 컨트롤러] = A 버튼
-public class ItemInputB : MonoBehaviour, IFreeze
+public class ItemInputB : MonoBehaviourPunCallbacks, IFreeze
 {
-    [SerializeField] InputActionReference BInputActionReference;
+    [SerializeField] InputActionReference BInputActionReference; //xr b
 
-    [SerializeField] InputActionReference triggerInputActionReference;
+    [SerializeField] InputActionReference triggerInputActionReference; //트리거
 
-    private void OnEnable()
+    Transform firepos; //모델의 끝부분
+
+    [SerializeField] Transform rightController; //오른쪽 컨트롤러
+
+    int grenadePower = 5;
+
+    GameObject Item1 = null;
+    Queue<GameObject> itemQueue = new Queue<GameObject>();
+
+    GameObject currentItem;
+    GameObject newItem;
+
+
+    //임시
+    void ItemAdd()
     {
+        //아이템 추가
+        itemQueue.Enqueue(newItem);
+        //교체할때
+        currentItem = itemQueue.Dequeue();
+        itemQueue.Enqueue(currentItem);  
+        
+    }
+
+
+
+    public override void OnEnable()
+    {
+        base.OnEnable();
         BInputActionReference.action.Enable();
         BInputActionReference.action.performed += ControllerB;
 
@@ -19,8 +49,9 @@ public class ItemInputB : MonoBehaviour, IFreeze
         triggerInputActionReference.action.canceled += OnTriggerReleased;
     }
 
-    private void OnDisable()
+    public override void OnDisable()
     {
+        base.OnDisable();
         BInputActionReference.action.performed -= ControllerB;
         BInputActionReference.action.Disable();
 
@@ -30,11 +61,20 @@ public class ItemInputB : MonoBehaviour, IFreeze
 
     //트리거 함
     private void OnTriggerPressed(InputAction.CallbackContext context)
-    { 
+    {
+        //photonView.RPC("Item1Rpc",RpcTarget.All);
         //아이템 사용
-
+      
+        Rigidbody rb = Item1.gameObject.GetComponent<Rigidbody>();
+        Vector3 throwDirection = firepos.transform.forward + firepos.transform.up;
+        Item1.transform.parent = null;
+        rb.useGravity = true;
+        rb.AddForce(throwDirection * grenadePower, ForceMode.VelocityChange);
 
     }
+
+   
+
 
     //트리거 뗌
     void OnTriggerReleased(InputAction.CallbackContext context)
@@ -42,6 +82,20 @@ public class ItemInputB : MonoBehaviour, IFreeze
 
 
 
+    }
+    public void StateItem(bool isItemInputB)
+    {
+        if (isItemInputB == true)
+        {
+            firepos = rightController.gameObject.GetComponentInChildren<ActionBasedController>().model.GetChild(0).transform;
+            Item1 = PhotonNetwork.Instantiate("Boomprefab", firepos.position, Quaternion.identity);
+            Item1.transform.parent = firepos.transform;
+            Item1.gameObject.GetComponent<Rigidbody>().useGravity = false;
+        }
+        else if(isItemInputB == false)
+        {
+            PhotonNetwork.Destroy(Item1);
+        }
     }
 
     //아이템 교체 b

@@ -1,16 +1,19 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class XrControllerMgr : MonoBehaviour
+public class XrControllerMgr : MonoBehaviourPunCallbacks
 {
-    [SerializeField] //아이템 > 채집총 교체
+    [SerializeField] //아이템 > 채집총 교체 a
     InputActionReference AInputActionReference; 
 
     //게임오브젝트 활성화 비활성화용
     [SerializeField] GameObject HandHarvestObj;
     [SerializeField] GameObject ItemObj;
+
+    [SerializeField] ItemInputB itemInputB;
 
     bool isItemController = false;   //처음은 채집총 시작
 
@@ -32,17 +35,23 @@ public class XrControllerMgr : MonoBehaviour
     //아이템, 채집총 교체 a
     private void ControllerA(InputAction.CallbackContext context)
     {
-        if (isItemController == true)
+        if (photonView.IsMine)
         {
-            Debug.Log("컨트롤 a버튼 채집총 > 아이템총 교체");
-            isItemController = false;
-            IsItemObj(true);
-        }
-        else if (isItemController == false)
-        {
-            Debug.Log("컨트롤 a버튼 아이템총 > 채집총 교체");
-            isItemController = true;
-            IsItemObj(false);
+
+            if (isItemController == false)
+            {
+                Debug.Log("컨트롤 a버튼 채집총 > 아이템총 교체");
+                isItemController = true;
+                IsItemObj(true);
+                itemInputB.StateItem(true);
+            }
+            else if (isItemController == true)
+            {
+                Debug.Log("컨트롤 a버튼 아이템총 > 채집총 교체");
+                isItemController = false;
+                itemInputB.StateItem(false);
+                IsItemObj(false);
+            }
         }
 
     }
