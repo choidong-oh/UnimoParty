@@ -11,7 +11,7 @@ public class TestEnemybase : EnemyBase
         Debug.Log("move호출");
     }
 
-    public override void Freeze(Vector3 direction)
+    public override void Freeze(Vector3 direction, bool isFreeze)
     {
         Debug.Log("Freeze호출");
     }

@@ -1,6 +1,6 @@
+using Photon.Pun;
 using System.Collections;
 using UnityEngine;
-using Photon.Pun;
 
 public class ShookShook : EnemyBase
 {
@@ -24,8 +24,11 @@ public class ShookShook : EnemyBase
     [SerializeField] GameObject CrashShookShook;
     Collider myCollider;
 
-    private void OnEnable()
+    float MoveSpeedSave;
+
+    public override void OnEnable()
     {
+        base.OnEnable();
         myCollider = GetComponent<Collider>();
         myCollider.enabled = false;
         terrain = Terrain.activeTerrain;
@@ -93,7 +96,6 @@ public class ShookShook : EnemyBase
 
     IEnumerator GoShookShook()
     {
-        Debug.Log("GoShookShook dasdsadasdas");
         Vector3 pos = transform.position;
         myCollider.enabled = true;
         Target.y = pos.y;
@@ -117,11 +119,9 @@ public class ShookShook : EnemyBase
         if (other.gameObject.tag == "Player")
         {
 
-
-
             damage = 1;
-            //Manager.Instance.observer.HitPlayer(damage);
-            //Debug.Log(Manager.Instance.observer.UserPlayer.gamedata.life);
+            Manager.Instance.observer.HitPlayer(damage);
+            Debug.Log(Manager.Instance.observer.UserPlayer.gamedata.life);
 
             Vector3 hitPoint = other.ClosestPoint(transform.position);//충돌지점에 최대한 가깝게
 
@@ -133,18 +133,16 @@ public class ShookShook : EnemyBase
             gameObject.SetActive(false);
         }
 
-
-
     }
 
 
     public override void Move(Vector3 direction)
     {
-        photonView.RPC("Move1",RpcTarget.All, direction);
+        photonView.RPC("MoveRPC", RpcTarget.All, direction);
     }
 
     [PunRPC]
-    public  void Move1(Vector3 direction)
+    public void MoveRPC(Vector3 direction)
     {
         myCollider = GetComponent<Collider>();
         myCollider.enabled = false;
@@ -194,8 +192,10 @@ public class ShookShook : EnemyBase
         }
         else
         {
-            Debug.Log("너는 왜 오류임?");
+            Debug.Log("슉슉이 절대값 잡아주는곳 오류임");
         }
+
+
         transform.position = Position;
 
         Coroutine = StartCoroutine(GoShookShook());
@@ -206,8 +206,29 @@ public class ShookShook : EnemyBase
         throw new System.NotImplementedException();
     }
 
-    public override void Freeze(Vector3 direction)
+    public override void Freeze(Vector3 direction, bool isFreeze)
     {
-        throw new System.NotImplementedException();
+        photonView.RPC("FreezeRPC", RpcTarget.All, direction);
     }
+
+    [PunRPC]
+    public void FreezeRPC(Vector3 direction, bool isFreeze)
+    {
+        if (isFreeze == true)
+        {
+            MoveSpeedSave = MoveSpeed;
+            MoveSpeed = 0;
+
+        }
+        else if (isFreeze == false)
+        {
+            MoveSpeed = MoveSpeedSave;
+        }
+        else
+        {
+            Debug.Log("슉슉이 프리즈 고장남");
+        }
+    }
+
+
 }

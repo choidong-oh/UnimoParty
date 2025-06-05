@@ -1,4 +1,6 @@
 
+using UnityEngine;
+
 public interface IDamageable
 {
     void TakeDamage(int dmg);
@@ -13,4 +15,9 @@ public interface ICommand
 public interface IFreeze 
 {
     void Freeze(bool IsFreeze);
+}
+
+public interface IItemUse
+{
+    void Use(Transform firePos, int power);
 }

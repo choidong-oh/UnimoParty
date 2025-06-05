@@ -3,14 +3,10 @@ using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class FreezeBoom : MonoBehaviourPunCallbacks
+public class FreezeBoom : MonoBehaviourPunCallbacks, IItemUse
 {
 
-    private void Start()
-    {
-        StartCoroutine(wait());
-    }
-
+   
     IEnumerator wait()
     {
         while (true)
@@ -20,6 +16,17 @@ public class FreezeBoom : MonoBehaviourPunCallbacks
             //Explode();
         }
     }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "Ground")
+        {
+            StartCoroutine(wait());
+        }
+
+    }
+
+
 
     [PunRPC]
     void Explode()
@@ -74,7 +81,7 @@ public class FreezeBoom : MonoBehaviourPunCallbacks
                 if (target.TryGetComponent<EnemyBase>(out EnemyBase Enemy))
                 {
                     ICommand command = null;
-                    command = new FreezeCommand(Enemy, transform.position);
+                    command = new FreezeCommand(Enemy, transform.position, true);
                     command.Execute();
 
 
@@ -83,7 +90,7 @@ public class FreezeBoom : MonoBehaviourPunCallbacks
                 }
                 if (target.TryGetComponent<TestEnemybase>(out TestEnemybase TestEnemy))
                 {
-                    TestEnemy.Freeze(transform.position);
+                    TestEnemy.Freeze(transform.position,true);
 
 
                     Debug.Log("TestEnemy ¾î¸§");
@@ -94,6 +101,15 @@ public class FreezeBoom : MonoBehaviourPunCallbacks
 
 
         }
+    }
+
+    public void Use(Transform firepos,int power)
+    {
+        Rigidbody rb = gameObject.GetComponent<Rigidbody>();
+        Vector3 throwDirection = firepos.transform.forward + firepos.transform.up;
+        transform.parent = null;
+        rb.useGravity = true;
+        rb.AddForce(throwDirection * power, ForceMode.VelocityChange);
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////
 
