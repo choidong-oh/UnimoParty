@@ -436,6 +436,26 @@ PrefabInstance:
       propertyPath: sceneViewId
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1428426021658542479, guid: 966bc0a092b89c4468fa9a4c467e78fa, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1428426021658542479, guid: 966bc0a092b89c4468fa9a4c467e78fa, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2309908000137546218, guid: 966bc0a092b89c4468fa9a4c467e78fa, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2309908000137546218, guid: 966bc0a092b89c4468fa9a4c467e78fa, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2309908000137546218, guid: 966bc0a092b89c4468fa9a4c467e78fa, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3212577677110866569, guid: 966bc0a092b89c4468fa9a4c467e78fa, type: 3}
       propertyPath: m_LocalPosition.x
       value: 31.7
@@ -476,6 +496,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4352813311524674621, guid: 966bc0a092b89c4468fa9a4c467e78fa, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4352813311524674621, guid: 966bc0a092b89c4468fa9a4c467e78fa, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4352813311524674621, guid: 966bc0a092b89c4468fa9a4c467e78fa, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4414192712401531367, guid: 966bc0a092b89c4468fa9a4c467e78fa, type: 3}
+      propertyPath: triggerInputActionReference
+      value: 
+      objectReference: {fileID: 83097790271614945, guid: c348712bda248c246b8c49b3db54643f, type: 3}
     - target: {fileID: 8109497528567356183, guid: 966bc0a092b89c4468fa9a4c467e78fa, type: 3}
       propertyPath: m_Name
       value: Player
@@ -582,6 +618,9 @@ MonoBehaviour:
   tempFairyValue_1: 10
   tempFairyValue_2: 10
   tempFairyValue_3: 10
+  _FairyScore_1: 1
+  _FairyScore_2: 2
+  _FairyScore_3: 3
 --- !u!4 &1531656183
 Transform:
   m_ObjectHideFlags: 0

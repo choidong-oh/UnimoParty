@@ -68,7 +68,7 @@ public class IngameObserver
 
     void GetItem()
     {
-        var randomrange = _itemRandomNum.Next((int)ItemName.Potion, (int)ItemName.FreezeBoom, (int)ItemName.end);
+        var randomrange = _itemRandomNum.Next((int)ItemName.Potion, (int)ItemName.end);
         switch (randomrange)
         {
             //아이템 enum 크기만큼 case 생성하여 userItemDatas의 같은 값을 대입
