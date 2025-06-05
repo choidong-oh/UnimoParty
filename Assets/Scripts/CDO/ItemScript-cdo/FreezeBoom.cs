@@ -6,11 +6,7 @@ using UnityEngine;
 public class FreezeBoom : MonoBehaviourPunCallbacks
 {
 
-    private void Start()
-    {
-        StartCoroutine(wait());
-    }
-
+   
     IEnumerator wait()
     {
         while (true)
@@ -20,6 +16,17 @@ public class FreezeBoom : MonoBehaviourPunCallbacks
             //Explode();
         }
     }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "Ground")
+        {
+            StartCoroutine(wait());
+        }
+
+    }
+
+
 
     [PunRPC]
     void Explode()
