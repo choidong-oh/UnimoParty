@@ -1818,7 +1818,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &924924877
 Transform:
   m_ObjectHideFlags: 0
@@ -2280,6 +2280,9 @@ MonoBehaviour:
   tempFairyValue_1: 10
   tempFairyValue_2: 10
   tempFairyValue_3: 10
+  _FairyScore_1: 1
+  _FairyScore_2: 2
+  _FairyScore_3: 3
 --- !u!4 &1221788417
 Transform:
   m_ObjectHideFlags: 0
