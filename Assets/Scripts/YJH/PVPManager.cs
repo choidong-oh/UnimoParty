@@ -239,6 +239,7 @@ public class PVPManager : MonoBehaviourPunCallbacks
     {
         Debug.Log("¿‘¿Â ¡ﬂ");
         PhotonNetwork.JoinRoom(codeInput.text);
+        roomPanel.SetActive(true);
     }
 
 
