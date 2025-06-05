@@ -12,13 +12,13 @@ public class Burnduri : EnemyBase
     Vector3 myPos;
 
     [Header("이동 설정")]
-    public float MoveSpeed = 1f;
-    public float chargeSpeed = 10f;
-    public float chargeDistance = 3f;
+    [SerializeField] float MoveSpeed = 1f;
+    [SerializeField] float chargeSpeed = 10f;
+    [SerializeField] float chargeDistance = 3f;
 
     [Header("거리 조건")]
-    public float triggerDistance = 10f;
-    public float fixedY = 0f;
+    [SerializeField] float triggerDistance = 10f;
+    [SerializeField] float fixedY = 0f;
 
 
     private bool isCharging = false;
@@ -298,6 +298,7 @@ public class Burnduri : EnemyBase
         photonView.RPC("FreezeRPC", RpcTarget.All, direction);
     }
 
+    [PunRPC]
     public void FreezeRPC(Vector3 direction, bool isFreeze)
     {
         if (isFreeze == true)

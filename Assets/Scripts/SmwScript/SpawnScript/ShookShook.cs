@@ -26,63 +26,63 @@ public class ShookShook : EnemyBase
 
     float MoveSpeedSave;
 
-    //public override void OnEnable()
-    //{
-    //    base.OnEnable();
-    //    myCollider = GetComponent<Collider>();
-    //    myCollider.enabled = false;
-    //    terrain = Terrain.activeTerrain;
-    //    Terrainsize = terrain.terrainData.size;
-    //    Terrainpos = terrain.transform.position;
+    public override void OnEnable()
+    {
+        base.OnEnable();
+        myCollider = GetComponent<Collider>();
+        myCollider.enabled = false;
+        terrain = Terrain.activeTerrain;
+        Terrainsize = terrain.terrainData.size;
+        Terrainpos = terrain.transform.position;
 
-    //    Position = transform.position;
-    //    Target = transform.position;//좌표 마추기용 
+        Position = transform.position;
+        Target = transform.position;//좌표 마추기용 
 
-    //    minX = Terrainpos.x;
-    //    maxX = Terrainpos.x + Terrainsize.x;
-    //    minZ = Terrainpos.z;
-    //    maxZ = Terrainpos.z + Terrainsize.z;
+        minX = Terrainpos.x;
+        maxX = Terrainpos.x + Terrainsize.x;
+        minZ = Terrainpos.z;
+        maxZ = Terrainpos.z + Terrainsize.z;
 
 
-    //    float Left = Mathf.Abs(Position.x - minX);
-    //    float Right = Mathf.Abs(Position.x - maxX);
-    //    float Bottom = Mathf.Abs(Position.z - minZ);
-    //    float Top = Mathf.Abs(Position.z - maxZ);
+        float Left = Mathf.Abs(Position.x - minX);
+        float Right = Mathf.Abs(Position.x - maxX);
+        float Bottom = Mathf.Abs(Position.z - minZ);
+        float Top = Mathf.Abs(Position.z - maxZ);
 
-    //    float NearPos = Mathf.Min(Left, Right, Bottom, Top);
+        float NearPos = Mathf.Min(Left, Right, Bottom, Top);
 
-    //    if (NearPos == Left)
-    //    {
-    //        Position.x = minX;
-    //        Target.x = maxX;
+        if (NearPos == Left)
+        {
+            Position.x = minX;
+            Target.x = maxX;
 
-    //    }
-    //    else if (NearPos == Right)
-    //    {
-    //        Position.x = maxX;
-    //        Target.x = minX;
+        }
+        else if (NearPos == Right)
+        {
+            Position.x = maxX;
+            Target.x = minX;
 
-    //    }
-    //    else if (NearPos == Bottom)
-    //    {
-    //        Position.z = minZ;
-    //        Target.z = maxZ;
+        }
+        else if (NearPos == Bottom)
+        {
+            Position.z = minZ;
+            Target.z = maxZ;
 
-    //    }
-    //    else if (NearPos == Top)
-    //    {
-    //        Position.z = maxZ;
-    //        Target.z = minZ;
+        }
+        else if (NearPos == Top)
+        {
+            Position.z = maxZ;
+            Target.z = minZ;
 
-    //    }
-    //    else
-    //    {
-    //        Debug.Log("너는 왜 오류임?");
-    //    }
-    //    transform.position = Position;
+        }
+        else
+        {
+            Debug.Log("너는 왜 오류임?");
+        }
+        transform.position = Position;
 
-    //    Coroutine = StartCoroutine(GoShookShook());
-    //}
+        Coroutine = StartCoroutine(GoShookShook());
+    }
 
     public override void OnDisable()
     {

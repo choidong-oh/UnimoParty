@@ -1,18 +1,21 @@
+using Photon.Pun;
 using System.Collections;
 using UnityEngine;
+using static UnityEditor.PlayerSettings;
+using static UnityEngine.ParticleSystem;
 
-public class Bungpeo : MonoBehaviour
+public class Bungpeo : EnemyBase
 {
-    public float explosionForce = 20f;
-    public float explosionRadius = 20f;
-    public float upwardsModifier = 1f;
-    public LayerMask explosionMask;
+    [SerializeField] float explosionForce = 20f;
+    [SerializeField] float explosionRadius = 20f;
+    [SerializeField] float upwardsModifier = 1f;
+    [SerializeField] LayerMask explosionMask;
 
-    public GameObject[] Fragment;
+    [SerializeField] GameObject[] Fragment;
 
-    public GameObject explosionFragment;
+    [SerializeField] GameObject explosionPartycle;
 
-    public GameObject[] Body;
+    [SerializeField] GameObject[] Body;
 
     Animator animator;
 
@@ -20,45 +23,53 @@ public class Bungpeo : MonoBehaviour
 
     private string explodeStateName = "anim_MON003_ready02";
 
-    private Vector3 initialScale;
-    private void Awake()
+    [SerializeField] GameObject CrashBunpeo;
+
+    Terrain terrain;
+
+    int IsActivateFragment = 0;
+
+    private void OnTriggerEnter(Collider other)
     {
-        initialScale = transform.localScale;
-        animator = GetComponent<Animator>();
-        myCollider = GetComponent<Collider>();
+        if (other.gameObject.tag == "Player")
+        {
+            Manager.Instance.observer.HitPlayer(damage);
+            Debug.Log(Manager.Instance.observer.UserPlayer.gamedata.life);
+
+            Vector3 hitPoint = other.ClosestPoint(transform.position);//충돌지점에 최대한 가깝게
+
+            Vector3 normal = (hitPoint - transform.position).normalized;// 방향계산
+            Quaternion rot = Quaternion.LookRotation(normal);// 방향계산
+
+            GameObject inst = Instantiate(CrashBunpeo, hitPoint, rot);
+
+
+            gameObject.SetActive(false);
+        }
+
     }
 
-    private void OnEnable()
+    public override void OnEnable()
     {
-        // 1) 애니메이터를 잠시 끈다
-        animator.enabled = false;
-
-        // 2) transform 스케일을 초기값으로 강제 복원
-        transform.localScale = initialScale;
-
-        // 3) 애니메이터 내부 상태 완전 초기화
-        animator.Rebind();
-        animator.Update(0f);
-
-        // 4) 진입 상태(Entry)애니메이션을 0초 지점으로 강제 재생
-        //    애니메이터 컨트롤러에서 해당 레이어의 기본 스테이트 이름을 정확히 넣어주자.
-        string entryStateName = "Idle"; // 예시: Entry 상태 이름(Animator Controller에 설정된 첫 스테이트)
-        animator.Play(entryStateName, 0, 0f);
-        animator.Update(0f); // ★여기서 다시 한 번 0초 프레임을 적용해서 transform.localScale=1,1,1이 확실히 반영되도록 함
-
-        // 5) 이제 애니메이터를 켜면, 설정한 첫 프레임 상태(스케일=1,1,1)에서부터 재생된다
-        animator.enabled = true;
-
-
-
-
+        animator = GetComponent<Animator>();
+        myCollider = GetComponent<Collider>();
 
         myCollider.enabled = true;
 
+        terrain = Terrain.activeTerrain;
+
+        float terrainY = terrain.SampleHeight(transform.position) + transform.localScale.y / 2f;
+        transform.position = new Vector3(transform.position.x, terrainY, transform.position.z);
 
         for (int i = 0; i < Body.Length; i++)
         {
             Body[i].SetActive(true);
+        }
+
+
+        for (int i = 0; i < Fragment.Length; i++)
+        {
+            Fragment[i].SetActive(true);
         }
 
         StartCoroutine(WaitAndExplode());
@@ -71,11 +82,11 @@ public class Bungpeo : MonoBehaviour
             yield return null;
         }
 
-        // 해당 상태(State)가 재생되는 순간, 연결된 클립 정보(대개 하나)에서 길이(length) 가져오기
+        // State가 재생되는 순간, 연결된 클립길이 가져오기
         AnimatorClipInfo[] clips = animator.GetCurrentAnimatorClipInfo(0);
         if (clips.Length == 0)
         {
-            Debug.LogWarning($"[{explodeStateName}] 상태에 연결된 애니메이션 클립이 없습니다.");
+            Debug.LogWarning($"{explodeStateName} 클립이 없음");
             yield break;
         }
 
@@ -87,8 +98,9 @@ public class Bungpeo : MonoBehaviour
     }
 
 
-    private void OnDisable()
+    public override void OnDisable()
     {
+        base.OnDisable();
         for (int i = 0; i < Fragment.Length; i++)
         {
 
@@ -103,11 +115,13 @@ public class Bungpeo : MonoBehaviour
                 Fragment[i].GetComponent<Rigidbody>().useGravity = false;
             }
             Fragment[i].transform.localPosition = Vector3.zero;
+            Fragment[i].SetActive(true);
         }
         for (int i = 0; i < Body.Length; i++)
         {
             Body[i].SetActive(true);
         }
+
     }
 
     public void Explode()
@@ -144,7 +158,7 @@ public class Bungpeo : MonoBehaviour
             }
         }
 
-        GameObject inst = Instantiate(explosionFragment, transform.position, Quaternion.identity);
+        GameObject inst = Instantiate(explosionPartycle, transform.position, Quaternion.identity);
 
         for (int i = 0; i < Body.Length; i++)
         {
@@ -152,6 +166,73 @@ public class Bungpeo : MonoBehaviour
             myCollider.enabled = false;
         }
 
+
+    }
+
+    [PunRPC]
+    public void IsActivateRPC()
+    {
+        IsActivateFragment++;
+        if (IsActivateFragment == 4)
+        {
+            Debug.Log("완료");
+            IsActivateFragment = 0;
+            gameObject.SetActive(false);
+        }
+        Debug.Log(IsActivateFragment + "일단 작동함 ");
+    }
+    public void IsActivate()
+    {
+        photonView.RPC("IsActivateRPC", RpcTarget.All);
+    }
+
+    public override void Move(Vector3 direction)
+    {
+        photonView.RPC("MoveRPC", RpcTarget.All, direction);
+    }
+
+    public override void Freeze(Vector3 direction, bool isFreeze)
+    {
+        photonView.RPC("FreezeRPC", RpcTarget.All, direction);
+    }
+
+    public override void CsvEnemyInfo()
+    {
+        throw new System.NotImplementedException();
+    }
+
+
+    [PunRPC]
+    public void MoveRPC(Vector3 direction)
+    {
+        animator = GetComponent<Animator>();
+        myCollider = GetComponent<Collider>();
+
+        myCollider.enabled = true;
+
+        terrain = Terrain.activeTerrain;
+
+        float terrainY = terrain.SampleHeight(transform.position) + transform.localScale.y / 2f;
+        transform.position = new Vector3(transform.position.x, terrainY, transform.position.z);
+
+        for (int i = 0; i < Body.Length; i++)
+        {
+            Body[i].SetActive(true);
+        }
+
+
+        for (int i = 0; i < Fragment.Length; i++)
+        {
+            Fragment[i].SetActive(true);
+        }
+
+        StartCoroutine(WaitAndExplode());
+    }
+
+
+    [PunRPC]
+    public void FreezeRPC(Vector3 direction, bool isFreeze)
+    {
 
     }
 

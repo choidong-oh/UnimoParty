@@ -5,8 +5,8 @@ using UnityEngine.TerrainUtils;
 
 public class TestSpawn : MonoBehaviour
 {
-    public float x = 25f;
-    public float y = 25f;
+    [SerializeField] float x = 25f;
+    [SerializeField] float y = 25f;
 
     float RandomXMin;
     float RandomYMin;
@@ -14,8 +14,8 @@ public class TestSpawn : MonoBehaviour
     float RandomYMax;
 
 
-    public int maxEnemies = 10;
-    public int spawnTimer = 3;
+    [SerializeField] int maxEnemies = 10;
+    [SerializeField] int spawnTimer = 3;
     [SerializeField] GameObject[] Enemy;
     Vector3 spawnPos;
 
