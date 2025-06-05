@@ -58,7 +58,7 @@ public class PVPManager : MonoBehaviourPunCallbacks
     }
 
     public override void OnJoinedLobby()
-    {
+    {       
         PhotonNetwork.JoinOrCreateRoom("LobbyRoom", new RoomOptions { MaxPlayers = 20 }, TypedLobby.Default);
     }
 
