@@ -18,8 +18,6 @@ public class PVPManager : MonoBehaviourPunCallbacks
     [SerializeField] GameObject PVPPanel;
     [SerializeField] GameObject roomPanel;
 
-
-
     [Header("매칭 분류")]
     [SerializeField] Image matchImage;
     [SerializeField] TextMeshProUGUI Count;
@@ -32,16 +30,18 @@ public class PVPManager : MonoBehaviourPunCallbacks
     [SerializeField] Transform nicknamePanelParent;
     [SerializeField] Button actionButton;
     [SerializeField] TextMeshProUGUI actionButtonText;
+
     [Header("매칭 분류")]
     [SerializeField] TMP_InputField codeInput;
 
 
     private byte maxPlayers = 8;
     private const byte minPlayers = 2;
-    private Coroutine matchmakingCoroutine;
 
     private Stack<GameObject> panelStack = new Stack<GameObject>();
     private GameObject currentPanel;
+    private int readyCount = 0;
+
 
     private Dictionary<int, GameObject> playerUIMap = new Dictionary<int, GameObject>();
     IEnumerator Start()
@@ -57,8 +57,6 @@ public class PVPManager : MonoBehaviourPunCallbacks
         PVPPanel.SetActive(false);
         roomPanel.SetActive(false);
 
-        
-        
 
         PhotonNetwork.NickName = FirebaseAuthMgr.user.DisplayName;
     }
@@ -73,11 +71,12 @@ public class PVPManager : MonoBehaviourPunCallbacks
         currentPanel = nextPanel;
         currentPanel.SetActive(true);
     }
+    //인스펙터 끼워 넣기 용
     public void PVEButton()
     {
         ShowPanel(PVEPanel);
     }
-
+    //인스펙터 끼워 넣기 용
     public void PVPButton()
     {
         ShowPanel(PVPPanel);
@@ -119,26 +118,40 @@ public class PVPManager : MonoBehaviourPunCallbacks
         checkPanel.SetActive(false);
         roomPanel.SetActive(false);
     }
+
     public void MatchmakingButton()
     {
-        matchmakingCoroutine = StartCoroutine(MatchmakingRoutine());
+        Count.gameObject.SetActive(true);
+        StartCoroutine(MatchmakingRoutine());
         matchImage.color = new Color(1, 1, 0, 1);
     }
 
     private IEnumerator MatchmakingRoutine()
     {
+        yield return new WaitForSeconds(0.1f);
+        int timeElapsed = 0;
+        Count.text = "00:00";
         while (maxPlayers >= minPlayers)
         {
             Debug.Log($"[매치메이킹] 최대 인원: {maxPlayers}");
 
             PhotonNetwork.JoinRandomOrCreateRoom(null,maxPlayers,MatchmakingMode.FillRoom,null,null,"Random",new RoomOptions { MaxPlayers = maxPlayers },null);
 
-            yield return new WaitForSeconds(30f);
+            timeElapsed = 0;
+            while (timeElapsed < 30)
+            {
+                int minutes = timeElapsed / 60;
+                int seconds = timeElapsed % 60;
+                Count.text = $"{minutes:D2}:{seconds:D2}";
+
+                yield return new WaitForSeconds(1f);
+                timeElapsed++;
+            }
 
             maxPlayers--;
+            Debug.Log($"[매치메이킹] 인원 감소 → maxPlayers: {maxPlayers}");
         }
 
-        matchmakingCoroutine = null;
     }
 
     public override void OnJoinedRoom()
@@ -146,14 +159,13 @@ public class PVPManager : MonoBehaviourPunCallbacks
         if (PhotonNetwork.CurrentRoom.Name == "Random")
         {
             Debug.Log("매치메이킹 시작");
-            StopCoroutine(matchmakingCoroutine);
-            matchmakingCoroutine = null;
+            StopCoroutine(MatchmakingRoutine());
         }
         else
         {
             Debug.Log("입장 성공");
             UpdateActionButton();
-            // 모든 플레이어에 대한 UI 생성
+
             foreach (Player p in PhotonNetwork.PlayerList)
             {
                 AddNicknameUI(p);
@@ -164,14 +176,17 @@ public class PVPManager : MonoBehaviourPunCallbacks
     }
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
-        // 매치메이킹용 임시방 ("Random")에서는 UI를 만들지 않음
         if (PhotonNetwork.CurrentRoom.Name != "Random")
         {
             AddNicknameUI(newPlayer);
-            CheckAllReady();
             UpdateActionButton();
+            if(PhotonNetwork.IsMasterClient)
+            {
+                CheckAllReady();
+            }
         }
     }
+
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
         if (PhotonNetwork.CurrentRoom.Name != "Random")
@@ -182,50 +197,31 @@ public class PVPManager : MonoBehaviourPunCallbacks
                 playerUIMap.Remove(otherPlayer.ActorNumber);
             }
 
-            CheckAllReady();
+            if(PhotonNetwork.IsMasterClient)
+            {
+                CheckAllReady();
+            }
             UpdateActionButton();
         }
     }
     private void CheckAllReady()
     {
-        if (!PhotonNetwork.IsMasterClient)
-            return;
-        if (PhotonNetwork.CurrentRoom.PlayerCount < 2)
-        {
-            actionButton.interactable = false;
-            return;
-        }
-        foreach (var kvp in playerUIMap)
-        {
-            TextMeshProUGUI[] texts = kvp.Value.GetComponentsInChildren<TextMeshProUGUI>();
-            bool isReady = false;
+        int totalPlayers = PhotonNetwork.CurrentRoom.PlayerCount;
 
-            foreach (var t in texts)
-            {
-                if (t.name == "StateText" && t.text == "준비")
-                {
-                    isReady = true;
-                    break;
-                }
-            }
-
-            if (!isReady)
-            {
-                actionButton.interactable = false;
-                return;
-            }
-        }
-        actionButton.interactable = true;
+        actionButton.interactable = (readyCount >= totalPlayers - 1);
     }
     private void AddNicknameUI(Player p)
     {
-        GameObject panel = Instantiate(nicknamePanel, nicknamePanelParent);
-        TextMeshProUGUI[] texts = panel.GetComponentsInChildren<TextMeshProUGUI>();
-        foreach (var t in texts)
-        {
-             t.text = p.NickName;
-        }
+        GameObject panel = PhotonNetwork.Instantiate("PlayerPanel", Vector3.zero, Quaternion.identity, 0);
+        panel.transform.SetParent(nicknamePanelParent, false);
 
+        TextMeshProUGUI texts = panel.GetComponentInChildren<TextMeshProUGUI>();
+        texts.text = p.NickName;
+        
+        if(p.ActorNumber != PhotonNetwork.MasterClient.ActorNumber)
+        {
+            panel.GetComponentInChildren<Image>().gameObject.SetActive(false);
+        }
         playerUIMap[p.ActorNumber] = panel;
     }
 
@@ -243,25 +239,10 @@ public class PVPManager : MonoBehaviourPunCallbacks
 
 
 
-    [PunRPC]
-    public void SetReadyState(int actorNumber)
-    {
-        if (playerUIMap.TryGetValue(actorNumber, out GameObject ui))
-        {
-            TextMeshProUGUI[] texts = ui.GetComponentsInChildren<TextMeshProUGUI>();
-            foreach (var t in texts)
-            {
-                t.text = "준비";
-                break;
-                
-            }
-        }
-    }
-
 
     public override void OnMasterClientSwitched(Player newMasterClient)
     {
-        UpdateActionButton(); // 마스터 바뀌면 버튼도 업데이트
+        UpdateActionButton();
     }
     public void ReadyButton()
     {
@@ -291,13 +272,40 @@ public class PVPManager : MonoBehaviourPunCallbacks
             actionButton.onClick.AddListener(ReadyButton);
         }
     }
+    public override void OnLeftRoom()
+    {
+        Debug.Log("방 나감");
+    }
+    [PunRPC]
+    public void SetReadyState(int actorNumber)
+    {
+        if (PhotonNetwork.LocalPlayer.ActorNumber == actorNumber &&
+            !PhotonNetwork.LocalPlayer.IsMasterClient)
+        {
+            readyCount++;
+            if (playerUIMap.TryGetValue(actorNumber, out GameObject ui))
+            {
+                Image stateImage = ui.GetComponentInChildren<Image>();
+                stateImage.gameObject.SetActive(true);
 
+                stateImage.GetComponentInChildren<TextMeshProUGUI>().text = "준비";
+            }
+        }
+
+        if (PhotonNetwork.IsMasterClient)
+        {
+            CheckAllReady();
+        }
+    }
     #region 수정 사항 과거버전 
 
-    //버튼 생성 및 버튼 클릭시 파티초대 
+    //버튼 생성 및 버튼 클릭시 파티초대
     //public override void OnJoinedLobby()
-    //{       
-    //    PhotonNetwork.JoinOrCreateRoom("LobbyRoom", new RoomOptions { MaxPlayers = 20 }, TypedLobby.Default);
+    //{
+    //    foreach (Player p in PhotonNetwork.PlayerList)
+    //    {
+    //        AddPlayerButton(p);
+    //    }
     //}
 
     //public override void OnConnectedToMaster()
@@ -316,10 +324,6 @@ public class PVPManager : MonoBehaviourPunCallbacks
     //    }
     //}
 
-    //public override void OnPlayerEnteredRoom(Player newPlayer)
-    //{
-    //    AddPlayerButton(newPlayer);
-    //}
 
     //public override void OnPlayerLeftRoom(Player otherPlayer)
     //{
@@ -341,11 +345,11 @@ public class PVPManager : MonoBehaviourPunCallbacks
     //    else
     //    {
     //        button.onClick.RemoveAllListeners();
-    //        button.onClick.AddListener(() => SendInviteButton(p));            
+    //        button.onClick.AddListener(() => SendInviteButton(p));
     //    }
     //}
 
-    //// 플레이어 나가면 버튼 제거
+    ////// 플레이어 나가면 버튼 제거
     //void RemovePlayerButton(Player p)
     //{
     //    if (playerButtons.TryGetValue(p.NickName, out Button btn))
