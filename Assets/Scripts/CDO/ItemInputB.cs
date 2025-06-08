@@ -1,15 +1,25 @@
 using Photon.Pun;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.XR.Interaction.Toolkit;
 
 
+//1. 아이템들이있음 //아이템1, 아이템2, 아이템3 
+//2. 아이템들(프리팹이름만 담고 사용한다)
+//3. 큐에 아이템들을 담음 
+//4. 현재 아이템 = 큐에 첫번째
+//5. 아이템의기능 아이템의use함수를 사용
+//6. 아이템 사용함수는 컨트롤러의 함수 사용
+//7. 교체는 첫번째아이템을 다시 큐에담음
+
+
 //secondaryButton[오른손 XR 컨트롤러] = B 버튼
 //primaryButton[오른손 XR 컨트롤러] = A 버튼
 public class ItemInputB : MonoBehaviourPunCallbacks, IFreeze
 {
-    [SerializeField] InputActionReference BInputActionReference; //xr b
+    [SerializeField] InputActionReference bInputActionReference; //xr b
 
     [SerializeField] InputActionReference triggerInputActionReference; //트리거
 
@@ -19,90 +29,126 @@ public class ItemInputB : MonoBehaviourPunCallbacks, IFreeze
 
     int grenadePower = 5;
 
-    GameObject Item1 = null;
-    Queue<GameObject> itemQueue = new Queue<GameObject>();
+    public Queue<string> itemQueue = new Queue<string>();
 
-    GameObject currentItem;
+    GameObject currentItem = null;
     GameObject newItem;
 
 
-    //임시
-    void ItemAdd()
+    GameObject ItemAdd(string ItemPrefabName)
     {
-        //아이템 추가
-        itemQueue.Enqueue(newItem);
-        //교체할때
-        currentItem = itemQueue.Dequeue();
-        itemQueue.Enqueue(currentItem);  
-        
+        firepos = rightController.gameObject.GetComponentInChildren<ActionBasedController>().model.GetChild(0).transform;
+        newItem = PhotonNetwork.Instantiate(ItemPrefabName, firepos.position, Quaternion.identity);
+        newItem.transform.parent = firepos.transform;
+        newItem.gameObject.GetComponent<Rigidbody>().useGravity = false;
+
+        return newItem;
     }
-
-
 
     public override void OnEnable()
     {
         base.OnEnable();
-        BInputActionReference.action.Enable();
-        BInputActionReference.action.performed += ControllerB;
+        bInputActionReference.action.Enable();
+        bInputActionReference.action.performed += ControllerB;
 
         triggerInputActionReference.action.performed += OnTriggerPressed;
-        triggerInputActionReference.action.canceled += OnTriggerReleased;
     }
 
     public override void OnDisable()
     {
         base.OnDisable();
-        BInputActionReference.action.performed -= ControllerB;
-        BInputActionReference.action.Disable();
+        bInputActionReference.action.performed -= ControllerB;
+        bInputActionReference.action.Disable();
 
         triggerInputActionReference.action.performed -= OnTriggerPressed;
-        triggerInputActionReference.action.canceled -= OnTriggerReleased;
     }
 
     //트리거 함
     private void OnTriggerPressed(InputAction.CallbackContext context)
     {
-        //photonView.RPC("Item1Rpc",RpcTarget.All);
         //아이템 사용
-      
-        Rigidbody rb = Item1.gameObject.GetComponent<Rigidbody>();
+
+        Rigidbody rb = currentItem.gameObject.GetComponent<Rigidbody>();
         Vector3 throwDirection = firepos.transform.forward + firepos.transform.up;
-        Item1.transform.parent = null;
+        currentItem.transform.parent = null;
         rb.useGravity = true;
         rb.AddForce(throwDirection * grenadePower, ForceMode.VelocityChange);
 
-    }
-
-   
-
-
-    //트리거 뗌
-    void OnTriggerReleased(InputAction.CallbackContext context)
-    {
-
-
+        //아이템사용하면 큐 삭제
+        itemQueue.Dequeue();
 
     }
+
+    //프리팹 생성
     public void StateItem(bool isItemInputB)
     {
         if (isItemInputB == true)
         {
-            firepos = rightController.gameObject.GetComponentInChildren<ActionBasedController>().model.GetChild(0).transform;
-            Item1 = PhotonNetwork.Instantiate("Boomprefab", firepos.position, Quaternion.identity);
-            Item1.transform.parent = firepos.transform;
-            Item1.gameObject.GetComponent<Rigidbody>().useGravity = false;
+            if (itemQueue.Count == 0)
+            {
+                itemQueue.Enqueue("Boomprefab");
+                itemQueue.Enqueue("PotionPrefab1");
+            }
+            if (currentItem == null)
+            {
+                string QueueItem = itemQueue.Peek();
+                currentItem = ItemAdd(QueueItem);
+            }
+
         }
-        else if(isItemInputB == false)
+        else if (isItemInputB == false)
         {
-            PhotonNetwork.Destroy(Item1);
+            if (currentItem != null)
+            {
+                PhotonNetwork.Destroy(currentItem);
+                currentItem = null;
+            }
         }
     }
 
     //아이템 교체 b
     private void ControllerB(InputAction.CallbackContext context)
     {
+        if (itemQueue.Count <= 0)
+        {
+            return;
+        }
+        //StartCoroutine(NetworkDestroyWait());
+
         Debug.Log("컨트롤 b버튼, 아이템 교체");
+        Debug.Log("itemQueue.count = " + itemQueue.Count);
+        string oldItem = itemQueue.Dequeue();
+        itemQueue.Enqueue(oldItem);
+
+        PhotonNetwork.Destroy(currentItem);
+
+        string nextItem = itemQueue.Peek();
+        Debug.Log("큐에들어갈프리팹이름 = "+ itemQueue.Peek());
+        currentItem = ItemAdd(nextItem);
+
+
     }
+
+
+    IEnumerator NetworkDestroyWait()
+    {
+        Debug.Log("컨트롤 b버튼, 아이템 교체");
+        Debug.Log("itemQueue.count = " + itemQueue.Count);
+        string oldItem = itemQueue.Dequeue();
+        itemQueue.Enqueue(oldItem);
+
+        PhotonNetwork.Destroy(currentItem);
+
+        yield return new WaitUntil(() => currentItem == null);
+
+        string nextItem = itemQueue.Peek();
+        if(nextItem == "")
+        {
+            Debug.Log("큐에들어갈내용이빈공간임");
+        }
+        currentItem = ItemAdd(nextItem);
+    }
+
 
     public void Freeze(bool IsFreeze)
     {

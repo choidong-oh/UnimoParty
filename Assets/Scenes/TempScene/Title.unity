@@ -2280,6 +2280,9 @@ MonoBehaviour:
   tempFairyValue_1: 10
   tempFairyValue_2: 10
   tempFairyValue_3: 10
+  _FairyScore_1: 1
+  _FairyScore_2: 2
+  _FairyScore_3: 3
 --- !u!4 &1221788417
 Transform:
   m_ObjectHideFlags: 0

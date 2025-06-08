@@ -1,13 +1,11 @@
 using Photon.Pun;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class XrControllerMgr : MonoBehaviourPunCallbacks
 {
     [SerializeField] //아이템 > 채집총 교체 a
-    InputActionReference AInputActionReference; 
+    InputActionReference AInputActionReference;
 
     //게임오브젝트 활성화 비활성화용
     [SerializeField] GameObject HandHarvestObj;
@@ -17,15 +15,17 @@ public class XrControllerMgr : MonoBehaviourPunCallbacks
 
     bool isItemController = false;   //처음은 채집총 시작
 
-    private void OnEnable()
+    public override void OnEnable()
     {
+        base.OnEnable();
         AInputActionReference.action.Enable();
         AInputActionReference.action.performed += ControllerA;
 
     }
 
-    private void OnDisable()
+    public override void OnDisable()
     {
+        base.OnDisable();
         AInputActionReference.action.performed -= ControllerA;
         AInputActionReference.action.Disable();
 

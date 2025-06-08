@@ -1,20 +1,18 @@
 using Photon.Pun;
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class FreezeBoom : MonoBehaviourPunCallbacks, IItemUse
 {
 
-   
+
     IEnumerator wait()
     {
-        while (true)
-        {
-            yield return new WaitForSeconds(2);
-            photonView.RPC("Explode", RpcTarget.All);
-            //Explode();
-        }
+        yield return new WaitForSeconds(2);
+        photonView.RPC("Explode", RpcTarget.All, true);
+
+        yield return new WaitForSeconds(2);
+        photonView.RPC("Explode", RpcTarget.All, false);
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -29,7 +27,7 @@ public class FreezeBoom : MonoBehaviourPunCallbacks, IItemUse
 
 
     [PunRPC]
-    void Explode()
+    void Explode(bool isFreeze)
     {
         RaycastHit[] hits = Physics.SphereCastAll(transform.position, 30, Vector3.up, 100f, LayerMask.GetMask("Player", "Enemy", "Water"));
         foreach (var hitobj in hits)
@@ -48,20 +46,20 @@ public class FreezeBoom : MonoBehaviourPunCallbacks, IItemUse
 
                 if ((PlayerMove = target.GetComponentInChildren<JoystickController>()) != null)
                 {
-                    PlayerMove.Freeze(true);
+                    PlayerMove.Freeze(isFreeze);
                     Debug.Log("플레이어 움직임 어름");
                 }
 
                 if ((headDash = target.GetComponentInChildren<HeadDash>()) != null)
                 {
-                    headDash.Freeze(true);
+                    headDash.Freeze(isFreeze);
 
                     Debug.Log("플레이어 대시 어름");
                 }
 
                 if (target.TryGetComponent<HandHarvest>(out HandHarvest PlayerHarvest))
                 {
-                    PlayerHarvest.Freeze(true);
+                    PlayerHarvest.Freeze(isFreeze);
 
                     Debug.Log("플레이어 채집 어름");
                 }
@@ -81,7 +79,7 @@ public class FreezeBoom : MonoBehaviourPunCallbacks, IItemUse
                 if (target.TryGetComponent<EnemyBase>(out EnemyBase Enemy))
                 {
                     ICommand command = null;
-                    command = new FreezeCommand(Enemy, transform.position, true);
+                    command = new FreezeCommand(Enemy, transform.position, isFreeze);
                     command.Execute();
 
 
@@ -90,7 +88,7 @@ public class FreezeBoom : MonoBehaviourPunCallbacks, IItemUse
                 }
                 if (target.TryGetComponent<TestEnemybase>(out TestEnemybase TestEnemy))
                 {
-                    TestEnemy.Freeze(transform.position,true);
+                    TestEnemy.Freeze(transform.position, isFreeze);
 
 
                     Debug.Log("TestEnemy 어름");
@@ -103,7 +101,7 @@ public class FreezeBoom : MonoBehaviourPunCallbacks, IItemUse
         }
     }
 
-    public void Use(Transform firepos,int power)
+    public void Use(Transform firepos, int power)
     {
         Rigidbody rb = gameObject.GetComponent<Rigidbody>();
         Vector3 throwDirection = firepos.transform.forward + firepos.transform.up;
