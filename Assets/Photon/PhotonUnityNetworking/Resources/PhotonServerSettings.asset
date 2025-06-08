@@ -51,9 +51,10 @@ MonoBehaviour:
   - DeveloperJoinRoom
   - 
   - PartyInvite
+  - SetReadyState
   - FreezeRPC
-  - MoveRPC
   - IsActivateRPC
+  - MoveRPC
   DisableAutoOpenWizard: 1
   ShowSettings: 0
-  DevRegionSetOnce: 0
+  DevRegionSetOnce: 1

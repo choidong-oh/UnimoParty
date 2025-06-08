@@ -9,8 +9,8 @@ EditorBuildSettings:
     path: Assets/Scenes/TempScene/Title.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
   - enabled: 1
-    path: Assets/Scenes/TempScene/Lobby.unity
-    guid: 52531fd912dc5a8439d9f555a1bc05d4
+    path: Assets/Scenes/TempScene/Lobby 1.unity
+    guid: 6f3605498bde7c248aae0cbe88eb6117
   - enabled: 1
     path: Assets/Scenes/TempScene/Ingame.unity
     guid: edc5227e4b02aea429d32c48f2860cb3
