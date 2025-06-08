@@ -32,6 +32,7 @@ public class PVPManager : MonoBehaviourPunCallbacks
     [SerializeField] TextMeshProUGUI actionButtonText;
 
     [Header("매칭 분류")]
+    [SerializeField] Button makeRoomBtn;
     [SerializeField] TMP_InputField codeInput;
 
 
@@ -44,6 +45,10 @@ public class PVPManager : MonoBehaviourPunCallbacks
 
 
     private Dictionary<int, GameObject> playerUIMap = new Dictionary<int, GameObject>();
+    Coroutine matchCorutine;
+    private bool isMatchMaking;
+
+    
     IEnumerator Start()
     {
         PhotonNetwork.AutomaticallySyncScene = true;
@@ -121,34 +126,62 @@ public class PVPManager : MonoBehaviourPunCallbacks
 
     public void MatchmakingButton()
     {
-        Count.gameObject.SetActive(true);
-        StartCoroutine(MatchmakingRoutine());
-        matchImage.color = new Color(1, 1, 0, 1);
+        isMatchMaking = !isMatchMaking;
+
+        if (!isMatchMaking)
+        {
+            makeRoomBtn.interactable = true;
+            codeInput.interactable = true;
+            Count.gameObject.SetActive(false);
+            matchImage.color = new Color(1, 1, 0, 0);
+
+            StopCoroutine(matchCorutine);
+            matchCorutine = null;
+            PhotonNetwork.LeaveRoom();
+        }
+        else
+        {
+            makeRoomBtn.interactable = false;
+            codeInput.interactable = false;
+
+            Count.gameObject.SetActive(true);
+            matchCorutine = StartCoroutine(MatchmakingRoutine()); 
+            matchImage.color = new Color(1, 1, 0, 1);
+        }
     }
 
     private IEnumerator MatchmakingRoutine()
     {
+        maxPlayers = 8;
         yield return new WaitForSeconds(0.1f);
         int timeElapsed = 0;
+        int addTime = 30;
         Count.text = "00:00";
         while (maxPlayers >= minPlayers)
         {
-            Debug.Log($"[매치메이킹] 최대 인원: {maxPlayers}");
-
-            PhotonNetwork.JoinRandomOrCreateRoom(null,maxPlayers,MatchmakingMode.FillRoom,null,null,"Random",new RoomOptions { MaxPlayers = maxPlayers },null);
-
-            timeElapsed = 0;
-            while (timeElapsed < 30)
+            
+            if(PhotonNetwork.InRoom)
+            {
+                PhotonNetwork.LeaveRoom(true);
+                yield return new WaitUntil(() => !PhotonNetwork.InRoom);
+                
+               
+            }
+            else
+            {
+                PhotonNetwork.JoinRandomOrCreateRoom(null, maxPlayers, MatchmakingMode.FillRoom, null, null, "Random", new RoomOptions { MaxPlayers = 8 }, null);
+            }
+            while (timeElapsed < addTime)
             {
                 int minutes = timeElapsed / 60;
                 int seconds = timeElapsed % 60;
                 Count.text = $"{minutes:D2}:{seconds:D2}";
 
                 yield return new WaitForSeconds(1f);
-                timeElapsed++;
+                timeElapsed++;                
             }
-
-            maxPlayers--;
+            addTime += 30;
+            
             Debug.Log($"[매치메이킹] 인원 감소 → maxPlayers: {maxPlayers}");
         }
 
@@ -159,7 +192,6 @@ public class PVPManager : MonoBehaviourPunCallbacks
         if (PhotonNetwork.CurrentRoom.Name == "Random")
         {
             Debug.Log("매치메이킹 시작");
-            StopCoroutine(MatchmakingRoutine());
         }
         else
         {
@@ -274,7 +306,12 @@ public class PVPManager : MonoBehaviourPunCallbacks
     }
     public override void OnLeftRoom()
     {
-        Debug.Log("방 나감");
+        maxPlayers--;
+        if (PhotonNetwork.CurrentRoom.Name == "Random")
+        {
+            Debug.Log(maxPlayers + " 명으로 방 생성");
+            PhotonNetwork.JoinRandomOrCreateRoom(null, maxPlayers, MatchmakingMode.FillRoom, null, null, "Random", new RoomOptions { MaxPlayers = maxPlayers }, null);
+        }
     }
     [PunRPC]
     public void SetReadyState(int actorNumber)
