@@ -125,6 +125,11 @@ public class ItemInputB : MonoBehaviourPunCallbacks, IFreeze
 
     }
 
+    public void AddQueueItem(string ItemName)
+    {
+        itemQueue.Enqueue(ItemName);
+    }
+
     public void Freeze(bool IsFreeze)
     {
         throw new System.NotImplementedException();

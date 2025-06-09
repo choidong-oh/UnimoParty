@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 8072139401927795052}
   - component: {fileID: 5450030656941190239}
   - component: {fileID: 662542914266189646}
+  - component: {fileID: 8997659942057048910}
   m_Layer: 0
   m_Name: PotionPrefab1
   m_TagString: Untagged
@@ -176,3 +177,15 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &8997659942057048910
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2476595782683099581}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 128e9553ae5519f4297d3a83d106d068, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -86,14 +86,7 @@ public class FreezeBoom : MonoBehaviourPunCallbacks, IItemUse
 
                     Debug.Log("enemy 어름");
                 }
-                if (target.TryGetComponent<TestEnemybase>(out TestEnemybase TestEnemy))
-                {
-                    TestEnemy.Freeze(transform.position, isFreeze);
-
-
-                    Debug.Log("TestEnemy 어름");
-                }
-
+               
             }
 
 
