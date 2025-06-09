@@ -4,12 +4,7 @@ using UnityEngine;
 
 public enum ItemName
 {
-    Potion, FreezeBoom, end
-}
-
-public enum ItemType
-{
-
+    Potion, FreezeBoom, Barricade, end
 }
 
 public class ItemData : InterfaceMethod.TableData
