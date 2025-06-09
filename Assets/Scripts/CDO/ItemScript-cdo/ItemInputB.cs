@@ -33,6 +33,9 @@ public class ItemInputB : MonoBehaviourPunCallbacks, IFreeze
     GameObject currentItem = null;
     GameObject newItem;
 
+    //스크립트
+    [SerializeField] XrControllerMgr XrControllerMgrObj;
+
     public override void OnEnable()
     {
         base.OnEnable();
@@ -60,8 +63,15 @@ public class ItemInputB : MonoBehaviourPunCallbacks, IFreeze
             itemUse.Use(firepos, grenadePower);
         }
 
+
         //아이템사용하면 큐 삭제
         itemQueue.Dequeue();
+        //큐에 담겨진 아이템이 없으면
+        if (itemQueue.Count <= 0)
+        {
+            XrControllerMgrObj.IsItemObj(false);
+            return;
+        }
         string nextItem = itemQueue.Peek();
         currentItem = ItemCreate(nextItem);
 
@@ -107,12 +117,14 @@ public class ItemInputB : MonoBehaviourPunCallbacks, IFreeze
     //아이템 교체 b
     private void ControllerB(InputAction.CallbackContext context)
     {
+        //혹시 몰라 안전코드
         if (itemQueue.Count <= 0)
         {
+            XrControllerMgrObj.IsItemObj(false);
             return;
         }
+
         Debug.Log("컨트롤 b버튼, 아이템 교체");
-        Debug.Log("itemQueue.count = " + itemQueue.Count);
         string oldItem = itemQueue.Dequeue();
         itemQueue.Enqueue(oldItem);
 
@@ -120,13 +132,23 @@ public class ItemInputB : MonoBehaviourPunCallbacks, IFreeze
 
         if (itemQueue.Count <= 0)
         {
+            XrControllerMgrObj.IsItemObj(false);
             return;
         }
-        Debug.Log("큐에들어갈프리팹이름 = " + itemQueue.Peek());
         string nextItem = itemQueue.Peek();
         currentItem = ItemCreate(nextItem);
 
 
+    }
+
+    public void IsItemQueueCountZero()
+    {
+        //큐에 담겨진 아이템이 없으면
+        if (itemQueue.Count <= 0)
+        {
+            XrControllerMgrObj.IsItemObj(false);
+            return;
+        }
     }
 
     public void AddQueueItem(string ItemName)
