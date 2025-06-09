@@ -1,5 +1,4 @@
 using Photon.Pun;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -34,17 +33,6 @@ public class ItemInputB : MonoBehaviourPunCallbacks, IFreeze
     GameObject currentItem = null;
     GameObject newItem;
 
-
-    GameObject ItemAdd(string ItemPrefabName)
-    {
-        firepos = rightController.gameObject.GetComponentInChildren<ActionBasedController>().model.GetChild(0).transform;
-        newItem = PhotonNetwork.Instantiate(ItemPrefabName, firepos.position, Quaternion.identity);
-        newItem.transform.parent = firepos.transform;
-        newItem.gameObject.GetComponent<Rigidbody>().useGravity = false;
-
-        return newItem;
-    }
-
     public override void OnEnable()
     {
         base.OnEnable();
@@ -67,16 +55,26 @@ public class ItemInputB : MonoBehaviourPunCallbacks, IFreeze
     private void OnTriggerPressed(InputAction.CallbackContext context)
     {
         //아이템 사용
-
-        Rigidbody rb = currentItem.gameObject.GetComponent<Rigidbody>();
-        Vector3 throwDirection = firepos.transform.forward + firepos.transform.up;
-        currentItem.transform.parent = null;
-        rb.useGravity = true;
-        rb.AddForce(throwDirection * grenadePower, ForceMode.VelocityChange);
+        if (currentItem.TryGetComponent<IItemUse>(out var itemUse))
+        {
+            itemUse.Use(firepos, grenadePower);
+        }
 
         //아이템사용하면 큐 삭제
         itemQueue.Dequeue();
+        string nextItem = itemQueue.Peek();
+        currentItem = ItemCreate(nextItem);
 
+    }
+
+    GameObject ItemCreate(string ItemPrefabName)
+    {
+        firepos = rightController.gameObject.GetComponentInChildren<ActionBasedController>().model.GetChild(0).transform;
+        newItem = PhotonNetwork.Instantiate(ItemPrefabName, firepos.position, Quaternion.identity);
+        newItem.transform.parent = firepos.transform;
+        newItem.gameObject.GetComponent<Rigidbody>().useGravity = false;
+
+        return newItem;
     }
 
     //프리팹 생성
@@ -92,7 +90,7 @@ public class ItemInputB : MonoBehaviourPunCallbacks, IFreeze
             if (currentItem == null)
             {
                 string QueueItem = itemQueue.Peek();
-                currentItem = ItemAdd(QueueItem);
+                currentItem = ItemCreate(QueueItem);
             }
 
         }
@@ -113,8 +111,6 @@ public class ItemInputB : MonoBehaviourPunCallbacks, IFreeze
         {
             return;
         }
-        //StartCoroutine(NetworkDestroyWait());
-
         Debug.Log("컨트롤 b버튼, 아이템 교체");
         Debug.Log("itemQueue.count = " + itemQueue.Count);
         string oldItem = itemQueue.Dequeue();
@@ -122,33 +118,12 @@ public class ItemInputB : MonoBehaviourPunCallbacks, IFreeze
 
         PhotonNetwork.Destroy(currentItem);
 
+        Debug.Log("큐에들어갈프리팹이름 = " + itemQueue.Peek());
         string nextItem = itemQueue.Peek();
-        Debug.Log("큐에들어갈프리팹이름 = "+ itemQueue.Peek());
-        currentItem = ItemAdd(nextItem);
+        currentItem = ItemCreate(nextItem);
 
 
     }
-
-
-    IEnumerator NetworkDestroyWait()
-    {
-        Debug.Log("컨트롤 b버튼, 아이템 교체");
-        Debug.Log("itemQueue.count = " + itemQueue.Count);
-        string oldItem = itemQueue.Dequeue();
-        itemQueue.Enqueue(oldItem);
-
-        PhotonNetwork.Destroy(currentItem);
-
-        yield return new WaitUntil(() => currentItem == null);
-
-        string nextItem = itemQueue.Peek();
-        if(nextItem == "")
-        {
-            Debug.Log("큐에들어갈내용이빈공간임");
-        }
-        currentItem = ItemAdd(nextItem);
-    }
-
 
     public void Freeze(bool IsFreeze)
     {
