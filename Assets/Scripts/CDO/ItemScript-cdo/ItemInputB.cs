@@ -26,7 +26,7 @@ public class ItemInputB : MonoBehaviourPunCallbacks, IFreeze
 
     [SerializeField] Transform rightController; //오른쪽 컨트롤러
 
-    int grenadePower = 5;
+    int grenadePower = 2;
 
     public Queue<string> itemQueue = new Queue<string>();
 
@@ -71,7 +71,7 @@ public class ItemInputB : MonoBehaviourPunCallbacks, IFreeze
     {
         firepos = rightController.gameObject.GetComponentInChildren<ActionBasedController>().model.GetChild(0).transform;
         newItem = PhotonNetwork.Instantiate(ItemPrefabName, firepos.position, Quaternion.identity);
-        newItem.transform.parent = firepos.transform;
+        newItem.transform.parent = firepos;
         newItem.gameObject.GetComponent<Rigidbody>().useGravity = false;
 
         return newItem;
@@ -118,6 +118,10 @@ public class ItemInputB : MonoBehaviourPunCallbacks, IFreeze
 
         PhotonNetwork.Destroy(currentItem);
 
+        if (itemQueue.Count <= 0)
+        {
+            return;
+        }
         Debug.Log("큐에들어갈프리팹이름 = " + itemQueue.Peek());
         string nextItem = itemQueue.Peek();
         currentItem = ItemCreate(nextItem);

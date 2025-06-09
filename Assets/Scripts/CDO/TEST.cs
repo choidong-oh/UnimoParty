@@ -8,6 +8,8 @@ public class TEST : MonoBehaviourPunCallbacks, IItemUse
         Rigidbody rb = gameObject.GetComponent<Rigidbody>();
         transform.parent = null;
         rb.useGravity = true;
+        Collider cd = gameObject.GetComponent<CapsuleCollider>();
+        cd.isTrigger = false;
     }
 }
 

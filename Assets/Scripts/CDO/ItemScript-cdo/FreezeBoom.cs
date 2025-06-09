@@ -101,6 +101,9 @@ public class FreezeBoom : MonoBehaviourPunCallbacks, IItemUse
         transform.parent = null;
         rb.useGravity = true;
         rb.AddForce(throwDirection * power, ForceMode.VelocityChange);
+        
+        Collider cd = gameObject.GetComponent<BoxCollider>();
+        cd.isTrigger = false;
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////
 

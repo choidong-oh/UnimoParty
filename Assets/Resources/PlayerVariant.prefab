@@ -170,9 +170,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AInputActionReference: {fileID: -722322437804225622, guid: 75c98270c91a5e74bba10c83794ab594, type: 3}
-  HandHarvestObj: {fileID: 3339427171508547215}
+  handHarvestObj: {fileID: 3339427171508547215}
   ItemObj: {fileID: 621761742234676228}
   itemInputB: {fileID: 4414192712401531367}
+  ItemGun: {fileID: 4756468719463012015, guid: a52667fed78cf2148a1efb56bda8f247, type: 3}
+  harvestGun: {fileID: 1902367689499881727, guid: 6df06eda25e3cca46aa64bf61dfbfb27, type: 3}
+  rightController: {fileID: 7560748128269401353}
 --- !u!1 &3339427171508547215
 GameObject:
   m_ObjectHideFlags: 0
@@ -1201,6 +1204,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 9014170783728641055, guid: 895f6f3c2d334633b5800312285058d2, type: 3}
   m_PrefabInstance: {fileID: 1582426809760196016}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &7560748128269401353 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9014170783705847993, guid: 895f6f3c2d334633b5800312285058d2, type: 3}
+  m_PrefabInstance: {fileID: 1582426809760196016}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: caff514de9b15ad48ab85dcff5508221, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &7560748128269401356 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9014170783705847996, guid: 895f6f3c2d334633b5800312285058d2, type: 3}
