@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using Photon.Pun;
 using Photon.Realtime;
 using TMPro;
-using UnityEditor.XR;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -164,8 +163,6 @@ public class PVPManager : MonoBehaviourPunCallbacks
             {
                 PhotonNetwork.LeaveRoom(true);
                 yield return new WaitUntil(() => !PhotonNetwork.InRoom);
-                
-               
             }
             else
             {
@@ -184,7 +181,6 @@ public class PVPManager : MonoBehaviourPunCallbacks
             
             Debug.Log($"[매치메이킹] 인원 감소 → maxPlayers: {maxPlayers}");
         }
-
     }
 
     public override void OnJoinedRoom()
@@ -206,6 +202,7 @@ public class PVPManager : MonoBehaviourPunCallbacks
             roomNumber.text = PhotonNetwork.CurrentRoom.Name;
         }
     }
+    //플레이어 검증
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
         if (PhotonNetwork.CurrentRoom.Name != "Random")
@@ -252,7 +249,7 @@ public class PVPManager : MonoBehaviourPunCallbacks
         
         if(p.ActorNumber != PhotonNetwork.MasterClient.ActorNumber)
         {
-            panel.GetComponentInChildren<Image>().gameObject.SetActive(false);
+            panel.GetComponentInChildren<Image>().enabled = false;
         }
         playerUIMap[p.ActorNumber] = panel;
     }
@@ -278,7 +275,10 @@ public class PVPManager : MonoBehaviourPunCallbacks
     }
     public void ReadyButton()
     {
-        photonView.RPC("SetReadyState", RpcTarget.All, PhotonNetwork.LocalPlayer.ActorNumber);
+        if(photonView.IsMine)
+        {
+            photonView.RPC("SetReadyState", RpcTarget.All, PhotonNetwork.LocalPlayer.ActorNumber);
+        }
     }
 
 
