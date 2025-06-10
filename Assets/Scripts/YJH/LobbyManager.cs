@@ -95,7 +95,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
             currentPanel.SetActive(true);
         }
     }
-
+    //PVE 스테이지 진입
     public void Stage1()
     {
         SceneManager.LoadScene(2);
@@ -201,14 +201,6 @@ public class LobbyManager : MonoBehaviourPunCallbacks
             }
         }
     }
-    //플레이어 검증
-
-
-
-
-
-
-
 
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
@@ -216,7 +208,10 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         if (PhotonNetwork.CurrentRoom.Name != "Random")
         {
             UpdateActionButton();
-            CheckAllReady();
+            if(PhotonNetwork.IsMasterClient)
+            {
+                CheckAllReady();
+            }
         }
     }
 
@@ -245,23 +240,31 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         {
             actionButton.interactable = true;
         }
+        else
+        {
+            actionButton.interactable = false;
+        }
     }
     public void AddNicknameUI(Player player)
     {
+        StartCoroutine(CreateAndParentPanel(player));
+    }
+    private IEnumerator CreateAndParentPanel(Player p)
+    {
         GameObject panelGO = PhotonNetwork.Instantiate("PlayerPanel", Vector3.zero, Quaternion.identity);
+
+        yield return new WaitForEndOfFrame();
+
         panelGO.transform.SetParent(nicknamePanelParent, false);
 
         PlayerPanel panel = panelGO.GetComponent<PlayerPanel>();
-
-        panel.Setup(player);
+        panel.Setup(p);
         panel.SetReady(false);
 
-        if(PhotonNetwork.MasterClient.ActorNumber == player.ActorNumber)
-        {
-            panel.MasterClient(true);
-        }
+        bool isMaster = PhotonNetwork.MasterClient.ActorNumber == p.ActorNumber;
+        panel.MasterClient(isMaster);
 
-        playerUIMap[player.ActorNumber] = panelGO;
+        playerUIMap[p.ActorNumber] = panelGO;
     }
 
 
@@ -299,6 +302,9 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         if (PhotonNetwork.IsMasterClient)
         {
             PhotonNetwork.LoadLevel(3);
+
+            //플레이어 검증 한번
+            //code
         }
     }
     private void UpdateActionButton()
