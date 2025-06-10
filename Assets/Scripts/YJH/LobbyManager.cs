@@ -195,7 +195,10 @@ public class LobbyManager : MonoBehaviourPunCallbacks
             UpdateActionButton();
             roomNumber.text = PhotonNetwork.CurrentRoom.Name;
 
-            AddNicknameUI(PhotonNetwork.LocalPlayer);
+            foreach (Player p in PhotonNetwork.PlayerList)
+            {
+                AddNicknameUI(p);
+            }
         }
     }
     //플레이어 검증
@@ -212,12 +215,6 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     {
         if (PhotonNetwork.CurrentRoom.Name != "Random")
         {
-            if (!newPlayer.IsLocal)
-            {
-                Debug.Log("플레이어 들어옴 ");
-                AddNicknameUI(newPlayer);
-            }
-
             UpdateActionButton();
             CheckAllReady();
         }
@@ -247,7 +244,6 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         if(readyCount >= totalPlayers - 1)
         {
             actionButton.interactable = true;
-
         }
     }
     public void AddNicknameUI(Player player)
@@ -260,10 +256,12 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         panel.Setup(player);
         panel.SetReady(false);
 
-        if(PhotonNetwork.IsMasterClient)
+        if(PhotonNetwork.MasterClient.ActorNumber == player.ActorNumber)
         {
             panel.MasterClient(true);
         }
+
+        playerUIMap[player.ActorNumber] = panelGO;
     }
 
 
