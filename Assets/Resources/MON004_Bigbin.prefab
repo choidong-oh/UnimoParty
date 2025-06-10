@@ -132,12 +132,12 @@ GameObject:
   m_Component:
   - component: {fileID: 1833009012014487209}
   - component: {fileID: 5733094594523647187}
-  - component: {fileID: 1095790574522376776}
   - component: {fileID: 4775033398015313414}
   - component: {fileID: 1154712326992935214}
   - component: {fileID: 5823029981212611641}
   - component: {fileID: 7305706874805686371}
   - component: {fileID: 1179899013769426180}
+  - component: {fileID: 3726070795678874614}
   m_Layer: 9
   m_Name: MON004_Bigbin
   m_TagString: Monster
@@ -189,27 +189,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!65 &1095790574522376776
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1313915641652497427}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 0
-  serializedVersion: 3
-  m_Size: {x: 0.9, y: 0.9, z: 0.9}
-  m_Center: {x: 0, y: 0.45, z: 0}
 --- !u!114 &4775033398015313414
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -282,10 +261,31 @@ MonoBehaviour:
   sizeScale: 0
   spawnCount: 0
   players: []
-  MoveSpeed: 1
   fixedY: 0
   CrashBigbin: {fileID: 3334270714622040670, guid: ec76bf7085b617642b864a17d4140558, type: 3}
-  JumpParticles: {fileID: 2468800769804463885, guid: 46bf23091e1de0d4fbce9968c2ac07eb, type: 3}
+  JumpParticles: {fileID: 3452779220196208324}
+  JumpExplode: {fileID: 3334270714622040670, guid: cc2c48f2df5f0b0448bfddb0aa678049, type: 3}
+--- !u!65 &3726070795678874614
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1313915641652497427}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 0
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2361167099061129024
 GameObject:
   m_ObjectHideFlags: 0
@@ -764,7 +764,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2468800769804463885, guid: 46bf23091e1de0d4fbce9968c2ac07eb, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5537590046119492063, guid: 46bf23091e1de0d4fbce9968c2ac07eb, type: 3}
+      propertyPath: stopAction
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8861594722215894499, guid: 46bf23091e1de0d4fbce9968c2ac07eb, type: 3}
       propertyPath: m_RootOrder
