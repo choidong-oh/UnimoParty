@@ -208,7 +208,7 @@ public class ShookShook : EnemyBase
 
     public override void Freeze(Vector3 direction, bool isFreeze)
     {
-        photonView.RPC("FreezeRPC", RpcTarget.All, direction);
+        photonView.RPC("FreezeRPC", RpcTarget.All, direction, isFreeze);
     }
 
     [PunRPC]
