@@ -6,14 +6,14 @@ using UnityEngine;
 public class ScaffoldingSpawner : MonoBehaviour
 {
     public GameObject[] flowerPrefabs; // 프리팹 3개 넣을 배열
-    //public GameObject cubePrefab;         // 생성할 큐브 프리팹
-    public Transform centerObject;        // 중심 기준이 되는 오브젝트
+    //public GameObject cubePrefab;    // 생성할 큐브 프리팹
+    public Transform centerObject;     // 중심 기준이 되는 오브젝트
 
     void Start()
     {
-        int gridSize = 6;                 // 격자 크기: 6x6
-        float area = 80f;                 // 사용할 맵 영역 크기 (터레인은 100x100이지만 80x80 기준으로 제한)
-        float spacing = area / gridSize;  // 각 큐브 간의 간격
+        int gridSize = 6;                 // 격자 크기 6x6
+        float area = 80f;                 // 사용할 맵 영역 크기
+        float spacing = area / gridSize;  // 큐브 간의 간격
 
         Vector3 center = centerObject.position;           // 기준 중심 위치
         
@@ -27,7 +27,7 @@ public class ScaffoldingSpawner : MonoBehaviour
                 if ((x == 2 || x == 3) && (z == 2 || z == 3))
                     continue;
 
-                // 중심 기준으로 위치 오프셋 계산
+                // 중심 기준으로 위치 계산
                 float offsetX = (x - 2.5f) * spacing;
                 float offsetZ = (z - 2.5f) * spacing;
                 Vector3 spawnPos = center + new Vector3(offsetX, 0f, offsetZ);
