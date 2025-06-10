@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
@@ -7,7 +5,6 @@ public class TestGrab : MonoBehaviour
 {
 
     private XRGrabInteractable grabInteractable;
-    [SerializeField] Transform player;
 
     void Start()
     {
@@ -21,14 +18,14 @@ public class TestGrab : MonoBehaviour
     {
         Debug.Log("±×·¦ÇÜ");
 
-        grabInteractable.attachTransform = player;
-        Transform attach = grabInteractable.attachTransform;
-        Vector3 currentRotation = attach.localEulerAngles;
-        attach.localEulerAngles = new Vector3(currentRotation.x, currentRotation.y + 90f, currentRotation.z);
+        var rotation = gameObject.transform.eulerAngles;
+        rotation.y += 90;
+        transform.Rotate(rotation);
+
 
     }
 
-        void OnRelease(SelectExitEventArgs args)
+    void OnRelease(SelectExitEventArgs args)
     {
 
     }
