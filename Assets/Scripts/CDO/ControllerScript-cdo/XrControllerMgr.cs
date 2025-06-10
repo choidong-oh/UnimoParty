@@ -1,27 +1,28 @@
 using Photon.Pun;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.XR;
 using UnityEngine.XR.Interaction.Toolkit;
 
 public class XrControllerMgr : MonoBehaviourPunCallbacks
 {
-    [SerializeField] //아이템 > 채집총 교체 a
-    InputActionReference AInputActionReference;
-
-    //게임오브젝트 활성화 비활성화용
-    [SerializeField] GameObject handHarvestObj;
-    [SerializeField] GameObject ItemObj;
-
-    [SerializeField] ItemInputB itemInputB;
-
-    [SerializeField] GameObject ItemGun;
-    [SerializeField] GameObject harvestGun;
+    //아이템총 인풋액션(인풋 프라이머리)
+    [SerializeField] InputActionReference AInputActionReference;
     [SerializeField] ActionBasedController rightController;
 
-    GameObject RController;
+    //게임오브젝트 활성화 비활성화용
+    [Header("각 스크립트 들어가있는 오브젝트")]
+    [SerializeField] GameObject handHarvestObj;
+    [SerializeField] GameObject ItemObj;
+    [SerializeField] ItemInputB itemInputB;
+
+    [Header("총 프리팹 (모델)")]
+    [SerializeField] GameObject harvestGun;
+    [SerializeField] GameObject ItemGun;
+
 
     bool isItemController = false;   //처음은 채집총 시작
+    GameObject RController;
+    Transform lasetRcontroller; //temp
 
     private void Start()
     {
@@ -45,7 +46,6 @@ public class XrControllerMgr : MonoBehaviourPunCallbacks
 
     }
 
-    Transform lasetRcontroller;
     //아이템, 채집총 교체 a
     private void ControllerA(InputAction.CallbackContext context)
     {
@@ -72,11 +72,11 @@ public class XrControllerMgr : MonoBehaviourPunCallbacks
 
     }
 
-    void IsItemObj(bool isItem)
+    public void IsItemObj(bool isItem)
     {
         ItemObj.SetActive(isItem);
         handHarvestObj.SetActive(!isItem);
-        if(isItem == true)
+        if (isItem == true)
         {
             lasetRcontroller = rightController.model;
             rightController.model.gameObject.SetActive(false);
@@ -84,7 +84,7 @@ public class XrControllerMgr : MonoBehaviourPunCallbacks
             rightController.model = RController.transform;
             rightController.modelPrefab = RController.transform;
         }
-        else if(isItem == false)
+        else if (isItem == false)
         {
             rightController.model = lasetRcontroller;
             rightController.model.gameObject.SetActive(true);
@@ -97,9 +97,9 @@ public class XrControllerMgr : MonoBehaviourPunCallbacks
     }
 
 
-   
 
-    
+
+
 
 
 
