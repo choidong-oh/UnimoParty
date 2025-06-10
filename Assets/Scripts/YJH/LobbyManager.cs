@@ -29,6 +29,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     [SerializeField] Transform nicknamePanelParent;
     [SerializeField] Button actionButton;
     [SerializeField] TextMeshProUGUI actionButtonText;
+    [SerializeField] GameObject gameSettingPanel;
 
     [Header("매칭 분류")]
     [SerializeField] Button makeRoomBtn;
@@ -57,6 +58,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         Debug.Log("네트워크 연결 완");
 
         ShowPanel(lobbyPanel);
+        gameSettingPanel.SetActive(false);
         PVEPanel.SetActive(false);
         PVPPanel.SetActive(false);
         roomPanel.SetActive(false);
@@ -245,6 +247,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
             actionButton.interactable = false;
         }
     }
+
     public void AddNicknameUI(Player player)
     {
         StartCoroutine(CreateAndParentPanel(player));
@@ -253,7 +256,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     {
         GameObject panelGO = PhotonNetwork.Instantiate("PlayerPanel", Vector3.zero, Quaternion.identity);
 
-        yield return new WaitForEndOfFrame();
+        yield return new WaitForSeconds(0.5f);
 
         panelGO.transform.SetParent(nicknamePanelParent, false);
 
@@ -340,6 +343,21 @@ public class LobbyManager : MonoBehaviourPunCallbacks
                 panel.SetReady(true);
             }
         }
+    }
+
+
+
+    public void GameSettingButton()
+    {
+        gameSettingPanel.SetActive(true);
+    }
+    public void ExitSetting()
+    {
+        gameSettingPanel.SetActive(false);
+    }
+    public void SaveSetting()
+    {
+        gameSettingPanel.SetActive(false);
     }
     #region 수정 사항 과거버전 
 

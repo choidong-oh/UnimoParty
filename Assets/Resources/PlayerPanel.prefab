@@ -264,6 +264,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   actorNumber: 0
+  skin: {fileID: 0}
   nicknameText: {fileID: 8598506544463952191}
   readyIcon: {fileID: 8103068895900488766}
   masterIcon: {fileID: 5127016041155110911}
