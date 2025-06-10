@@ -44,7 +44,6 @@
 
 using Photon.Pun;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ScaffoldingSpawner : MonoBehaviour
@@ -52,6 +51,14 @@ public class ScaffoldingSpawner : MonoBehaviour
     public GameObject cubePrefab;         // 생성할 큐브 프리팹
     public Transform centerObject;        // 중심 기준이 되는 오브젝트
 
+    private void Awake()
+    {
+        StartCoroutine(WaitForSceneChange());
+    }
+    IEnumerator WaitForSceneChange()
+    {
+        yield return new WaitForSeconds(0.5f);
+    }
     void Start()
     {
         int gridSize = 6;                 // 격자 크기: 6x6
