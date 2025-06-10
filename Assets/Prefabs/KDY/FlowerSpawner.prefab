@@ -44,6 +44,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0bb217cce59a9064088b440a91c59b05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cubePrefab: {fileID: 3477442797691105170, guid: c85d512691b3ff54bb3250febbf0d505, type: 3}
+  flowerPrefabs:
+  - {fileID: 3477442797691105170, guid: 929e6a2f11bb5ae4e90d472b65ca194e, type: 3}
+  - {fileID: 3477442797691105170, guid: c4fc873611764574aac36e12b04e4e56, type: 3}
+  - {fileID: 3477442797691105170, guid: c85d512691b3ff54bb3250febbf0d505, type: 3}
   centerObject: {fileID: 0}
-  cubeCount: 10

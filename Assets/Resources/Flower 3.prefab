@@ -216,7 +216,7 @@ GameObject:
   - component: {fileID: -3836480637052131136}
   - component: {fileID: 7794598289152759205}
   m_Layer: 0
-  m_Name: Flower
+  m_Name: Flower 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -520,9 +520,9 @@ MonoBehaviour:
   decreaseSpeed: 0.5
   activateAction: {fileID: 83097790271614945, guid: c348712bda248c246b8c49b3db54643f, type: 3}
   SpiritVisagePoint: 0
-  FairyDataType1: 1
-  FairyDataType2: 2
-  FairyDataType3: 3
+  FairyDataType1: 0
+  FairyDataType2: 0
+  FairyDataType3: 1
 --- !u!114 &-3836480637052131136
 MonoBehaviour:
   m_ObjectHideFlags: 0
