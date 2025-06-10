@@ -9,7 +9,7 @@ public class DataLoader
     public Dictionary<string, List<InterfaceMethod.TableData>> data = new Dictionary<string, List<InterfaceMethod.TableData>>()
     {
         { "Enemy", new List<InterfaceMethod.TableData>()},
-        { "ItemData", new List<InterfaceMethod.TableData>()},
+        { "Item", new List<InterfaceMethod.TableData>()},
     };
 
     public void DataLoad()
@@ -43,13 +43,24 @@ public class DataLoader
                     }
                     break;
 
-                case "ItemData":
+                case "Item":
                     Debug.Log(" csv ·Îµå");
                     for (int i = 1; i < lines.Length - 1; i++)
                     {
                         string[] values = lines[i].Split(',');
                         ItemData itemData = new ItemData();
                         itemData.INDEX = int.Parse(values[0]);
+                        itemData.Name = values[1].ToString();
+                        itemData.ItemProbabilityTop = int.Parse(values[2]);
+                        itemData.ItemProbabilityMid = int.Parse(values[3]);
+                        itemData.ItemProbabilityBot = int.Parse(values[4]);
+                        itemData.ItemConTime = int.Parse(values[6]);
+                        itemData.ItemHeal = int.Parse(values[7]);
+                        itemData.ItemShootSpeed = int.Parse(values[8]);
+                        itemData.ItemExplRange = int.Parse(values[9]);
+                        itemData.ItemMaxRange = int.Parse(values[10]);
+                        itemData.ItemIceTime = int.Parse(values[11]);
+                        itemData.ItemAlarmTime = int.Parse(values[12]);
 
                         item.Value.Add(itemData);
                     }

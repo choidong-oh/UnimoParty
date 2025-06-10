@@ -73,6 +73,7 @@ public class PewPew : EnemyBase
 
     IEnumerator GoPewPew()
     {
+        myCollider = GetComponent<Collider>();
         myCollider.enabled = true;
         while (true)
         {
@@ -126,6 +127,7 @@ public class PewPew : EnemyBase
     [PunRPC]
     public void MoveRPC(Vector3 direction)
     {
+        myCollider = GetComponent<Collider>();
         // 1. Terrain ÂüÁ¶
         terrain = Terrain.activeTerrain;
         if (terrain == null)

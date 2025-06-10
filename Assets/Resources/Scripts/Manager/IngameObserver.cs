@@ -14,9 +14,11 @@ public class IngameObserver
     private int gameoverTargetScore = 100;
     public int roomInPlayerCount;
     public List<int> ranks;
+    public int currentPlayerRank;
 
     private bool isGameOver = false;
     ItemData _selectItem;
+    public ItemGetRate getItemRate = new ItemGetRate();
     System.Random _itemRandomNum;
 
     public void Setting()
@@ -81,6 +83,10 @@ public class IngameObserver
                 Manager.Instance.observer.UserPlayer.gamedata._Inventory.userItemDatas[(int)ItemName.FreezeBoom].ItemData.ItemCount++;
                 break;
 
+            case (int)ItemName.Barricade:
+                Manager.Instance.observer.UserPlayer.gamedata._Inventory.userItemDatas[(int)ItemName.FreezeBoom].ItemData.ItemCount++;
+                break;
+
             case (int)ItemName.end:
                 break;
         }
@@ -128,7 +134,10 @@ public class IngameObserver
     public void GetFairy(FairyType fairytype)
     {
         //페어리 타입을 이미 받은 상태에서 유저 페어리에 대입함.
-        UserPlayer.gamedata.playerFairyType = fairytype;
+        UserPlayer.gamedata.playerFairyType.FairyDataType_1 = fairytype.FairyDataType_1;
+        UserPlayer.gamedata.playerFairyType.FairyDataType_2 = fairytype.FairyDataType_2;
+        UserPlayer.gamedata.playerFairyType.FairyDataType_3 = fairytype.FairyDataType_3;
+
         var tempfairy = UserPlayer.gamedata;
 
         //여기에 포톤 추가.
