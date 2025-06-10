@@ -14,14 +14,20 @@ public class HeldAmountUI : MonoBehaviour
 
     private void Start()
     {
-        UpdateHaveUI();
+        Manager.Instance.observer.OnGameDataChange += UpdateHaveUI;
     }
 
-    public void UpdateHaveUI()
+    private void OnDestroy()
     {
-        int have1 = Manager.Instance.goalCount.GoalFairyValue_1;
-        int have2 = Manager.Instance.goalCount.GoalFairyValue_2;
-        int have3 = Manager.Instance.goalCount.GoalFairyValue_3;
+        // 구독 해제
+        Manager.Instance.observer.OnGameDataChange -= UpdateHaveUI;
+    }
+
+    public void UpdateHaveUI(DataCenter data)
+    {
+        int have1 = data.playerFairyType.FairyDataType_1;
+        int have2 = data.playerFairyType.FairyDataType_2;
+        int have3 = data.playerFairyType.FairyDataType_3;
 
         row1.text = $"{have1:00} / {MAX_AMOUNT}";
         row2.text = $"{have2:00} / {MAX_AMOUNT}";

@@ -262,7 +262,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b5d1fab7ea152b4fbec98393fbd1682, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IsTestMode: 1
+  IsTestMode: 0
   DontSpwanEnemy: 0
   DontSpwanFlower: 0
 --- !u!4 &171321892
