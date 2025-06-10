@@ -1,7 +1,7 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
 
 public class Bigbin : EnemyBase
 {
@@ -9,7 +9,7 @@ public class Bigbin : EnemyBase
     public List<Transform> players = new List<Transform>();//플레이어 여기에 등록함
 
     [Header("이동 설정")]
-    [SerializeField] float MoveSpeed = 1f;
+    float MoveSpeed = 5f;
     float FirstSpeed;
 
 
@@ -24,6 +24,8 @@ public class Bigbin : EnemyBase
 
     [SerializeField] GameObject JumpParticles;
 
+    [SerializeField] GameObject JumpExplode;
+
     Transform nearestPlayer;
 
     Vector3 myPos;
@@ -31,82 +33,90 @@ public class Bigbin : EnemyBase
 
     Animator animator;
 
-    string state1 = "anim_MON004_appear";
+
     string state2 = "anim_MON004_readytojump";
     string state3 = "anim_MON004_jump01";
     string state4 = "anim_MON004_jump02";
     string state5 = "anim_MON004_jump03";
 
-    private void Start()
-    {
-        animator = GetComponent<Animator>();
-        myCollider = GetComponent<Collider>();
-        FirstSpeed = MoveSpeed / 2;
-    }
 
-    public override void OnEnable()
-    {
-        base.OnEnable();
-        StartCoroutine(GoBigBin());
+    //public override void OnEnable()
+    //{
+    //    animator = GetComponent<Animator>();
+    //    myCollider = GetComponent<Collider>();
+    //    terrain = Terrain.activeTerrain;
+    //    FirstSpeed = MoveSpeed / 2;
+    //    base.OnEnable();
+    //    StartCoroutine(GoBigBin());
 
-    }
+    //}
 
 
     public override void OnDisable()
     {
         base.OnDisable();
-        MoveSpeed = FirstSpeed;
+        MoveSpeed = FirstSpeed * 2;
     }
 
 
     IEnumerator GoBigBin()
     {
 
-        yield return new WaitUntil(() =>
-            animator.GetCurrentAnimatorStateInfo(0).IsName(state3)
-        );
         myCollider.enabled = true;
+
+        yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName(state2));
+        while (animator.GetCurrentAnimatorStateInfo(0).IsName(state2))
+            yield return null;
+        JumpParticles.SetActive(true);  
+        MoveSpeed += FirstSpeed;
+        Debug.Log($"state2 exit → MoveSpeed={MoveSpeed}");
+
         StartCoroutine(MoveRoutine());
         StartCoroutine(UpdateDistance());
-        yield return new WaitUntil(() =>
-        {
-            var info = animator.GetCurrentAnimatorStateInfo(0);
-            return info.IsName(state3) && info.normalizedTime >= 1f;
-        });
-        MoveSpeed = MoveSpeed + FirstSpeed;
 
-        yield return new WaitUntil(() =>
-        {
-            var info = animator.GetCurrentAnimatorStateInfo(0);
-            return info.IsName(state4) && info.normalizedTime >= 1f;
-        });
+        yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName(state3));
+        while (animator.GetCurrentAnimatorStateInfo(0).IsName(state3))
+            yield return null;
+        JumpParticles.SetActive(true);
 
-        MoveSpeed = MoveSpeed + FirstSpeed;
+        MoveSpeed += FirstSpeed;
+        Debug.Log($"state3 exit → MoveSpeed={MoveSpeed}");
 
-        yield return new WaitUntil(() =>
+
+
+
+        yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName(state4));
+        while (animator.GetCurrentAnimatorStateInfo(0).IsName(state4))
+            yield return null;
+        JumpParticles.SetActive(true);
+
+        MoveSpeed += FirstSpeed;
+        Debug.Log($"state4 exit → MoveSpeed={MoveSpeed}");
+
+
+
+        yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName(state5));
+
+        var infos = animator.GetCurrentAnimatorClipInfo(0);
+        if (infos.Length > 0)
         {
-            var info = animator.GetCurrentAnimatorStateInfo(0);
-            return info.IsName(state5) && info.normalizedTime >= 1f;
-        });
-        
+            var playingClip = infos[0].clip;
+            float duration = playingClip.length / animator.GetCurrentAnimatorStateInfo(0).speed;
+            yield return new WaitForSeconds(duration);
+        }
+        else
+        {
+            Debug.LogWarning("현재 재생 중인 클립을 찾지 못했습니다.");
+        }
+        Instantiate(JumpExplode, transform.position, Quaternion.identity);
+        StopAllCoroutines();
         gameObject.SetActive(false);
-
-        yield return null;
     }
+
+
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Ground")
-        {
-            Vector3 hitPoint = other.ClosestPoint(transform.position);//충돌지점에 최대한 가깝게
-
-            Vector3 normal = (hitPoint - transform.position).normalized;// 방향계산
-            Quaternion rot = Quaternion.LookRotation(normal);// 방향계산
-
-            GameObject inst = Instantiate(JumpParticles, hitPoint, rot);
-        }
-
-
         if (other.gameObject.tag == "Player")
         {
             Manager.Instance.observer.HitPlayer(damage);
@@ -133,8 +143,9 @@ public class Bigbin : EnemyBase
             float CheckNear = Vector3.Distance(myPos, Target);
 
             myPos = transform.position;
-            float terrainY = terrain.SampleHeight(transform.position) + transform.localScale.y / 2f + fixedY;
+            float terrainY = terrain.SampleHeight(transform.position) + fixedY;
             transform.position = new Vector3(myPos.x, terrainY, myPos.z);
+
             transform.position += transform.forward * MoveSpeed * Time.fixedDeltaTime;
 
             yield return new WaitForFixedUpdate();
@@ -170,7 +181,7 @@ public class Bigbin : EnemyBase
             {
                 float Distance = Vector3.Distance(myPos, player.position);
 
-   
+
                 if (Distance < minDistance)
                 {
                     minDistance = Distance;
@@ -183,6 +194,7 @@ public class Bigbin : EnemyBase
                 Target = nearestPlayer.position;
 
                 transform.LookAt(Target);
+                transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
             }
 
 
@@ -190,14 +202,43 @@ public class Bigbin : EnemyBase
         }
     }
 
+    
     public override void Move(Vector3 direction)
     {
-        throw new System.NotImplementedException();
+        photonView.RPC("MoveRPC", RpcTarget.All, direction);
+    }
+
+    [PunRPC]
+    public void MoveRPC(Vector3 direction)
+    {
+        animator = GetComponent<Animator>();
+        myCollider = GetComponent<Collider>();
+        terrain = Terrain.activeTerrain;
+        FirstSpeed = MoveSpeed / 2;
+        base.OnEnable();
+        StartCoroutine(GoBigBin());
     }
 
     public override void Freeze(Vector3 direction, bool isFreeze)
     {
-        throw new System.NotImplementedException();
+        photonView.RPC("FreezeRPC", RpcTarget.All, direction);
+    }
+
+    [PunRPC]
+    public void FreezeRPC(Vector3 direction, bool isFreeze)
+    {
+        if (isFreeze == true)
+        {
+            StopAllCoroutines();
+        }
+        else if (isFreeze == false)
+        {
+            Move(direction);
+        }
+        else
+        {
+            Debug.Log("빅빈 프리즈 고장남");
+        }
     }
 
     public override void CsvEnemyInfo()
