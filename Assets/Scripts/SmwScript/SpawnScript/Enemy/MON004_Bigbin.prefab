@@ -263,7 +263,8 @@ MonoBehaviour:
   players: []
   fixedY: 0
   CrashBigbin: {fileID: 3334270714622040670, guid: ec76bf7085b617642b864a17d4140558, type: 3}
-  JumpParticles: {fileID: 2468800769804463885, guid: 46bf23091e1de0d4fbce9968c2ac07eb, type: 3}
+  JumpParticles: {fileID: 3452779220196208324}
+  JumpExplode: {fileID: 3334270714622040670, guid: cc2c48f2df5f0b0448bfddb0aa678049, type: 3}
 --- !u!65 &3726070795678874614
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -763,6 +764,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2468800769804463885, guid: 46bf23091e1de0d4fbce9968c2ac07eb, type: 3}
       propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5537590046119492063, guid: 46bf23091e1de0d4fbce9968c2ac07eb, type: 3}
+      propertyPath: stopAction
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8861594722215894499, guid: 46bf23091e1de0d4fbce9968c2ac07eb, type: 3}

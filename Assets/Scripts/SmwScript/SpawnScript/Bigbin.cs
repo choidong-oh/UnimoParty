@@ -8,7 +8,7 @@ public class Bigbin : EnemyBase
     public List<Transform> players = new List<Transform>();//플레이어 여기에 등록함
 
     [Header("이동 설정")]
-    float MoveSpeed = 1f;
+    float MoveSpeed = 5f;
     float FirstSpeed;
 
 
@@ -22,6 +22,8 @@ public class Bigbin : EnemyBase
     [SerializeField] GameObject CrashBigbin;
 
     [SerializeField] GameObject JumpParticles;
+
+    [SerializeField] GameObject JumpExplode;
 
     Transform nearestPlayer;
 
@@ -64,7 +66,7 @@ public class Bigbin : EnemyBase
         yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName(state2));
         while (animator.GetCurrentAnimatorStateInfo(0).IsName(state2))
             yield return null;
-        Instantiate(JumpParticles, transform.position, Quaternion.identity);
+        JumpParticles.SetActive(true);  
         MoveSpeed += FirstSpeed;
         Debug.Log($"state2 exit → MoveSpeed={MoveSpeed}");
 
@@ -74,7 +76,8 @@ public class Bigbin : EnemyBase
         yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName(state3));
         while (animator.GetCurrentAnimatorStateInfo(0).IsName(state3))
             yield return null;
-        Instantiate(JumpParticles, transform.position, Quaternion.identity);
+        JumpParticles.SetActive(true);
+
         MoveSpeed += FirstSpeed;
         Debug.Log($"state3 exit → MoveSpeed={MoveSpeed}");
 
@@ -84,7 +87,8 @@ public class Bigbin : EnemyBase
         yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName(state4));
         while (animator.GetCurrentAnimatorStateInfo(0).IsName(state4))
             yield return null;
-        Instantiate(JumpParticles, transform.position, Quaternion.identity);
+        JumpParticles.SetActive(true);
+
         MoveSpeed += FirstSpeed;
         Debug.Log($"state4 exit → MoveSpeed={MoveSpeed}");
 
@@ -103,7 +107,7 @@ public class Bigbin : EnemyBase
         {
             Debug.LogWarning("현재 재생 중인 클립을 찾지 못했습니다.");
         }
-        Instantiate(JumpParticles, transform.position, Quaternion.identity);
+        Instantiate(JumpExplode, transform.position, Quaternion.identity);
         StopAllCoroutines();
         gameObject.SetActive(false);
     }
@@ -117,8 +121,8 @@ public class Bigbin : EnemyBase
 
         if (other.gameObject.tag == "Player")
         {
-            Manager.Instance.observer.HitPlayer(damage);
-            Debug.Log(Manager.Instance.observer.UserPlayer.gamedata.life);
+            //Manager.Instance.observer.HitPlayer(damage);
+            //Debug.Log(Manager.Instance.observer.UserPlayer.gamedata.life);
 
             Vector3 hitPoint = other.ClosestPoint(transform.position);//충돌지점에 최대한 가깝게
 
