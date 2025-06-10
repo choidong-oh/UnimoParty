@@ -40,16 +40,16 @@ public class Bigbin : EnemyBase
     string state5 = "anim_MON004_jump03";
 
 
-    public override void OnEnable()
-    {
-        animator = GetComponent<Animator>();
-        myCollider = GetComponent<Collider>();
-        terrain = Terrain.activeTerrain;
-        FirstSpeed = MoveSpeed / 2;
-        base.OnEnable();
-        StartCoroutine(GoBigBin());
+    //public override void OnEnable()
+    //{
+    //    animator = GetComponent<Animator>();
+    //    myCollider = GetComponent<Collider>();
+    //    terrain = Terrain.activeTerrain;
+    //    FirstSpeed = MoveSpeed / 2;
+    //    base.OnEnable();
+    //    StartCoroutine(GoBigBin());
 
-    }
+    //}
 
 
     public override void OnDisable()
