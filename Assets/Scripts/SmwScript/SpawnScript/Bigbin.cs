@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -116,13 +117,10 @@ public class Bigbin : EnemyBase
 
     private void OnTriggerEnter(Collider other)
     {
-
-
-
         if (other.gameObject.tag == "Player")
         {
-            //Manager.Instance.observer.HitPlayer(damage);
-            //Debug.Log(Manager.Instance.observer.UserPlayer.gamedata.life);
+            Manager.Instance.observer.HitPlayer(damage);
+            Debug.Log(Manager.Instance.observer.UserPlayer.gamedata.life);
 
             Vector3 hitPoint = other.ClosestPoint(transform.position);//충돌지점에 최대한 가깝게
 
@@ -204,14 +202,43 @@ public class Bigbin : EnemyBase
         }
     }
 
+    
     public override void Move(Vector3 direction)
     {
-        throw new System.NotImplementedException();
+        photonView.RPC("MoveRPC", RpcTarget.All, direction);
+    }
+
+    [PunRPC]
+    public void MoveRPC(Vector3 direction)
+    {
+        animator = GetComponent<Animator>();
+        myCollider = GetComponent<Collider>();
+        terrain = Terrain.activeTerrain;
+        FirstSpeed = MoveSpeed / 2;
+        base.OnEnable();
+        StartCoroutine(GoBigBin());
     }
 
     public override void Freeze(Vector3 direction, bool isFreeze)
     {
-        throw new System.NotImplementedException();
+        photonView.RPC("FreezeRPC", RpcTarget.All, direction);
+    }
+
+    [PunRPC]
+    public void FreezeRPC(Vector3 direction, bool isFreeze)
+    {
+        if (isFreeze == true)
+        {
+            StopAllCoroutines();
+        }
+        else if (isFreeze == false)
+        {
+            Move(direction);
+        }
+        else
+        {
+            Debug.Log("빅빈 프리즈 고장남");
+        }
     }
 
     public override void CsvEnemyInfo()
