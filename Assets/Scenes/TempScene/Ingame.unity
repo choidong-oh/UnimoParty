@@ -355,7 +355,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1168439179064205256, guid: 966bc0a092b89c4468fa9a4c467e78fa, type: 3}
       propertyPath: sceneViewId
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3212577677110866569, guid: 966bc0a092b89c4468fa9a4c467e78fa, type: 3}
       propertyPath: m_LocalPosition.x
@@ -397,33 +397,13 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6982916911885084784, guid: 966bc0a092b89c4468fa9a4c467e78fa, type: 3}
-      propertyPath: sceneViewId
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7717133913288446714, guid: 966bc0a092b89c4468fa9a4c467e78fa, type: 3}
-      propertyPath: m_DisableVisualsWhenBlockedInGroup
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 8109497528567356183, guid: 966bc0a092b89c4468fa9a4c467e78fa, type: 3}
       propertyPath: m_Name
       value: Player (1)
       objectReference: {fileID: 0}
     - target: {fileID: 9097946719516881756, guid: 966bc0a092b89c4468fa9a4c467e78fa, type: 3}
       propertyPath: sceneViewId
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 9167722245327750355, guid: 966bc0a092b89c4468fa9a4c467e78fa, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 17.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 9167722245327750355, guid: 966bc0a092b89c4468fa9a4c467e78fa, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 1.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 9167722245327750355, guid: 966bc0a092b89c4468fa9a4c467e78fa, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 4.6
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -564,10 +544,6 @@ PrefabInstance:
     - target: {fileID: 2667370604442209742, guid: b61375c4814d95d4ca8769d9b61b82d3, type: 3}
       propertyPath: m_Name
       value: AUBE
-      objectReference: {fileID: 0}
-    - target: {fileID: 2667370604442209742, guid: b61375c4814d95d4ca8769d9b61b82d3, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9163936637618298184, guid: b61375c4814d95d4ca8769d9b61b82d3, type: 3}
       propertyPath: m_LocalPosition.x

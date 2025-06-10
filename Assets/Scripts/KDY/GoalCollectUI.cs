@@ -22,6 +22,12 @@ public class GoalCollectUI : MonoBehaviour
         Manager.Instance.observer.OnGameDataChange -= UpdateCollectUI;
     }
 
+    public void CallDeliveryFairy()
+    {
+        Debug.Log("DeliveryFairy 호출");
+        Manager.Instance.observer.DeliveryFairy();
+    }
+
     // 채집 수 / 목표 수 갱신
     private void UpdateCollectUI(DataCenter data)
     {
