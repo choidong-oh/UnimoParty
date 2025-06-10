@@ -406,11 +406,11 @@ MonoBehaviour:
   Count: {fileID: 474325496}
   roomNumber: {fileID: 1446560072}
   checkPanel: {fileID: 207746829}
-  nicknamePanel: {fileID: 1834638525326064622, guid: 8b7bfa262cb7b3a4ea38912616bb9ca4, type: 3}
   nicknamePanelParent: {fileID: 183864880}
   actionButton: {fileID: 202852035}
   actionButtonText: {fileID: 128436253}
   gameSettingPanel: {fileID: 2145313864}
+  playerPanelPrefab: {fileID: 1834638525326064622, guid: 8b7bfa262cb7b3a4ea38912616bb9ca4, type: 3}
   makeRoomBtn: {fileID: 491087539}
   codeInput: {fileID: 694122122}
 --- !u!114 &73048170

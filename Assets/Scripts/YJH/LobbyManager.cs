@@ -25,11 +25,11 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     [SerializeField] TextMeshProUGUI roomNumber;
     [SerializeField] GameObject checkPanel;
 
-    [SerializeField] GameObject nicknamePanel;
     [SerializeField] Transform nicknamePanelParent;
     [SerializeField] Button actionButton;
     [SerializeField] TextMeshProUGUI actionButtonText;
     [SerializeField] GameObject gameSettingPanel;
+    [SerializeField] GameObject playerPanelPrefab;
 
     [Header("매칭 분류")]
     [SerializeField] Button makeRoomBtn;
@@ -58,8 +58,8 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         Debug.Log("네트워크 연결 완");
 
         ShowPanel(lobbyPanel);
-        gameSettingPanel.SetActive(false);
         PVEPanel.SetActive(false);
+        gameSettingPanel.SetActive(false);
         PVPPanel.SetActive(false);
         roomPanel.SetActive(false);
 
@@ -68,14 +68,12 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     }
     private void ShowPanel(GameObject nextPanel)
     {
-        if (currentPanel != null)
+        if (panelStack.Count > 0)
         {
-            panelStack.Push(currentPanel);
-            currentPanel.SetActive(false);
+            panelStack.Peek().SetActive(false);
         }
-
-        currentPanel = nextPanel;
-        currentPanel.SetActive(true);
+        panelStack.Push(nextPanel);
+        nextPanel.SetActive(true);
     }
     //인스펙터 끼워 넣기 용
     public void PVEButton()
@@ -105,9 +103,9 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     public void CreatRoom()
     {
+        PhotonNetwork.CreateRoom($"{Random.Range(10000, 99999)}", new RoomOptions {IsVisible = false,MaxPlayers=8 });
         PVPPanel.SetActive(false);
         roomPanel.SetActive(true);
-        PhotonNetwork.CreateRoom($"{Random.Range(10000, 99999)}", new RoomOptions {IsVisible = false,MaxPlayers=8 });
     }
     public void InRoomBackButton()
     {
@@ -194,13 +192,13 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         else
         {
             Debug.Log("입장 성공");
-            UpdateActionButton();
             roomNumber.text = PhotonNetwork.CurrentRoom.Name;
 
             foreach (Player p in PhotonNetwork.PlayerList)
             {
                 AddNicknameUI(p);
             }
+            UpdateActionButton();
         }
     }
 
@@ -209,8 +207,9 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     {
         if (PhotonNetwork.CurrentRoom.Name != "Random")
         {
+            AddNicknameUI(newPlayer);
             UpdateActionButton();
-            if(PhotonNetwork.IsMasterClient)
+            if (PhotonNetwork.IsMasterClient)
             {
                 CheckAllReady();
             }
@@ -227,11 +226,11 @@ public class LobbyManager : MonoBehaviourPunCallbacks
                 playerUIMap.Remove(otherPlayer.ActorNumber);
             }
 
+            UpdateActionButton();
             if(PhotonNetwork.IsMasterClient)
             {
                 CheckAllReady();
             }
-            UpdateActionButton();
         }
     }
     private void CheckAllReady()
@@ -248,26 +247,23 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         }
     }
 
-    public void AddNicknameUI(Player player)
+    private void AddNicknameUI(Player player)
     {
-        StartCoroutine(CreateAndParentPanel(player));
-    }
-    private IEnumerator CreateAndParentPanel(Player p)
-    {
-        GameObject panelGO = PhotonNetwork.Instantiate("PlayerPanel", Vector3.zero, Quaternion.identity);
+        if (playerUIMap.ContainsKey(player.ActorNumber))
+            return;
 
-        yield return new WaitForSeconds(0.5f);
+        GameObject panel = Instantiate(playerPanelPrefab, nicknamePanelParent);
+        RectTransform rt = panel.GetComponent<RectTransform>();
+        rt.localScale = Vector3.one;
+        rt.localPosition = Vector3.zero;
+        rt.localRotation = Quaternion.identity;
 
-        panelGO.transform.SetParent(nicknamePanelParent, false);
+        PlayerPanel pPanel = panel.GetComponent<PlayerPanel>();
+        pPanel.Setup(player);
+        pPanel.SetReady(false);
+        pPanel.MasterClient(player.ActorNumber == PhotonNetwork.MasterClient.ActorNumber);
 
-        PlayerPanel panel = panelGO.GetComponent<PlayerPanel>();
-        panel.Setup(p);
-        panel.SetReady(false);
-
-        bool isMaster = PhotonNetwork.MasterClient.ActorNumber == p.ActorNumber;
-        panel.MasterClient(isMaster);
-
-        playerUIMap[p.ActorNumber] = panelGO;
+        playerUIMap[player.ActorNumber] = panel;
     }
 
 
@@ -294,7 +290,6 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     }
     public void ReadyButton()
     {
-        readyCount++;
         photonView.RPC("SetReadyState", RpcTarget.All, PhotonNetwork.LocalPlayer.ActorNumber);
         
     }
@@ -333,15 +328,13 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     {
         if (PhotonNetwork.IsMasterClient)
         {
+            readyCount++;
             CheckAllReady();
         }
 
-        foreach (PlayerPanel panel in FindObjectsOfType<PlayerPanel>())
+        if (playerUIMap.TryGetValue(actorNumber, out var panel))
         {
-            if (panel.actorNumber == actorNumber)
-            {
-                panel.SetReady(true);
-            }
+            panel.GetComponent<PlayerPanel>().SetReady(true);
         }
     }
 
