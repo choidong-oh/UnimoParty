@@ -1,7 +1,7 @@
 using Photon.Pun;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.XR;
 using UnityEngine.XR.Interaction.Toolkit;
 
 public class HandHarvest : MonoBehaviourPunCallbacks, IFreeze
@@ -20,6 +20,8 @@ public class HandHarvest : MonoBehaviourPunCallbacks, IFreeze
     [SerializeField] float hapticAmplitude;
     [SerializeField] float hapticDuraiton;
 
+    int gap = 10;
+
     //콜백은 OnEnable 안댐
     //player은 안사라지니깐 awake, start에 넣으면 댈듯 
     //콜백 쓸만한건없긴함
@@ -28,6 +30,7 @@ public class HandHarvest : MonoBehaviourPunCallbacks, IFreeze
         if (!photonView.IsMine)
         {
             cameraOffset.gameObject.SetActive(false);
+            StartCoroutine(FlowerDistanceCor());
         }
     }
 
@@ -59,7 +62,7 @@ public class HandHarvest : MonoBehaviourPunCallbacks, IFreeze
             activateAction.action.performed -= OnTriggerPressed;
             activateAction.action.canceled -= OnTriggerReleased;
         }
-        else if(!isFreeze)
+        else if (!isFreeze)
         {
             activateAction.action.performed += OnTriggerPressed;
             activateAction.action.canceled += OnTriggerReleased;
@@ -75,7 +78,6 @@ public class HandHarvest : MonoBehaviourPunCallbacks, IFreeze
 
         if (rayInteractor.TryGetCurrent3DRaycastHit(out RaycastHit hit))
         {
-
             if (!hit.collider.TryGetComponent<Flower>(out flower))
             {
                 return;
@@ -89,12 +91,39 @@ public class HandHarvest : MonoBehaviourPunCallbacks, IFreeze
                 //그래야 애만 진동됌
                 rayInteractor.xrController.SendHapticImpulse(hapticAmplitude, hapticDuraiton);
 
+                var playerPos = gameObject.transform.position;
+
+
                 flower.Init(this);
                 flower.StartHarvest();
                 Debug.Log("Flower 수확 시작!");
+
+
+
+
             }
         }
     }
+
+    IEnumerator FlowerDistanceCor()
+    {
+        while (true)
+        {
+            if (flower != null)
+            {
+                if (Vector3.Distance(flower.gameObject.transform.position, rayInteractor.transform.position) >= gap)
+                {
+                    if (flower != null && flower.gameObject.activeSelf == true)
+                    {
+                        flower.StopHarvest();
+                    }
+
+                }
+            }
+            yield return null;
+        }
+    }
+
 
     void OnTriggerReleased(InputAction.CallbackContext context)
     {
