@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: -2459209917050790293}
   - component: {fileID: 4285106527709397399}
   - component: {fileID: 3104323853831513005}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: PewPew
   m_TagString: Untagged
   m_Icon: {fileID: 0}
