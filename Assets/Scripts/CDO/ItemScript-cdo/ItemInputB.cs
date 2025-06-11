@@ -96,6 +96,7 @@ public class ItemInputB : MonoBehaviourPunCallbacks, IFreeze
             {
                 itemQueue.Enqueue("Boomprefab");
                 itemQueue.Enqueue("PotionPrefab1");
+                itemQueue.Enqueue("TestItem");
             }
             if (currentItem == null)
             {

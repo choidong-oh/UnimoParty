@@ -10,6 +10,7 @@ public class DataLoader
     {
         { "Enemy", new List<InterfaceMethod.TableData>()},
         { "Item", new List<InterfaceMethod.TableData>()},
+        { "SpaceShip", new List<InterfaceMethod.TableData>()},
     };
 
     public void DataLoad()
@@ -65,6 +66,15 @@ public class DataLoader
                         item.Value.Add(itemData);
                     }
                     break;
+
+                case "SpaceShip":
+
+
+
+
+
+                    break;
+
             }
         }
     }

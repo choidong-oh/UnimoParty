@@ -25,10 +25,11 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     [SerializeField] TextMeshProUGUI roomNumber;
     [SerializeField] GameObject checkPanel;
 
-    [SerializeField] GameObject nicknamePanel;
     [SerializeField] Transform nicknamePanelParent;
     [SerializeField] Button actionButton;
     [SerializeField] TextMeshProUGUI actionButtonText;
+    [SerializeField] GameObject gameSettingPanel;
+    [SerializeField] GameObject playerPanelPrefab;
 
     [Header("매칭 분류")]
     [SerializeField] Button makeRoomBtn;
@@ -58,6 +59,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
         ShowPanel(lobbyPanel);
         PVEPanel.SetActive(false);
+        gameSettingPanel.SetActive(false);
         PVPPanel.SetActive(false);
         roomPanel.SetActive(false);
 
@@ -66,14 +68,12 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     }
     private void ShowPanel(GameObject nextPanel)
     {
-        if (currentPanel != null)
+        if (panelStack.Count > 0)
         {
-            panelStack.Push(currentPanel);
-            currentPanel.SetActive(false);
+            panelStack.Peek().SetActive(false);
         }
-
-        currentPanel = nextPanel;
-        currentPanel.SetActive(true);
+        panelStack.Push(nextPanel);
+        nextPanel.SetActive(true);
     }
     //인스펙터 끼워 넣기 용
     public void PVEButton()
@@ -95,7 +95,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
             currentPanel.SetActive(true);
         }
     }
-
+    //PVE 스테이지 진입
     public void Stage1()
     {
         SceneManager.LoadScene(2);
@@ -103,9 +103,9 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     public void CreatRoom()
     {
+        PhotonNetwork.CreateRoom($"{Random.Range(10000, 99999)}", new RoomOptions {IsVisible = false,MaxPlayers=8 });
         PVPPanel.SetActive(false);
         roomPanel.SetActive(true);
-        PhotonNetwork.CreateRoom($"{Random.Range(10000, 99999)}", new RoomOptions {IsVisible = false,MaxPlayers=8 });
     }
     public void InRoomBackButton()
     {
@@ -192,31 +192,27 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         else
         {
             Debug.Log("입장 성공");
-            UpdateActionButton();
             roomNumber.text = PhotonNetwork.CurrentRoom.Name;
 
             foreach (Player p in PhotonNetwork.PlayerList)
             {
                 AddNicknameUI(p);
             }
+            UpdateActionButton();
         }
     }
-    //플레이어 검증
-
-
-
-
-
-
-
 
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
         if (PhotonNetwork.CurrentRoom.Name != "Random")
         {
+            AddNicknameUI(newPlayer);
             UpdateActionButton();
-            CheckAllReady();
+            if (PhotonNetwork.IsMasterClient)
+            {
+                CheckAllReady();
+            }
         }
     }
 
@@ -230,11 +226,11 @@ public class LobbyManager : MonoBehaviourPunCallbacks
                 playerUIMap.Remove(otherPlayer.ActorNumber);
             }
 
+            UpdateActionButton();
             if(PhotonNetwork.IsMasterClient)
             {
                 CheckAllReady();
             }
-            UpdateActionButton();
         }
     }
     private void CheckAllReady()
@@ -245,23 +241,29 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         {
             actionButton.interactable = true;
         }
-    }
-    public void AddNicknameUI(Player player)
-    {
-        GameObject panelGO = PhotonNetwork.Instantiate("PlayerPanel", Vector3.zero, Quaternion.identity);
-        panelGO.transform.SetParent(nicknamePanelParent, false);
-
-        PlayerPanel panel = panelGO.GetComponent<PlayerPanel>();
-
-        panel.Setup(player);
-        panel.SetReady(false);
-
-        if(PhotonNetwork.MasterClient.ActorNumber == player.ActorNumber)
+        else
         {
-            panel.MasterClient(true);
+            actionButton.interactable = false;
         }
+    }
 
-        playerUIMap[player.ActorNumber] = panelGO;
+    private void AddNicknameUI(Player player)
+    {
+        if (playerUIMap.ContainsKey(player.ActorNumber))
+            return;
+
+        GameObject panel = Instantiate(playerPanelPrefab, nicknamePanelParent);
+        RectTransform rt = panel.GetComponent<RectTransform>();
+        rt.localScale = Vector3.one;
+        rt.localPosition = Vector3.zero;
+        rt.localRotation = Quaternion.identity;
+
+        PlayerPanel pPanel = panel.GetComponent<PlayerPanel>();
+        pPanel.Setup(player);
+        pPanel.SetReady(false);
+        pPanel.MasterClient(player.ActorNumber == PhotonNetwork.MasterClient.ActorNumber);
+
+        playerUIMap[player.ActorNumber] = panel;
     }
 
 
@@ -288,7 +290,6 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     }
     public void ReadyButton()
     {
-        readyCount++;
         photonView.RPC("SetReadyState", RpcTarget.All, PhotonNetwork.LocalPlayer.ActorNumber);
         
     }
@@ -299,6 +300,9 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         if (PhotonNetwork.IsMasterClient)
         {
             PhotonNetwork.LoadLevel(3);
+
+            //플레이어 검증 한번
+            //code
         }
     }
     private void UpdateActionButton()
@@ -324,16 +328,29 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     {
         if (PhotonNetwork.IsMasterClient)
         {
+            readyCount++;
             CheckAllReady();
         }
 
-        foreach (PlayerPanel panel in FindObjectsOfType<PlayerPanel>())
+        if (playerUIMap.TryGetValue(actorNumber, out var panel))
         {
-            if (panel.actorNumber == actorNumber)
-            {
-                panel.SetReady(true);
-            }
+            panel.GetComponent<PlayerPanel>().SetReady(true);
         }
+    }
+
+
+
+    public void GameSettingButton()
+    {
+        gameSettingPanel.SetActive(true);
+    }
+    public void ExitSetting()
+    {
+        gameSettingPanel.SetActive(false);
+    }
+    public void SaveSetting()
+    {
+        gameSettingPanel.SetActive(false);
     }
     #region 수정 사항 과거버전 
 

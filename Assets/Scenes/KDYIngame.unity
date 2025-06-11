@@ -362,7 +362,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b5d1fab7ea152b4fbec98393fbd1682, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IsTestMode: 1
+  IsTestMode: 0
   DontSpwanEnemy: 0
   DontSpwanFlower: 0
 --- !u!4 &1047439977
@@ -585,6 +585,22 @@ PrefabInstance:
       propertyPath: centerObject
       value: 
       objectReference: {fileID: 1755960696}
+    - target: {fileID: 3132521309283916604, guid: 688994b758e53ee448c92419b5423d4b, type: 3}
+      propertyPath: flowerPrefabs.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3132521309283916604, guid: 688994b758e53ee448c92419b5423d4b, type: 3}
+      propertyPath: flowerPrefabs.Array.data[0]
+      value: 
+      objectReference: {fileID: 3477442797691105170, guid: 929e6a2f11bb5ae4e90d472b65ca194e, type: 3}
+    - target: {fileID: 3132521309283916604, guid: 688994b758e53ee448c92419b5423d4b, type: 3}
+      propertyPath: flowerPrefabs.Array.data[1]
+      value: 
+      objectReference: {fileID: 3477442797691105170, guid: c4fc873611764574aac36e12b04e4e56, type: 3}
+    - target: {fileID: 3132521309283916604, guid: 688994b758e53ee448c92419b5423d4b, type: 3}
+      propertyPath: flowerPrefabs.Array.data[2]
+      value: 
+      objectReference: {fileID: 3477442797691105170, guid: c85d512691b3ff54bb3250febbf0d505, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
