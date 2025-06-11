@@ -497,7 +497,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 128e9553ae5519f4297d3a83d106d068, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  boundingBoxPrefab: {fileID: 9062917801096977609, guid: 8c93c145e47ea984da56fffa50142929, type: 3}
+  cubePrefab: {fileID: 9062917801096977609, guid: 8c93c145e47ea984da56fffa50142929, type: 3}
+  IsTuch: 0
+  tuch2: 0
 --- !u!65 &946848647
 BoxCollider:
   m_ObjectHideFlags: 0
