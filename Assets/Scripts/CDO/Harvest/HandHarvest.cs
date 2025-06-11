@@ -19,7 +19,6 @@ public class HandHarvest : MonoBehaviourPunCallbacks, IFreeze
     [Header("Haptic 진동 관련")]
     [SerializeField] float hapticAmplitude;
     [SerializeField] float hapticDuraiton;
-
     int gap = 10;
 
     //콜백은 OnEnable 안댐
@@ -30,6 +29,9 @@ public class HandHarvest : MonoBehaviourPunCallbacks, IFreeze
         if (!photonView.IsMine)
         {
             cameraOffset.gameObject.SetActive(false);
+        }
+        else
+        {
             StartCoroutine(FlowerDistanceCor());
         }
     }
@@ -75,6 +77,7 @@ public class HandHarvest : MonoBehaviourPunCallbacks, IFreeze
     private void OnTriggerPressed(InputAction.CallbackContext context)
     {
         flower = null;
+        IsHarvest(false);
 
         if (rayInteractor.TryGetCurrent3DRaycastHit(out RaycastHit hit))
         {
@@ -89,10 +92,9 @@ public class HandHarvest : MonoBehaviourPunCallbacks, IFreeze
                 //진동
                 //*인스펙터창에서 다른진동 Haptic 0으로 줄여야댐
                 //그래야 애만 진동됌
-                rayInteractor.xrController.SendHapticImpulse(hapticAmplitude, hapticDuraiton);
+                //rayInteractor.xrController.SendHapticImpulse(hapticAmplitude, hapticDuraiton);
 
-                var playerPos = gameObject.transform.position;
-
+                IsHarvest(true);
 
                 flower.Init(this);
                 flower.StartHarvest();
@@ -104,6 +106,61 @@ public class HandHarvest : MonoBehaviourPunCallbacks, IFreeze
             }
         }
     }
+    Coroutine cor;
+    public void IsHarvest(bool isHarvest)
+    {
+        if (isHarvest)
+        {
+            cor = StartCoroutine(IsHarvestCor());
+            //rayInteractor.xrController.SendHapticImpulse(hapticAmplitude, hapticDuraiton);
+        }
+        else if (!isHarvest)
+        {
+            if (cor != null)
+            {
+                StopCoroutine(cor);
+            }
+            rayInteractor.xrController.SendHapticImpulse(0, 0);
+        }
+
+    }
+
+    IEnumerator IsHarvestCor()
+    {
+        while (true)
+        {
+            rayInteractor.xrController.SendHapticImpulse(hapticAmplitude, hapticDuraiton);
+            yield return new WaitForSeconds(hapticDuraiton);
+        }
+
+    }
+
+
+
+    private void Update()
+    {
+        if (flower != null)
+        {
+            if (Vector3.Distance(flower.gameObject.transform.position, rayInteractor.transform.position) >= 5)
+            {
+                if (flower != null && flower.gameObject.activeSelf == true)
+                {
+                    IsHarvest(false);
+                    flower.StopHarvest();
+
+                }
+               
+            }
+
+            if (flower.gameObject.activeSelf == false)
+            {
+                IsHarvest(false);
+
+            }
+
+        }
+    }
+
 
     IEnumerator FlowerDistanceCor()
     {
@@ -111,15 +168,26 @@ public class HandHarvest : MonoBehaviourPunCallbacks, IFreeze
         {
             if (flower != null)
             {
-                if (Vector3.Distance(flower.gameObject.transform.position, rayInteractor.transform.position) >= gap)
+                if (Vector3.Distance(flower.gameObject.transform.position, rayInteractor.transform.position) >= 5)
                 {
                     if (flower != null && flower.gameObject.activeSelf == true)
                     {
+                        IsHarvest(false);
                         flower.StopHarvest();
+
                     }
 
                 }
+
+                if (flower.gameObject.activeSelf == false)
+                {
+                    IsHarvest(false);
+
+                }
+
             }
+
+
             yield return null;
         }
     }
@@ -130,7 +198,9 @@ public class HandHarvest : MonoBehaviourPunCallbacks, IFreeze
         Debug.Log("Trigger 뗌");
         if (flower != null && flower.gameObject.activeSelf == true)
         {
+            IsHarvest(false);
             flower.StopHarvest();
+            flower = null;
         }
     }
 

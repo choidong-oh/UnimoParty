@@ -146,9 +146,9 @@ public class Flower : MonoBehaviourPun
             Manager.Instance.observer.GetFairy(fairyType);
         }
 
-        //this.gameObject.SetActive(false);
+        this.gameObject.SetActive(false);
 
-        photonView.RPC("FlowerSetAcive", RpcTarget.All,false);
+        photonView.RPC("FlowerSetAcive", RpcTarget.Others,false);
 
         Debug.Log("채집 완료!");
     }

@@ -18,9 +18,12 @@ public class TestGrab : MonoBehaviour
     {
         Debug.Log("±×·¦ÇÜ");
 
-        var rotation = gameObject.transform.eulerAngles;
-        rotation.y += 90;
-        transform.Rotate(rotation);
+        Vector3 pos = gameObject.transform.position;
+        pos.x = 0;
+        pos.y += 90;
+        pos.z = 0;
+
+        transform.Rotate(pos);
 
 
     }
