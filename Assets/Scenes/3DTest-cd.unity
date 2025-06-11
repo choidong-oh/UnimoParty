@@ -498,8 +498,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cubePrefab: {fileID: 9062917801096977609, guid: 8c93c145e47ea984da56fffa50142929, type: 3}
-  IsTuch: 0
-  tuch2: 0
+  bool1: 0
+  bool2: 0
 --- !u!65 &946848647
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -597,7 +597,7 @@ GameObject:
   - component: {fileID: 982506291}
   - component: {fileID: 982506290}
   - component: {fileID: 982506289}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: Terrain
   m_TagString: Ground
   m_Icon: {fileID: 0}
