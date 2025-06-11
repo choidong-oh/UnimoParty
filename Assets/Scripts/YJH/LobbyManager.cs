@@ -63,7 +63,6 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         PVPPanel.SetActive(false);
         roomPanel.SetActive(false);
 
-
         PhotonNetwork.NickName = FirebaseAuthMgr.user.DisplayName;
     }
     private void ShowPanel(GameObject nextPanel)
@@ -74,6 +73,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         }
         panelStack.Push(nextPanel);
         nextPanel.SetActive(true);
+        currentPanel = panelStack.Peek().gameObject;
     }
     //인스펙터 끼워 넣기 용
     public void PVEButton()
@@ -88,12 +88,15 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     public void BackButton()
     {
-        if (panelStack.Count > 0)
+        if (panelStack.Count > 1)
         {
-            currentPanel.SetActive(false);
-            currentPanel = panelStack.Pop();
+            GameObject last = panelStack.Pop();
+            last.SetActive(false);
+
+            currentPanel = panelStack.Peek();
             currentPanel.SetActive(true);
         }
+        
     }
     //PVE 스테이지 진입
     public void Stage1()
