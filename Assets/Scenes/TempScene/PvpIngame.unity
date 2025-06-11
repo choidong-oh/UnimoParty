@@ -1035,6 +1035,10 @@ PrefabInstance:
       propertyPath: centerTransform
       value: 
       objectReference: {fileID: 718748185}
+    - target: {fileID: 4300253985010686547, guid: b0700a97fafc8564c88c1d084dea0bf9, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7790173326523820615, guid: b0700a97fafc8564c88c1d084dea0bf9, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1074,6 +1078,10 @@ PrefabInstance:
     - target: {fileID: 7790173326523820615, guid: b0700a97fafc8564c88c1d084dea0bf9, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8199224167387089582, guid: b0700a97fafc8564c88c1d084dea0bf9, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
