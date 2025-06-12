@@ -84,7 +84,6 @@ public class OptionManager : MonoBehaviour
         for (int i = 0; i < sliders.Length;i++)
         {
             PlayerPrefs.SetFloat("Slider" + i , sliders[i].value);
-            OptionData.sliderValues[i] = sliders[i].value;
         }
 
         if (operationToggles[0].isOn)

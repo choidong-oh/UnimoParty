@@ -1,5 +1,5 @@
 
 public static class OptionData
 {
-    public static float[] sliderValues = new float[4];
+    public static float[] values = new float[4];
 }
