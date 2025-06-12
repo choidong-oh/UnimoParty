@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets;
+using static UnityEngine.Rendering.DebugUI;
 
 public class OptionManager : MonoBehaviour
 {
@@ -148,24 +149,30 @@ public class OptionManager : MonoBehaviour
         float qhrks = Mathf.Lerp(0.9f, 0.7f, normalized);
         vignette.defaultParameters.apertureSize = qhrks;
 
+        OptionData.dataValues[0] = qhrks;
         //여기서 optionData저장 vignette.defaultParameters.apertureSize
     }
     public void UpdateBGMSound()
     {
         //여기서 optionData저장 
         //배경음 업데이트 및 저장
+
+        OptionData.dataValues[1] = sliders[1].value;
     }
     public void UpdateSFXSound()
     {
         //여기서 optionData저장 
         //효과음 소리 업데이트 및 저장
+        OptionData.dataValues[2] = sliders[2].value;
     }
     public void UpdateNomalTurn()
     {
         //0일때 50
         //1당 2
         //100일 때 250
-        smoothTurn.turnSpeed = sliders[3].value * 2f + 50f;
+        float _turnSpeed = sliders[3].value * 2f + 50f;
+        smoothTurn.turnSpeed = _turnSpeed;
+        OptionData.dataValues[3] = _turnSpeed;
         //여기서 optionData저장 smoothTurn.turnSpeed
     }
     public void UpdateTurnAmount()
