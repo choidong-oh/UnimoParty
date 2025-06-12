@@ -43,7 +43,7 @@ public class TEST : MonoBehaviour
             int groundLayer = LayerMask.GetMask("Water"); 
             int mask = ~groundLayer;//그라운드만 제외 비트연산
             // 나중에 레이어마스크 인스펙터창에서 빼야할듯 public LayerMask layerMask; 
-            Bounds previewBounds = previewCube.GetComponent<Renderer>().bounds;
+            Bounds previewBounds = previewCube.GetComponent<MeshRenderer>().bounds;
 
             bool isBlocked = Physics.CheckBox (previewBounds.center,
                                                previewBounds.extents,
@@ -93,10 +93,15 @@ public class TEST : MonoBehaviour
     bool CanPlace()
     {
         if (previewCube == null) { return false; }
+        int groundLayer = LayerMask.GetMask("Water");
+        int mask = ~groundLayer;//그라운드만 제외 비트연산
+                                // 나중에 레이어마스크 인스펙터창에서 빼야할듯 public LayerMask layerMask; 
 
-        Bounds previewBounds = previewCube.GetComponent<Renderer>().bounds;
-
-        bool isBlocked = Physics.CheckBox(previewBounds.center, previewBounds.extents, previewCube.transform.rotation);
+        Bounds previewBounds = previewCube.GetComponent<MeshRenderer>().bounds;
+        bool isBlocked = Physics.CheckBox(previewBounds.center,
+                                           previewBounds.extents,
+                                           previewCube.transform.rotation,
+                                           mask);
 
         return isBlocked;
     }
