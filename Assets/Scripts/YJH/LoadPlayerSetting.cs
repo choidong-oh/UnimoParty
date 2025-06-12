@@ -22,9 +22,19 @@ public class LoadPlayerSetting : MonoBehaviourPunCallbacks
             smoothTurn = turn.GetComponent<ActionBasedContinuousTurnProvider>();
 
 
-
-            smoothTurn.turnSpeed = OptionData.dataValues[3];
             vignette.defaultParameters.apertureSize = OptionData.dataValues[0];
+
+            if(OptionData.isSmooth)
+            {
+                ABCM.smoothTurnEnabled = true;
+                smoothTurn.turnSpeed = OptionData.dataValues[3];
+            }
+            else
+            {
+                ABCM.smoothTurnEnabled = false;
+                snapTurn.turnAmount = OptionData.amount;
+            }
+                
         }
         
     }

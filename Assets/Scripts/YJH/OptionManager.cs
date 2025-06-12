@@ -47,6 +47,7 @@ public class OptionManager : MonoBehaviour
         // smooth 회전
         if (operationToggles[0].isOn)
         {
+            OptionData.isSmooth = true;
             operationToggles[0].interactable = false;
             operationToggles[1].interactable = true;
 
@@ -64,6 +65,7 @@ public class OptionManager : MonoBehaviour
         //스냅 회전
         else if(operationToggles[1].isOn)
         {
+            OptionData.isSmooth = false;
             operationToggles[0].interactable = true;
             operationToggles[1].interactable = false;
 
@@ -181,16 +183,19 @@ public class OptionManager : MonoBehaviour
         {
             snapTurn.turnAmount = 30;
             PlayerPrefs.SetInt("TurnAmount", 0);
+            OptionData.amount = 30;
         }
         else if(angleToggles[1].isOn)
         {
             snapTurn.turnAmount = 60;
             PlayerPrefs.SetInt("TurnAmount", 1);
+            OptionData.amount = 60;
         }
         else if(angleToggles[2].isOn)
         {
             snapTurn.turnAmount = 90;
             PlayerPrefs.SetInt("TurnAmount", 2);
+            OptionData.amount = 90;
         }
     }
 
