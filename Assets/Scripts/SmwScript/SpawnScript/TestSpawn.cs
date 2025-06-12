@@ -1,39 +1,54 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.TerrainUtils;
 
-public class TestSpawn : MonoBehaviour
+public class TestSpawn : MonoBehaviourPun
 {
-    [SerializeField] float x = 25f;
-    [SerializeField] float y = 25f;
-
     float RandomXMin;
-    float RandomYMin;
+    float RandomZMin;
     float RandomXMax;
-    float RandomYMax;
-
+    float RandomZMax;
 
     [SerializeField] int maxEnemies = 10;
     [SerializeField] int spawnTimer = 3;
     [SerializeField] GameObject[] Enemy;
+
     Vector3 spawnPos;
 
     Terrain terrain;
 
+    [SerializeField] float NoSpawn = 5f;
+    [SerializeField] float SideNoSpawn;
+
+    void Awake()
+    {
+        PhotonNetwork.ConnectUsingSettings();
+    }
+
     private void Start()
     {
         terrain = Terrain.activeTerrain;
+
         Vector3 TerrainMin = terrain.transform.position;
         Vector3 TerrainMax = terrain.terrainData.size;
 
         RandomXMin = TerrainMin.x;
-        RandomYMin = TerrainMin.z;
+        RandomZMin = TerrainMin.z;
 
         RandomXMax = TerrainMin.x + TerrainMax.x;
-        RandomYMax = TerrainMin.z + TerrainMax.z;
+        RandomZMax = TerrainMin.z + TerrainMax.z;
 
         StartCoroutine(SpawnRoutine());
+    }
+
+    [PunRPC]
+    void SpawnRPC()
+    {
+        int RandomEnemy = Random.Range(0, Enemy.Length);
+
+        Instantiate(Enemy[RandomEnemy], spawnPos, Quaternion.identity);
     }
 
 
@@ -41,17 +56,27 @@ public class TestSpawn : MonoBehaviour
     {
         
         int spawned = 0;
+
+
+        float centerX = (RandomXMin + RandomXMax) * 0.5f;
+        float centerZ = (RandomZMin + RandomZMax) * 0.5f;
+
         while (spawned < maxEnemies)
         {
-            Debug.Log("소환됨");
+            float RandomX = Random.Range(RandomXMin - SideNoSpawn, RandomXMax - SideNoSpawn);
+            float RandomZ = Random.Range(RandomZMin - SideNoSpawn, RandomZMax - SideNoSpawn);
 
-            //이거는 내가쓸 스포너여
-            x = Random.Range(RandomXMin, RandomXMax);
-            y = Random.Range(RandomYMin, RandomYMax);
+            while (Mathf.Abs(RandomX - centerX) < NoSpawn && Mathf.Abs(RandomZ - centerZ) < NoSpawn)
+            {
+                RandomX = Random.Range(RandomXMin - SideNoSpawn, RandomXMax - SideNoSpawn);
+                RandomZ = Random.Range(RandomZMin - SideNoSpawn, RandomZMax - SideNoSpawn);
+            }
 
+            spawnPos = new Vector3(RandomX, 0f, RandomZ);
+
+            //photonView.RPC("SpawnRPC", RpcTarget.All);
             int RandomEnemy = Random.Range(0, Enemy.Length);
-            spawnPos = new Vector3(x, 0, y);
-            Instantiate(Enemy[RandomEnemy] , spawnPos, Quaternion.identity);
+            Instantiate(Enemy[RandomEnemy], spawnPos, Quaternion.identity);
             spawned++;
             yield return new WaitForSeconds(spawnTimer);
         }
