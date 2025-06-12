@@ -2,16 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpaceShipData
-{
+public class SpaceShipData : InterfaceMethod.TableData
+{ 
     int _index;
     string _name;
     int _inventorySlotCount;
     float _shipMoveSpeed;
     string _shipModelName;
+    int _shipCost;
     List<ItemData> shipInventory = new List<ItemData>();
 
-    public int Index
+    public int INDEX
     {
         get { return _index; }
         set { _index = value; }
@@ -39,5 +40,11 @@ public class SpaceShipData
     {
         get { return _shipModelName; }
         set { _shipModelName = value; }
+    }
+
+    public int ShipCost
+    {
+        get { return _shipCost; }
+        set { _shipCost = value; }
     }
 }

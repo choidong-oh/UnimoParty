@@ -23,7 +23,7 @@ public class IngameObserver
 
     public void Setting()
     {
-        //UserPlayer.gamedata.life = 100;
+        UserPlayer.gamedata.life = 100;
         var tempUser = UserPlayer.gamedata;
 
         OnGameDataChange.Invoke(tempUser);
@@ -117,11 +117,6 @@ public class IngameObserver
         OnGameDataChange.Invoke(tempUser);
     }
 
-    void ChangeItem()
-    {
-
-    }
-
     void SelectItem(ItemData selectitem)
     {
         _selectItem = selectitem;
@@ -192,7 +187,17 @@ public class IngameObserver
     public void BuyItem(ItemData buyitems)
     {
         UserPlayer.gamedata._money -= buyitems.ItemCost;
-        UserPlayer.gamedata._Inventory.userItemDatas[0].ItemData.ItemCount++;
+        UserPlayer.gamedata._Inventory.userItemDatas[(int)buyitems.type].ItemData.ItemCount++;
+
+        var tempuser = UserPlayer.gamedata;
+
+        OnGameDataChange?.Invoke(tempuser);
+    }
+
+    public void BuyShip(SpaceShipData buyship)
+    {
+        UserPlayer.gamedata._money -= buyship.ShipCost;
+        UserPlayer.gamedata._Inventory.spaceShipDatas.Add(buyship);
 
         var tempuser = UserPlayer.gamedata;
 

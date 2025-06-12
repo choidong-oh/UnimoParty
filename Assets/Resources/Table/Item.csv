@@ -1,1 +1,7 @@
-﻿Index,Name,Value
+﻿item_idx,item_name_kor,item_probability_top,item_probability_mid,item_probability_bot,item_time,item_con_time,item_heal,item_shoot_speed,item_expl_range,item_max_range,item_ice_time,item_alarm_time,item_remarks
+400,회복 포션,40,20,20,0,0,1,0,0,0,0,0,
+401,얼음 폭탄,0,20,0,0,0,0,5,1,0,3,0,
+402,바리케이드,10,20,10,0,999,0,0,0,5,0,0,
+403,유령,40,10,10,0,3,0,0,0,0,0,1,
+404,광산 폭탄,0,10,30,0,0,0,5,0.3,0,0,0,
+405,드론,10,20,30,0,0,0,0,0,0,0,0,

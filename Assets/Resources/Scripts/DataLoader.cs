@@ -30,7 +30,7 @@ public class DataLoader
             switch (csvFIles.name)
             {
                 case "Enemy":
-                    Debug.Log("에너미 csv  로드");
+                    Debug.Log("Enemy csv 로드");
                     for (int i = 1; i < lines.Length - 1; i++)
                     {
                         //enemyData = null;
@@ -43,9 +43,9 @@ public class DataLoader
                         //item.Value.Add(enemyData);
                     }
                     break;
-
+                        
                 case "Item":
-                    Debug.Log(" csv 로드");
+                    Debug.Log("Item csv 로드");
                     for (int i = 1; i < lines.Length - 1; i++)
                     {
                         string[] values = lines[i].Split(',');
@@ -58,7 +58,7 @@ public class DataLoader
                         itemData.ItemConTime = int.Parse(values[6]);
                         itemData.ItemHeal = int.Parse(values[7]);
                         itemData.ItemShootSpeed = int.Parse(values[8]);
-                        itemData.ItemExplRange = int.Parse(values[9]);
+                        itemData.ItemExplRange = float.Parse(values[9]);
                         itemData.ItemMaxRange = int.Parse(values[10]);
                         itemData.ItemIceTime = int.Parse(values[11]);
                         itemData.ItemAlarmTime = int.Parse(values[12]);
@@ -68,15 +68,21 @@ public class DataLoader
                     break;
 
                 case "SpaceShip":
+                    Debug.Log("SpaceShip csv 로드");
+                    for (int i = 1; i < lines.Length - 1; i++)
+                    {
+                        string[] values = lines[i].Split(',');
+                        SpaceShipData spaceShipData = new SpaceShipData();
+                        spaceShipData.Name = values[1].ToString();
+                        spaceShipData.ShipMoveSpeed = float.Parse(values[2]);
+                        spaceShipData.InventorySlotCount = int.Parse(values[3]);
+                        spaceShipData.ShipCost = int.Parse(values[4]);
 
-
-
-
+                        item.Value.Add(spaceShipData);
+                    }
 
                     break;
-
             }
         }
     }
-
 }

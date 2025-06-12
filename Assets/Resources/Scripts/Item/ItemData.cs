@@ -17,7 +17,7 @@ public class ItemData : InterfaceMethod.TableData
     public int _itemConTime;
     public int _itemHeal;
     public int _itemShootSpeed;
-    public int _itemExplRange;
+    public float _itemExplRange;
     public int _itemMaxRange;
     public int _itemIceTime;
     public int _itemAlarmTime;
@@ -68,7 +68,7 @@ public class ItemData : InterfaceMethod.TableData
         set { _itemShootSpeed = value; }
     }
 
-    public int ItemExplRange
+    public float ItemExplRange
     {
         get { return _itemExplRange; }
         set { _itemExplRange = value; }
