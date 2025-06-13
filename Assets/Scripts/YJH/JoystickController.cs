@@ -38,6 +38,8 @@ public class JoystickController : MonoBehaviourPunCallbacks, IFreeze
 
     void Start()
     {
+        tempMoveSpeed = moveSpeed;
+
         //userName.text = FirebaseLoginMgr.user.DisplayName;
         if (photonView.IsMine)
         {
@@ -98,7 +100,6 @@ public class JoystickController : MonoBehaviourPunCallbacks, IFreeze
     {
         if (IsFreeze == true)
         {
-            tempMoveSpeed = moveSpeed;
             moveSpeed = 0f;
         }
         else if (IsFreeze == false)
