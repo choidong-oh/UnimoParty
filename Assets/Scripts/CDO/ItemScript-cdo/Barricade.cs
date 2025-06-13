@@ -22,7 +22,10 @@ public class Barricade : MonoBehaviour
             previewBarricadPrefab = Instantiate(realBarricadPrefab);
             Destroy(previewBarricadPrefab.GetComponent<Collider>());
             //SetTransparent(previewBarricadPrefab, 0.3f, Color.black);
+            GroundPos();
+
             previewBounds = previewBarricadPrefab.GetComponent<MeshRenderer>().bounds;
+
         }
     }
 
@@ -96,23 +99,31 @@ public class Barricade : MonoBehaviour
     //¹Ù´Ú Æ÷Áö¼Ç
     Vector3 GroundPos()
     {
-        Vector3 spawnPos = transform.position;
-        spawnPos.y += previewBounds.extents.y;
-        spawnPos += transform.forward * 5f;
-        previewBarricadPrefab.transform.position = spawnPos;
+        //Vector3 spawnPos = transform.position;
+        //spawnPos.y += previewBounds.extents.y;
+        //spawnPos += transform.forward * 5f;
+        //previewBarricadPrefab.transform.position = spawnPos;
 
-        previewPlayerPos = previewBarricadPrefab.transform.position;
+        //previewPlayerPos = previewBarricadPrefab.transform.position;
 
-        //if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, 10f))
-        //{
-        //    if (hit.collider.gameObject.tag == "Ground")
-        //    {
-        //        Vector3 spawnPos = previewBarricadPrefab.transform.position;
-        //        spawnPos.y += previewBounds.extents.y;
-        //        spawnPos += transform.forward * 5f;
-        //        previewBarricadPrefab.transform.position = spawnPos;
-        //    }
-        //}
+        var tempPos = transform.position + transform.forward * 5f;
+
+        if (Physics.Raycast(tempPos, Vector3.down, out RaycastHit hit, 10f))
+        {
+            if (hit.collider.gameObject.tag == "Ground")
+            {
+                previewBounds = previewBarricadPrefab.GetComponent<MeshRenderer>().bounds;
+                Vector3 spawnPos = hit.point;
+                spawnPos.y += previewBounds.extents.y;
+                spawnPos += transform.forward * 5f;
+                previewBarricadPrefab.transform.position = spawnPos;
+               
+                previewPlayerPos = previewBarricadPrefab.transform.position;
+
+            }
+        }
+
+
         return previewPlayerPos;
     }
 
