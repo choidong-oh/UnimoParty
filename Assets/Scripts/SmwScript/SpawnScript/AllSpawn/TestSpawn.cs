@@ -6,6 +6,8 @@ using UnityEngine.TerrainUtils;
 
 public class TestSpawn : MonoBehaviourPun
 {
+    [SerializeField] private GameObject enemyPrefab;
+
     float RandomXMin;
     float RandomZMin;
     float RandomXMax;
@@ -13,7 +15,7 @@ public class TestSpawn : MonoBehaviourPun
 
     [SerializeField] int maxEnemies = 10;
     [SerializeField] int spawnTimer = 3;
-    [SerializeField] GameObject[] Enemy;
+
 
     Vector3 spawnPos;
 
@@ -22,10 +24,6 @@ public class TestSpawn : MonoBehaviourPun
     [SerializeField] float NoSpawn = 5f;
     [SerializeField] float SideNoSpawn;
 
-    void Awake()
-    {
-        PhotonNetwork.ConnectUsingSettings();
-    }
 
     private void Start()
     {
@@ -43,13 +41,6 @@ public class TestSpawn : MonoBehaviourPun
         StartCoroutine(SpawnRoutine());
     }
 
-    [PunRPC]
-    void SpawnRPC()
-    {
-        int RandomEnemy = Random.Range(0, Enemy.Length);
-
-        Instantiate(Enemy[RandomEnemy], spawnPos, Quaternion.identity);
-    }
 
 
     IEnumerator SpawnRoutine()
@@ -74,9 +65,9 @@ public class TestSpawn : MonoBehaviourPun
 
             spawnPos = new Vector3(RandomX, 0f, RandomZ);
 
-            //photonView.RPC("SpawnRPC", RpcTarget.All);
-            int RandomEnemy = Random.Range(0, Enemy.Length);
-            Instantiate(Enemy[RandomEnemy], spawnPos, Quaternion.identity);
+
+            PoolManager.Instance.Spawn(enemyPrefab, spawnPos, Quaternion.identity);
+
             spawned++;
             yield return new WaitForSeconds(spawnTimer);
         }
