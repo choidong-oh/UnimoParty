@@ -77,6 +77,7 @@ public class DataLoader
                         spaceShipData.ShipMoveSpeed = float.Parse(values[2]);
                         spaceShipData.InventorySlotCount = int.Parse(values[3]);
                         spaceShipData.ShipCost = int.Parse(values[4]);
+                        spaceShipData.ShipModelName = values[5].ToString();
 
                         item.Value.Add(spaceShipData);
                     }

@@ -5,6 +5,6 @@ using UnityEngine;
 public class SpaceShip : MonoBehaviour
 {
     public GameObject Model;
-    SpaceShipData SpaceShipData = new SpaceShipData();
+    public SpaceShipData SpaceShipData = new SpaceShipData();
 
 }

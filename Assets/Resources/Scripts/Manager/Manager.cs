@@ -42,8 +42,23 @@ public class Manager : MonoBehaviour
         dataLoader.DataLoad();
     }
 
+    private void Start()
+    {
+        //CheckData();
+    }
+
     public void GetPlayerCount(int playercount)
     {
         observer.roomInPlayerCount = playercount;
+    }
+
+    public void CheckData()
+    {
+        for(int i = 0; i < dataLoader.data["SpaceShip"].Count; i++)
+        {
+            SpaceShip tempspaceship = new SpaceShip();
+            tempspaceship.SpaceShipData = (SpaceShipData)dataLoader.data["SpaceShip"][i];
+            Debug.Log(tempspaceship.SpaceShipData.Name);
+        }
     }
 }
