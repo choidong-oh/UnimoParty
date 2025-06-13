@@ -1,7 +1,7 @@
-﻿index,ShipName,ShipSpeed,InventoryCount,Cost
-500,회복 포션,8,1,500
-501,얼음 폭탄,9,1,600
-502,바리케이드,10,2,700
-503,유령,15,2,800
-504,광산 폭탄,20,3,900
-505,드론,25,3,1000
+﻿index,ShipName,ShipSpeed,InventoryCount,Cost,ShipModelName,,,,,
+500,꿀벌우주선,8,1,500,String,,,,,
+501,번개우주선,9,1,600,String,,,,,
+502,운석우주선,10,2,700,String,,,,,
+503,유령우주선,15,2,800,String,,,,,
+504,광산우주선,20,3,900,String,,,,,
+505,드론우주선,25,3,1000,String,,,,,
