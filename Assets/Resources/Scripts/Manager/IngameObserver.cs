@@ -16,6 +16,7 @@ public class IngameObserver
     public List<int> ranks;
     public int currentPlayerRank;
 
+
     private bool isGameOver = false;
     ItemData _selectItem;
     public ItemGetRate getItemRate = new ItemGetRate();

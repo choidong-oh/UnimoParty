@@ -23,9 +23,6 @@ public class OptionManager : MonoBehaviour
 
     private void Start()
     {
-        ABCM = GameObject.Find("Camera Offset").transform.GetChild(5).GetComponent<ActionBasedControllerManager>();
-
-
         OptionLoad();
         UpdateTurnAmount();
         OperationChange();

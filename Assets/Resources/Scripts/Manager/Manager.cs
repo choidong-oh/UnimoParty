@@ -29,6 +29,7 @@ public class Manager : MonoBehaviour
 
     void Awake()
     {
+
         if (instance == null)
         {
             instance = this;
