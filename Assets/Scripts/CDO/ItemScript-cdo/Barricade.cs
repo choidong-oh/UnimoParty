@@ -15,16 +15,16 @@ public class Barricade : MonoBehaviour
 
     bool isBlocked; //겹치는 오브젝트가있냐? 콜라이더되는애들이 있냐
 
+    private MeshRenderer previewRenderer;
     private void OnEnable()
     {
         if (previewBarricadPrefab == null)
         {
             previewBarricadPrefab = Instantiate(realBarricadPrefab);
             Destroy(previewBarricadPrefab.GetComponent<Collider>());
-            //SetTransparent(previewBarricadPrefab, 0.3f, Color.black);
             GroundPos();
 
-            previewBounds = previewBarricadPrefab.GetComponent<MeshRenderer>().bounds;
+            previewRenderer = previewBarricadPrefab.GetComponent<MeshRenderer>();
 
         }
     }
@@ -41,9 +41,11 @@ public class Barricade : MonoBehaviour
             return;
         }
 
-        //바닥체크 움직임
+        //바닥체크 및 움직임
         GroundPos();
-        previewBounds = previewBarricadPrefab.GetComponent<MeshRenderer>().bounds;
+
+        previewBounds = previewRenderer.bounds;
+
         isBlocked = Physics.CheckBox(previewBounds.center,
                                      previewBounds.extents,
                                      previewBarricadPrefab.transform.rotation,
@@ -51,11 +53,11 @@ public class Barricade : MonoBehaviour
         if (isBlocked == true)
         {
             Debug.Log("겹치는 오브젝트 있음요");
-            SetTransparent(previewBarricadPrefab, 0.3f, Color.red);
+            SetTransparent(0.3f, Color.red);
         }
         else
         {
-            SetTransparent(previewBarricadPrefab, 0.3f, Color.green);
+            SetTransparent(0.3f, Color.green);
         }
 
 
@@ -77,10 +79,6 @@ public class Barricade : MonoBehaviour
         }
 
 
-
-
-
-
     }
 
     //미리보기 아이템 삭제
@@ -99,25 +97,26 @@ public class Barricade : MonoBehaviour
     //바닥 포지션
     Vector3 GroundPos()
     {
-        //Vector3 spawnPos = transform.position;
-        //spawnPos.y += previewBounds.extents.y;
-        //spawnPos += transform.forward * 5f;
-        //previewBarricadPrefab.transform.position = spawnPos;
-
-        //previewPlayerPos = previewBarricadPrefab.transform.position;
-
         var tempPos = transform.position + transform.forward * 5f;
 
         if (Physics.Raycast(tempPos, Vector3.down, out RaycastHit hit, 10f))
         {
             if (hit.collider.gameObject.tag == "Ground")
             {
-                previewBounds = previewBarricadPrefab.GetComponent<MeshRenderer>().bounds;
+
+                //로테이션
+                Vector3 direction = transform.position - previewBarricadPrefab.transform.position;
+                direction.y = 0f; 
+                Quaternion rotation = Quaternion.LookRotation(direction);
+
+                //포지션
                 Vector3 spawnPos = hit.point;
                 spawnPos.y += previewBounds.extents.y;
                 spawnPos += transform.forward * 5f;
                 previewBarricadPrefab.transform.position = spawnPos;
-               
+
+                previewBarricadPrefab.transform.rotation = rotation;
+
                 previewPlayerPos = previewBarricadPrefab.transform.position;
 
             }
@@ -128,15 +127,18 @@ public class Barricade : MonoBehaviour
     }
 
     //머티리얼 색변환
-    void SetTransparent(GameObject obj, float alpha, Color color)
+    void SetTransparent(float alpha, Color color)
     {
-        var renderer = obj.GetComponent<MeshRenderer>();
+        if (previewRenderer == null)
+        {
+            return;
+        }
 
-        var mat = renderer.materials[0];
+        var mat = previewRenderer.materials[0];
 
         color.a = alpha;
         mat.color = color;
-        renderer.material = mat;
+        previewRenderer.material = mat;
     }
 
 
