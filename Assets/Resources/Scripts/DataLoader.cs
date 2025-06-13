@@ -33,7 +33,6 @@ public class DataLoader
                     Debug.Log("Enemy csv ·Îµå");
                     for (int i = 1; i < lines.Length - 1; i++)
                     {
-                        //enemyData = null;
                         //string[] values = lines[i].Split(',');
                         ////EnemyBase.INDEX = int.Parse(values[0]);
                         //enemyData.enemyName = values[1].ToString();
