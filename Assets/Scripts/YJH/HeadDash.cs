@@ -21,6 +21,11 @@ public class HeadDash : MonoBehaviourPunCallbacks, IFreeze
     //freeze º¯¼ö
     float tempDashDistance = 1F;
     float tempDashCooldown = 5f;
+    private void Start()
+    {
+        tempDashDistance = dashDistance;
+        tempDashCooldown = dashCooldown;
+    }
 
     void Update()
     {
@@ -89,8 +94,6 @@ public class HeadDash : MonoBehaviourPunCallbacks, IFreeze
     {
         if (IsFreeze == true)
         {
-            tempDashDistance = dashDistance;
-            tempDashCooldown = dashCooldown;
             dashDistance = 0;
             dashCooldown = 0;
         }

@@ -217,7 +217,7 @@ public class IngameObserver
     public void EndGame()
     {
         isGameOver = true;
-
+         
         //여기에 포톤 추가.
         OnGameEnd?.Invoke();
     }
