@@ -34,7 +34,9 @@ public class Barricade : MonoBehaviour
         DestotyPreviewPrefab();
     }
 
-    private void Update()
+    
+
+    private void FixedUpdate()
     {
         if (previewBarricadPrefab == null)
         {
@@ -104,18 +106,27 @@ public class Barricade : MonoBehaviour
             if (hit.collider.gameObject.tag == "Ground")
             {
 
-                //로테이션
-                Vector3 direction = transform.position - previewBarricadPrefab.transform.position;
-                direction.y = 0f; 
-                Quaternion rotation = Quaternion.LookRotation(direction);
+                
 
                 //포지션
                 Vector3 spawnPos = hit.point;
                 spawnPos.y += previewBounds.extents.y;
+                var tempSpawnPos = spawnPos.y;
+
                 spawnPos += transform.forward * 5f;
                 previewBarricadPrefab.transform.position = spawnPos;
 
+                //로테이션
+                Vector3 direction = transform.position - previewBarricadPrefab.transform.position;
+                direction.y = 0;
+
+                Quaternion rotation = Quaternion.LookRotation(direction);
+
                 previewBarricadPrefab.transform.rotation = rotation;
+
+                previewBarricadPrefab.transform.position = new Vector3(spawnPos.x, tempSpawnPos, spawnPos.z);
+
+
 
                 previewPlayerPos = previewBarricadPrefab.transform.position;
 
