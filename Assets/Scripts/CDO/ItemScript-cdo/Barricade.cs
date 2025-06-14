@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Barricade : MonoBehaviour
+public class Barricade : MonoBehaviour, IItemUse
 {
     [SerializeField] GameObject realBarricadPrefab; //실제 생성
     GameObject previewBarricadPrefab; //미리보기
@@ -34,7 +34,7 @@ public class Barricade : MonoBehaviour
         DestotyPreviewPrefab();
     }
 
-    
+
 
     private void FixedUpdate()
     {
@@ -63,24 +63,6 @@ public class Barricade : MonoBehaviour
         }
 
 
-
-        //아이템 생성
-        if (bool2 == true)
-        {
-            bool2 = false;
-
-            if (CanPlace() == false)
-            {
-                Instantiate(realBarricadPrefab, GroundPos(), Quaternion.identity);
-                DestotyPreviewPrefab();
-            }
-            else
-            {
-                Debug.Log("겹쳐서 배치 불가!");
-            }
-        }
-
-
     }
 
     //미리보기 아이템 삭제
@@ -106,7 +88,7 @@ public class Barricade : MonoBehaviour
             if (hit.collider.gameObject.tag == "Ground")
             {
 
-                
+
 
                 //포지션
                 Vector3 spawnPos = hit.point;
@@ -167,15 +149,20 @@ public class Barricade : MonoBehaviour
         return isBlocked;
     }
 
+    public void Use(Transform firePos, int power)
+    {
+
+        if (CanPlace() == false)
+        {
+            Instantiate(realBarricadPrefab, GroundPos(), Quaternion.identity);
+            DestotyPreviewPrefab();
+        }
+        else
+        {
+            Debug.Log("겹쳐서 배치 불가!");
+        }
 
 
 
-
-
-
-
-
-
-
-
+    }
 }
