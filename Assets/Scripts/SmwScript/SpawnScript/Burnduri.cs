@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class Burnduri : EnemyBase
 {
+    [HideInInspector] public GameObject prefab;
+
     [Header("플레이어 리스트")]
     public List<Transform> players = new List<Transform>();//플레이어 여기에 등록함
 
@@ -60,50 +62,50 @@ public class Burnduri : EnemyBase
             Debug.Log(Manager.Instance.observer.UserPlayer.gamedata.life);
             Manager.Instance.observer.HitPlayer(damage);
             StopAllCoroutines();
-            gameObject.SetActive(false);
+            PoolManager.Instance.Despawn(prefab, gameObject);
         }
     }
 
-    //public override void OnEnable()
-    //{
-    //    base.OnEnable();
-    //    animator = GetComponent<Animator>();
-    //    myCollider = GetComponent<Collider>();
+    public override void OnEnable()
+    {
+        base.OnEnable();
+        animator = GetComponent<Animator>();
+        myCollider = GetComponent<Collider>();
 
-    //    myCollider.enabled = false;
+        myCollider.enabled = false;
 
-    //    if (animator != null)
-    //    {
-    //        foreach (var clip in animator.runtimeAnimatorController.animationClips)
-    //        {
-    //            if (clip.name == "anim_01_MON001_Bduri_Appearance")
-    //                appearanceClip = clip;
-    //            else if (clip.name == "anim_03_MON001_Bduri_Encounter")
-    //                encounterClip = clip;
-    //            else if (clip.name == "anim_01_MON001_Bduri_Disappearance")
-    //                disappearClip = clip;
-    //        }
-    //    }
-    //    // 컨트롤러에 등록된 모든 클립을 뒤져서 원하는 이름의 클립을 저장
+        if (animator != null)
+        {
+            foreach (var clip in animator.runtimeAnimatorController.animationClips)
+            {
+                if (clip.name == "anim_01_MON001_Bduri_Appearance")
+                    appearanceClip = clip;
+                else if (clip.name == "anim_03_MON001_Bduri_Encounter")
+                    encounterClip = clip;
+                else if (clip.name == "anim_01_MON001_Bduri_Disappearance")
+                    disappearClip = clip;
+            }
+        }
+        // 컨트롤러에 등록된 모든 클립을 뒤져서 원하는 이름의 클립을 저장
 
-    //    if (appearanceClip == null || encounterClip == null || disappearClip == null)
-    //        Debug.LogWarning("Appearance 또는 Encounter 클립을 찾지 못했습니다.");
+        if (appearanceClip == null || encounterClip == null || disappearClip == null)
+            Debug.LogWarning("Appearance 또는 Encounter 클립없음");
 
-    //    //한번만 찾을꺼임
-    //    if (players.Count == 0)
-    //    {
-    //        var objs = GameObject.FindGameObjectsWithTag("Player");
-    //        foreach (var obj in objs)
-    //        {
-    //            players.Add(obj.transform);
-    //        }
-    //    }
+        //한번만 찾을꺼임
+        if (players.Count == 0)
+        {
+            var objs = GameObject.FindGameObjectsWithTag("Player");
+            foreach (var obj in objs)
+            {
+                players.Add(obj.transform);
+            }
+        }
 
-    //    terrain = Terrain.activeTerrain;
-    //    isCharging = false;
+        terrain = Terrain.activeTerrain;
+        isCharging = false;
 
-    //    StartCoroutine(GoBurnduri());
-    //}
+        StartCoroutine(GoBurnduri());
+    }
 
     IEnumerator GoBurnduri()
     {
@@ -237,7 +239,7 @@ public class Burnduri : EnemyBase
         float DisappearCool = disappearClip != null ? disappearClip.length / animator.speed : 0f;
         myCollider.enabled = false;
         yield return new WaitForSeconds(DisappearCool);
-        gameObject.SetActive(false);
+        PoolManager.Instance.Despawn(prefab, gameObject);
     }
 
 

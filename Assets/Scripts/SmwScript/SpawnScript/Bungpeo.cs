@@ -6,6 +6,8 @@ using static UnityEngine.ParticleSystem;
 
 public class Bungpeo : EnemyBase
 {
+    [HideInInspector] public GameObject prefab;
+
     [SerializeField] float explosionForce = 20f;
     [SerializeField] float explosionRadius = 20f;
     [SerializeField] float upwardsModifier = 1f;
@@ -44,37 +46,37 @@ public class Bungpeo : EnemyBase
             GameObject inst = Instantiate(CrashBunpeo, hitPoint, rot);
 
 
-            gameObject.SetActive(false);
+            PoolManager.Instance.Despawn(prefab, gameObject);
         }
 
     }
 
-    //public override void OnEnable()
-    //{
-    //    base.OnEnable();
-    //    animator = GetComponent<Animator>();
-    //    myCollider = GetComponent<Collider>();
+    public override void OnEnable()
+    {
+        base.OnEnable();
+        animator = GetComponent<Animator>();
+        myCollider = GetComponent<Collider>();
 
-    //    myCollider.enabled = true;
+        myCollider.enabled = true;
 
-    //    terrain = Terrain.activeTerrain;
+        terrain = Terrain.activeTerrain;
 
-    //    float terrainY = terrain.SampleHeight(transform.position) + transform.localScale.y / 2f;
-    //    transform.position = new Vector3(transform.position.x, terrainY, transform.position.z);
+        float terrainY = terrain.SampleHeight(transform.position) + transform.localScale.y / 2f;
+        transform.position = new Vector3(transform.position.x, terrainY, transform.position.z);
 
-    //    for (int i = 0; i < Body.Length; i++)
-    //    {
-    //        Body[i].SetActive(true);
-    //    }
+        for (int i = 0; i < Body.Length; i++)
+        {
+            Body[i].SetActive(true);
+        }
 
 
-    //    for (int i = 0; i < Fragment.Length; i++)
-    //    {
-    //        Fragment[i].SetActive(true);
-    //    }
+        for (int i = 0; i < Fragment.Length; i++)
+        {
+            Fragment[i].SetActive(true);
+        }
 
-    //    StartCoroutine(WaitAndExplode());
-    //}
+        StartCoroutine(WaitAndExplode());
+    }
 
     private IEnumerator WaitAndExplode()
     {
@@ -178,7 +180,7 @@ public class Bungpeo : EnemyBase
         {
             Debug.Log("완료");
             IsActivateFragment = 0;
-            gameObject.SetActive(false);
+            PoolManager.Instance.Despawn(prefab, gameObject);
         }
         Debug.Log(IsActivateFragment + "일단 작동함 ");
     }
