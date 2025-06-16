@@ -104,6 +104,8 @@ public class FreezeBoom : MonoBehaviourPunCallbacks, IItemUse
         
         Collider cd = gameObject.GetComponent<BoxCollider>();
         cd.isTrigger = false;
+
+        //Manager.Instance.observer.UseItem(ItemData selectitem);
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////
 
