@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 6914358527619130648}
   - component: {fileID: 2513446290006641027}
   - component: {fileID: 1354150721409897}
-  - component: {fileID: 1323094798831875682}
   - component: {fileID: -4460017238645582271}
   - component: {fileID: 6659060338371666958}
   - component: {fileID: -3011215628625037470}
@@ -136,7 +135,7 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 0
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
@@ -292,18 +291,6 @@ MonoBehaviour:
   m_StartingSingleGrabTransformers: []
   m_StartingMultipleGrabTransformers: []
   m_AddDefaultGrabTransformers: 1
---- !u!114 &1323094798831875682
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 143633201157678771}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 693303b137385af44bb6b9c6f8e575dc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &-4460017238645582271
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -372,11 +359,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a43f0ca7faf5070489fb3d9b7418dace, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  installMaxDistance: 5
   realBarricadPrefab: {fileID: 3242883989005295176, guid: 2595f1cefa56a5443ba36cea4acb5dc9, type: 3}
   noGroundlayerMask:
     serializedVersion: 2
     m_Bits: 3066
-  bool2: 0
+  isGrab: 0
 --- !u!1 &7387276154332796757
 GameObject:
   m_ObjectHideFlags: 0

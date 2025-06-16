@@ -4,14 +4,17 @@ using UnityEngine;
 
 public class FreezeBoom : MonoBehaviourPunCallbacks, IItemUse
 {
+    [SerializeField] int boomRange; //ÆøÅº ¹üÀ§
+    [SerializeField] int boomDuration; //Áö¼Ó½Ã°£
+    [SerializeField] int boomShootPower; //ÆøÅº ¹ß»ç ¼Óµµ
 
 
     IEnumerator wait()
     {
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(boomDuration);
         photonView.RPC("Explode", RpcTarget.All, true);
 
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(boomDuration);
         photonView.RPC("Explode", RpcTarget.All, false);
     }
 
@@ -29,7 +32,7 @@ public class FreezeBoom : MonoBehaviourPunCallbacks, IItemUse
     [PunRPC]
     void Explode(bool isFreeze)
     {
-        RaycastHit[] hits = Physics.SphereCastAll(transform.position, 30, Vector3.up, 100f, LayerMask.GetMask("Player", "Enemy", "Water"));
+        RaycastHit[] hits = Physics.SphereCastAll(transform.position, 30, Vector3.up, boomRange, LayerMask.GetMask("Player", "Enemy"));
         foreach (var hitobj in hits)
         {
             Debug.Log("ºù°á ÆøÅº");
@@ -94,18 +97,18 @@ public class FreezeBoom : MonoBehaviourPunCallbacks, IItemUse
         }
     }
 
-    public void Use(Transform firepos, int power)
+    public bool Use(Transform firepos, int power)
     {
         Rigidbody rb = gameObject.GetComponent<Rigidbody>();
         Vector3 throwDirection = firepos.transform.forward + firepos.transform.up;
         transform.parent = null;
         rb.useGravity = true;
-        rb.AddForce(throwDirection * power, ForceMode.VelocityChange);
+        rb.AddForce(throwDirection * boomShootPower, ForceMode.VelocityChange);
         
         Collider cd = gameObject.GetComponent<BoxCollider>();
         cd.isTrigger = false;
 
-        //Manager.Instance.observer.UseItem(ItemData selectitem);
+        return true;
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////
 

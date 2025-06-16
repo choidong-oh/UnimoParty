@@ -36,6 +36,36 @@ public class ItemInputB : MonoBehaviourPunCallbacks, IFreeze
     //스크립트
     [SerializeField] XrControllerMgr XrControllerMgrObj;
 
+    //아이템 확인용
+    [Header("아이템 확인용 <이미지 변경>")]
+    [SerializeField] Material[] material;
+    //0 : potion, 1 : freezeboom, 2 : barrigate 
+
+    void ChangeTexture()
+    {
+        var controller = rightController.GetComponent<ActionBasedController>().model;
+
+        Debug.Log("controller.name: " + controller.name);
+
+        var renderer = controller.transform.GetChild(2).GetComponent<MeshRenderer>();
+        Debug.Log("renderer.name: " + renderer.name);
+
+        //머트리얼 변경 세트
+        var materials = renderer.materials;
+        materials[0] = material[0];
+        renderer.materials = materials;
+
+
+        //dd.transform.GetChild(3).GetComponent<MeshRenderer>().materials[0] = material[1];
+        //dd.transform.GetChild(4).GetComponent<MeshRenderer>().materials[0] = material[2];
+    }
+
+    private void Start()
+    {
+        ChangeTexture();
+        
+    }
+
     public override void OnEnable()
     {
         base.OnEnable();
@@ -60,8 +90,13 @@ public class ItemInputB : MonoBehaviourPunCallbacks, IFreeze
         //아이템 사용
         if (currentItem.TryGetComponent<IItemUse>(out var itemUse))
         {
-            itemUse.Use(firepos, grenadePower);
+            if (itemUse.Use(firepos, grenadePower) == false)
+            {
+                return;
+            }
+
         }
+
 
 
         //아이템사용하면 큐 삭제

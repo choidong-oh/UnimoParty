@@ -594,8 +594,8 @@ GameObject:
   - component: {fileID: 946848649}
   - component: {fileID: 946848648}
   - component: {fileID: 946848647}
-  - component: {fileID: 946848646}
   - component: {fileID: 946848651}
+  - component: {fileID: 946848652}
   m_Layer: 0
   m_Name: TESTCube
   m_TagString: Untagged
@@ -603,24 +603,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &946848646
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 946848645}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 128e9553ae5519f4297d3a83d106d068, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cubePrefab: {fileID: 9062917801096977609, guid: 8c93c145e47ea984da56fffa50142929, type: 3}
-  bool1: 0
-  bool2: 0
-  layerMask:
-    serializedVersion: 2
-    m_Bits: 0
 --- !u!65 &946848647
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -714,16 +696,30 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 946848645}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a43f0ca7faf5070489fb3d9b7418dace, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  installMaxDistance: 2
   realBarricadPrefab: {fileID: 3242883989005295176, guid: 2595f1cefa56a5443ba36cea4acb5dc9, type: 3}
   noGroundlayerMask:
     serializedVersion: 2
     m_Bits: 3035
-  bool2: 0
+  isGrab: 0
+--- !u!114 &946848652
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 946848645}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 128e9553ae5519f4297d3a83d106d068, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  material: {fileID: 2100000, guid: 0c6653baacb4b0244bf34f57e095db53, type: 2}
 --- !u!1 &982506288
 GameObject:
   m_ObjectHideFlags: 0
