@@ -31,7 +31,7 @@ public class Barricade : MonoBehaviour, IItemUse
 
     private void OnDisable()
     {
-        DestotyPreviewPrefab();
+        DestoryPreviewPrefab();
     }
 
 
@@ -66,11 +66,12 @@ public class Barricade : MonoBehaviour, IItemUse
     }
 
     //미리보기 아이템 삭제
-    void DestotyPreviewPrefab()
+    void DestoryPreviewPrefab()
     {
         if (previewBarricadPrefab != null)
         {
             Destroy(previewBarricadPrefab);
+            Destroy(gameObject);
             previewBarricadPrefab = null;
         }
 
@@ -111,6 +112,7 @@ public class Barricade : MonoBehaviour, IItemUse
 
 
                 previewPlayerPos = previewBarricadPrefab.transform.position;
+
 
             }
         }
@@ -154,8 +156,8 @@ public class Barricade : MonoBehaviour, IItemUse
 
         if (CanPlace() == false)
         {
-            Instantiate(realBarricadPrefab, GroundPos(), Quaternion.identity);
-            DestotyPreviewPrefab();
+            Instantiate(realBarricadPrefab, GroundPos(), previewBarricadPrefab.transform.rotation);
+            DestoryPreviewPrefab();
         }
         else
         {
