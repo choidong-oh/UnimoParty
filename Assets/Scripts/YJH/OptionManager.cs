@@ -5,7 +5,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets;
-using static UnityEngine.Rendering.DebugUI;
 
 public class OptionManager : MonoBehaviour
 {
