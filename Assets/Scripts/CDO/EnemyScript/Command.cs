@@ -19,5 +19,5 @@ public interface IFreeze
 
 public interface IItemUse
 {
-    public void Use(Transform firePos, int power);
+    public bool Use(Transform firePos, int power);
 }

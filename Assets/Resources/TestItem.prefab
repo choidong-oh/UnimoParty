@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: -4460017238645582271}
   - component: {fileID: 6659060338371666958}
   - component: {fileID: -3011215628625037470}
+  - component: {fileID: -6424301228822912138}
   m_Layer: 0
   m_Name: TestItem
   m_TagString: Untagged
@@ -359,6 +360,23 @@ MonoBehaviour:
   m_SnapCollider: {fileID: 6914358527619130648}
   m_DisableSnapColliderWhenSelected: 1
   m_SnapToCollider: {fileID: 0}
+--- !u!114 &-6424301228822912138
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 143633201157678771}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a43f0ca7faf5070489fb3d9b7418dace, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  realBarricadPrefab: {fileID: 3242883989005295176, guid: 2595f1cefa56a5443ba36cea4acb5dc9, type: 3}
+  noGroundlayerMask:
+    serializedVersion: 2
+    m_Bits: 3066
+  bool2: 0
 --- !u!1 &7387276154332796757
 GameObject:
   m_ObjectHideFlags: 0

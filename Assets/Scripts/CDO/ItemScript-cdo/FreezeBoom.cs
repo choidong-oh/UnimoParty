@@ -94,7 +94,7 @@ public class FreezeBoom : MonoBehaviourPunCallbacks, IItemUse
         }
     }
 
-    public void Use(Transform firepos, int power)
+    public bool Use(Transform firepos, int power)
     {
         Rigidbody rb = gameObject.GetComponent<Rigidbody>();
         Vector3 throwDirection = firepos.transform.forward + firepos.transform.up;
@@ -104,6 +104,7 @@ public class FreezeBoom : MonoBehaviourPunCallbacks, IItemUse
         
         Collider cd = gameObject.GetComponent<BoxCollider>();
         cd.isTrigger = false;
+        return true;
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////
 
