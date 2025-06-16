@@ -5,8 +5,11 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public class XrControllerMgr : MonoBehaviourPunCallbacks
 {
+    [SerializeField] GameObject optionPanel;
     //아이템총 인풋액션(인풋 프라이머리)
     [SerializeField] InputActionReference AInputActionReference;
+    [SerializeField] InputActionReference MenuInputActionReference;
+
     [SerializeField] ActionBasedController rightController;
 
     //게임오브젝트 활성화 비활성화용
@@ -19,7 +22,7 @@ public class XrControllerMgr : MonoBehaviourPunCallbacks
     [SerializeField] GameObject harvestGun;
     [SerializeField] GameObject ItemGun;
 
-
+    private bool isOption = false;
     bool isItemController = false;   //처음은 채집총 시작
     GameObject RController;
     Transform lasetRcontroller; //temp
@@ -28,6 +31,8 @@ public class XrControllerMgr : MonoBehaviourPunCallbacks
     {
         RController = Instantiate(ItemGun, rightController.gameObject.transform);
         RController.SetActive(false);
+
+        optionPanel.SetActive(false);
     }
 
     public override void OnEnable()
@@ -35,6 +40,9 @@ public class XrControllerMgr : MonoBehaviourPunCallbacks
         base.OnEnable();
         AInputActionReference.action.Enable();
         AInputActionReference.action.performed += ControllerA;
+
+        MenuInputActionReference.action.Enable();
+        MenuInputActionReference.action.performed += ControllerMenu;
 
     }
 
@@ -44,6 +52,26 @@ public class XrControllerMgr : MonoBehaviourPunCallbacks
         AInputActionReference.action.performed -= ControllerA;
         AInputActionReference.action.Disable();
 
+        MenuInputActionReference.action.performed -= ControllerMenu;
+        MenuInputActionReference.action.Disable();
+
+    }
+
+    //종현 , 메뉴 버튼 클릭시 옵션 창
+    private void ControllerMenu(InputAction.CallbackContext context)
+    {
+        if(photonView.IsMine)
+        {
+            isOption = !isOption;
+            if(isOption)
+            {
+                optionPanel.SetActive(true);
+            }
+            else
+            {
+                optionPanel.SetActive(false);
+            }
+        }
     }
 
     //아이템, 채집총 교체 a

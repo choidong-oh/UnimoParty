@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class Bigbin : EnemyBase
 {
+    [HideInInspector] public GameObject prefab;
+
     [Header("플레이어 리스트")]
     public List<Transform> players = new List<Transform>();//플레이어 여기에 등록함
 
@@ -40,16 +42,16 @@ public class Bigbin : EnemyBase
     string state5 = "anim_MON004_jump03";
 
 
-    //public override void OnEnable()
-    //{
-    //    animator = GetComponent<Animator>();
-    //    myCollider = GetComponent<Collider>();
-    //    terrain = Terrain.activeTerrain;
-    //    FirstSpeed = MoveSpeed / 2;
-    //    base.OnEnable();
-    //    StartCoroutine(GoBigBin());
+    public override void OnEnable()
+    {
+        animator = GetComponent<Animator>();
+        myCollider = GetComponent<Collider>();
+        terrain = Terrain.activeTerrain;
+        FirstSpeed = MoveSpeed / 2;
+        base.OnEnable();
+        StartCoroutine(GoBigBin());
 
-    //}
+    }
 
 
     public override void OnDisable()
@@ -110,7 +112,7 @@ public class Bigbin : EnemyBase
         }
         Instantiate(JumpExplode, transform.position, Quaternion.identity);
         StopAllCoroutines();
-        gameObject.SetActive(false);
+        PoolManager.Instance.Despawn(prefab, gameObject);
     }
 
 
@@ -130,7 +132,7 @@ public class Bigbin : EnemyBase
             GameObject inst = Instantiate(CrashBigbin, hitPoint, rot);
 
 
-            gameObject.SetActive(false);
+            PoolManager.Instance.Despawn(prefab, gameObject);
         }
 
     }
