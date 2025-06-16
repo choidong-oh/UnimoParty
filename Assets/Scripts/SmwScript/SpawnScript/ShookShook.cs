@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class ShookShook : EnemyBase
 {
+    [HideInInspector] public GameObject prefab;
+
     Vector3 Position;
     Vector3 Terrainpos;
     Vector3 Terrainsize;
@@ -26,63 +28,66 @@ public class ShookShook : EnemyBase
 
     float MoveSpeedSave;
 
-    //public override void OnEnable()
-    //{
-    //    base.OnEnable();
-    //    myCollider = GetComponent<Collider>();
-    //    myCollider.enabled = false;
-    //    terrain = Terrain.activeTerrain;
-    //    Terrainsize = terrain.terrainData.size;
-    //    Terrainpos = terrain.transform.position;
+    public override void OnEnable()
+    {
+        base.OnEnable();
+        myCollider = GetComponent<Collider>();
+        myCollider.enabled = false;
+        terrain = Terrain.activeTerrain;
+        Terrainsize = terrain.terrainData.size;
+        Terrainpos = terrain.transform.position;
 
-    //    Position = transform.position;
-    //    Target = transform.position;//좌표 마추기용 
+        Position = transform.position;
 
-    //    minX = Terrainpos.x;
-    //    maxX = Terrainpos.x + Terrainsize.x;
-    //    minZ = Terrainpos.z;
-    //    maxZ = Terrainpos.z + Terrainsize.z;
+        minX = Terrainpos.x;
+        maxX = Terrainpos.x + Terrainsize.x;
+        minZ = Terrainpos.z;
+        maxZ = Terrainpos.z + Terrainsize.z;
 
 
-    //    float Left = Mathf.Abs(Position.x - minX);
-    //    float Right = Mathf.Abs(Position.x - maxX);
-    //    float Bottom = Mathf.Abs(Position.z - minZ);
-    //    float Top = Mathf.Abs(Position.z - maxZ);
+        float Left = Mathf.Abs(Position.x - minX);
+        float Right = Mathf.Abs(Position.x - maxX);
+        float Bottom = Mathf.Abs(Position.z - minZ);
+        float Top = Mathf.Abs(Position.z - maxZ);
 
-    //    float NearPos = Mathf.Min(Left, Right, Bottom, Top);
+        float NearPos = Mathf.Min(Left, Right, Bottom, Top);
 
-    //    if (NearPos == Left)
-    //    {
-    //        Position.x = minX;
-    //        Target.x = maxX;
+        if (NearPos == Left)
+        {
+            Position.x = minX;
+            Target = new Vector3(maxX, 0, Position.z);
+        }
+        else if (NearPos == Right)
+        {
+            Position.x = maxX;
+            Target = new Vector3(minX, 0, Position.z);
+        }
+        else if (NearPos == Bottom)
+        {
+            Position.z = minZ;
+            Target = new Vector3(Position.x, 0, maxZ);
+        }
+        else if (NearPos == Top)
+        {
+            Position.z = maxZ;
+            Target = new Vector3(Position.x, 0, minZ);
+        }
+        else
+        {
+            Debug.Log("슉슉이 절대값 잡아주는곳 오류임");
+        }
 
-    //    }
-    //    else if (NearPos == Right)
-    //    {
-    //        Position.x = maxX;
-    //        Target.x = minX;
+        float terrainY = terrain.SampleHeight(Position) + transform.localScale.y / 2f + fixedY;
+        Position.y = terrainY;
+        transform.position = Position;
 
-    //    }
-    //    else if (NearPos == Bottom)
-    //    {
-    //        Position.z = minZ;
-    //        Target.z = maxZ;
+        terrainY = terrain.SampleHeight(Target) + transform.localScale.y / 2f + fixedY;
+        Target.y = terrainY;
 
-    //    }
-    //    else if (NearPos == Top)
-    //    {
-    //        Position.z = maxZ;
-    //        Target.z = minZ;
+        transform.position = Position;
 
-    //    }
-    //    else
-    //    {
-    //        Debug.Log("너는 왜 오류임?");
-    //    }
-    //    transform.position = Position;
-
-    //    Coroutine = StartCoroutine(GoShookShook());
-    //}
+        Coroutine = StartCoroutine(GoShookShook());
+    }
 
     public override void OnDisable()
     {
@@ -111,7 +116,8 @@ public class ShookShook : EnemyBase
             yield return new WaitForFixedUpdate();
         }
         transform.position = Target;
-        gameObject.SetActive(false);
+        PoolManager.Instance.Despawn(prefab, gameObject);
+
     }
 
     private void OnTriggerEnter(Collider other)
@@ -130,7 +136,8 @@ public class ShookShook : EnemyBase
 
             GameObject inst = Instantiate(CrashShookShook, hitPoint, rot);
 
-            gameObject.SetActive(false);
+            PoolManager.Instance.Despawn(prefab, gameObject);
+
         }
 
     }
@@ -151,7 +158,6 @@ public class ShookShook : EnemyBase
         Terrainpos = terrain.transform.position;
 
         Position = transform.position;
-        Target = transform.position;//좌표 마추기용 
 
         minX = Terrainpos.x;
         maxX = Terrainpos.x + Terrainsize.x;
@@ -169,32 +175,34 @@ public class ShookShook : EnemyBase
         if (NearPos == Left)
         {
             Position.x = minX;
-            Target.x = maxX;
-
+            Target = new Vector3(maxX, 0, Position.z);
         }
         else if (NearPos == Right)
         {
             Position.x = maxX;
-            Target.x = minX;
-
+            Target = new Vector3(minX, 0, Position.z);
         }
         else if (NearPos == Bottom)
         {
             Position.z = minZ;
-            Target.z = maxZ;
-
+            Target = new Vector3(Position.x, 0, maxZ);
         }
         else if (NearPos == Top)
         {
             Position.z = maxZ;
-            Target.z = minZ;
-
+            Target = new Vector3(Position.x, 0, minZ);
         }
         else
         {
             Debug.Log("슉슉이 절대값 잡아주는곳 오류임");
         }
 
+        float terrainY = terrain.SampleHeight(Position) + transform.localScale.y / 2f + fixedY;
+        Position.y = terrainY;
+        transform.position = Position;
+
+        terrainY = terrain.SampleHeight(Target) + transform.localScale.y / 2f + fixedY;
+        Target.y = terrainY;
 
         transform.position = Position;
 
