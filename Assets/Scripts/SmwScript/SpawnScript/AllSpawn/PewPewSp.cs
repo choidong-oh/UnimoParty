@@ -1,10 +1,8 @@
-using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.TerrainUtils;
 
-public class TestSpawn : MonoBehaviourPun
+public class PewPewSp : MonoBehaviour
 {
     [SerializeField] private GameObject enemyPrefab;
 
@@ -45,7 +43,7 @@ public class TestSpawn : MonoBehaviourPun
 
     IEnumerator SpawnRoutine()
     {
-        
+
         int spawned = 0;
 
 
@@ -63,7 +61,7 @@ public class TestSpawn : MonoBehaviourPun
                 RandomZ = Random.Range(RandomZMin - SideNoSpawn, RandomZMax - SideNoSpawn);
             }
 
-            Debug.Log(RandomX+" ÁÂÇ¥   " + RandomZ + " ÁÂÇ¥ ¼ÒÈ¯µÊ");
+            Debug.Log(RandomX + " ÁÂÇ¥   " + RandomZ + " ÁÂÇ¥ ¼ÒÈ¯µÊ");
             spawnPos = new Vector3(RandomX, 0f, RandomZ);
 
 
@@ -74,4 +72,25 @@ public class TestSpawn : MonoBehaviourPun
             yield return new WaitForSeconds(spawnTimer);
         }
     }
+
+    public void SpawnOne()
+    {
+
+        float centerX = (RandomXMin + RandomXMax) * 0.5f;
+        float centerZ = (RandomZMin + RandomZMax) * 0.5f;
+
+        float RandomX = Random.Range(RandomXMin - SideNoSpawn, RandomXMax - SideNoSpawn);
+        float RandomZ = Random.Range(RandomZMin - SideNoSpawn, RandomZMax - SideNoSpawn);
+        while (Mathf.Abs(RandomX - centerX) < NoSpawn && Mathf.Abs(RandomZ - centerZ) < NoSpawn)
+        {
+            RandomX = Random.Range(RandomXMin - SideNoSpawn, RandomXMax - SideNoSpawn);
+            RandomZ = Random.Range(RandomZMin - SideNoSpawn, RandomZMax - SideNoSpawn);
+        }
+
+        Vector3 spawnPos = new Vector3(RandomX,
+            terrain.SampleHeight(new Vector3(RandomX, 0, RandomZ)) + enemyPrefab.transform.localScale.y / 2f, RandomZ);
+
+        PoolManager.Instance.Spawn(enemyPrefab, spawnPos, Quaternion.identity);
+    }
+
 }

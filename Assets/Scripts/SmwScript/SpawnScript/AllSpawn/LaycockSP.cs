@@ -1,27 +1,27 @@
-using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BurnduriSP : MonoBehaviour
+public class LaycockSP : MonoBehaviour
 {
+    [SerializeField] private GameObject enemyPrefab;
+
     float RandomXMin;
     float RandomZMin;
     float RandomXMax;
     float RandomZMax;
 
-    [Header("스폰 설정")]
     [SerializeField] int maxEnemies = 10;
-    [SerializeField] float spawnTimer = 3f;
+    [SerializeField] float spawnTimer = 3;
+
 
     Vector3 spawnPos;
+
     Terrain terrain;
 
-    [Header("가운데 비우기")]
     [SerializeField] float NoSpawn = 5f;
     [SerializeField] float SideNoSpawn;
 
-    public static object BurnduriPool { get; private set; }
 
     private void Start()
     {
@@ -39,29 +39,34 @@ public class BurnduriSP : MonoBehaviour
         StartCoroutine(SpawnRoutine());
     }
 
+
+
     IEnumerator SpawnRoutine()
     {
+
         int spawned = 0;
+
 
         float centerX = (RandomXMin + RandomXMax) * 0.5f;
         float centerZ = (RandomZMin + RandomZMax) * 0.5f;
 
         while (spawned < maxEnemies)
         {
-
             float RandomX = Random.Range(RandomXMin - SideNoSpawn, RandomXMax - SideNoSpawn);
             float RandomZ = Random.Range(RandomZMin - SideNoSpawn, RandomZMax - SideNoSpawn);
+
             while (Mathf.Abs(RandomX - centerX) < NoSpawn && Mathf.Abs(RandomZ - centerZ) < NoSpawn)
             {
                 RandomX = Random.Range(RandomXMin - SideNoSpawn, RandomXMax - SideNoSpawn);
                 RandomZ = Random.Range(RandomZMin - SideNoSpawn, RandomZMax - SideNoSpawn);
             }
 
- 
+            Debug.Log(RandomX + " 좌표   " + RandomZ + " 좌표 소환됨");
             spawnPos = new Vector3(RandomX, 0f, RandomZ);
 
 
-            //BurnduriPool.Instance.SpawnBurnduri(spawnPos, Quaternion.identity);
+            PoolManager.Instance.Spawn(enemyPrefab, spawnPos, Quaternion.identity);
+            //Instantiate(enemyPrefab, spawnPos, Quaternion.identity);
 
             spawned++;
             yield return new WaitForSeconds(spawnTimer);

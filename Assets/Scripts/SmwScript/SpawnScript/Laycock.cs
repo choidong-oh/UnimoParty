@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class Laycock : EnemyBase
 {
+    [HideInInspector] public GameObject prefab;
+
     public List<Transform> players = new List<Transform>();//플레이어 여기에 등록함
 
     Vector3 myPos;
@@ -40,7 +42,7 @@ public class Laycock : EnemyBase
 
             GameObject inst = Instantiate(DieParticles, hitPoint, rot);
 
-            gameObject.SetActive(false);
+            PoolManager.Instance.Despawn(prefab, gameObject);
         }
 
     }
@@ -124,7 +126,7 @@ public class Laycock : EnemyBase
         yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f);
 
 
-        gameObject.SetActive(false);
+        PoolManager.Instance.Despawn(prefab, gameObject);
     }
 
     IEnumerator LoopLazer()

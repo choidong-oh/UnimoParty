@@ -1,4 +1,3 @@
-// PoolManager.cs
 using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.Pool;
@@ -21,7 +20,7 @@ public class PoolManager : MonoBehaviour
     [Header("여기에 풀링할 몬스터 프리팹들을 추가하세요")]
     [SerializeField] private List<PoolItem> poolItems;
 
-    // 프리팹 → ObjectPool 매핑
+
     private Dictionary<GameObject, ObjectPool<GameObject>> pools;
 
     private void Awake()
@@ -36,26 +35,20 @@ public class PoolManager : MonoBehaviour
         pools = new Dictionary<GameObject, ObjectPool<GameObject>>();
         foreach (var item in poolItems)
         {
-            var prefab = item.prefab; // 로컬 복사
+            var prefab = item.prefab;
             var pool = new ObjectPool<GameObject>(
-                // 생성 로직
+
                 createFunc: () =>
                 {
                     var go = Instantiate(prefab);
                     go.SetActive(false);
                     return go;
                 },
-                // Get() 시
-                actionOnGet: go =>
-                {
-                    go.SetActive(true);
-                },
-                // Release() 시
                 actionOnRelease: go =>
                 {
                     go.SetActive(false);
                 },
-                // 풀 초과 시 파괴
+
                 actionOnDestroy: go =>
                 {
                     Destroy(go);
@@ -69,32 +62,27 @@ public class PoolManager : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// 원하는 프리팹으로부터 풀에서 꺼내 스폰합니다.
-    /// </summary>
     public GameObject Spawn(GameObject prefab, Vector3 pos, Quaternion rot)
     {
         if (!pools.TryGetValue(prefab, out var pool))
-        {
-            Debug.LogWarning($"PoolManager: 풀에 등록되지 않은 prefab({prefab.name}) 입니다. Instantiate 사용.");
             return Instantiate(prefab, pos, rot);
-        }
 
+        // (1) Get은 비활성 상태로 반환
         var go = pool.Get();
-        go.transform.SetPositionAndRotation(pos, rot);
 
+            // (2) 위치/회전 세팅
+             go.transform.SetPositionAndRotation(pos, rot);
+
+            // (3) 여기서 활성화 → OnEnable()이 제대로 pos를 읽음
+             go.SetActive(true);
 
         var bd = go.GetComponent<Burnduri>();
         if (bd != null)
             bd.prefab = prefab;
 
-
         return go;
     }
 
-    /// <summary>
-    /// 스폰된 오브젝트를 다시 풀에 반환합니다.
-    /// </summary>
     public void Despawn(GameObject prefab, GameObject instance)
     {
         if (pools.TryGetValue(prefab, out var pool))
