@@ -5,7 +5,6 @@ using Photon.Pun;
 
 public class PewPew : EnemyBase
 {
-    [HideInInspector] public GameObject prefab;
 
     Vector3 Position;
 
@@ -122,10 +121,11 @@ public class PewPew : EnemyBase
 
             GameObject inst = Instantiate(CrashPewPew, hitPoint, rot);
 
-            PoolManager.Instance.Despawn(prefab, gameObject);
+            PoolManager.Instance.Despawn(gameObject);
             if (Spawner != null)
             {
                 Spawner.SpawnOne();
+
             }
         }
 
@@ -198,13 +198,5 @@ public class PewPew : EnemyBase
             Debug.Log("퓨퓨 프리즈 고장남");
         }
     }
-
-    IEnumerator WaitTime()
-    {
-
-
-        yield return new WaitForSeconds(1f);
-    }
-
 
 }

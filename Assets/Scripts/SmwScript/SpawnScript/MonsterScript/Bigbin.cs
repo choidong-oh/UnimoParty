@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class Bigbin : EnemyBase
 {
-    [HideInInspector] public GameObject prefab;
 
     [Header("플레이어 리스트")]
     public List<Transform> players = new List<Transform>();//플레이어 여기에 등록함
@@ -82,7 +81,7 @@ public class Bigbin : EnemyBase
         JumpParticles.SetActive(true);
 
         MoveSpeed += FirstSpeed;
-        Debug.Log($"state3 exit → MoveSpeed={MoveSpeed}");
+        //Debug.Log($"state3 exit → MoveSpeed={MoveSpeed}");
 
 
 
@@ -93,7 +92,7 @@ public class Bigbin : EnemyBase
         JumpParticles.SetActive(true);
 
         MoveSpeed += FirstSpeed;
-        Debug.Log($"state4 exit → MoveSpeed={MoveSpeed}");
+        //Debug.Log($"state4 exit → MoveSpeed={MoveSpeed}");
 
 
 
@@ -112,7 +111,7 @@ public class Bigbin : EnemyBase
         }
         Instantiate(JumpExplode, transform.position, Quaternion.identity);
         StopAllCoroutines();
-        PoolManager.Instance.Despawn(prefab, gameObject);
+        PoolManager.Instance.Despawn(gameObject);
     }
 
 
@@ -132,7 +131,7 @@ public class Bigbin : EnemyBase
             GameObject inst = Instantiate(CrashBigbin, hitPoint, rot);
 
 
-            PoolManager.Instance.Despawn(prefab, gameObject);
+            PoolManager.Instance.Despawn(gameObject);
         }
 
     }

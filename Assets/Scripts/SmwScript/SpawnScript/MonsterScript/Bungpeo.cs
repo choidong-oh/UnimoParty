@@ -6,7 +6,6 @@ using static UnityEngine.ParticleSystem;
 
 public class Bungpeo : EnemyBase
 {
-    [HideInInspector] public GameObject prefab;
 
     [SerializeField] float explosionForce = 20f;
     [SerializeField] float explosionRadius = 20f;
@@ -46,7 +45,7 @@ public class Bungpeo : EnemyBase
             GameObject inst = Instantiate(CrashBunpeo, hitPoint, rot);
 
 
-            PoolManager.Instance.Despawn(prefab, gameObject);
+            PoolManager.Instance.Despawn(gameObject);
         }
 
     }
@@ -172,7 +171,8 @@ public class Bungpeo : EnemyBase
 
     }
 
-    [PunRPC]
+
+   [PunRPC]
     public void IsActivateRPC()
     {
         IsActivateFragment++;
@@ -180,7 +180,8 @@ public class Bungpeo : EnemyBase
         {
             Debug.Log("완료");
             IsActivateFragment = 0;
-            PoolManager.Instance.Despawn(prefab, gameObject);
+
+            PoolManager.Instance.Despawn(gameObject);
         }
         Debug.Log(IsActivateFragment + "일단 작동함 ");
     }
@@ -238,5 +239,6 @@ public class Bungpeo : EnemyBase
     {
 
     }
+    
 
 }
