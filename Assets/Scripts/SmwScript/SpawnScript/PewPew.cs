@@ -5,6 +5,8 @@ using Photon.Pun;
 
 public class PewPew : EnemyBase
 {
+    [HideInInspector] public GameObject prefab;
+
     Vector3 Position;
 
     float Radius;
@@ -24,40 +26,48 @@ public class PewPew : EnemyBase
 
     float MoveSpeedSave;
 
-    //public override void OnEnable()
-    //{
-    //    base.OnEnable();
-    //    myCollider = GetComponent<Collider>();
-    //    myCollider.enabled = false;
-    //    // 1. Terrain 참조
-    //    terrain = Terrain.activeTerrain;
-    //    if (terrain == null)
-    //    {
-    //        Debug.LogWarning("트레인 없다 트레인쓰세요.");
-    //    }
-    //    else
-    //    {
-    //        Vector3 tPos = terrain.transform.position;
-    //        Vector3 tSize = terrain.terrainData.size;
+    private PewPewSp Spawner;
 
-    //        float centerX = tPos.x + tSize.x * 0.5f;
-    //        float centerZ = tPos.z + tSize.z * 0.5f;
+    public override void OnEnable()
+    {
+        base.OnEnable();
 
-    //        Position = new Vector3(centerX, 0, centerZ);//트레인기준 중심
-    //    }
+        if (Spawner == null)
+        {
+            Spawner = FindObjectOfType<PewPewSp>();
+        }
 
-    //    //랜덤 몬스터 크기
-    //    float RandomScale = Random.Range(1, 4) * 0.3f;
-    //    transform.localScale = new Vector3(RandomScale, RandomScale, RandomScale);
+        myCollider = GetComponent<Collider>();
+        myCollider.enabled = false;
+        // 1. Terrain 참조
+        terrain = Terrain.activeTerrain;
+        if (terrain == null)
+        {
+            Debug.LogWarning("트레인 없다 트레인쓰세요.");
+        }
+        else
+        {
+            Vector3 tPos = terrain.transform.position;
+            Vector3 tSize = terrain.terrainData.size;
 
-    //    //랜덤 각도에서 시작
-    //    Angle = Random.Range(0f, Mathf.PI * 2f);
-    //    //랜덤반지름 위치 
-    //    Radius = Random.Range(3f, 20f);
-    //    //랜덤 회전 방향(1 or -1)
-    //    rotateDirection = Random.value < 0.5f ? 1 : -1;
-    //    rotateCoroutine = StartCoroutine(GoPewPew());//굳이 변수 선언한건 값 초기화 때문
-    //}
+            float centerX = tPos.x + tSize.x * 0.5f;
+            float centerZ = tPos.z + tSize.z * 0.5f;
+
+            Position = new Vector3(centerX, 0, centerZ);//트레인기준 중심
+        }
+
+        //랜덤 몬스터 크기
+        float RandomScale = Random.Range(1, 4) * 0.5f;
+        transform.localScale = new Vector3(RandomScale, RandomScale, RandomScale);
+
+        //랜덤 각도에서 시작
+        Angle = Random.Range(0f, Mathf.PI * 2f);
+        //랜덤반지름 위치 
+        Radius = Random.Range(3f, 20f);
+        //랜덤 회전 방향(1 or -1)
+        rotateDirection = Random.value < 0.5f ? 1 : -1;
+        rotateCoroutine = StartCoroutine(GoPewPew());//굳이 변수 선언한건 값 초기화 때문
+    }
 
 
     public override void OnDisable()
@@ -103,8 +113,7 @@ public class PewPew : EnemyBase
     {
         if (other.gameObject.tag == "Player")
         {
-            Manager.Instance.observer.HitPlayer(damage);
-            Debug.Log(Manager.Instance.observer.UserPlayer.gamedata.life);
+            //Manager.Instance.observer.HitPlayer(damage);
 
             Vector3 hitPoint = other.ClosestPoint(transform.position);//충돌지점에 최대한 가깝게
 
@@ -113,8 +122,11 @@ public class PewPew : EnemyBase
 
             GameObject inst = Instantiate(CrashPewPew, hitPoint, rot);
 
-
-            gameObject.SetActive(false);
+            PoolManager.Instance.Despawn(prefab, gameObject);
+            if (Spawner != null)
+            {
+                Spawner.SpawnOne();
+            }
         }
 
     }
@@ -186,5 +198,13 @@ public class PewPew : EnemyBase
             Debug.Log("퓨퓨 프리즈 고장남");
         }
     }
+
+    IEnumerator WaitTime()
+    {
+
+
+        yield return new WaitForSeconds(1f);
+    }
+
 
 }

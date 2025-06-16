@@ -2,11 +2,11 @@ using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEditor.PlayerSettings;
-using static UnityEngine.GraphicsBuffer;
 
 public class Laycock : EnemyBase
 {
+    [HideInInspector] public GameObject prefab;
+
     public List<Transform> players = new List<Transform>();//플레이어 여기에 등록함
 
     Vector3 myPos;
@@ -21,6 +21,10 @@ public class Laycock : EnemyBase
     Terrain terrain;
 
     float LazerLoopTime = 3;
+
+    Animator animator;
+
+    Collider myCollider;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -38,7 +42,7 @@ public class Laycock : EnemyBase
 
             GameObject inst = Instantiate(DieParticles, hitPoint, rot);
 
-            gameObject.SetActive(false);
+            PoolManager.Instance.Despawn(prefab, gameObject);
         }
 
     }
@@ -48,8 +52,7 @@ public class Laycock : EnemyBase
     {
         base.OnEnable();
         StartCoroutine(Distance());
-        //ShootLazer();
-
+        StartCoroutine(testCor());
     }
 
 
@@ -57,12 +60,15 @@ public class Laycock : EnemyBase
     {
         base.OnDisable();
 
-
     }
 
     IEnumerator Distance()
     {
+        animator = GetComponent<Animator>();
+        myCollider = GetComponent<Collider>();
         terrain = Terrain.activeTerrain;
+
+
         float terrainY = terrain.SampleHeight(transform.position) + transform.localScale.y / 2f;
         transform.position = new Vector3(transform.position.x, terrainY, transform.position.z);
         if (players.Count == 0)
@@ -103,14 +109,24 @@ public class Laycock : EnemyBase
         StartCoroutine(Lazer());
     }
 
-   
+
     IEnumerator Lazer()
     {
         ChargeParticles.gameObject.SetActive(true);
 
         yield return new WaitUntil(() => !ChargeParticles.IsAlive(true));
 
-        StartCoroutine(LoopLazer());
+        animator.SetTrigger("action");
+        yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName("anim_MON006_ShootStart") && !animator.IsInTransition(0));
+        yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f);
+
+        yield return StartCoroutine(LoopLazer());
+
+        yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName("anim_MON006_Disappear") && !animator.IsInTransition(0));
+        yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f);
+
+
+        PoolManager.Instance.Despawn(prefab, gameObject);
     }
 
     IEnumerator LoopLazer()
@@ -118,8 +134,16 @@ public class Laycock : EnemyBase
         ShootParticles.gameObject.SetActive(true);
         yield return new WaitForSeconds(LazerLoopTime);
         ShootParticles.gameObject.SetActive(false);
+        
+        animator.SetTrigger("disappear");
     }
 
+
+    IEnumerator testCor()
+    {
+        yield return new WaitForSeconds(5);
+        ShootLazer();
+    }
 
     public override void CsvEnemyInfo()
     {

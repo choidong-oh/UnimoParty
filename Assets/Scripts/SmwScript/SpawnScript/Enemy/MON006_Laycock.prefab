@@ -404,6 +404,7 @@ GameObject:
   - component: {fileID: 7777166420961094849}
   - component: {fileID: 4399497261349254843}
   - component: {fileID: 5192853079454639722}
+  - component: {fileID: 8675857789943882067}
   m_Layer: 0
   m_Name: MON006_Laycock
   m_TagString: Laycock
@@ -477,7 +478,30 @@ MonoBehaviour:
   players: []
   ChargeParticles: {fileID: 3842282182899517917}
   ShootParticles: {fileID: 4647297202715138178}
-  DieParticles: {fileID: 0}
+  DieParticles: {fileID: 3334270714622040670, guid: 591be72f292aa7a4fba90570ef2e99b4, type: 3}
+--- !u!136 &8675857789943882067
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6964213239136335483}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.75
+  m_Height: 2
+  m_Direction: 2
+  m_Center: {x: 0, y: 0.8, z: -0.63}
 --- !u!1 &7069069335575830069
 GameObject:
   m_ObjectHideFlags: 0
