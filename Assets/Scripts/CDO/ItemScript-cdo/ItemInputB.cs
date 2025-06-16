@@ -60,7 +60,12 @@ public class ItemInputB : MonoBehaviourPunCallbacks, IFreeze
         //아이템 사용
         if (currentItem.TryGetComponent<IItemUse>(out var itemUse))
         {
-            itemUse.Use(firepos, grenadePower);
+            if (itemUse.Use(firepos, grenadePower) == false)
+            {
+                return;
+            }
+
+
         }
 
 

@@ -151,17 +151,19 @@ public class Barricade : MonoBehaviour, IItemUse
         return isBlocked;
     }
 
-    public void Use(Transform firePos, int power)
+    public bool Use(Transform firePos, int power)
     {
 
         if (CanPlace() == false)
         {
             Instantiate(realBarricadPrefab, GroundPos(), previewBarricadPrefab.transform.rotation);
             DestoryPreviewPrefab();
+            return true;
         }
         else
         {
             Debug.Log("겹쳐서 배치 불가!");
+            return false;
         }
 
 
