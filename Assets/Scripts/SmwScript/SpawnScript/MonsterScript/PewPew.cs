@@ -112,7 +112,7 @@ public class PewPew : EnemyBase
     {
         if (other.gameObject.tag == "Player")
         {
-            //Manager.Instance.observer.HitPlayer(damage);
+            Manager.Instance.observer.HitPlayer(damage);
 
             Vector3 hitPoint = other.ClosestPoint(transform.position);//충돌지점에 최대한 가깝게
 
