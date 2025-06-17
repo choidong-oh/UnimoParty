@@ -289,7 +289,6 @@ MonoBehaviour:
   enemyMoveSpeed: 0
   sizeScale: 0
   spawnCount: 0
-  prefab: {fileID: 0}
   fixedY: 0
   CrashShookShook: {fileID: 3334270714622040670, guid: 82e464f45bb255b4da1b9565fa50643d, type: 3}
 --- !u!114 &-8131516004819685662
