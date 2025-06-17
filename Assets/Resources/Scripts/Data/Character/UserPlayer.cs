@@ -13,6 +13,6 @@ public class UserPlayer : MonoBehaviour
     void Start()
     {
         Manager.Instance.observer.UserPlayer = this;
-        
+
     }
 }
