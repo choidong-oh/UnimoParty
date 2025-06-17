@@ -308,7 +308,7 @@ public class Burnduri : EnemyBase
         }
         else if (isFreeze == false)
         {
-            Move(direction);
+            //Move(direction);
         }
         else
         {

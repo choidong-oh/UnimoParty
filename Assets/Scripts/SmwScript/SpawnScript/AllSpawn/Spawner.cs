@@ -3,8 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.TerrainUtils;
+using static UnityEngine.Rendering.DebugUI.Table;
 
-public class TestSpawn : MonoBehaviourPun
+public class Spawner : MonoBehaviourPun
 {
     [SerializeField] private GameObject enemyPrefab;
 
@@ -54,19 +55,19 @@ public class TestSpawn : MonoBehaviourPun
 
         while (spawned < maxEnemies)
         {
-            float RandomX = Random.Range(RandomXMin - SideNoSpawn, RandomXMax - SideNoSpawn);
-            float RandomZ = Random.Range(RandomZMin - SideNoSpawn, RandomZMax - SideNoSpawn);
+            float RandomX = Random.Range(RandomXMin + SideNoSpawn, RandomXMax - SideNoSpawn);
+            float RandomZ = Random.Range(RandomZMin + SideNoSpawn, RandomZMax - SideNoSpawn);
 
             while (Mathf.Abs(RandomX - centerX) < NoSpawn && Mathf.Abs(RandomZ - centerZ) < NoSpawn)
             {
-                RandomX = Random.Range(RandomXMin - SideNoSpawn, RandomXMax - SideNoSpawn);
-                RandomZ = Random.Range(RandomZMin - SideNoSpawn, RandomZMax - SideNoSpawn);
+                RandomX = Random.Range(RandomXMin + SideNoSpawn, RandomXMax - SideNoSpawn);
+                RandomZ = Random.Range(RandomZMin + SideNoSpawn, RandomZMax - SideNoSpawn);
             }
 
             //Debug.Log(RandomX+" ÁÂÇ¥   " + RandomZ + " ÁÂÇ¥ ¼ÒÈ¯µÊ");
             spawnPos = new Vector3(RandomX, 0f, RandomZ);
 
-
+            Debug.Log(enemyPrefab + " " + spawnPos);
             PoolManager.Instance.Spawn(enemyPrefab, spawnPos, Quaternion.identity);
             //Instantiate(enemyPrefab, spawnPos, Quaternion.identity);
 

@@ -60,7 +60,7 @@ public class Bungpeo : EnemyBase
 
         terrain = Terrain.activeTerrain;
 
-        float terrainY = terrain.SampleHeight(transform.position) + transform.localScale.y / 2f;
+        float terrainY = terrain.SampleHeight(transform.position) + transform.localScale.y / 2f - 0.5f;
         transform.position = new Vector3(transform.position.x, terrainY, transform.position.z);
 
         for (int i = 0; i < Body.Length; i++)
@@ -187,17 +187,17 @@ public class Bungpeo : EnemyBase
     }
     public void IsActivate()
     {
-        photonView.RPC("IsActivateRPC", RpcTarget.All);
+        //photonView.RPC("IsActivateRPC", RpcTarget.All);
     }
 
     public override void Move(Vector3 direction)
     {
-        photonView.RPC("MoveRPC", RpcTarget.All, direction);
+        //photonView.RPC("MoveRPC", RpcTarget.All, direction);
     }
 
     public override void Freeze(Vector3 direction, bool isFreeze)
     {
-        photonView.RPC("FreezeRPC", RpcTarget.All, direction);
+        //photonView.RPC("FreezeRPC", RpcTarget.All, direction);
     }
 
     public override void CsvEnemyInfo()
