@@ -63,7 +63,7 @@ public class TestSpawn : MonoBehaviourPun
                 RandomZ = Random.Range(RandomZMin - SideNoSpawn, RandomZMax - SideNoSpawn);
             }
 
-            Debug.Log(RandomX+" ÁÂÇ¥   " + RandomZ + " ÁÂÇ¥ ¼ÒÈ¯µÊ");
+            //Debug.Log(RandomX+" ÁÂÇ¥   " + RandomZ + " ÁÂÇ¥ ¼ÒÈ¯µÊ");
             spawnPos = new Vector3(RandomX, 0f, RandomZ);
 
 

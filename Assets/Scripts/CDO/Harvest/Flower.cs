@@ -1,8 +1,10 @@
 using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UIElements;
 
 public class Flower : MonoBehaviourPun
 {
@@ -36,8 +38,19 @@ public class Flower : MonoBehaviourPun
 
     FairyType fairyType;
 
+    private LaycockSP LaycockSpawner;
+
+
+
+
+
     private void Start()
     {
+        if (LaycockSpawner == null)
+        {
+            LaycockSpawner = GameObject.Find("LaycockSp").GetComponent<LaycockSP>();
+        }
+
         controller = GameObject.Find("InGameDataController").GetComponent<InGameDataController>();
         //체크포인트
         checkPoints.Add(harvestTime / 3f);
@@ -85,6 +98,8 @@ public class Flower : MonoBehaviourPun
     //수확 시작
     private IEnumerator HarvestCoroutine()
     {
+        
+
         while (currentProgress < harvestTime)
         {
             currentProgress += Time.deltaTime;
@@ -127,6 +142,7 @@ public class Flower : MonoBehaviourPun
     //채집 결과
     void CompleteHarvest()
     {
+        LaycockSpawner.SpawnLaycock(gameObject.transform);
         harvestingRoutine = null;
         currentProgress = 0f;
 
