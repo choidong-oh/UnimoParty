@@ -139,7 +139,7 @@ GameObject:
   - component: {fileID: 1179899013769426180}
   - component: {fileID: 3726070795678874614}
   m_Layer: 9
-  m_Name: MON004_Bigbin
+  m_Name: Bigbin
   m_TagString: Monster
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

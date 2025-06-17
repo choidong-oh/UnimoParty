@@ -217,7 +217,7 @@ GameObject:
   - component: {fileID: 6533020907287779115}
   - component: {fileID: -2929386769901427779}
   m_Layer: 0
-  m_Name: MON003_Bungpeo
+  m_Name: Bungpeo
   m_TagString: Monster
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -174,7 +174,7 @@ GameObject:
   - component: {fileID: 547410790989049250}
   - component: {fileID: 8196372354446775763}
   m_Layer: 9
-  m_Name: ShookShookTest
+  m_Name: ShookShook
   m_TagString: Monster
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

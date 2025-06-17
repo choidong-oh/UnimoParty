@@ -526,7 +526,7 @@ GameObject:
   - component: {fileID: 5201961080034001827}
   - component: {fileID: 6043893170171595216}
   m_Layer: 7
-  m_Name: BurnduriTest
+  m_Name: Burnduri
   m_TagString: Monster
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

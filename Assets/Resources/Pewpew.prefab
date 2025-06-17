@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1072457946450581015}
   - component: {fileID: 1678637481661994660}
   m_Layer: 0
-  m_Name: MON005_Pewpew
+  m_Name: Pewpew
   m_TagString: Monster
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

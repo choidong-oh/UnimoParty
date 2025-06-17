@@ -406,7 +406,7 @@ GameObject:
   - component: {fileID: 5192853079454639722}
   - component: {fileID: 8675857789943882067}
   m_Layer: 0
-  m_Name: MON006_Laycock
+  m_Name: Laycock
   m_TagString: Laycock
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
