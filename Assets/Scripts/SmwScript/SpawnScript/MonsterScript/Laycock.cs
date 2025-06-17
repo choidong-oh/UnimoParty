@@ -25,6 +25,7 @@ public class Laycock : EnemyBase
 
     Collider myCollider;
 
+    [SerializeField] float FreezeTime = 3;
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Player")
@@ -66,6 +67,7 @@ public class Laycock : EnemyBase
         myCollider = GetComponent<Collider>();
         terrain = Terrain.activeTerrain;
 
+        myCollider.enabled = true;
 
         float terrainY = terrain.SampleHeight(transform.position) + transform.localScale.y / 2f;
         transform.position = new Vector3(transform.position.x, terrainY, transform.position.z);
@@ -146,11 +148,30 @@ public class Laycock : EnemyBase
 
     public override void Freeze(Vector3 direction, bool isFreeze)
     {
-        throw new System.NotImplementedException();
+        if (isFreeze == true)
+        {
+            myCollider.enabled = false;
+            animator.speed = 0f;
+        }
+        else if (isFreeze == false)
+        {
+            StartCoroutine(FreezeCor());
+        }
+        else
+        {
+            Debug.Log("ΩµΩµ¿Ã «¡∏Æ¡Ó ∞Ì¿Â≥≤");
+        }
     }
 
     public override void Move(Vector3 direction)
     {
         throw new System.NotImplementedException();
+    }
+
+    IEnumerator FreezeCor()
+    {
+        yield return new WaitForSeconds(FreezeTime);
+        animator.speed = 1f;
+        myCollider.enabled = true;
     }
 }

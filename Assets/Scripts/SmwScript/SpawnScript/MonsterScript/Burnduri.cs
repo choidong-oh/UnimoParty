@@ -44,6 +44,7 @@ public class Burnduri : EnemyBase
 
     [SerializeField] GameObject CrashBurnduri;
 
+    [SerializeField] float FreezeTime = 3;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -305,10 +306,13 @@ public class Burnduri : EnemyBase
         if (isFreeze == true)
         {
             StopAllCoroutines();
+            myCollider.enabled = false;
+            animator.speed = 0f;
         }
         else if (isFreeze == false)
         {
             //Move(direction);
+            StartCoroutine(FreezeCor());
         }
         else
         {
@@ -316,4 +320,12 @@ public class Burnduri : EnemyBase
         }
     }
 
+    IEnumerator FreezeCor()
+    {
+        yield return new WaitForSeconds(FreezeTime);
+        myCollider.enabled = true;
+        animator.speed = 1f;
+        StartCoroutine(GoBurnduri());
+
+    }
 }

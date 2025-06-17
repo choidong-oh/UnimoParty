@@ -29,6 +29,8 @@ public class PewPew : EnemyBase
 
     Animator animator;
 
+    [SerializeField] float FreezeTime = 3;
+
     public override void OnEnable()
     {
         base.OnEnable();
@@ -135,6 +137,14 @@ public class PewPew : EnemyBase
 
     }
 
+    IEnumerator FreezeCor()
+    {
+        yield return new WaitForSeconds(FreezeTime);
+        MoveSpeed = MoveSpeedSave;
+        animator.speed = 1f;
+        myCollider.enabled = true;
+    }
+
     public override void Move(Vector3 direction)
     {
         photonView.RPC("MoveRPC", RpcTarget.All, direction);
@@ -196,8 +206,7 @@ public class PewPew : EnemyBase
         }
         else if (isFreeze == false)
         {
-            MoveSpeed = MoveSpeedSave;
-            animator.speed = 1f;
+            StartCoroutine(FreezeCor());
         }
         else
         {

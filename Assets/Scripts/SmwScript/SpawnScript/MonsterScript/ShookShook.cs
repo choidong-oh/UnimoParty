@@ -27,6 +27,10 @@ public class ShookShook : EnemyBase
 
     float MoveSpeedSave;
 
+    Animator animator;
+
+    [SerializeField] float FreezeTime = 3;
+
     public override void OnEnable()
     {
         base.OnEnable();
@@ -225,11 +229,12 @@ public class ShookShook : EnemyBase
         {
             MoveSpeedSave = MoveSpeed;
             MoveSpeed = 0;
-
+            myCollider.enabled = false;
+            animator.speed = 0f;
         }
         else if (isFreeze == false)
         {
-            MoveSpeed = MoveSpeedSave;
+            StartCoroutine(FreezeCor());
         }
         else
         {
@@ -237,5 +242,12 @@ public class ShookShook : EnemyBase
         }
     }
 
+    IEnumerator FreezeCor()
+    {
+        yield return new WaitForSeconds(FreezeTime);
+        MoveSpeed = MoveSpeedSave;
+        animator.speed = 1f;
+        myCollider.enabled = true;
+    }
 
 }
