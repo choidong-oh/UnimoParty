@@ -22,6 +22,8 @@ public class ItemInputB : MonoBehaviourPunCallbacks, IFreeze
 
     [SerializeField] InputActionReference triggerInputActionReference; //트리거
 
+    [SerializeField] GameObject gun2Prefab;
+
     Transform firepos; //모델의 끝부분
 
     [SerializeField] Transform rightController; //오른쪽 컨트롤러
@@ -36,34 +38,82 @@ public class ItemInputB : MonoBehaviourPunCallbacks, IFreeze
     //스크립트
     [SerializeField] XrControllerMgr XrControllerMgrObj;
 
-    //아이템 확인용
-    [Header("아이템 확인용 <이미지 변경>")]
-    [SerializeField] Material[] material;
-    //0 : potion, 1 : freezeboom, 2 : barrigate 
 
-    void ChangeTexture()
+    //아이템 위치 (자식객체)
+    Transform invenItem1;
+    Transform invenItem2;
+    Transform invenItem3;
+
+    //아이템 생성 프리팹
+    GameObject item1;
+    GameObject item2;
+    GameObject item3;
+
+
+    void OnEnableItem()
     {
-        var controller = rightController.GetComponent<ActionBasedController>().model;
+        var modelGun2 = rightController.gameObject.GetComponent<ActionBasedController>().model;
 
-        Debug.Log("controller.name: " + controller.name);
-
-        var renderer = controller.transform.GetChild(2).GetComponent<MeshRenderer>();
-        Debug.Log("renderer.name: " + renderer.name);
-
-        //머트리얼 변경 세트
-        var materials = renderer.materials;
-        materials[0] = material[0];
-        renderer.materials = materials;
-
-
-        //dd.transform.GetChild(3).GetComponent<MeshRenderer>().materials[0] = material[1];
-        //dd.transform.GetChild(4).GetComponent<MeshRenderer>().materials[0] = material[2];
+        invenItem1 = modelGun2.GetChild(2);
+        invenItem2 = modelGun2.GetChild(3);
+        invenItem3 = modelGun2.GetChild(4);
     }
 
-    private void Start()
+    void InvenCreateItem()
     {
-        ChangeTexture();
-        
+
+        if (item1 != null)
+        {
+            PhotonNetwork.Destroy(item1);
+        }
+        if (item2 != null)
+        {
+            PhotonNetwork.Destroy(item2);
+        }
+        if (item3 != null)
+        {
+            PhotonNetwork.Destroy(item3);
+        }
+
+
+
+
+        string[] arr = itemQueue.ToArray();
+        if (arr.Length == 0)
+        {
+            return;
+        }
+
+        item1 = PhotonNetwork.Instantiate(arr[0], transform.position, Quaternion.identity);
+        item1.transform.SetParent(invenItem1, false);
+        item1.transform.localPosition = Vector3.zero;
+        item1.GetComponent<Rigidbody>().useGravity = false;
+        item1.transform.localScale = Vector3.one * 0.5f;
+
+        if (arr.Length == 1)
+        {
+            return;
+        }
+
+        item2 = PhotonNetwork.Instantiate(arr[1], transform.position, Quaternion.identity);
+        item2.transform.SetParent(invenItem2, false);
+        item2.transform.localPosition = Vector3.zero;
+        item2.GetComponent<Rigidbody>().useGravity = false;
+        item2.transform.localScale = Vector3.one * 0.5f;
+
+        if (arr.Length == 2)
+        {
+            return;
+        }
+
+        item3 = PhotonNetwork.Instantiate(arr[2], transform.position, Quaternion.identity);
+        item3.transform.SetParent(invenItem3, false);
+        item3.transform.localPosition = Vector3.zero;
+        item3.GetComponent<Rigidbody>().useGravity = false;
+        item3.transform.localScale = Vector3.one * 0.5f;
+
+
+
     }
 
     public override void OnEnable()
@@ -109,8 +159,9 @@ public class ItemInputB : MonoBehaviourPunCallbacks, IFreeze
         }
         string nextItem = itemQueue.Peek();
         currentItem = ItemCreate(nextItem);
-
     }
+
+
 
     GameObject ItemCreate(string ItemPrefabName)
     {
@@ -119,6 +170,8 @@ public class ItemInputB : MonoBehaviourPunCallbacks, IFreeze
         newItem.transform.parent = firepos;
         newItem.gameObject.GetComponent<Rigidbody>().useGravity = false;
 
+        //OnEnableInvenItem();
+        InvenCreateItem();
         return newItem;
     }
 
@@ -127,6 +180,7 @@ public class ItemInputB : MonoBehaviourPunCallbacks, IFreeze
     {
         if (isItemInputB == true)
         {
+            OnEnableItem();
             if (itemQueue.Count == 0)
             {
                 itemQueue.Enqueue("Boomprefab");

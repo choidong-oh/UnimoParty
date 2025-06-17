@@ -47,12 +47,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bInputActionReference: {fileID: -7840984986808251201, guid: 75c98270c91a5e74bba10c83794ab594, type: 3}
   triggerInputActionReference: {fileID: 83097790271614945, guid: c348712bda248c246b8c49b3db54643f, type: 3}
+  gun2Prefab: {fileID: 4756468719463012015, guid: a52667fed78cf2148a1efb56bda8f247, type: 3}
   rightController: {fileID: 7560748128269401356}
   XrControllerMgrObj: {fileID: 12462241475859743}
-  material:
-  - {fileID: 2100000, guid: 1280d683446fff544885d914556eea1c, type: 2}
-  - {fileID: 2100000, guid: 044959def70275442b6efd7a9b583806, type: 2}
-  - {fileID: 2100000, guid: 2825fc69ad30b9140ad62977f84e3fc9, type: 2}
 --- !u!114 &9097946719516881756
 MonoBehaviour:
   m_ObjectHideFlags: 0

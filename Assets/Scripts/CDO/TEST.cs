@@ -1,10 +1,16 @@
 using UnityEngine;
+using Photon.Pun;
 
 
-
-public class TEST : MonoBehaviour
+public class TEST : MonoBehaviour, IItemUse
 {
     [SerializeField] Material material;
+
+    public bool Use(Transform firePos, int power)
+    {
+        PhotonNetwork.Destroy(gameObject);  
+        return true;
+    }
 
     private void Awake()
     {
