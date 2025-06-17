@@ -109,10 +109,22 @@ public class FirebaseAuthMgr : MonoBehaviour
             confirmText.text = "nickname: " + user.DisplayName;
             SetButtonInteractable();
 
-            Task<int> loadMoneyTask = LoadUserDataAsync(user.DisplayName, "rewardIngameMoney", 0);
+            Task<int> loadMoneyTask = LoadUserDataAsync(user.DisplayName, "rewardIngameMoney", -1);
             yield return new WaitUntil(() => loadMoneyTask.IsCompleted);
 
-            Manager.Instance.observer.UserPlayer.gamedata._money = loadMoneyTask.Result;
+            int money = loadMoneyTask.Result;
+
+            if (money == -1)
+            {
+                Debug.Log("저장된 돈이 없어서 기본값 5000원으로 설정");
+                yield return SaveUserData(user.DisplayName, "rewardIngameMoney", 5000);
+                money = 5000;
+            }
+
+
+            Manager.Instance.observer.UserPlayer.gamedata._money = money;
+
+            Debug.Log("최종 로드된 머니: " + money);
 
             if (test)
             {
