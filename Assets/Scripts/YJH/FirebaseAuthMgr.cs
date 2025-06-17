@@ -8,6 +8,7 @@ using Firebase;
 using Firebase.Auth;
 using Firebase.Database;
 using UnityEngine.SceneManagement;
+using System;
 
 public class FirebaseAuthMgr : MonoBehaviour
 {
@@ -30,6 +31,8 @@ public class FirebaseAuthMgr : MonoBehaviour
     public FirebaseAuth auth;
 
     private bool test = false;
+
+    public int IngameMoney { get; private set; }
 
     private void Awake()
     {
@@ -106,7 +109,15 @@ public class FirebaseAuthMgr : MonoBehaviour
             confirmText.text = "nickname: " + user.DisplayName;
             SetButtonInteractable();
 
-            if (test) SceneManager.LoadScene(2);
+            Task<int> loadMoneyTask = LoadUserDataAsync(user.DisplayName, "rewardIngameMoney", 0);
+            yield return new WaitUntil(() => loadMoneyTask.IsCompleted);
+
+            Instance.IngameMoney = loadMoneyTask.Result;
+
+            if (test)
+            {
+                SceneManager.LoadScene(2);
+            }
         }
     }
 
@@ -142,21 +153,40 @@ public class FirebaseAuthMgr : MonoBehaviour
                 warningText.text = "";
                 confirmText.text = "nickname: " + user.DisplayName;
                 SetButtonInteractable();
-                yield return StartCoroutine(InitPlayerCurrency());
+                yield return StartCoroutine(InitPlayerMoney());
             }
         }
     }
 
-    private IEnumerator InitPlayerCurrency()
+    private IEnumerator InitPlayerMoney()
     {
-        yield return SaveUserData(user.DisplayName, "rewardIngameCurrency", 0);
-        yield return SaveUserData(user.DisplayName, "rewardMetaCurrency", 0);
+        yield return SaveUserData(user.DisplayName, "rewardIngameMoney", 0);
+        yield return SaveUserData(user.DisplayName, "rewardMetaMoney", 0); 
     }
 
     public IEnumerator SaveUserData<T>(string userId, string dataName, T value)
     {
         var task = dbRef.Child("users").Child(userId).Child(dataName).SetValueAsync(value);
         yield return new WaitUntil(() => task.IsCompleted);
+    }
+
+    public async Task<T> LoadUserDataAsync<T>(string userId, string dataName, T type)
+    {
+        DataSnapshot snapshot = await dbRef.Child("users").Child(userId).Child(dataName).GetValueAsync();
+        T Tvalue = type;
+
+        if (snapshot.Exists)
+        {
+            Tvalue = (T)Convert.ChangeType(snapshot.Value, typeof(T));
+            Debug.Log(userId + "의 " + dataName + " 불러옴");
+            Debug.Log("Tvalue : " + Tvalue);
+        }
+        else
+        {
+            Debug.Log("저장된 데이터 없음");
+        }
+
+        return Tvalue;
     }
 
     public void StartButton() => SceneManager.LoadScene(1);
