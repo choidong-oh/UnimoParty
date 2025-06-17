@@ -60,7 +60,7 @@ public class Bungpeo : EnemyBase
 
         terrain = Terrain.activeTerrain;
 
-        float terrainY = terrain.SampleHeight(transform.position) + transform.localScale.y / 2f;
+        float terrainY = terrain.SampleHeight(transform.position) + transform.localScale.y / 2f - 0.5f;
         transform.position = new Vector3(transform.position.x, terrainY, transform.position.z);
 
         for (int i = 0; i < Body.Length; i++)

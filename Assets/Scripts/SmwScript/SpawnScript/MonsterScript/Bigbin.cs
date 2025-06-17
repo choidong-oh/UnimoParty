@@ -70,7 +70,7 @@ public class Bigbin : EnemyBase
             yield return null;
         JumpParticles.SetActive(true);  
         MoveSpeed += FirstSpeed;
-        Debug.Log($"state2 exit ¡æ MoveSpeed={MoveSpeed}");
+        //Debug.Log($"state2 exit ¡æ MoveSpeed={MoveSpeed}");
 
         StartCoroutine(MoveRoutine());
         StartCoroutine(UpdateDistance());
