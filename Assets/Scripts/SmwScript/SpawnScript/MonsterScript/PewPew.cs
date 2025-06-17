@@ -27,9 +27,13 @@ public class PewPew : EnemyBase
 
     private PewPewSp Spawner;
 
+    Animator animator;
+
     public override void OnEnable()
     {
         base.OnEnable();
+
+        animator = GetComponent<Animator>();
 
         if (Spawner == null)
         {
@@ -187,11 +191,13 @@ public class PewPew : EnemyBase
         {
             MoveSpeedSave = MoveSpeed;
             MoveSpeed = 0;
-
+            myCollider.enabled = false;
+            animator.speed = 0f;
         }
         else if (isFreeze == false)
         {
             MoveSpeed = MoveSpeedSave;
+            animator.speed = 1f;
         }
         else
         {
