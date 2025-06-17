@@ -187,17 +187,17 @@ public class Bungpeo : EnemyBase
     }
     public void IsActivate()
     {
-        photonView.RPC("IsActivateRPC", RpcTarget.All);
+        //photonView.RPC("IsActivateRPC", RpcTarget.All);
     }
 
     public override void Move(Vector3 direction)
     {
-        photonView.RPC("MoveRPC", RpcTarget.All, direction);
+        //photonView.RPC("MoveRPC", RpcTarget.All, direction);
     }
 
     public override void Freeze(Vector3 direction, bool isFreeze)
     {
-        photonView.RPC("FreezeRPC", RpcTarget.All, direction);
+        //photonView.RPC("FreezeRPC", RpcTarget.All, direction);
     }
 
     public override void CsvEnemyInfo()
