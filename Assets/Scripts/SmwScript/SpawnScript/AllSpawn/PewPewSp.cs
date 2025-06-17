@@ -78,12 +78,12 @@ public class PewPewSp : MonoBehaviour
         float centerX = (RandomXMin + RandomXMax) * 0.5f;
         float centerZ = (RandomZMin + RandomZMax) * 0.5f;
 
-        float RandomX = Random.Range(RandomXMin - SideNoSpawn, RandomXMax - SideNoSpawn);
-        float RandomZ = Random.Range(RandomZMin - SideNoSpawn, RandomZMax - SideNoSpawn);
+        float RandomX = Random.Range(RandomXMin + SideNoSpawn, RandomXMax - SideNoSpawn);
+        float RandomZ = Random.Range(RandomZMin + SideNoSpawn, RandomZMax - SideNoSpawn);
         while (Mathf.Abs(RandomX - centerX) < NoSpawn && Mathf.Abs(RandomZ - centerZ) < NoSpawn)
         {
-            RandomX = Random.Range(RandomXMin - SideNoSpawn, RandomXMax - SideNoSpawn);
-            RandomZ = Random.Range(RandomZMin - SideNoSpawn, RandomZMax - SideNoSpawn);
+            RandomX = Random.Range(RandomXMin + SideNoSpawn, RandomXMax - SideNoSpawn);
+            RandomZ = Random.Range(RandomZMin + SideNoSpawn, RandomZMax - SideNoSpawn);
         }
 
         Vector3 spawnPos = new Vector3(RandomX,
