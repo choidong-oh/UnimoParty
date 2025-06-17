@@ -1,7 +1,7 @@
-﻿index,ShipName,ShipSpeed,InventoryCount,Cost,ShipModelName,,,,,
-500,꿀벌우주선,8,1,500,String,,,,,
-501,번개우주선,9,1,600,String,,,,,
-502,운석우주선,10,2,700,String,,,,,
-503,유령우주선,15,2,800,String,,,,,
-504,광산우주선,20,3,900,String,,,,,
-505,드론우주선,25,3,1000,String,,,,,
+﻿index,ShipName,ShipSpeed,InventoryCount,Cost,ShipModelName
+500,꿀벌우주선,8,1,500,EQ001_BeeTail_ST000
+501,번개우주선,9,1,600,EQ001_BeeTail_ST000
+502,운석우주선,10,2,700,EQ001_BeeTail_ST000
+503,유령우주선,15,2,800,EQ001_BeeTail_ST000
+504,광산우주선,20,3,900,EQ001_BeeTail_ST000
+505,드론우주선,25,3,1000,EQ001_BeeTail_ST000
