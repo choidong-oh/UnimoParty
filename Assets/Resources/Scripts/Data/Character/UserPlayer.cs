@@ -7,11 +7,12 @@ public class UserPlayer : MonoBehaviour
 {
     public FairyType fairyType;
     public GameObject SpaceShipObj;
-    public DataCenter gamedata = new DataCenter(100,0,5000,PlayerState.None);
+    public DataCenter gamedata = new DataCenter(100,0,0,PlayerState.None);
     SpaceShipData SpaceShip;
 
     void Start()
     {
         Manager.Instance.observer.UserPlayer = this;
+        
     }
 }

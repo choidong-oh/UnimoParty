@@ -112,7 +112,7 @@ public class FirebaseAuthMgr : MonoBehaviour
             Task<int> loadMoneyTask = LoadUserDataAsync(user.DisplayName, "rewardIngameMoney", 0);
             yield return new WaitUntil(() => loadMoneyTask.IsCompleted);
 
-            Instance.IngameMoney = loadMoneyTask.Result;
+            Manager.Instance.observer.UserPlayer.gamedata._money = loadMoneyTask.Result;
 
             if (test)
             {
@@ -160,7 +160,7 @@ public class FirebaseAuthMgr : MonoBehaviour
 
     private IEnumerator InitPlayerMoney()
     {
-        yield return SaveUserData(user.DisplayName, "rewardIngameMoney", 0);
+        yield return SaveUserData(user.DisplayName, "rewardIngameMoney", 5000);
         yield return SaveUserData(user.DisplayName, "rewardMetaMoney", 0); 
     }
 
