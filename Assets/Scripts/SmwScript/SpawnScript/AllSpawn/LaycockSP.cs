@@ -1,75 +1,45 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class LaycockSP : MonoBehaviour
 {
-    [SerializeField] private GameObject enemyPrefab;
+    [SerializeField] private GameObject monsterPrefab;
+    [SerializeField] private int maxCount = 10;
+    private int Count= 0;
+    List<GameObject> Monsters = new List<GameObject>();
 
-    float RandomXMin;
-    float RandomZMin;
-    float RandomXMax;
-    float RandomZMax;
-
-    [SerializeField] int maxEnemies = 10;
-    [SerializeField] float spawnTimer = 3;
-
-
-    Vector3 spawnPos;
-
-    Terrain terrain;
-
-    [SerializeField] float NoSpawn = 5f;
-    [SerializeField] float SideNoSpawn;
-
-
-    private void Start()
+    public void SpawnLaycock(Transform position)
     {
-        terrain = Terrain.activeTerrain;
+        Vector3 vector3 = new Vector3(position.position.x, position.position.y, position.position.z);
+        GameObject go = PoolManager.Instance.Spawn(monsterPrefab, vector3, Quaternion.identity);
+        Monsters.Add(go);
 
-        Vector3 TerrainMin = terrain.transform.position;
-        Vector3 TerrainMax = terrain.terrainData.size;
+        Debug.Log(Count);
 
-        RandomXMin = TerrainMin.x;
-        RandomZMin = TerrainMin.z;
-
-        RandomXMax = TerrainMin.x + TerrainMax.x;
-        RandomZMax = TerrainMin.z + TerrainMax.z;
-
-        StartCoroutine(SpawnRoutine());
-    }
-
-
-
-    IEnumerator SpawnRoutine()
-    {
-
-        int spawned = 0;
-
-
-        float centerX = (RandomXMin + RandomXMax) * 0.5f;
-        float centerZ = (RandomZMin + RandomZMax) * 0.5f;
-
-        while (spawned < maxEnemies)
+        Count++;
+        if (Count >= maxCount)
         {
-            float RandomX = Random.Range(RandomXMin - SideNoSpawn, RandomXMax - SideNoSpawn);
-            float RandomZ = Random.Range(RandomZMin - SideNoSpawn, RandomZMax - SideNoSpawn);
-
-            while (Mathf.Abs(RandomX - centerX) < NoSpawn && Mathf.Abs(RandomZ - centerZ) < NoSpawn)
+            for (int i = 0; i < Monsters.Count; i++)
             {
-                RandomX = Random.Range(RandomXMin - SideNoSpawn, RandomXMax - SideNoSpawn);
-                RandomZ = Random.Range(RandomZMin - SideNoSpawn, RandomZMax - SideNoSpawn);
+                var m = Monsters[i];
+                var lay = m.GetComponent<Laycock>();
+                if (lay != null)
+                {
+                    lay.ShootLazer();
+                }
             }
 
-            Debug.Log(RandomX + " ÁÂÇ¥   " + RandomZ + " ÁÂÇ¥ ¼ÒÈ¯µÊ");
-            spawnPos = new Vector3(RandomX, 0f, RandomZ);
-
-
-            PoolManager.Instance.Spawn(enemyPrefab, spawnPos, Quaternion.identity);
-            //Instantiate(enemyPrefab, spawnPos, Quaternion.identity);
-
-            spawned++;
-            yield return new WaitForSeconds(spawnTimer);
+            Count = 0;
+            Monsters.Clear();
         }
+
     }
 }
+
+
+
+

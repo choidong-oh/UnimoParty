@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class Burnduri : EnemyBase
 {
-    [HideInInspector] public GameObject prefab;
 
     [Header("플레이어 리스트")]
     public List<Transform> players = new List<Transform>();//플레이어 여기에 등록함
@@ -62,7 +61,7 @@ public class Burnduri : EnemyBase
             Debug.Log(Manager.Instance.observer.UserPlayer.gamedata.life);
             Manager.Instance.observer.HitPlayer(damage);
             StopAllCoroutines();
-            PoolManager.Instance.Despawn(prefab, gameObject);
+            PoolManager.Instance.Despawn(gameObject);
         }
     }
 
@@ -239,7 +238,7 @@ public class Burnduri : EnemyBase
         float DisappearCool = disappearClip != null ? disappearClip.length / animator.speed : 0f;
         myCollider.enabled = false;
         yield return new WaitForSeconds(DisappearCool);
-        PoolManager.Instance.Despawn(prefab, gameObject);
+        PoolManager.Instance.Despawn(gameObject);
     }
 
 

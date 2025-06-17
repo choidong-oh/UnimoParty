@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class ShookShook : EnemyBase
 {
-    [HideInInspector] public GameObject prefab;
 
     Vector3 Position;
     Vector3 Terrainpos;
@@ -116,7 +115,7 @@ public class ShookShook : EnemyBase
             yield return new WaitForFixedUpdate();
         }
         transform.position = Target;
-        PoolManager.Instance.Despawn(prefab, gameObject);
+        PoolManager.Instance.Despawn(gameObject);
 
     }
 
@@ -136,7 +135,7 @@ public class ShookShook : EnemyBase
 
             GameObject inst = Instantiate(CrashShookShook, hitPoint, rot);
 
-            PoolManager.Instance.Despawn(prefab, gameObject);
+            PoolManager.Instance.Despawn(gameObject);
 
         }
 

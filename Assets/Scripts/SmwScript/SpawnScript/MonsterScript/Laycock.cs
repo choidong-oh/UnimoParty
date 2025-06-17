@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class Laycock : EnemyBase
 {
-    [HideInInspector] public GameObject prefab;
 
     public List<Transform> players = new List<Transform>();//플레이어 여기에 등록함
 
@@ -42,7 +41,7 @@ public class Laycock : EnemyBase
 
             GameObject inst = Instantiate(DieParticles, hitPoint, rot);
 
-            PoolManager.Instance.Despawn(prefab, gameObject);
+            PoolManager.Instance.Despawn(gameObject);
         }
 
     }
@@ -51,15 +50,14 @@ public class Laycock : EnemyBase
     public override void OnEnable()
     {
         base.OnEnable();
-        StartCoroutine(Distance());
-        StartCoroutine(testCor());
+        StartCoroutine(Distance());;
     }
 
 
     public override void OnDisable()
     {
         base.OnDisable();
-
+        StopAllCoroutines();
     }
 
     IEnumerator Distance()
@@ -126,7 +124,7 @@ public class Laycock : EnemyBase
         yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f);
 
 
-        PoolManager.Instance.Despawn(prefab, gameObject);
+        PoolManager.Instance.Despawn(gameObject);
     }
 
     IEnumerator LoopLazer()
@@ -139,11 +137,7 @@ public class Laycock : EnemyBase
     }
 
 
-    IEnumerator testCor()
-    {
-        yield return new WaitForSeconds(5);
-        ShootLazer();
-    }
+
 
     public override void CsvEnemyInfo()
     {

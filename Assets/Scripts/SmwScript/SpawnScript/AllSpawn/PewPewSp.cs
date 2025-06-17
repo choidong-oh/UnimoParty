@@ -66,7 +66,6 @@ public class PewPewSp : MonoBehaviour
 
 
             PoolManager.Instance.Spawn(enemyPrefab, spawnPos, Quaternion.identity);
-            //Instantiate(enemyPrefab, spawnPos, Quaternion.identity);
 
             spawned++;
             yield return new WaitForSeconds(spawnTimer);
