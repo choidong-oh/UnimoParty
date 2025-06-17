@@ -476,6 +476,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: MonsterSpawnMgr
       objectReference: {fileID: 0}
+    - target: {fileID: 2679417459161413165, guid: b0700a97fafc8564c88c1d084dea0bf9, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2785092862276059123, guid: b0700a97fafc8564c88c1d084dea0bf9, type: 3}
       propertyPath: centerTransform
       value: 
