@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.TerrainUtils;
 
-public class TestSpawn : MonoBehaviourPun
+public class Spawner : MonoBehaviourPun
 {
     [SerializeField] private GameObject enemyPrefab;
 

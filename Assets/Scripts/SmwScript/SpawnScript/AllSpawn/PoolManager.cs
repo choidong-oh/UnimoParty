@@ -10,7 +10,7 @@ public class PoolItem
     [Tooltip("풀 초기 용량")]
     public int defaultCapacity = 10;
     [Tooltip("풀 최대 크기")]
-    public int maxSize = 100;
+    public int maxSize = 50;
 }
 
 public class PoolManager : MonoBehaviour
