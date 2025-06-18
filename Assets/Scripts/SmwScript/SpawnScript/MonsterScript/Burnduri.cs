@@ -315,7 +315,6 @@ public class Burnduri : EnemyBase
         {
             //Move(direction);
             StartCoroutine(FreezeCor());
-            IsFreeze.SetActive(false);
         }
         else
         {
@@ -329,6 +328,7 @@ public class Burnduri : EnemyBase
         myCollider.enabled = true;
         animator.speed = 1f;
         StartCoroutine(GoBurnduri());
+        IsFreeze.SetActive(false);
 
     }
 }

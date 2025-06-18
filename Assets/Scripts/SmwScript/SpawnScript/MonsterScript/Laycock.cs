@@ -162,6 +162,7 @@ public class Laycock : EnemyBase
         {
             myCollider.enabled = false;
             animator.speed = 0f;
+            IsFreeze.SetActive(true);
         }
         else if (isFreeze == false)
         {
@@ -183,5 +184,6 @@ public class Laycock : EnemyBase
         yield return new WaitForSeconds(FreezeTime);
         animator.speed = 1f;
         myCollider.enabled = true;
+        IsFreeze.SetActive(false);
     }
 }

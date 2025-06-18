@@ -237,7 +237,6 @@ public class ShookShook : EnemyBase
         else if (isFreeze == false)
         {
             StartCoroutine(FreezeCor());
-            IsFreeze.SetActive(false);
         }
         else
         {
@@ -251,6 +250,7 @@ public class ShookShook : EnemyBase
         MoveSpeed = MoveSpeedSave;
         animator.speed = 1f;
         myCollider.enabled = true;
+        IsFreeze.SetActive(false);
     }
 
 }

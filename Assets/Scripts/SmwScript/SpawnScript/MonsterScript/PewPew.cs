@@ -139,13 +139,7 @@ public class PewPew : EnemyBase
 
     }
 
-    IEnumerator FreezeCor()
-    {
-        yield return new WaitForSeconds(FreezeTime);
-        MoveSpeed = MoveSpeedSave;
-        animator.speed = 1f;
-        myCollider.enabled = true;
-    }
+
 
     public override void Move(Vector3 direction)
     {
@@ -210,12 +204,18 @@ public class PewPew : EnemyBase
         else if (isFreeze == false)
         {
             StartCoroutine(FreezeCor());
-            IsFreeze.SetActive(false);
         }
         else
         {
             Debug.Log("퓨퓨 프리즈 고장남");
         }
     }
-
+    IEnumerator FreezeCor()
+    {
+        yield return new WaitForSeconds(FreezeTime);
+        MoveSpeed = MoveSpeedSave;
+        animator.speed = 1f;
+        myCollider.enabled = true;
+        IsFreeze.SetActive(false);
+    }
 }

@@ -241,6 +241,7 @@ public class Bigbin : EnemyBase
         if (isFreeze == true)
         {
             myCollider.enabled = false;
+            IsFreeze.SetActive(true);
             MoveSpeedSave = MoveSpeed;
             MoveSpeed = 0;
             animator.speed = 0f;
@@ -267,5 +268,6 @@ public class Bigbin : EnemyBase
         MoveSpeed = MoveSpeedSave;
         animator.speed = 1f;
         myCollider.enabled = true;
+        IsFreeze.SetActive(false);
     }
 }

@@ -251,6 +251,7 @@ public class Bungpeo : EnemyBase
         {
             myCollider.enabled = false;
             animator.speed = 0f;
+            IsFreeze.SetActive(true);
         }
         else if (isFreeze == false)
         {
@@ -268,6 +269,7 @@ public class Bungpeo : EnemyBase
 
         animator.speed = 1f;
         myCollider.enabled = true;
+        IsFreeze.SetActive(false);
     }
 
 }
