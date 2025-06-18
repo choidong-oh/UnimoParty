@@ -24,8 +24,12 @@ public class Laycock : EnemyBase
     Animator animator;
 
     Collider myCollider;
+    string AppearAni = "anim_MON006_Appear";
 
     [SerializeField] float FreezeTime = 3;
+
+    [SerializeField] GameObject IsFreeze;
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Player")
@@ -66,6 +70,10 @@ public class Laycock : EnemyBase
         animator = GetComponent<Animator>();
         myCollider = GetComponent<Collider>();
         terrain = Terrain.activeTerrain;
+
+        yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName(AppearAni));
+        while (animator.GetCurrentAnimatorStateInfo(0).IsName(AppearAni))
+        yield return null;
 
         myCollider.enabled = true;
 
@@ -112,6 +120,8 @@ public class Laycock : EnemyBase
 
     IEnumerator Lazer()
     {
+
+        yield return new WaitForSeconds(3f);
         ChargeParticles.gameObject.SetActive(true);
 
         yield return new WaitUntil(() => !ChargeParticles.IsAlive(true));

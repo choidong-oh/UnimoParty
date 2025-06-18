@@ -46,6 +46,7 @@ public class Burnduri : EnemyBase
 
     [SerializeField] float FreezeTime = 3;
 
+    [SerializeField] GameObject IsFreeze;
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Player")
@@ -89,7 +90,7 @@ public class Burnduri : EnemyBase
         // 컨트롤러에 등록된 모든 클립을 뒤져서 원하는 이름의 클립을 저장
 
         if (appearanceClip == null || encounterClip == null || disappearClip == null)
-            Debug.LogWarning("Appearance 또는 Encounter 클립없음");
+            Debug.LogWarning("클립 중에 1개 이상 없음");
 
         //한번만 찾을꺼임
         if (players.Count == 0)
@@ -306,6 +307,7 @@ public class Burnduri : EnemyBase
         if (isFreeze == true)
         {
             StopAllCoroutines();
+            IsFreeze.SetActive(true);
             myCollider.enabled = false;
             animator.speed = 0f;
         }
@@ -313,6 +315,7 @@ public class Burnduri : EnemyBase
         {
             //Move(direction);
             StartCoroutine(FreezeCor());
+            IsFreeze.SetActive(false);
         }
         else
         {

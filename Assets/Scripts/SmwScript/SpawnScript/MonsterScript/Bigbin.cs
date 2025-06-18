@@ -34,12 +34,17 @@ public class Bigbin : EnemyBase
 
     Animator animator;
 
+    [SerializeField] float FreezeTime = 3;
 
+    string AppearAni = "anim_MON004_appear";
     string state2 = "anim_MON004_readytojump";
     string state3 = "anim_MON004_jump01";
     string state4 = "anim_MON004_jump02";
     string state5 = "anim_MON004_jump03";
 
+    [SerializeField] GameObject IsFreeze;
+
+    float MoveSpeedSave;
 
     public override void OnEnable()
     {
@@ -62,6 +67,11 @@ public class Bigbin : EnemyBase
 
     IEnumerator GoBigBin()
     {
+
+
+        yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName(AppearAni));
+        while (animator.GetCurrentAnimatorStateInfo(0).IsName(AppearAni))
+            yield return null;
 
         myCollider.enabled = true;
 
@@ -230,11 +240,15 @@ public class Bigbin : EnemyBase
     {
         if (isFreeze == true)
         {
-            StopAllCoroutines();
+            myCollider.enabled = false;
+            MoveSpeedSave = MoveSpeed;
+            MoveSpeed = 0;
+            animator.speed = 0f;
         }
         else if (isFreeze == false)
         {
-            Move(direction);
+            //Move(direction);
+            StartCoroutine(FreezeCor());
         }
         else
         {
@@ -245,5 +259,13 @@ public class Bigbin : EnemyBase
     public override void CsvEnemyInfo()
     {
         throw new System.NotImplementedException();
+    }
+
+    IEnumerator FreezeCor()
+    {
+        yield return new WaitForSeconds(FreezeTime);
+        MoveSpeed = MoveSpeedSave;
+        animator.speed = 1f;
+        myCollider.enabled = true;
     }
 }

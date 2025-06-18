@@ -31,6 +31,7 @@ public class ShookShook : EnemyBase
 
     [SerializeField] float FreezeTime = 3;
 
+    [SerializeField] GameObject IsFreeze;
     public override void OnEnable()
     {
         base.OnEnable();
@@ -227,6 +228,7 @@ public class ShookShook : EnemyBase
     {
         if (isFreeze == true)
         {
+            IsFreeze.SetActive(true);
             MoveSpeedSave = MoveSpeed;
             MoveSpeed = 0;
             myCollider.enabled = false;
@@ -235,6 +237,7 @@ public class ShookShook : EnemyBase
         else if (isFreeze == false)
         {
             StartCoroutine(FreezeCor());
+            IsFreeze.SetActive(false);
         }
         else
         {
