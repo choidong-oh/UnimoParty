@@ -62,6 +62,7 @@ public class Bigbin : EnemyBase
     {
         base.OnDisable();
         MoveSpeed = FirstSpeed * 2;
+        myCollider.enabled = false;
     }
 
 

@@ -132,7 +132,7 @@ public class Bungpeo : EnemyBase
         {
             Body[i].SetActive(true);
         }
-
+        myCollider.enabled = false;
     }
 
     public void Explode()

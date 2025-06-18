@@ -63,6 +63,7 @@ public class Laycock : EnemyBase
     {
         base.OnDisable();
         StopAllCoroutines();
+        myCollider.enabled = false;
     }
 
     IEnumerator Distance()

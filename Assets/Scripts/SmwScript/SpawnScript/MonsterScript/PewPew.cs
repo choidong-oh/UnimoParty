@@ -85,7 +85,7 @@ public class PewPew : EnemyBase
             StopCoroutine(rotateCoroutine);
             rotateCoroutine = null;
         }
-
+        myCollider.enabled = false;
     }
 
     IEnumerator GoPewPew()
