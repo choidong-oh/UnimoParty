@@ -2,6 +2,8 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using Photon.Pun;
+using Photon.Pun.Demo.Procedural;
+using Unity.XR.CoreUtils;
 
 public class PewPew : EnemyBase
 {
@@ -33,6 +35,14 @@ public class PewPew : EnemyBase
 
     [SerializeField] GameObject IsFreeze;
 
+    Vector3 newPos;
+    Vector3 moveDir;
+
+    float terrainY;
+
+    [SerializeField] float CenterNoSpawn=5f;
+
+
     public override void OnEnable()
     {
         base.OnEnable();
@@ -45,8 +55,9 @@ public class PewPew : EnemyBase
         }
 
         myCollider = GetComponent<Collider>();
+
         myCollider.enabled = false;
-        // 1. Terrain 참조
+
         terrain = Terrain.activeTerrain;
         if (terrain == null)
         {
@@ -63,48 +74,66 @@ public class PewPew : EnemyBase
             Position = new Vector3(centerX, 0, centerZ);//트레인기준 중심
         }
 
-        //랜덤 몬스터 크기
         float RandomScale = Random.Range(1, 4) * 0.5f;
         transform.localScale = new Vector3(RandomScale, RandomScale, RandomScale);
 
-        //랜덤 각도에서 시작
+
         Angle = Random.Range(0f, Mathf.PI * 2f);
-        //랜덤반지름 위치 
-        Radius = Random.Range(3f, 20f);
-        //랜덤 회전 방향(1 or -1)
+        Radius = Random.Range(CenterNoSpawn, 20f);
         rotateDirection = Random.value < 0.5f ? 1 : -1;
         rotateCoroutine = StartCoroutine(GoPewPew());//굳이 변수 선언한건 값 초기화 때문
+
     }
 
 
     public override void OnDisable()
     {
         base.OnDisable();
-        if (rotateCoroutine != null)
-        {
-            StopCoroutine(rotateCoroutine);
-            rotateCoroutine = null;
-        }
         myCollider.enabled = false;
     }
+
 
     IEnumerator GoPewPew()
     {
         myCollider = GetComponent<Collider>();
+
+        float angularSpeed = MoveSpeed / Radius; 
+        Angle -= angularSpeed * Time.deltaTime * rotateDirection;
+
+
+        float x = Position.x + Mathf.Cos(Angle) * Radius;
+        float z = Position.z + Mathf.Sin(Angle) * Radius;
+
+        terrainY = terrain.SampleHeight(transform.position) + transform.localScale.y / 2f + fixedY;
+        newPos = new Vector3(x, terrainY, z);
+
+        moveDir = (newPos - transform.position).normalized;
+
+        if (moveDir.sqrMagnitude > 0.001f)
+        {
+            transform.rotation = Quaternion.LookRotation(moveDir);
+        }
+        transform.position = newPos;
+
+        yield return new WaitForSeconds(1f);
+
+
         myCollider.enabled = true;
+
         while (true)
         {
-            float angularSpeed =  MoveSpeed / Radius; //원 둘레를 도는 속도
+            angularSpeed =  MoveSpeed / Radius; //원 둘레를 도는 속도
             Angle -= angularSpeed * Time.deltaTime * rotateDirection;//각도를 회전 방향에 따라 바꿔줌
 
             //위치 계산해서 이동
-            float x = Position.x + Mathf.Cos(Angle) * Radius;
-            float z = Position.z + Mathf.Sin(Angle) * Radius;
+            x = Position.x + Mathf.Cos(Angle) * Radius;
+            z = Position.z + Mathf.Sin(Angle) * Radius;
 
-            float terrainY = terrain.SampleHeight(transform.position) + transform.localScale.y / 2f + fixedY;
-            Vector3 newPos = new Vector3(x, terrainY, z);
+            terrainY = terrain.SampleHeight(transform.position) + transform.localScale.y / 2f + fixedY;
+            newPos = new Vector3(x, terrainY, z);
 
-            Vector3 moveDir = (newPos - transform.position).normalized;
+            moveDir = (newPos - transform.position).normalized;
+
             if (moveDir.sqrMagnitude > 0.001f)
             {
                 transform.rotation = Quaternion.LookRotation(moveDir);
@@ -149,35 +178,7 @@ public class PewPew : EnemyBase
     [PunRPC]
     public void MoveRPC(Vector3 direction)
     {
-        myCollider = GetComponent<Collider>();
-        // 1. Terrain 참조
-        terrain = Terrain.activeTerrain;
-        if (terrain == null)
-        {
-            Debug.LogWarning("트레인 없다 트레인쓰세요.");
-        }
-        else
-        {
-            Vector3 tPos = terrain.transform.position;
-            Vector3 tSize = terrain.terrainData.size;
 
-            float centerX = tPos.x + tSize.x * 0.5f;
-            float centerZ = tPos.z + tSize.z * 0.5f;
-
-            Position = new Vector3(centerX, 0, centerZ);//트레인기준 중심
-        }
-
-        //랜덤 몬스터 크기
-        float RandomScale = Random.Range(1, 4) * 0.3f;
-        transform.localScale = new Vector3(RandomScale, RandomScale, RandomScale);
-
-        //랜덤 각도에서 시작
-        Angle = Random.Range(0f, Mathf.PI * 2f);
-        //랜덤반지름 위치 
-        Radius = Random.Range(3f, 20f);
-        //랜덤 회전 방향(1 or -1)
-        rotateDirection = Random.value < 0.5f ? 1 : -1;
-        rotateCoroutine = StartCoroutine(GoPewPew());//굳이 변수 선언한건 값 초기화 때문
     }
 
     public override void CsvEnemyInfo()
@@ -212,10 +213,13 @@ public class PewPew : EnemyBase
     }
     IEnumerator FreezeCor()
     {
+
         yield return new WaitForSeconds(FreezeTime);
         MoveSpeed = MoveSpeedSave;
         animator.speed = 1f;
         myCollider.enabled = true;
         IsFreeze.SetActive(false);
     }
+
+
 }
