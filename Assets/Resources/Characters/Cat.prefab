@@ -232,7 +232,7 @@ GameObject:
   - component: {fileID: 1607729064535897833}
   - component: {fileID: 4661192373156867219}
   m_Layer: 10
-  m_Name: CH002_Sofo_ST000
+  m_Name: Cat
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
