@@ -1,3 +1,4 @@
+using Ilumisoft.RadarSystem;
 using UnityEngine;
 
 public class WallTeleporter : MonoBehaviour
@@ -81,6 +82,9 @@ public class WallTeleporter : MonoBehaviour
                 // 최종 회전 적용: 현재 X(고개 기울기)와 Z(몸 기울기)는 그대로 유지하고,
                 // Y(좌우 회전)만 목표 방향으로 덮어씀
                 player.rotation = Quaternion.Euler(currentEuler.x, targetEuler.y, currentEuler.z);
+
+                // 레이더 회전 즉시 갱신
+                player.GetComponentInChildren<Radar>().RefreshRotationImmediately();
             }
         }
     }

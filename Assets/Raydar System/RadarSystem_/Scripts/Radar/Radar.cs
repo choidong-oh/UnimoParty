@@ -103,6 +103,18 @@ namespace Ilumisoft.RadarSystem
         }
 
         /// <summary>
+        /// 외부에서 강제로 레이더 회전을 갱신할 때 호출
+        /// </summary>
+        public void RefreshRotationImmediately()
+        {
+            UpdateRotation();
+        }
+        ///
+        ///
+        ///
+
+
+        /// <summary>
         /// 플레이어 회전에 따라 rotatingRoot에 회전 적용
         /// </summary>
         private void UpdateRotation()
