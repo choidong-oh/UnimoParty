@@ -169,7 +169,7 @@ GameObject:
   - component: {fileID: 1450701268953237441}
   - component: {fileID: 4810338953395133883}
   m_Layer: 10
-  m_Name: CH001_RiBee_ST000
+  m_Name: RiBee
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -109,7 +109,7 @@ public class FirebaseAuthMgr : MonoBehaviour
             confirmText.text = "nickname: " + user.DisplayName;
             SetButtonInteractable();
 
-            Task<int> loadMoneyTask = LoadUserDataAsync(user.DisplayName, "rewardIngameMoney", -1);
+            Task<int> loadMoneyTask = LoadUserDataAsync<int>(user.DisplayName, "rewardIngameMoney");
             yield return new WaitUntil(() => loadMoneyTask.IsCompleted);
 
             int money = loadMoneyTask.Result;
@@ -123,7 +123,6 @@ public class FirebaseAuthMgr : MonoBehaviour
 
 
             Manager.Instance.observer.UserPlayer.gamedata._money = money;
-
             Debug.Log("최종 로드된 머니: " + money);
 
             if (test)
@@ -182,23 +181,19 @@ public class FirebaseAuthMgr : MonoBehaviour
         yield return new WaitUntil(() => task.IsCompleted);
     }
 
-    public async Task<T> LoadUserDataAsync<T>(string userId, string dataName, T type)
+    public async Task<T> LoadUserDataAsync<T>(string userId, string dataName)
     {
         DataSnapshot snapshot = await dbRef.Child("users").Child(userId).Child(dataName).GetValueAsync();
-        T Tvalue = type;
 
         if (snapshot.Exists)
         {
-            Tvalue = (T)Convert.ChangeType(snapshot.Value, typeof(T));
-            Debug.Log(userId + "의 " + dataName + " 불러옴");
-            Debug.Log("Tvalue : " + Tvalue);
-        }
-        else
-        {
-            Debug.Log("저장된 데이터 없음");
+            T value = (T)Convert.ChangeType(snapshot.Value, typeof(T));
+            Debug.Log($"{userId}의 {dataName} 불러옴: {value}");
+            return value;
         }
 
-        return Tvalue;
+        Debug.Log($"{userId}의 {dataName} 데이터 없음, 기본값 반환");
+        return default(T);
     }
 
     public void StartButton() => SceneManager.LoadScene(1);

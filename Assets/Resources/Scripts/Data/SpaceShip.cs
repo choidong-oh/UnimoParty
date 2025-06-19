@@ -7,6 +7,7 @@ public class SpaceShip : MonoBehaviour
     public GameObject Model;
     public SpaceShipData SpaceShipData = new SpaceShipData();
     public List<GameObject> ItemSlot;
+    public string shipnamek;
 
     private void Start()
     {
