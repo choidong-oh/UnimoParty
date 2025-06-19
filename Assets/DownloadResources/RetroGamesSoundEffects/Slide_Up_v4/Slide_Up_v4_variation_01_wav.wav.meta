@@ -1,0 +1,29 @@
+fileFormatVersion: 2
+guid: 9b013f5999225514884434c53a22c73a
+AudioImporter:
+  externalObjects: {}
+  serializedVersion: 6
+  defaultSettings:
+    loadType: 0
+    sampleRateSetting: 0
+    sampleRateOverride: 44100
+    compressionFormat: 1
+    quality: 1
+    conversionMode: 0
+  platformSettingOverrides: {}
+  forceToMono: 0
+  normalize: 1
+  preloadAudioData: 1
+  loadInBackground: 0
+  ambisonic: 0
+  3D: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 213390
+  packageName: Retro Games - Sound Effects
+  packageVersion: 1.0
+  assetPath: Assets/RetroGamesSoundEffects/Slide_Up_v4/Slide_Up_v4_variation_01_wav.wav
+  uploadId: 513845
