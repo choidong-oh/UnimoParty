@@ -68,7 +68,7 @@ MonoBehaviour:
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents: []
-  sceneViewId: 1
+  sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
 --- !u!1 &1160406152182108691
@@ -367,7 +367,7 @@ MonoBehaviour:
   moveSpeed: 15
   joystick: {fileID: 6227144248681308237}
   leftController: {fileID: 7560748128881851881}
-  controllerPrefab: {fileID: 8758423527188247893, guid: 1392f805216c47742996d4742c80721c, type: 3}
+  controllerPrefab: {fileID: 6705402075998324148, guid: 04a641d64263fb64ea334fa4f27db7b5, type: 3}
   joystickTF: {fileID: 6904511494459151782}
   userName: {fileID: 0}
 --- !u!1 &3045044192309151319
@@ -1512,7 +1512,7 @@ PrefabInstance:
     - target: {fileID: 9014170783705847993, guid: 895f6f3c2d334633b5800312285058d2, type: 3}
       propertyPath: m_ModelPrefab
       value: 
-      objectReference: {fileID: 251685742273046401, guid: 6df06eda25e3cca46aa64bf61dfbfb27, type: 3}
+      objectReference: {fileID: -8679921383154817045, guid: 151d82a329df739459d0188c7dd40f43, type: 3}
     - target: {fileID: 9014170783705847997, guid: 895f6f3c2d334633b5800312285058d2, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -1561,6 +1561,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9014170785475729497, guid: 895f6f3c2d334633b5800312285058d2, type: 3}
+      propertyPath: m_ModelPrefab
+      value: 
+      objectReference: {fileID: 6216532115693788942, guid: 04a641d64263fb64ea334fa4f27db7b5, type: 3}
     - target: {fileID: 9014170785475729501, guid: 895f6f3c2d334633b5800312285058d2, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1862,7 +1866,7 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 8555340415063019410}
-  sceneViewId: 2
+  sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
 --- !u!114 &7628203917452170165

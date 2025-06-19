@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 58b4e0c33d8e54b44b1ea57606e8126e
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 291473
+  packageName: LowpolyEnvironmentPack
+  packageVersion: 1.1
+  assetPath: Assets/VertexModeler/LowpolyEnvironmentPack/Material/patricle/Mat_SandStorm.mat
+  uploadId: 682767
