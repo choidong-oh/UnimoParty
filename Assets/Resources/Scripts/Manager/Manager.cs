@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Photon.Realtime;
 using UnityEngine;
 
 public class Manager : MonoBehaviour
@@ -26,6 +27,7 @@ public class Manager : MonoBehaviour
     public DataLoader dataLoader = new DataLoader();
     public IngameObserver observer = new IngameObserver();
     Shop shop;
+    public List<Player> players = new List<Player>();
 
     void Awake()
     {
