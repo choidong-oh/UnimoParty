@@ -1,9 +1,6 @@
-using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
 using Photon.Pun;
-using Photon.Pun.Demo.Procedural;
-using Unity.XR.CoreUtils;
+using System.Collections;
+using UnityEngine;
 
 public class PewPew : EnemyBase
 {
@@ -12,7 +9,7 @@ public class PewPew : EnemyBase
 
     float Radius;
     float MoveSpeed = 10;
-    float Angle;           
+    float Angle;
 
     int rotateDirection;   //어디로갈지 시계 반시계
     float fixedY = 0f;// 나중에 조절하게 만들꺼
@@ -40,8 +37,7 @@ public class PewPew : EnemyBase
 
     float terrainY;
 
-    [SerializeField] float CenterNoSpawn=5f;
-
+    [SerializeField] float CenterNoSpawn = 5f;
 
     public override void OnEnable()
     {
@@ -77,7 +73,6 @@ public class PewPew : EnemyBase
         float RandomScale = Random.Range(1, 4) * 0.5f;
         transform.localScale = new Vector3(RandomScale, RandomScale, RandomScale);
 
-
         Angle = Random.Range(0f, Mathf.PI * 2f);
         Radius = Random.Range(CenterNoSpawn, 20f);
         rotateDirection = Random.value < 0.5f ? 1 : -1;
@@ -90,6 +85,7 @@ public class PewPew : EnemyBase
     {
         base.OnDisable();
         myCollider.enabled = false;
+        ImFreeze = false;
     }
 
 
@@ -97,7 +93,7 @@ public class PewPew : EnemyBase
     {
         myCollider = GetComponent<Collider>();
 
-        float angularSpeed = MoveSpeed / Radius; 
+        float angularSpeed = MoveSpeed / Radius;
         Angle -= angularSpeed * Time.deltaTime * rotateDirection;
 
 
@@ -122,7 +118,7 @@ public class PewPew : EnemyBase
 
         while (true)
         {
-            angularSpeed =  MoveSpeed / Radius; //원 둘레를 도는 속도
+            angularSpeed = MoveSpeed / Radius; //원 둘레를 도는 속도
             Angle -= angularSpeed * Time.deltaTime * rotateDirection;//각도를 회전 방향에 따라 바꿔줌
 
             //위치 계산해서 이동
@@ -166,6 +162,42 @@ public class PewPew : EnemyBase
             }
         }
 
+        if (other.gameObject.tag == "Monster")
+        {
+            EnemyBase otherEnemy = other.GetComponent<EnemyBase>();
+            if (otherEnemy == null)
+                return; 
+
+
+            if (otherEnemy.ImFreeze)
+            {
+                Manager.Instance.observer.HitPlayer(damage);
+
+                Vector3 hitPoint = other.ClosestPoint(transform.position);
+
+                Vector3 normal = (hitPoint - transform.position).normalized;
+                Quaternion rot = Quaternion.LookRotation(normal);
+
+                GameObject inst = Instantiate(CrashPewPew, hitPoint, rot);
+
+                PoolManager.Instance.Despawn(gameObject);
+                Spawner.SpawnOne();
+            }
+        }
+        if (other.gameObject.tag == "Aube")
+        {
+            Manager.Instance.observer.HitPlayer(damage);
+
+            Vector3 hitPoint = other.ClosestPoint(transform.position);
+
+            Vector3 normal = (hitPoint - transform.position).normalized;
+            Quaternion rot = Quaternion.LookRotation(normal);
+
+            GameObject inst = Instantiate(CrashPewPew, hitPoint, rot);
+
+            PoolManager.Instance.Despawn(gameObject);
+        }
+
     }
 
 
@@ -196,6 +228,7 @@ public class PewPew : EnemyBase
     {
         if (isFreeze == true)
         {
+            ImFreeze = isFreeze;
             IsFreeze.SetActive(true);
             MoveSpeedSave = MoveSpeed;
             MoveSpeed = 0;
@@ -204,6 +237,7 @@ public class PewPew : EnemyBase
         }
         else if (isFreeze == false)
         {
+            ImFreeze = isFreeze;
             StartCoroutine(FreezeCor());
         }
         else

@@ -145,6 +145,43 @@ public class Bigbin : EnemyBase
             PoolManager.Instance.Despawn(gameObject);
         }
 
+        if (other.gameObject.tag == "Monster")
+        {
+            EnemyBase otherEnemy = other.GetComponent<EnemyBase>();
+            if (otherEnemy == null)
+                return;
+
+            if (otherEnemy.ImFreeze)
+            {
+                Vector3 hitPoint = other.ClosestPoint(transform.position);
+
+                Vector3 normal = (hitPoint - transform.position).normalized;
+                Quaternion rot = Quaternion.LookRotation(normal);
+
+                GameObject inst = Instantiate(CrashBigbin, hitPoint, rot);
+
+
+                Debug.Log(Manager.Instance.observer.UserPlayer.gamedata.life);
+                Manager.Instance.observer.HitPlayer(damage);
+
+                PoolManager.Instance.Despawn(gameObject);
+            }
+        }
+
+        if (other.gameObject.tag == "Aube")
+        {
+            Manager.Instance.observer.HitPlayer(damage);
+
+            Vector3 hitPoint = other.ClosestPoint(transform.position);
+
+            Vector3 normal = (hitPoint - transform.position).normalized;
+            Quaternion rot = Quaternion.LookRotation(normal);
+
+            GameObject inst = Instantiate(CrashBigbin, hitPoint, rot);
+
+            PoolManager.Instance.Despawn(gameObject);
+        }
+
     }
 
     IEnumerator MoveRoutine()
@@ -242,6 +279,7 @@ public class Bigbin : EnemyBase
         if (isFreeze == true)
         {
             myCollider.enabled = false;
+            ImFreeze = isFreeze;
             IsFreeze.SetActive(true);
             MoveSpeedSave = MoveSpeed;
             MoveSpeed = 0;
@@ -250,6 +288,7 @@ public class Bigbin : EnemyBase
         else if (isFreeze == false)
         {
             //Move(direction);
+            ImFreeze = isFreeze;
             StartCoroutine(FreezeCor());
         }
         else

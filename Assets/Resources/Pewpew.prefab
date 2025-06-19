@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 1072457946450581014}
   - component: {fileID: 1072457946450581015}
   - component: {fileID: 1678637481661994660}
-  m_Layer: 0
+  - component: {fileID: 2129747609290656086}
+  m_Layer: 7
   m_Name: Pewpew
   m_TagString: Monster
   m_Icon: {fileID: 0}
@@ -102,7 +103,34 @@ MonoBehaviour:
   CrashPewPew: {fileID: 3334270714622040670, guid: a6f8de2a92b3f544e9f4a3d2b553479e, type: 3}
   FreezeTime: 3
   IsFreeze: {fileID: 4263359793204383367}
-  centerNoSpawn: 5
+  CenterNoSpawn: 5
+--- !u!54 &2129747609290656086
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1072457946450581002}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &1393993307722373672
 GameObject:
   m_ObjectHideFlags: 0
@@ -112,7 +140,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1393993307722373687}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: rig_MON005_Pewpew
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -147,7 +175,7 @@ GameObject:
   - component: {fileID: 2050193335415326232}
   - component: {fileID: 5434650298330547221}
   - component: {fileID: 7719004108407158054}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: obj_MON005_Eye
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -230,7 +258,7 @@ GameObject:
   - component: {fileID: 7534536693578583571}
   - component: {fileID: 7851029883556705010}
   - component: {fileID: 9097666913166425800}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: obj_MON005_Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -316,7 +344,7 @@ GameObject:
   - component: {fileID: 4941083265794410959}
   - component: {fileID: 9021766629439997082}
   - component: {fileID: 9021766629439997083}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: StateStorage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -409,6 +437,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 408123861751237808}
     m_Modifications:
+    - target: {fileID: 2406356296441275134, guid: adc9f61ef640e5f4e9261ea0f591828d, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 3997202016695774717, guid: adc9f61ef640e5f4e9261ea0f591828d, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 7543651097898661888, guid: adc9f61ef640e5f4e9261ea0f591828d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -452,6 +488,10 @@ PrefabInstance:
     - target: {fileID: 8087840629484875825, guid: adc9f61ef640e5f4e9261ea0f591828d, type: 3}
       propertyPath: m_Name
       value: VFX_MON000_BlackPortal
+      objectReference: {fileID: 0}
+    - target: {fileID: 8087840629484875825, guid: adc9f61ef640e5f4e9261ea0f591828d, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -526,6 +566,10 @@ PrefabInstance:
     - target: {fileID: 6525371096981633737, guid: c96b2f060bca00d44ba6fe58e17b6869, type: 3}
       propertyPath: m_Name
       value: IceCube_Melting
+      objectReference: {fileID: 0}
+    - target: {fileID: 6525371096981633737, guid: c96b2f060bca00d44ba6fe58e17b6869, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 6525371096981633737, guid: c96b2f060bca00d44ba6fe58e17b6869, type: 3}
       propertyPath: m_IsActive
