@@ -46,7 +46,7 @@ Material:
     - _Detail_Blend: 1
     - _Detail_On_Top: 0
     - _Detail_Pow: 1.98
-    - _Detail_Strength: 1.22
+    - _Detail_Strength: 3.29
     - _Detail_Tile: 0.18
     - _Fog_Multiply: 1
     - _Fog_Offset: 0.02
@@ -62,11 +62,11 @@ Material:
     - _Use_Fog: 1
     - _Use_Top: 1
     m_Colors:
-    - _Dark_Color: {r: 0.024563903, g: 0.05928059, b: 0.0754717, a: 0}
-    - _Detail_Color: {r: 0.29730332, g: 0.4811321, b: 0.4811321, a: 1}
-    - _Fog_Color: {r: 0, g: 0.09466907, b: 0.13295434, a: 0}
-    - _Main_Color: {r: 0, g: 0.117524736, b: 0.14150941, a: 1}
-    - _Top_Color: {r: 0.9009434, g: 1, b: 1, a: 1}
+    - _Dark_Color: {r: 0.28662333, g: 0.32766175, b: 0.5377358, a: 0}
+    - _Detail_Color: {r: 0.17412782, g: 0.34961352, b: 0.4056604, a: 1}
+    - _Fog_Color: {r: 0, g: 0, b: 0, a: 0}
+    - _Main_Color: {r: 0.0016019903, g: 0.045862693, b: 0.11320752, a: 1}
+    - _Top_Color: {r: 0.16037738, g: 0.16037738, b: 0.16037738, a: 1}
   m_BuildTextureStacks: []
 --- !u!114 &2206344178042728445
 MonoBehaviour:

@@ -20,7 +20,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     [Header("매칭 분류")]
     [SerializeField] Image matchImage;
     [SerializeField] TextMeshProUGUI Count;
-
+    [SerializeField] GameObject failPanel;
     [Header("방 안에")]
     [SerializeField] TextMeshProUGUI roomNumber;
     [SerializeField] GameObject checkPanel;
@@ -62,8 +62,10 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         gameSettingPanel.SetActive(false);
         PVPPanel.SetActive(false);
         roomPanel.SetActive(false);
+        failPanel.SetActive(false);
 
         PhotonNetwork.NickName = FirebaseAuthMgr.user.DisplayName;
+
     }
     private void ShowPanel(GameObject nextPanel)
     {
@@ -279,8 +281,8 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     public override void OnJoinRoomFailed(short returnCode, string message)
     {
         Debug.Log("방 찾기 실패");
-        PVPPanel.SetActive(true);
-        roomPanel.SetActive(false);
+        panelStack.Pop();
+        failPanel.SetActive(true);
     }
     public void CodeJoinRoom()
     {
