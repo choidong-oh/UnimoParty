@@ -14,7 +14,10 @@ public abstract class EnemyBase : MonoBehaviourPunCallbacks
     public int damage;                     
     public float enemyMoveSpeed;                
     public int sizeScale;              
-    public int spawnCount;                
+    public int spawnCount;
+
+    public bool ImFreeze { get; protected set; }
+
 
     public abstract void Move(Vector3 direction);
     public abstract void Freeze(Vector3 direction, bool isFreeze);

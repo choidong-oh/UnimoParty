@@ -52,6 +52,43 @@ public class Bungpeo : EnemyBase
             PoolManager.Instance.Despawn(gameObject);
         }
 
+        if (other.gameObject.tag == "Monster")
+        {
+            EnemyBase otherEnemy = other.GetComponent<EnemyBase>();
+            if (otherEnemy == null)
+                return;
+
+            if (otherEnemy.ImFreeze)
+            {
+                Vector3 hitPoint = other.ClosestPoint(transform.position);
+
+                Vector3 normal = (hitPoint - transform.position).normalized;
+                Quaternion rot = Quaternion.LookRotation(normal);
+
+                GameObject inst = Instantiate(CrashBunpeo, hitPoint, rot);
+
+
+                Debug.Log(Manager.Instance.observer.UserPlayer.gamedata.life);
+                Manager.Instance.observer.HitPlayer(damage);
+
+                PoolManager.Instance.Despawn(gameObject);
+            }
+        }
+
+        if (other.gameObject.tag == "Aube")
+        {
+            Manager.Instance.observer.HitPlayer(damage);
+
+            Vector3 hitPoint = other.ClosestPoint(transform.position);
+
+            Vector3 normal = (hitPoint - transform.position).normalized;
+            Quaternion rot = Quaternion.LookRotation(normal);
+
+            GameObject inst = Instantiate(CrashBunpeo, hitPoint, rot);
+
+            PoolManager.Instance.Despawn(gameObject);
+        }
+
     }
 
     public override void OnEnable()
@@ -249,13 +286,14 @@ public class Bungpeo : EnemyBase
     {
         if (isFreeze == true)
         {
+            ImFreeze = isFreeze;
             myCollider.enabled = false;
             animator.speed = 0f;
             IsFreeze.SetActive(true);
         }
         else if (isFreeze == false)
         {
-
+            ImFreeze = isFreeze;
             StartCoroutine(FreezeCor());
         }
         else

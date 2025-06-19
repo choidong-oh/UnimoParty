@@ -793,6 +793,18 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6632942309842899335, guid: 68d30902df87b5d40b777c9b45999f53, type: 3}
+      propertyPath: maxEnemies
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 7626579411440929942, guid: 68d30902df87b5d40b777c9b45999f53, type: 3}
+      propertyPath: maxEnemies
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 7626579411440929942, guid: 68d30902df87b5d40b777c9b45999f53, type: 3}
+      propertyPath: SideNoSpawn
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 7699131707580523911, guid: 68d30902df87b5d40b777c9b45999f53, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

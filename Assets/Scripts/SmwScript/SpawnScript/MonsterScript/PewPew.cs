@@ -39,8 +39,6 @@ public class PewPew : EnemyBase
 
     [SerializeField] float CenterNoSpawn = 5f;
 
-    public bool ImFreeze = false;
-
     public override void OnEnable()
     {
         base.OnEnable();
@@ -74,7 +72,6 @@ public class PewPew : EnemyBase
 
         float RandomScale = Random.Range(1, 4) * 0.5f;
         transform.localScale = new Vector3(RandomScale, RandomScale, RandomScale);
-
 
         Angle = Random.Range(0f, Mathf.PI * 2f);
         Radius = Random.Range(CenterNoSpawn, 20f);
@@ -167,13 +164,37 @@ public class PewPew : EnemyBase
 
         if (other.gameObject.tag == "Monster")
         {
-            //if (other.ImFreeze)
-            //{
-            //    PoolManager.Instance.Despawn(gameObject);
-            //}
+            EnemyBase otherEnemy = other.GetComponent<EnemyBase>();
+            if (otherEnemy == null)
+                return; 
+
+
+            if (otherEnemy.ImFreeze)
+            {
+                Manager.Instance.observer.HitPlayer(damage);
+
+                Vector3 hitPoint = other.ClosestPoint(transform.position);
+
+                Vector3 normal = (hitPoint - transform.position).normalized;
+                Quaternion rot = Quaternion.LookRotation(normal);
+
+                GameObject inst = Instantiate(CrashPewPew, hitPoint, rot);
+
+                PoolManager.Instance.Despawn(gameObject);
+                Spawner.SpawnOne();
+            }
         }
         if (other.gameObject.tag == "Aube")
         {
+            Manager.Instance.observer.HitPlayer(damage);
+
+            Vector3 hitPoint = other.ClosestPoint(transform.position);
+
+            Vector3 normal = (hitPoint - transform.position).normalized;
+            Quaternion rot = Quaternion.LookRotation(normal);
+
+            GameObject inst = Instantiate(CrashPewPew, hitPoint, rot);
+
             PoolManager.Instance.Despawn(gameObject);
         }
 

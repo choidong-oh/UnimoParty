@@ -515,16 +515,12 @@ GameObject:
   - component: {fileID: 9135274300193671489}
   - component: {fileID: 2893333270847640379}
   - component: {fileID: 8740847984141528756}
-  - component: {fileID: 1044497752}
-  - component: {fileID: 1044497753}
-  - component: {fileID: 3446165436436648467}
   - component: {fileID: 3432748481019608082}
-  - component: {fileID: 8699898694323566944}
-  - component: {fileID: 3389187268223202056}
   - component: {fileID: -5146211747824840565}
   - component: {fileID: -598686533152891395}
   - component: {fileID: 5201961080034001827}
   - component: {fileID: 6043893170171595216}
+  - component: {fileID: 5662073454302290343}
   m_Layer: 7
   m_Name: Burnduri
   m_TagString: Monster
@@ -599,45 +595,6 @@ CapsuleCollider:
   m_Height: 1.43
   m_Direction: 2
   m_Center: {x: 0, y: 1.06, z: 0.18}
---- !u!114 &1044497752
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8470377270446183419}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e5c39381b84e6245b6de29c7f1f64cd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isExplode: 1
-  explodeFX: {fileID: 3334270714622040670, guid: 591be72f292aa7a4fba90570ef2e99b4, type: 3}
---- !u!114 &1044497753
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8470377270446183419}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 09a18e802695a254f91c1990935fad8c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &3446165436436648467
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8470377270446183419}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c3365e8f0573a5840a60bbb26bc2d10a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  indicatorObj: {fileID: 813030569924029378}
 --- !u!82 &3432748481019608082
 AudioSource:
   m_ObjectHideFlags: 0
@@ -752,34 +709,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &8699898694323566944
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8470377270446183419}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 94a6c3e405a38914cb290221d72849d5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shadowObj: {fileID: 7040775201560648083}
---- !u!114 &3389187268223202056
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8470377270446183419}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 800c5b7cde5b14645aaaf9267f3b6806, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ratio3D: 1
-  minDist: 2.5
-  maxDist: 10
 --- !u!114 &-5146211747824840565
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -807,7 +736,7 @@ MonoBehaviour:
   fixedY: 0
   CrashBurnduri: {fileID: 3334270714622040670, guid: 591be72f292aa7a4fba90570ef2e99b4, type: 3}
   FreezeTime: 3
-  IsFreeze: {fileID: 0}
+  IsFreeze: {fileID: 7253013630198467001}
 --- !u!114 &-598686533152891395
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -861,6 +790,33 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   iconPrefab: {fileID: 4922837886278913688, guid: 64491c38b1af452409456a53259a0f43, type: 3}
   clampOnRadar: 1
+--- !u!54 &5662073454302290343
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8470377270446183419}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1001 &148879231885707354
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1018,11 +974,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3853327610031083757, guid: a76ddc9aa9dfc8346a4452c82139d262, type: 3}
   m_PrefabInstance: {fileID: 3853501668736967061}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &813030569924029378 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4481668387225455191, guid: a76ddc9aa9dfc8346a4452c82139d262, type: 3}
-  m_PrefabInstance: {fileID: 3853501668736967061}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4479154217096524656
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1096,6 +1047,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c96b2f060bca00d44ba6fe58e17b6869, type: 3}
+--- !u!1 &7253013630198467001 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6525371096981633737, guid: c96b2f060bca00d44ba6fe58e17b6869, type: 3}
+  m_PrefabInstance: {fileID: 4479154217096524656}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8064875851155215107 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5892140821859311731, guid: c96b2f060bca00d44ba6fe58e17b6869, type: 3}
@@ -1185,10 +1141,5 @@ PrefabInstance:
 --- !u!4 &1695975564955082355 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9001557012747604099, guid: 99bb4abd34f45824dbdacc3ef80dca1e, type: 3}
-  m_PrefabInstance: {fileID: 7737928130884308720}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &7040775201560648083 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 781232824022357859, guid: 99bb4abd34f45824dbdacc3ef80dca1e, type: 3}
   m_PrefabInstance: {fileID: 7737928130884308720}
   m_PrefabAsset: {fileID: 0}
