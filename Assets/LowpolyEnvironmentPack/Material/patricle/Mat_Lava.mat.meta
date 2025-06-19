@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 21d9ff331ab642540921ac7a4a5f8204
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 291473
+  packageName: LowpolyEnvironmentPack
+  packageVersion: 1.1
+  assetPath: Assets/VertexModeler/LowpolyEnvironmentPack/Material/patricle/Mat_Lava.mat
+  uploadId: 682767

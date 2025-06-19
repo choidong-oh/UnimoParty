@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 646e4464fc79d8e4d9ccb792db13ef8f
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 291473
+  packageName: LowpolyEnvironmentPack
+  packageVersion: 1.1
+  assetPath: Assets/VertexModeler/LowpolyEnvironmentPack/Material/Material/Mat_LavaRock_Detail.mat
+  uploadId: 682767

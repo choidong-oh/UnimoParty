@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 8351047c84986e04f8c54f49f369df67
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 291473
+  packageName: LowpolyEnvironmentPack
+  packageVersion: 1.1
+  assetPath: Assets/VertexModeler/LowpolyEnvironmentPack/Material/patricle/Mat_Leaf.mat
+  uploadId: 682767

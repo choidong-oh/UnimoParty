@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 04fc89db7fa8dbb4dbdc0b830a178221
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 11400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 291473
+  packageName: LowpolyEnvironmentPack
+  packageVersion: 1.1
+  assetPath: Assets/VertexModeler/LowpolyEnvironmentPack/Scene/Fog/Geometry.asset
+  uploadId: 682767

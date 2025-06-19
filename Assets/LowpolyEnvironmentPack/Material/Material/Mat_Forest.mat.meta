@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 43496ea5a7ce4c744a8a45e70500d2db
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 291473
+  packageName: LowpolyEnvironmentPack
+  packageVersion: 1.1
+  assetPath: Assets/VertexModeler/LowpolyEnvironmentPack/Material/Material/Mat_Forest.mat
+  uploadId: 682767

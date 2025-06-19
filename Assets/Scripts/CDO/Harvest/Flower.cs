@@ -137,7 +137,7 @@ public class Flower : MonoBehaviourPun
     //채집 결과
     void CompleteHarvest()
     {
-        LaycockSpawner.SpawnLaycock(gameObject.transform);
+        //LaycockSpawner.SpawnLaycock(gameObject.transform);
         harvestingRoutine = null;
         currentProgress = 0f;
 
