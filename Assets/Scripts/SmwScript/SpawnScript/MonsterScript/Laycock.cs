@@ -30,6 +30,8 @@ public class Laycock : EnemyBase
 
     [SerializeField] GameObject IsFreeze;
 
+    private Coroutine lazerCoroutine;
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Player")
@@ -92,7 +94,7 @@ public class Laycock : EnemyBase
     public override void OnEnable()
     {
         base.OnEnable();
-        StartCoroutine(Distance());;
+        StartCoroutine(Distance()); ;
     }
 
 
@@ -111,7 +113,7 @@ public class Laycock : EnemyBase
 
         yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName(AppearAni));
         while (animator.GetCurrentAnimatorStateInfo(0).IsName(AppearAni))
-        yield return null;
+            yield return null;
 
         myCollider.enabled = true;
 
@@ -152,7 +154,13 @@ public class Laycock : EnemyBase
     [PunRPC]
     public void ShootLazer()
     {
-        StartCoroutine(Lazer());
+        //이미 실행 중인 Lazer 코루틴이 있으면 중지
+        if (lazerCoroutine != null)
+        {
+            StopCoroutine(lazerCoroutine);
+            lazerCoroutine = null;
+        }
+        lazerCoroutine = StartCoroutine(Lazer());
     }
 
 
@@ -173,7 +181,7 @@ public class Laycock : EnemyBase
         yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName("anim_MON006_Disappear") && !animator.IsInTransition(0));
         yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f);
 
-
+        lazerCoroutine = null;
         PoolManager.Instance.Despawn(gameObject);
     }
 
@@ -182,7 +190,7 @@ public class Laycock : EnemyBase
         ShootParticles.gameObject.SetActive(true);
         yield return new WaitForSeconds(LazerLoopTime);
         ShootParticles.gameObject.SetActive(false);
-        
+
         animator.SetTrigger("disappear");
     }
 
@@ -202,11 +210,17 @@ public class Laycock : EnemyBase
             myCollider.enabled = false;
             animator.speed = 0f;
             IsFreeze.SetActive(true);
+            if (lazerCoroutine != null)
+            {
+                StopCoroutine(lazerCoroutine);
+                lazerCoroutine = null;
+            }
         }
         else if (isFreeze == false)
         {
             ImFreeze = isFreeze;
             StartCoroutine(FreezeCor());
+            ShootLazer();
         }
         else
         {
