@@ -29,10 +29,6 @@ public class CollectStatusUI : MonoBehaviour
         int goal2 = Manager.Instance.tempFairyValue_2;
         int goal3 = Manager.Instance.tempFairyValue_3;
 
-        //int goal1 = Manager.Instance.goalCount.GoalFairyValue_1;
-        //int goal2 = Manager.Instance.goalCount.GoalFairyValue_2;
-        //int goal3 = Manager.Instance.goalCount.GoalFairyValue_3;
-
         row1.text = $"{have1:00} / {goal1:00}";
         row2.text = $"{have2:00} / {goal2:00}";
         row3.text = $"{have3:00} / {goal3:00}";

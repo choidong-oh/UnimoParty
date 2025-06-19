@@ -46,7 +46,7 @@ public class Flower : MonoBehaviourPun
 
     private void Start()
     {
-        //controller = GameObject.Find("InGameDataController").GetComponent<InGameDataController>();
+        controller = GameObject.Find("InGameDataController").GetComponent<InGameDataController>();
         //체크포인트
         checkPoints.Add(harvestTime / 3f);
         checkPoints.Add(harvestTime / 3f * 2f);
