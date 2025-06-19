@@ -10,6 +10,7 @@ public class SpaceShipData : InterfaceMethod.TableData
     float _shipMoveSpeed;
     string _shipModelName;
     int _shipCost;
+    bool _isbuy;
     List<ItemData> shipInventory = new List<ItemData>();
 
     public int INDEX
