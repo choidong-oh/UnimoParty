@@ -48,7 +48,7 @@ MonoBehaviour:
   bInputActionReference: {fileID: -7840984986808251201, guid: 75c98270c91a5e74bba10c83794ab594, type: 3}
   triggerInputActionReference: {fileID: 83097790271614945, guid: c348712bda248c246b8c49b3db54643f, type: 3}
   rightController: {fileID: 7560748128269401356}
-  XrControllerMgrObj: {fileID: 12462241475859743}
+  xrControllerMgr: {fileID: 12462241475859743}
 --- !u!114 &9097946719516881756
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -423,6 +423,7 @@ MonoBehaviour:
   handHarvestObj: {fileID: 3339427171508547215}
   ItemObj: {fileID: 621761742234676228}
   itemInputB: {fileID: 4414192712401531367}
+  handHarvest: {fileID: 3999241018668250046}
   harvestGun: {fileID: 1902367689499881727, guid: 6df06eda25e3cca46aa64bf61dfbfb27, type: 3}
   ItemGun: {fileID: 4756468719463012015, guid: a52667fed78cf2148a1efb56bda8f247, type: 3}
 --- !u!1 &3339427171508547215
@@ -471,6 +472,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cameraOffset: {fileID: 7560748128208814511}
   rayInteractor: {fileID: 7543132570412813937}
+  xrControllerMgr: {fileID: 12462241475859743}
+  rightController: {fileID: 7560748128269401356}
   spiritPoint: 0
   activateAction: {fileID: 83097790271614945, guid: c348712bda248c246b8c49b3db54643f, type: 3}
   hapticAmplitude: 1
