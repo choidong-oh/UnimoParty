@@ -48,7 +48,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     Coroutine matchCorutine;
     private bool isMatchMaking;
 
-    
+    public List<Player> playerList = new List<Player>();
     IEnumerator Start()
     {
         PhotonNetwork.AutomaticallySyncScene = true;
@@ -280,9 +280,10 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     public override void OnJoinRoomFailed(short returnCode, string message)
     {
-        Debug.Log("방 찾기 실패");
-        panelStack.Pop();
         failPanel.SetActive(true);
+        Debug.Log("방 찾기 실패");
+
+        roomPanel.SetActive(false);
     }
     public void CodeJoinRoom()
     {
@@ -309,10 +310,10 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     {
         if (PhotonNetwork.IsMasterClient)
         {
-            PhotonNetwork.LoadLevel(3);
+            Manager.Instance.players.Clear();
+            Manager.Instance.players.AddRange(PhotonNetwork.PlayerList);
 
-            //플레이어 검증 한번
-            //code
+            PhotonNetwork.LoadLevel(3);
         }
     }
     private void UpdateActionButton()
@@ -329,9 +330,6 @@ public class LobbyManager : MonoBehaviourPunCallbacks
             actionButtonText.text = "준비 완료";
             actionButton.onClick.AddListener(ReadyButton);
         }
-    }
-    public override void OnLeftRoom()
-    {
     }
     [PunRPC]
     public void SetReadyState(int actorNumber)

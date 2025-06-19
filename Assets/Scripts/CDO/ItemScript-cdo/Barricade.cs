@@ -1,21 +1,29 @@
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.XR.Interaction.Toolkit;
 
 public class Barricade : MonoBehaviour, IItemUse
 {
+    [SerializeField] int installMaxDistance; //설치 거리
+
     [SerializeField] GameObject realBarricadPrefab; //실제 생성
     GameObject previewBarricadPrefab; //미리보기
 
-    //[SerializeField] Transform rightControllerPos; //플레이어 
     Vector3 previewPlayerPos;
     Bounds previewBounds;
 
     public LayerMask noGroundlayerMask; //그라운드만 빼고 체크
 
-    public bool bool2 = false;
-
     bool isBlocked; //겹치는 오브젝트가있냐? 콜라이더되는애들이 있냐
 
     private MeshRenderer previewRenderer;
+
+    //그랩////////////////////////////////////////////////////////////
+    private XRGrabInteractable grabInteractable;
+
+    public bool isGrab = false;
+    float rotationY = 0;
+
     private void OnEnable()
     {
         if (previewBarricadPrefab == null)
@@ -27,14 +35,22 @@ public class Barricade : MonoBehaviour, IItemUse
             previewRenderer = previewBarricadPrefab.GetComponent<MeshRenderer>();
 
         }
+        grabInteractable = GetComponent<XRGrabInteractable>();
+        grabInteractable.selectEntered.AddListener(OnGrab);
     }
 
     private void OnDisable()
     {
         DestoryPreviewPrefab();
+        grabInteractable.selectEntered.RemoveListener(OnGrab);
     }
 
-
+    void OnGrab(SelectEnterEventArgs args)
+    {
+        Debug.Log("그랩햄");
+        isGrab = true;
+       
+    }
 
     private void FixedUpdate()
     {
@@ -77,26 +93,40 @@ public class Barricade : MonoBehaviour, IItemUse
 
     }
 
-
-
     //바닥 포지션
     Vector3 GroundPos()
     {
-        var tempPos = transform.position + transform.forward * 5f;
+        var tempPos = transform.position + transform.forward * installMaxDistance;
+
+        //if (isGrab == true)
+        //{
+        //    isGrab = false;
+        //    Vector3 pos1 = previewBarricadPrefab.transform.position;
+        //    pos1.y += 90;
+
+        //    previewBarricadPrefab.transform.Rotate(pos1);
+
+        //}
+        if(isGrab == true)
+        {
+            isGrab = false;
+            rotationY += 90;
+            if (rotationY >= 360f)
+            {
+                rotationY -= 360f;
+            }
+        }
 
         if (Physics.Raycast(tempPos, Vector3.down, out RaycastHit hit, 10f))
         {
             if (hit.collider.gameObject.tag == "Ground")
             {
-
-
-
                 //포지션
                 Vector3 spawnPos = hit.point;
                 spawnPos.y += previewBounds.extents.y;
                 var tempSpawnPos = spawnPos.y;
 
-                spawnPos += transform.forward * 5f;
+                spawnPos += transform.forward * installMaxDistance;
                 previewBarricadPrefab.transform.position = spawnPos;
 
                 //로테이션
@@ -105,14 +135,13 @@ public class Barricade : MonoBehaviour, IItemUse
 
                 Quaternion rotation = Quaternion.LookRotation(direction);
 
+                rotation *= Quaternion.Euler(0, rotationY, 0);
                 previewBarricadPrefab.transform.rotation = rotation;
 
                 previewBarricadPrefab.transform.position = new Vector3(spawnPos.x, tempSpawnPos, spawnPos.z);
 
 
-
                 previewPlayerPos = previewBarricadPrefab.transform.position;
-
 
             }
         }
@@ -153,7 +182,6 @@ public class Barricade : MonoBehaviour, IItemUse
 
     public bool Use(Transform firePos, int power)
     {
-
         if (CanPlace() == false)
         {
             Instantiate(realBarricadPrefab, GroundPos(), previewBarricadPrefab.transform.rotation);
@@ -165,8 +193,6 @@ public class Barricade : MonoBehaviour, IItemUse
             Debug.Log("겹쳐서 배치 불가!");
             return false;
         }
-
-
 
     }
 }
