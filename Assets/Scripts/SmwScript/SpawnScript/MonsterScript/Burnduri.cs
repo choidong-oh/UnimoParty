@@ -74,6 +74,43 @@ public class Burnduri : EnemyBase
             StopAllCoroutines();
             PoolManager.Instance.Despawn(gameObject);
         }
+
+        if (other.gameObject.tag == "Monster")
+        {
+            EnemyBase otherEnemy = other.GetComponent<EnemyBase>();
+            if (otherEnemy == null)
+                return;
+
+            if (otherEnemy.ImFreeze)
+            {
+                Vector3 hitPoint = other.ClosestPoint(transform.position);
+
+                Vector3 normal = (hitPoint - transform.position).normalized;
+                Quaternion rot = Quaternion.LookRotation(normal);
+
+                GameObject inst = Instantiate(CrashBurnduri, hitPoint, rot);
+
+
+                Debug.Log(Manager.Instance.observer.UserPlayer.gamedata.life);
+                Manager.Instance.observer.HitPlayer(damage);
+
+                PoolManager.Instance.Despawn(gameObject);
+            }
+        }
+
+        if (other.gameObject.tag == "Aube")
+        {
+            Manager.Instance.observer.HitPlayer(damage);
+
+            Vector3 hitPoint = other.ClosestPoint(transform.position);
+
+            Vector3 normal = (hitPoint - transform.position).normalized;
+            Quaternion rot = Quaternion.LookRotation(normal);
+
+            GameObject inst = Instantiate(CrashBurnduri, hitPoint, rot);
+
+            PoolManager.Instance.Despawn(gameObject);
+        }
     }
 
     public override void OnEnable()
@@ -271,6 +308,7 @@ public class Burnduri : EnemyBase
         if (isFreeze == true)
         {
             StopAllCoroutines();
+            ImFreeze = isFreeze;
             IsFreeze.SetActive(true);
             myCollider.enabled = false;
             animator.speed = 0f;
@@ -278,6 +316,7 @@ public class Burnduri : EnemyBase
         else if (isFreeze == false)
         {
             //Move(direction);
+            ImFreeze = isFreeze;
             StartCoroutine(FreezeCor());
         }
         else

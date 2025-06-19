@@ -1,0 +1,29 @@
+fileFormatVersion: 2
+guid: 677389b963572924085a8d14fda20a60
+AudioImporter:
+  externalObjects: {}
+  serializedVersion: 6
+  defaultSettings:
+    loadType: 0
+    sampleRateSetting: 0
+    sampleRateOverride: 44100
+    compressionFormat: 1
+    quality: 1
+    conversionMode: 0
+  platformSettingOverrides: {}
+  forceToMono: 0
+  normalize: 1
+  preloadAudioData: 1
+  loadInBackground: 0
+  ambisonic: 0
+  3D: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 213390
+  packageName: Retro Games - Sound Effects
+  packageVersion: 1.0
+  assetPath: Assets/RetroGamesSoundEffects/Slide_Down_v1/Slide_Down_v1_variation_02_wav.wav
+  uploadId: 513845

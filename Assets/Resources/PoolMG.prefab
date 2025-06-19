@@ -93,8 +93,6 @@ MonoBehaviour:
   enemyPrefab: {fileID: 1072457946450581002, guid: 4c7b23f28121b2f4c95603a0ab85877a, type: 3}
   maxEnemies: 10
   spawnTimer: 3
-  NoSpawn: 5
-  SideNoSpawn: 0
 --- !u!1 &1659351243827333647
 GameObject:
   m_ObjectHideFlags: 0
@@ -143,7 +141,7 @@ MonoBehaviour:
   maxEnemies: 10
   spawnTimer: 3
   NoSpawn: 5
-  SideNoSpawn: 0
+  SideNoSpawn: 3
 --- !u!1 &6133210232062724198
 GameObject:
   m_ObjectHideFlags: 0

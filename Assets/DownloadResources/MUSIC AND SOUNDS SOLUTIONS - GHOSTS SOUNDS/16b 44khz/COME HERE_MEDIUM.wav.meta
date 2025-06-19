@@ -1,0 +1,29 @@
+fileFormatVersion: 2
+guid: 33bae2f984e9f4574bc183043a4f5717
+AudioImporter:
+  externalObjects: {}
+  serializedVersion: 6
+  defaultSettings:
+    loadType: 0
+    sampleRateSetting: 0
+    sampleRateOverride: 44100
+    compressionFormat: 1
+    quality: 1
+    conversionMode: 0
+  platformSettingOverrides: {}
+  forceToMono: 0
+  normalize: 1
+  preloadAudioData: 1
+  loadInBackground: 0
+  ambisonic: 0
+  3D: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 261845
+  packageName: SPOOKY GHOSTS VOICES AND SOUNDS
+  packageVersion: 1.0
+  assetPath: Assets/MUSIC AND SOUNDS SOLUTIONS - GHOSTS SOUNDS/16b 44khz/COME HERE_MEDIUM.wav
+  uploadId: 626514

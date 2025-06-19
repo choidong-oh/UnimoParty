@@ -1,0 +1,29 @@
+fileFormatVersion: 2
+guid: 2a6256fec28ac5d4eb78de5b4f6fcf5a
+AudioImporter:
+  externalObjects: {}
+  serializedVersion: 6
+  defaultSettings:
+    loadType: 0
+    sampleRateSetting: 0
+    sampleRateOverride: 44100
+    compressionFormat: 1
+    quality: 1
+    conversionMode: 0
+  platformSettingOverrides: {}
+  forceToMono: 0
+  normalize: 1
+  preloadAudioData: 1
+  loadInBackground: 0
+  ambisonic: 0
+  3D: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 211274
+  packageName: Cartoon Games - Sound Effects
+  packageVersion: 2.0
+  assetPath: Assets/CartoonGamesSoundEffects/Falling_v1/Falling_v2_wav.wav
+  uploadId: 510394

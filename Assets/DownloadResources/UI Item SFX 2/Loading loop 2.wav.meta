@@ -1,0 +1,31 @@
+fileFormatVersion: 2
+guid: 3ac4327a852453d409e47a9d34f6e5ec
+timeCreated: 1539493123
+licenseType: Store
+AudioImporter:
+  externalObjects: {}
+  serializedVersion: 6
+  defaultSettings:
+    loadType: 0
+    sampleRateSetting: 0
+    sampleRateOverride: 44100
+    compressionFormat: 1
+    quality: 1
+    conversionMode: 0
+  platformSettingOverrides: {}
+  forceToMono: 0
+  normalize: 1
+  preloadAudioData: 1
+  loadInBackground: 0
+  ambisonic: 0
+  3D: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 130792
+  packageName: UI & Item Sound Effects 2
+  packageVersion: 1.0
+  assetPath: Assets/UI Item SFX 2/Loading loop 2.wav
+  uploadId: 272701

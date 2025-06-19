@@ -144,6 +144,43 @@ public class ShookShook : EnemyBase
 
         }
 
+        if (other.gameObject.tag == "Monster")
+        {
+            EnemyBase otherEnemy = other.GetComponent<EnemyBase>();
+            if (otherEnemy == null)
+                return;
+
+            if (otherEnemy.ImFreeze)
+            {
+                Vector3 hitPoint = other.ClosestPoint(transform.position);
+
+                Vector3 normal = (hitPoint - transform.position).normalized;
+                Quaternion rot = Quaternion.LookRotation(normal);
+
+                GameObject inst = Instantiate(CrashShookShook, hitPoint, rot);
+
+
+                Debug.Log(Manager.Instance.observer.UserPlayer.gamedata.life);
+                Manager.Instance.observer.HitPlayer(damage);
+
+                PoolManager.Instance.Despawn(gameObject);
+            }
+        }
+
+        if (other.gameObject.tag == "Aube")
+        {
+            Manager.Instance.observer.HitPlayer(damage);
+
+            Vector3 hitPoint = other.ClosestPoint(transform.position);
+
+            Vector3 normal = (hitPoint - transform.position).normalized;
+            Quaternion rot = Quaternion.LookRotation(normal);
+
+            GameObject inst = Instantiate(CrashShookShook, hitPoint, rot);
+
+            PoolManager.Instance.Despawn(gameObject);
+        }
+
     }
 
 
@@ -229,6 +266,7 @@ public class ShookShook : EnemyBase
         if (isFreeze == true)
         {
             IsFreeze.SetActive(true);
+            ImFreeze = isFreeze;
             MoveSpeedSave = MoveSpeed;
             MoveSpeed = 0;
             myCollider.enabled = false;
@@ -236,6 +274,7 @@ public class ShookShook : EnemyBase
         }
         else if (isFreeze == false)
         {
+            ImFreeze = isFreeze;
             StartCoroutine(FreezeCor());
         }
         else
