@@ -1,12 +1,14 @@
+using Photon.Pun;
 using Photon.Realtime;
 using TMPro;
 using Unity.XR.CoreUtils;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets;
 
-public class OptionManager : MonoBehaviour
+public class OptionManager : MonoBehaviourPunCallbacks
 {
     [SerializeField] Slider[] sliders;
     [SerializeField] TextMeshProUGUI[] sliderTexts;
@@ -195,4 +197,9 @@ public class OptionManager : MonoBehaviour
         }
     }
 
+    public void ExitButton()
+    {
+        PhotonNetwork.LeaveRoom();
+        SceneManager.LoadScene(1);
+    }
 }

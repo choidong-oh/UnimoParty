@@ -8,8 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: mat_MON005_Pewpew_body
-  m_Shader: {fileID: -6465566751694194690, guid: f1ea01c42f1ef854ca056969507b2e7f,
-    type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: f1ea01c42f1ef854ca056969507b2e7f, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -129,7 +128,6 @@ Material:
     - _RimMinMax: {r: -0.5, g: 20, b: 0, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []
-  m_AllowLocking: 1
 --- !u!114 &309103757037100833
 MonoBehaviour:
   m_ObjectHideFlags: 11

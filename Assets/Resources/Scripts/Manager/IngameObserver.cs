@@ -197,6 +197,7 @@ public class IngameObserver
 
     public void BuyShip(SpaceShipData buyship)
     {
+        
         UserPlayer.gamedata._money -= buyship.ShipCost;
         UserPlayer.gamedata._Inventory.spaceShipDatas.Add(buyship);
 

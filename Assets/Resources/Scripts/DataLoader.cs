@@ -8,9 +8,10 @@ public class DataLoader
     EnemyBase enemyData;
     public Dictionary<string, List<InterfaceMethod.TableData>> data = new Dictionary<string, List<InterfaceMethod.TableData>>()
     {
-        { "Enemy", new List<InterfaceMethod.TableData>()},
+        //{ "Enemy", new List<InterfaceMethod.TableData>()},
         //{ "Item", new List<InterfaceMethod.TableData>()},
         { "SpaceShip", new List<InterfaceMethod.TableData>()},
+        { "Character", new List<InterfaceMethod.TableData>()},
     };
 
     public void DataLoad()
@@ -79,6 +80,19 @@ public class DataLoader
                         spaceShipData.ShipModelName = values[5].ToString();
 
                         item.Value.Add(spaceShipData);
+                    }
+                    break;
+
+                case "Character":
+                    Debug.Log("Character csv ·Îµå");
+                    for (int i = 1; i < lines.Length - 1; i++)
+                    {
+                        string[] values = lines[i].Split(',');
+                        CharacterData characterData = new CharacterData();
+                        characterData.Name = values[1].ToString();
+                        characterData.CharacterCost = int.Parse(values[2]);
+
+                        item.Value.Add(characterData);
                     }
 
                     break;

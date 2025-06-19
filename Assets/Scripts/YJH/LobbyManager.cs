@@ -106,7 +106,12 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     public void CreatRoom()
     {
-        PhotonNetwork.CreateRoom($"{Random.Range(10000, 99999)}", new RoomOptions {IsVisible = false,MaxPlayers=8 });
+        StartCoroutine(WaitCreatRoom());
+    }
+    IEnumerator WaitCreatRoom()
+    {
+        yield return new WaitForSeconds(0.5f);
+        PhotonNetwork.CreateRoom($"{Random.Range(10000, 99999)}", new RoomOptions { IsVisible = false, MaxPlayers = 8 });
         PVPPanel.SetActive(false);
         roomPanel.SetActive(true);
     }
