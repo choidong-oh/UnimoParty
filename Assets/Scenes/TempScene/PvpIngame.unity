@@ -551,7 +551,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2667370604442209742, guid: b61375c4814d95d4ca8769d9b61b82d3, type: 3}
       propertyPath: m_TagString
-      value: Aube
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 9163936637618298184, guid: b61375c4814d95d4ca8769d9b61b82d3, type: 3}
       propertyPath: m_LocalPosition.x

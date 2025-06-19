@@ -405,6 +405,26 @@ PrefabInstance:
       propertyPath: sceneViewId
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 9186936229592200306, guid: 966bc0a092b89c4468fa9a4c467e78fa, type: 3}
+      propertyPath: m_Size.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 9186936229592200306, guid: 966bc0a092b89c4468fa9a4c467e78fa, type: 3}
+      propertyPath: m_Size.y
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 9186936229592200306, guid: 966bc0a092b89c4468fa9a4c467e78fa, type: 3}
+      propertyPath: m_Size.z
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 9186936229592200306, guid: 966bc0a092b89c4468fa9a4c467e78fa, type: 3}
+      propertyPath: m_Center.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9186936229592200306, guid: 966bc0a092b89c4468fa9a4c467e78fa, type: 3}
+      propertyPath: m_Center.y
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -544,6 +564,10 @@ PrefabInstance:
     - target: {fileID: 2667370604442209742, guid: b61375c4814d95d4ca8769d9b61b82d3, type: 3}
       propertyPath: m_Name
       value: AUBE
+      objectReference: {fileID: 0}
+    - target: {fileID: 2667370604442209742, guid: b61375c4814d95d4ca8769d9b61b82d3, type: 3}
+      propertyPath: m_TagString
+      value: Aube
       objectReference: {fileID: 0}
     - target: {fileID: 9163936637618298184, guid: b61375c4814d95d4ca8769d9b61b82d3, type: 3}
       propertyPath: m_LocalPosition.x
