@@ -476,6 +476,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: MonsterSpawnMgr
       objectReference: {fileID: 0}
+    - target: {fileID: 2679417459161413165, guid: b0700a97fafc8564c88c1d084dea0bf9, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2785092862276059123, guid: b0700a97fafc8564c88c1d084dea0bf9, type: 3}
       propertyPath: centerTransform
       value: 
@@ -955,6 +959,38 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 527471862456176497, guid: 68d30902df87b5d40b777c9b45999f53, type: 3}
+      propertyPath: poolItems.Array.data[4].prefab
+      value: 
+      objectReference: {fileID: 2682052996701666488, guid: 4c925edc2ee3a4646816f58583d8100e, type: 3}
+    - target: {fileID: 746278317229162379, guid: 68d30902df87b5d40b777c9b45999f53, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1313182949433518002, guid: 68d30902df87b5d40b777c9b45999f53, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6133210232062724198, guid: 68d30902df87b5d40b777c9b45999f53, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7626579411440929942, guid: 68d30902df87b5d40b777c9b45999f53, type: 3}
+      propertyPath: maxEnemies
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 7626579411440929942, guid: 68d30902df87b5d40b777c9b45999f53, type: 3}
+      propertyPath: spawnTimer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7626579411440929942, guid: 68d30902df87b5d40b777c9b45999f53, type: 3}
+      propertyPath: SideNoSpawn
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7626579411440929942, guid: 68d30902df87b5d40b777c9b45999f53, type: 3}
+      propertyPath: enemyPrefab
+      value: 
+      objectReference: {fileID: 2682052996701666488, guid: 4c925edc2ee3a4646816f58583d8100e, type: 3}
     - target: {fileID: 7699131707580523911, guid: 68d30902df87b5d40b777c9b45999f53, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -994,6 +1030,14 @@ PrefabInstance:
     - target: {fileID: 7699131707580523911, guid: 68d30902df87b5d40b777c9b45999f53, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7907539709961554583, guid: 68d30902df87b5d40b777c9b45999f53, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8441358980824217389, guid: 68d30902df87b5d40b777c9b45999f53, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8939297473847098787, guid: 68d30902df87b5d40b777c9b45999f53, type: 3}
       propertyPath: m_Name

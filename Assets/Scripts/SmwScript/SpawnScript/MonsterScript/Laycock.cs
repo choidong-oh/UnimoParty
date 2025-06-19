@@ -24,6 +24,11 @@ public class Laycock : EnemyBase
     Animator animator;
 
     Collider myCollider;
+    string AppearAni = "anim_MON006_Appear";
+
+    [SerializeField] float FreezeTime = 3;
+
+    [SerializeField] GameObject IsFreeze;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -58,6 +63,7 @@ public class Laycock : EnemyBase
     {
         base.OnDisable();
         StopAllCoroutines();
+        myCollider.enabled = false;
     }
 
     IEnumerator Distance()
@@ -66,6 +72,11 @@ public class Laycock : EnemyBase
         myCollider = GetComponent<Collider>();
         terrain = Terrain.activeTerrain;
 
+        yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName(AppearAni));
+        while (animator.GetCurrentAnimatorStateInfo(0).IsName(AppearAni))
+        yield return null;
+
+        myCollider.enabled = true;
 
         float terrainY = terrain.SampleHeight(transform.position) + transform.localScale.y / 2f;
         transform.position = new Vector3(transform.position.x, terrainY, transform.position.z);
@@ -110,6 +121,8 @@ public class Laycock : EnemyBase
 
     IEnumerator Lazer()
     {
+
+        yield return new WaitForSeconds(3f);
         ChargeParticles.gameObject.SetActive(true);
 
         yield return new WaitUntil(() => !ChargeParticles.IsAlive(true));
@@ -146,11 +159,32 @@ public class Laycock : EnemyBase
 
     public override void Freeze(Vector3 direction, bool isFreeze)
     {
-        throw new System.NotImplementedException();
+        if (isFreeze == true)
+        {
+            myCollider.enabled = false;
+            animator.speed = 0f;
+            IsFreeze.SetActive(true);
+        }
+        else if (isFreeze == false)
+        {
+            StartCoroutine(FreezeCor());
+        }
+        else
+        {
+            Debug.Log("ΩµΩµ¿Ã «¡∏Æ¡Ó ∞Ì¿Â≥≤");
+        }
     }
 
     public override void Move(Vector3 direction)
     {
         throw new System.NotImplementedException();
+    }
+
+    IEnumerator FreezeCor()
+    {
+        yield return new WaitForSeconds(FreezeTime);
+        animator.speed = 1f;
+        myCollider.enabled = true;
+        IsFreeze.SetActive(false);
     }
 }

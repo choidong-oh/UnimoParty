@@ -593,7 +593,7 @@ CapsuleCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Radius: 0.41
   m_Height: 1.43
@@ -806,6 +806,8 @@ MonoBehaviour:
   triggerDistance: 10
   fixedY: 0
   CrashBurnduri: {fileID: 3334270714622040670, guid: 591be72f292aa7a4fba90570ef2e99b4, type: 3}
+  FreezeTime: 3
+  IsFreeze: {fileID: 0}
 --- !u!114 &-598686533152891395
 MonoBehaviour:
   m_ObjectHideFlags: 0

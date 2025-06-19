@@ -52,6 +52,7 @@ public class PoolManager : MonoBehaviour
         if (!pools.TryGetValue(prefab, out var pool))
             return Instantiate(prefab, pos, rot);
 
+        //Debug.Log(prefab +" "+ pos +" "+ rot);
         var go = pool.Get();
 
         instanceToPool[go] = pool;

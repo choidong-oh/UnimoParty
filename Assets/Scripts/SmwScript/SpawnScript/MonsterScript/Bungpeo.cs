@@ -21,7 +21,7 @@ public class Bungpeo : EnemyBase
     Animator animator;
 
     Collider myCollider;
-
+    string AppearAni = "anim_MON003_appear";
     private string explodeStateName = "anim_MON003_ready02";
 
     [SerializeField] GameObject CrashBunpeo;
@@ -29,6 +29,10 @@ public class Bungpeo : EnemyBase
     Terrain terrain;
 
     int IsActivateFragment = 0;
+
+    [SerializeField] GameObject IsFreeze;
+
+    [SerializeField] float FreezeTime = 3;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -56,7 +60,6 @@ public class Bungpeo : EnemyBase
         animator = GetComponent<Animator>();
         myCollider = GetComponent<Collider>();
 
-        myCollider.enabled = true;
 
         terrain = Terrain.activeTerrain;
 
@@ -79,6 +82,12 @@ public class Bungpeo : EnemyBase
 
     private IEnumerator WaitAndExplode()
     {
+        yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName(AppearAni));
+        while (animator.GetCurrentAnimatorStateInfo(0).IsName(AppearAni))
+            yield return null;
+
+        myCollider.enabled = true;
+
         while (!animator.GetCurrentAnimatorStateInfo(0).IsName(explodeStateName))
         {
             yield return null;
@@ -123,7 +132,7 @@ public class Bungpeo : EnemyBase
         {
             Body[i].SetActive(true);
         }
-
+        myCollider.enabled = false;
     }
 
     public void Explode()
@@ -175,6 +184,7 @@ public class Bungpeo : EnemyBase
    [PunRPC]
     public void IsActivateRPC()
     {
+        //이거 파편 관련 된거임
         IsActivateFragment++;
         if (IsActivateFragment == 4)
         {
@@ -192,7 +202,7 @@ public class Bungpeo : EnemyBase
 
     public override void Move(Vector3 direction)
     {
-        photonView.RPC("MoveRPC", RpcTarget.All, direction);
+        //photonView.RPC("MoveRPC", RpcTarget.All, direction);
     }
 
     public override void Freeze(Vector3 direction, bool isFreeze)
@@ -237,8 +247,29 @@ public class Bungpeo : EnemyBase
     [PunRPC]
     public void FreezeRPC(Vector3 direction, bool isFreeze)
     {
+        if (isFreeze == true)
+        {
+            myCollider.enabled = false;
+            animator.speed = 0f;
+            IsFreeze.SetActive(true);
+        }
+        else if (isFreeze == false)
+        {
 
+            StartCoroutine(FreezeCor());
+        }
+        else
+        {
+            Debug.Log("빅빈 프리즈 고장남");
+        }
     }
-    
+    IEnumerator FreezeCor()
+    {
+        yield return new WaitForSeconds(FreezeTime);
+
+        animator.speed = 1f;
+        myCollider.enabled = true;
+        IsFreeze.SetActive(false);
+    }
 
 }
