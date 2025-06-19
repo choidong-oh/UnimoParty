@@ -14,5 +14,4 @@ public class Inventory
     public List<SpaceShipData> spaceShipDatas = new List<SpaceShipData>();
 
     public List<CharacterData> chracterDatas = new List<CharacterData>();
-
 }

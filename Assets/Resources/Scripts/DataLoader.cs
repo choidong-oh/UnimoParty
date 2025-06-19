@@ -30,10 +30,10 @@ public class DataLoader
             string[] lines = csvFIles.text.Split('\n');
             switch (csvFIles.name)
             {
-                case "Enemy":
-                    Debug.Log("Enemy csv 로드");
-                    for (int i = 1; i < lines.Length - 1; i++)
-                    {
+                //case "Enemy":
+                //    Debug.Log("Enemy csv 로드");
+                //    for (int i = 1; i < lines.Length - 1; i++)
+                //    {
                         //string[] values = lines[i].Split(',');
                         ////EnemyBase.INDEX = int.Parse(values[0]);
                         //enemyData.enemyName = values[1].ToString();
@@ -41,8 +41,8 @@ public class DataLoader
                         //enemyData.enemyMoveSpeed = float.Parse(values[4]);
 
                         //item.Value.Add(enemyData);
-                    }
-                    break;
+                    //}
+                    //break;
                         
                 //case "Item":
                 //    Debug.Log("Item csv 로드");

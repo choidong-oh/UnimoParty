@@ -17,7 +17,9 @@ public class IngameObserver
     public int currentPlayerRank;
 
 
-    private bool isGameOver = false;
+    public bool isGameOver = false;
+    public int mainGameOverNum;
+    public int subGameOverNum;
     ItemData _selectItem;
     public ItemGetRate getItemRate = new ItemGetRate();
     System.Random _itemRandomNum;
@@ -52,8 +54,11 @@ public class IngameObserver
 
             SceneManager.LoadScene(1);
 
-            // 여기에 포톤 추가.
-            // OnGameEnd?.Invoke();
+            //if(LobbyManager.엑터 넘버 리스트. 플레이어 카운트가 <= 1)
+            //{
+            //    Manager.Instance.observer.mainGameOverNum = (int)GameEndConditionList.LiveAlone;
+            //    OnGameEnd?.Invoke();
+            //}
         }
     }
 
@@ -142,9 +147,9 @@ public class IngameObserver
 
     public void DeliveryFairy()
     {
-        Manager.Instance.goalCount.GoalFairyValue_1 -= UserPlayer.gamedata.playerFairyType.FairyDataType_1;
-        Manager.Instance.goalCount.GoalFairyValue_2 -= UserPlayer.gamedata.playerFairyType.FairyDataType_2;
-        Manager.Instance.goalCount.GoalFairyValue_3 -= UserPlayer.gamedata.playerFairyType.FairyDataType_3;
+        Manager.Instance.tempFairyValue_1 -= UserPlayer.gamedata.playerFairyType.FairyDataType_1;
+        Manager.Instance.tempFairyValue_2 -= UserPlayer.gamedata.playerFairyType.FairyDataType_2;
+        Manager.Instance.tempFairyValue_3 -= UserPlayer.gamedata.playerFairyType.FairyDataType_3;
 
         tempPlayerFairy.FairyDataType_1 = 0;
         tempPlayerFairy.FairyDataType_2 = 0;
