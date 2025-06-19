@@ -1,4 +1,5 @@
 using Photon.Pun;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -22,8 +23,6 @@ public class ItemInputB : MonoBehaviourPunCallbacks, IFreeze
 
     [SerializeField] InputActionReference triggerInputActionReference; //트리거
 
-    [SerializeField] GameObject gun2Prefab;
-
     Transform firepos; //모델의 끝부분
 
     [SerializeField] Transform rightController; //오른쪽 컨트롤러
@@ -36,7 +35,7 @@ public class ItemInputB : MonoBehaviourPunCallbacks, IFreeze
     GameObject newItem;
 
     //스크립트
-    [SerializeField] XrControllerMgr XrControllerMgrObj;
+    [SerializeField] XrControllerMgr xrControllerMgr;
 
 
     //아이템 위치 (자식객체)
@@ -54,9 +53,11 @@ public class ItemInputB : MonoBehaviourPunCallbacks, IFreeze
     {
         var modelGun2 = rightController.gameObject.GetComponent<ActionBasedController>().model;
 
+
         invenItem1 = modelGun2.GetChild(2);
         invenItem2 = modelGun2.GetChild(3);
         invenItem3 = modelGun2.GetChild(4);
+
     }
 
     void InvenCreateItem()
@@ -123,6 +124,11 @@ public class ItemInputB : MonoBehaviourPunCallbacks, IFreeze
         bInputActionReference.action.performed += ControllerB;
 
         triggerInputActionReference.action.performed += OnTriggerPressed;
+
+
+        //아이템 입힘
+        itemQueue = xrControllerMgr.publicitemQueue;
+
     }
 
     public override void OnDisable()
@@ -154,7 +160,7 @@ public class ItemInputB : MonoBehaviourPunCallbacks, IFreeze
         //큐에 담겨진 아이템이 없으면
         if (itemQueue.Count <= 0)
         {
-            XrControllerMgrObj.IsItemObj(false);
+            xrControllerMgr.IsItemObj(false);
             return;
         }
         string nextItem = itemQueue.Peek();
@@ -165,6 +171,10 @@ public class ItemInputB : MonoBehaviourPunCallbacks, IFreeze
 
     GameObject ItemCreate(string ItemPrefabName)
     {
+        if(ItemPrefabName == "TestItem1")
+        {
+            ItemPrefabName = "TestItem";
+        }
         firepos = rightController.gameObject.GetComponentInChildren<ActionBasedController>().model.GetChild(0).transform;
         newItem = PhotonNetwork.Instantiate(ItemPrefabName, firepos.position, Quaternion.identity);
         newItem.transform.parent = firepos;
@@ -181,12 +191,12 @@ public class ItemInputB : MonoBehaviourPunCallbacks, IFreeze
         if (isItemInputB == true)
         {
             OnEnableItem();
-            if (itemQueue.Count == 0)
-            {
-                itemQueue.Enqueue("Boomprefab");
-                itemQueue.Enqueue("PotionPrefab1");
-                itemQueue.Enqueue("TestItem");
-            }
+            //if (itemQueue.Count == 0)
+            //{
+            //    itemQueue.Enqueue("Boomprefab");
+            //    itemQueue.Enqueue("PotionPrefab1");
+            //    itemQueue.Enqueue("TestItem");
+            //}
             if (currentItem == null)
             {
                 string QueueItem = itemQueue.Peek();
@@ -210,7 +220,7 @@ public class ItemInputB : MonoBehaviourPunCallbacks, IFreeze
         //혹시 몰라 안전코드
         if (itemQueue.Count <= 0)
         {
-            XrControllerMgrObj.IsItemObj(false);
+            xrControllerMgr.IsItemObj(false);
             return;
         }
 
@@ -222,7 +232,7 @@ public class ItemInputB : MonoBehaviourPunCallbacks, IFreeze
 
         if (itemQueue.Count <= 0)
         {
-            XrControllerMgrObj.IsItemObj(false);
+            xrControllerMgr.IsItemObj(false);
             return;
         }
         string nextItem = itemQueue.Peek();
@@ -236,7 +246,7 @@ public class ItemInputB : MonoBehaviourPunCallbacks, IFreeze
         //큐에 담겨진 아이템이 없으면
         if (itemQueue.Count <= 0)
         {
-            XrControllerMgrObj.IsItemObj(false);
+            xrControllerMgr.IsItemObj(false);
             return;
         }
     }
@@ -244,6 +254,7 @@ public class ItemInputB : MonoBehaviourPunCallbacks, IFreeze
     public void AddQueueItem(string ItemName)
     {
         itemQueue.Enqueue(ItemName);
+        InvenCreateItem();
     }
 
     public void Freeze(bool IsFreeze)

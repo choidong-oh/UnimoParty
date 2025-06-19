@@ -1,4 +1,6 @@
 using Photon.Pun;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.XR.Interaction.Toolkit;
@@ -14,6 +16,7 @@ public class XrControllerMgr : MonoBehaviourPunCallbacks
     [SerializeField] GameObject handHarvestObj;
     [SerializeField] GameObject ItemObj;
     [SerializeField] ItemInputB itemInputB;
+    [SerializeField] HandHarvest handHarvest;
 
     [Header("총 프리팹 (모델)")]
     [SerializeField] GameObject harvestGun;
@@ -23,6 +26,9 @@ public class XrControllerMgr : MonoBehaviourPunCallbacks
     bool isItemController = false;   //처음은 채집총 시작
     GameObject RController;
     Transform lasetRcontroller; //temp
+
+    //총 가지고 있는 아이템
+    public Queue<string> publicitemQueue = new Queue<string>();
 
     private void Start()
     {
@@ -35,6 +41,9 @@ public class XrControllerMgr : MonoBehaviourPunCallbacks
         base.OnEnable();
         AInputActionReference.action.Enable();
         AInputActionReference.action.performed += ControllerA;
+
+        //임시 아이템 추가
+        ItemQueueAdd("start");
 
     }
 
@@ -74,6 +83,7 @@ public class XrControllerMgr : MonoBehaviourPunCallbacks
 
     public void IsItemObj(bool isItem)
     {
+        ItemQueueAdd("start");
         ItemObj.SetActive(isItem);
         handHarvestObj.SetActive(!isItem);
         if (isItem == true)
@@ -94,11 +104,29 @@ public class XrControllerMgr : MonoBehaviourPunCallbacks
 
         }
 
+
     }
 
+    void ItemQueueAdd(string item)
+    {
+        if (publicitemQueue.Count == 0)
+        {
+            publicitemQueue.Enqueue("Boomprefab");
+            publicitemQueue.Enqueue("PotionPrefab1");
+            publicitemQueue.Enqueue("TestItem1");
+        }
 
+        if(item == "start")
+        {
+            return;
+        }
 
-
+        publicitemQueue.Enqueue(item);
+        var newItem = publicitemQueue.Peek();
+        itemInputB.AddQueueItem(newItem);
+        handHarvest.AddQueueItem(newItem);
+    }
+  
 
 
 

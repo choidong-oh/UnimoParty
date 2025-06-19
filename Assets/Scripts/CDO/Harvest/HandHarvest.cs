@@ -1,5 +1,6 @@
 using Photon.Pun;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.XR.Interaction.Toolkit;
@@ -9,6 +10,10 @@ public class HandHarvest : MonoBehaviourPunCallbacks, IFreeze
     [SerializeField] GameObject cameraOffset;
 
     [SerializeField] XRRayInteractor rayInteractor;
+
+    [SerializeField] XrControllerMgr xrControllerMgr;
+
+    [SerializeField] Transform rightController; //오른쪽 컨트롤러
 
     [SerializeField] int spiritPoint = 0; //
     public int SpiritPoint { get { return spiritPoint; } set { if (value < 0) { Debug.Log("정령음수됨"); value = 0; } spiritPoint = value; } }
@@ -20,6 +25,8 @@ public class HandHarvest : MonoBehaviourPunCallbacks, IFreeze
     [SerializeField] float hapticAmplitude;
     [SerializeField] float hapticDuraiton;
     int gap = 10;
+
+    public Queue<string> itemQueue = new Queue<string>();
 
     //콜백은 OnEnable 안댐
     //player은 안사라지니깐 awake, start에 넣으면 댈듯 
@@ -34,6 +41,14 @@ public class HandHarvest : MonoBehaviourPunCallbacks, IFreeze
         {
             StartCoroutine(FlowerDistanceCor());
         }
+        StartCoroutine(wait111());
+    }
+
+    IEnumerator wait111()
+    {
+        yield return null;
+        OnEnableItem();
+
     }
 
     public override void OnEnable()
@@ -44,6 +59,16 @@ public class HandHarvest : MonoBehaviourPunCallbacks, IFreeze
             activateAction.action.performed += OnTriggerPressed;
             activateAction.action.canceled += OnTriggerReleased;
         }
+
+        StartCoroutine(waitr());
+        //itemQueue = xrControllerMgr.publicitemQueue;
+    }
+
+    IEnumerator waitr()
+    {
+        yield return new WaitForSeconds(1);
+        itemQueue = xrControllerMgr.publicitemQueue;
+        InvenCreateItem();
     }
 
     public override void OnDisable()
@@ -213,5 +238,91 @@ public class HandHarvest : MonoBehaviourPunCallbacks, IFreeze
             Manager.Instance.observer.DeliveryFairy();
         }
     }
+
+    public void AddQueueItem(string ItemName)
+    {
+        itemQueue.Enqueue(ItemName);
+        InvenCreateItem();
+    }
+
+    //아이템 위치 (자식객체)
+    Transform invenItem1;
+    Transform invenItem2;
+    Transform invenItem3;
+
+    //아이템 생성 프리팹
+    GameObject item1;
+    GameObject item2;
+    GameObject item3;
+
+    void OnEnableItem()
+    {
+        var modelGun1 = rightController.gameObject.GetComponent<ActionBasedController>();
+       
+            var modelGun2 = modelGun1.model;
+
+        invenItem1 = modelGun2.GetChild(3);
+        invenItem2 = modelGun2.GetChild(4);
+        invenItem3 = modelGun2.GetChild(5);
+
+    }
+
+    void InvenCreateItem()
+    {
+
+        if (item1 != null)
+        {
+            PhotonNetwork.Destroy(item1);
+        }
+        if (item2 != null)
+        {
+            PhotonNetwork.Destroy(item2);
+        }
+        if (item3 != null)
+        {
+            PhotonNetwork.Destroy(item3);
+        }
+
+
+
+
+        string[] arr = itemQueue.ToArray();
+        if (arr.Length == 0)
+        {
+            return;
+        }
+
+        item1 = PhotonNetwork.Instantiate(arr[0], transform.position, Quaternion.identity);
+        item1.transform.SetParent(invenItem1, false);
+        item1.transform.localPosition = Vector3.zero;
+        item1.GetComponent<Rigidbody>().useGravity = false;
+        item1.transform.localScale = Vector3.one * 0.5f;
+
+        if (arr.Length == 1)
+        {
+            return;
+        }
+
+        item2 = PhotonNetwork.Instantiate(arr[1], transform.position, Quaternion.identity);
+        item2.transform.SetParent(invenItem2, false);
+        item2.transform.localPosition = Vector3.zero;
+        item2.GetComponent<Rigidbody>().useGravity = false;
+        item2.transform.localScale = Vector3.one * 0.5f;
+
+        if (arr.Length == 2)
+        {
+            return;
+        }
+
+        item3 = PhotonNetwork.Instantiate(arr[2], transform.position, Quaternion.identity);
+        item3.transform.SetParent(invenItem3, false);
+        item3.transform.localPosition = Vector3.zero;
+        item3.GetComponent<Rigidbody>().useGravity = false;
+        item3.transform.localScale = Vector3.one * 0.5f;
+
+
+
+    }
+
 
 }
