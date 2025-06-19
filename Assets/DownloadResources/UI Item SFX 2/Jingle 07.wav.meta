@@ -1,0 +1,31 @@
+fileFormatVersion: 2
+guid: f5c10af6b9e053b4d8ffb5e9af122d51
+timeCreated: 1539493133
+licenseType: Store
+AudioImporter:
+  externalObjects: {}
+  serializedVersion: 6
+  defaultSettings:
+    loadType: 0
+    sampleRateSetting: 0
+    sampleRateOverride: 44100
+    compressionFormat: 1
+    quality: 1
+    conversionMode: 0
+  platformSettingOverrides: {}
+  forceToMono: 0
+  normalize: 1
+  preloadAudioData: 1
+  loadInBackground: 0
+  ambisonic: 0
+  3D: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 130792
+  packageName: UI & Item Sound Effects 2
+  packageVersion: 1.0
+  assetPath: Assets/UI Item SFX 2/Jingle 07.wav
+  uploadId: 272701

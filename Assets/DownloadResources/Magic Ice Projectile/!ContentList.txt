@@ -1,0 +1,31 @@
+Charge Up.wav
+Frozen Meaty Shatter_01.wav
+Frozen Meaty Shatter_02.wav
+Frozen Meaty Shatter_03.wav
+Frozen Meaty Shatter_04.wav
+Ice Arrow Miss_01.wav
+Ice Arrow Miss_02.wav
+Ice Arrow Miss_03.wav
+Ice Arrow Miss_04.wav
+Ice Arrow Miss_05.wav
+Ice Arrow Miss_06.wav
+Ice Arrow Miss_07.wav
+Ice Break, Shatter, Smash_01.wav
+Ice Break, Shatter, Smash_02.wav
+Ice Break, Shatter, Smash_03.wav
+Ice Break, Shatter, Smash_04.wav
+Ice Breaking, Cracking.wav
+Ice Crystal Shatter, Break, Smash_01.wav
+Ice Crystal Shatter, Break, Smash_02.wav
+Ice Crystal Shatter, Break, Smash_03.wav
+Ice Crystal Shatter, Break, Smash_04.wav
+Ice Projectile Shoot_01.wav
+Ice Projectile Shoot_02.wav
+Ice Projectile Shoot_03.wav
+Iceball Travel and Impact_01.wav
+Iceball Travel and Impact_02.wav
+Impact Sudden Freeze_01.wav
+Impact Sudden Freeze_02.wav
+Impact Sudden Freeze_03.wav
+Impact Sudden Freeze_04.wav
+Impact Sudden Freeze_05.wav

@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 5cfc419b2dcdf4b459190bf68494645a
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 254961
+  packageName: Ice Shader - Melting Ice Cubes
+  packageVersion: 1.0
+  assetPath: Assets/ICeShader/Scenes/SampleSceneLightingSettings.lighting
+  uploadId: 598288

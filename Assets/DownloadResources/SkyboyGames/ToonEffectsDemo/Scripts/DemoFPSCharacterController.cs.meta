@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 3fd0d3ab8bc55fb4ba6cb65e72dbdc9a
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 174861
+  packageName: Toon Effects
+  packageVersion: 1.0
+  assetPath: Assets/SkyboyGames/ToonEffectsDemo/Scripts/DemoFPSCharacterController.cs
+  uploadId: 379396
