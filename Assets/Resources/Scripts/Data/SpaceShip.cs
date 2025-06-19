@@ -20,5 +20,4 @@ public class SpaceShip : MonoBehaviour
             ItemSlot[i].gameObject.SetActive(true);
         }
     }
-
 }
