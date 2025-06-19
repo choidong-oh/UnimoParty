@@ -218,6 +218,7 @@ public class Laycock : EnemyBase
         }
         else if (isFreeze == false)
         {
+            animator.SetTrigger("Freeze");
             ImFreeze = isFreeze;
             StartCoroutine(FreezeCor());
             ShootLazer();
