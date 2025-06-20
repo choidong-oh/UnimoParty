@@ -177,10 +177,9 @@ public class Flower : MonoBehaviourPun
     {
         currentProgress = 0;
     }
-
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        if (collision.gameObject.tag == "Ground")
+        if (other.gameObject.tag == "Ground")
         {
             Rigidbody rb = gameObject.GetComponent<Rigidbody>();
             rb.useGravity = false;
