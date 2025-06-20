@@ -177,6 +177,7 @@ public class ItemInputB : MonoBehaviourPunCallbacks, IFreeze
         }
         firepos = rightController.gameObject.GetComponentInChildren<ActionBasedController>().model.GetChild(0).transform;
         newItem = PhotonNetwork.Instantiate(ItemPrefabName, firepos.position, Quaternion.identity);
+        newItem.transform.rotation = rightController.transform.rotation;
         newItem.transform.parent = firepos;
         newItem.gameObject.GetComponent<Rigidbody>().useGravity = false;
 
