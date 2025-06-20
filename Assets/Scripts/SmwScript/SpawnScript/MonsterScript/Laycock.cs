@@ -172,7 +172,7 @@ public class Laycock : EnemyBase
 
         yield return new WaitUntil(() => !ChargeParticles.IsAlive(true));
 
-        animator.SetTrigger("action");
+        animator.SetBool("action", true);
         yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName("anim_MON006_ShootStart") && !animator.IsInTransition(0));
         yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f);
 
