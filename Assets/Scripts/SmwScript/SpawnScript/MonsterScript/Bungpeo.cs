@@ -119,21 +119,8 @@ public class Bungpeo : EnemyBase
         myCollider.enabled = true;
 
         yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName(explodeStateName));
-        while (animator.GetCurrentAnimatorStateInfo(0).IsName(explodeStateName))
+        while (animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1f)
             yield return null;
-
-
-        // State가 재생되는 순간, 연결된 클립길이 가져오기
-        AnimatorClipInfo[] clips = animator.GetCurrentAnimatorClipInfo(0);
-        if (clips.Length == 0)
-        {
-            Debug.LogWarning($"{explodeStateName} 클립이 없음");
-            yield break;
-        }
-
-        float clipLength = clips[0].clip.length;
-
-        yield return new WaitForSeconds(clipLength);
 
         Explode();
     }
@@ -211,7 +198,7 @@ public class Bungpeo : EnemyBase
     }
 
 
-   [PunRPC]
+    [PunRPC]
     public void IsActivateRPC()
     {
         //이거 파편 관련 된거임
