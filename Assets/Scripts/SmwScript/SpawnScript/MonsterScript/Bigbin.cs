@@ -79,7 +79,7 @@ public class Bigbin : EnemyBase
         yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName(state2));
         while (animator.GetCurrentAnimatorStateInfo(0).IsName(state2))
             yield return null;
-        JumpParticles.SetActive(true);  
+        JumpParticles.SetActive(true);
         MoveSpeed += FirstSpeed;
 
 
@@ -233,7 +233,7 @@ public class Bigbin : EnemyBase
         }
     }
 
-    
+
     public override void Move(Vector3 direction)
     {
         photonView.RPC("MoveRPC", RpcTarget.All, direction);

@@ -1023,8 +1023,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7626579411440929942, guid: 68d30902df87b5d40b777c9b45999f53, type: 3}
       propertyPath: enemyPrefab
-      value: 
-      objectReference: {fileID: 2682052996701666488, guid: 4c925edc2ee3a4646816f58583d8100e, type: 3}
+      value: Bungpeo
+      objectReference: {fileID: 0}
     - target: {fileID: 7699131707580523911, guid: 68d30902df87b5d40b777c9b45999f53, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
