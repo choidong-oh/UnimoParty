@@ -212,6 +212,7 @@ GameObject:
   - component: {fileID: 1384777306440658602}
   - component: {fileID: -2929386769901427779}
   - component: {fileID: 6814298388328768283}
+  - component: {fileID: 648996062448806593}
   m_Layer: 7
   m_Name: Bungpeo
   m_TagString: Monster
@@ -462,6 +463,20 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &648996062448806593
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2682052996701666488}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a35fd54ac079a8b47aa6549789157333, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  iconPrefab: {fileID: 4922837886278913688, guid: 64491c38b1af452409456a53259a0f43, type: 3}
+  clampOnRadar: 1
 --- !u!1 &2774577515815760134
 GameObject:
   m_ObjectHideFlags: 0

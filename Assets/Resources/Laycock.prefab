@@ -406,6 +406,7 @@ GameObject:
   - component: {fileID: 5192853079454639722}
   - component: {fileID: 8675857789943882067}
   - component: {fileID: 2820490197411291148}
+  - component: {fileID: 4502273977049202769}
   m_Layer: 7
   m_Name: Laycock
   m_TagString: Laycock
@@ -533,6 +534,20 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &4502273977049202769
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6964213239136335483}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a35fd54ac079a8b47aa6549789157333, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  iconPrefab: {fileID: 4922837886278913688, guid: 64491c38b1af452409456a53259a0f43, type: 3}
+  clampOnRadar: 1
 --- !u!1 &7069069335575830069
 GameObject:
   m_ObjectHideFlags: 0
