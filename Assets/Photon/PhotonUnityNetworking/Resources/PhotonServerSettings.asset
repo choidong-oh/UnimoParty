@@ -57,6 +57,7 @@ MonoBehaviour:
   - MoveRPC
   - ShootLazer
   - SpawnRPC
+  - SetupPlayer
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1
