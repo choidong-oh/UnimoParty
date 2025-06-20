@@ -1,10 +1,8 @@
-using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.SceneManagement;
+using Photon.Pun;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.UIElements;
 
 public class Flower : MonoBehaviourPun
 {
@@ -93,7 +91,7 @@ public class Flower : MonoBehaviourPun
     //수확 시작
     private IEnumerator HarvestCoroutine()
     {
-        
+
 
         while (currentProgress < harvestTime)
         {
@@ -159,7 +157,7 @@ public class Flower : MonoBehaviourPun
 
         this.gameObject.SetActive(false);
 
-        photonView.RPC("FlowerSetAcive", RpcTarget.Others,false);
+        photonView.RPC("FlowerSetAcive", RpcTarget.Others, false);
 
         Debug.Log("채집 완료!");
     }

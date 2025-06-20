@@ -100,26 +100,15 @@ public class Bigbin : EnemyBase
         yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName(state4));
         while (animator.GetCurrentAnimatorStateInfo(0).IsName(state4))
             yield return null;
+
         JumpParticles.SetActive(true);
 
         MoveSpeed += FirstSpeed;
 
-
-
-
         yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName(state5));
+        while (animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1f)
+            yield return null;
 
-        var infos = animator.GetCurrentAnimatorClipInfo(0);
-        if (infos.Length > 0)
-        {
-            var playingClip = infos[0].clip;
-            float duration = playingClip.length / animator.GetCurrentAnimatorStateInfo(0).speed;
-            yield return new WaitForSeconds(duration);
-        }
-        else
-        {
-            Debug.LogWarning("현재 재생 중인 클립이없음");
-        }
         Instantiate(JumpExplode, transform.position, Quaternion.identity);
         StopAllCoroutines();
         PoolManager.Instance.Despawn(gameObject);

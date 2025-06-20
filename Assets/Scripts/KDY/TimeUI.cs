@@ -1,7 +1,9 @@
 using UnityEngine;
 using TMPro;
+using Photon.Pun;
 
-public class TimeUI : MonoBehaviour
+
+public class TimeUI : MonoBehaviourPunCallbacks
 {
     [SerializeField] private float gameDuration = 120f;
 
@@ -13,7 +15,9 @@ public class TimeUI : MonoBehaviour
 
     private void Start()
     {
+        Manager.Instance.observer.OnGameEnd += GameOverUI;
         currentTime = gameDuration;
+
     }
 
     private void Update()
@@ -23,7 +27,8 @@ public class TimeUI : MonoBehaviour
             currentTime = 0f;
 
             //게임 종료 호출  isGameOver 처리 포함됨 (팀장님이 반영함)
-            Manager.Instance.observer.EndGame();
+            GameOverUI();
+            //Manager.Instance.observer.EndGame();
 
             //타이머 비활성화로 정지
             enabled = false;
@@ -36,5 +41,11 @@ public class TimeUI : MonoBehaviour
         int seconds = Mathf.FloorToInt(currentTime % 60f);
 
         timeText.text = $"{minutes:00}:{seconds:00}";
+    }
+
+    void GameOverUI()
+    {
+        PhotonNetwork.LoadLevel(1);
+        PhotonNetwork.LeaveRoom();
     }
 }
