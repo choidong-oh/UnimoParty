@@ -177,19 +177,7 @@ public class Flower : MonoBehaviourPun
     {
         currentProgress = 0;
     }
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.tag == "Ground")
-        {
-            Rigidbody rb = gameObject.GetComponent<Rigidbody>();
-            rb.useGravity = false;
 
-            rb.constraints = RigidbodyConstraints.FreezeAll;
-
-            Collider collider = gameObject.GetComponent<Collider>();
-            collider.isTrigger = true;
-        }
-    }
 }
 
 
