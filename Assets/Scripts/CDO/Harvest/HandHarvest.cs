@@ -46,7 +46,7 @@ public class HandHarvest : MonoBehaviourPunCallbacks, IFreeze
 
     IEnumerator wait111()
     {
-        yield return null;
+        yield return new WaitForSeconds(0.5f);
         OnEnableItem();
 
     }
