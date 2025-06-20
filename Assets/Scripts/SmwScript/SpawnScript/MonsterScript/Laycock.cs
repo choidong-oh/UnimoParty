@@ -210,18 +210,12 @@ public class Laycock : EnemyBase
             myCollider.enabled = false;
             animator.speed = 0f;
             IsFreeze.SetActive(true);
-            if (lazerCoroutine != null)
-            {
-                StopCoroutine(lazerCoroutine);
-                lazerCoroutine = null;
-            }
         }
         else if (isFreeze == false)
         {
             animator.SetTrigger("Freeze");
             ImFreeze = isFreeze;
             StartCoroutine(FreezeCor());
-            ShootLazer();
         }
         else
         {
