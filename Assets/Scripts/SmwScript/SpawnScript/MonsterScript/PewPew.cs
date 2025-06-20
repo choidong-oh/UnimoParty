@@ -111,8 +111,10 @@ public class PewPew : EnemyBase
         }
         transform.position = newPos;
 
-        yield return new WaitForSeconds(1f);
 
+        animator.speed = 0f;
+        yield return new WaitForSeconds(2f);
+        animator.speed = 1f;
 
         myCollider.enabled = true;
 
