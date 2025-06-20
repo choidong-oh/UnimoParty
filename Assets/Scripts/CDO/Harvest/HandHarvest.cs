@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.XR;
 using UnityEngine.XR.Interaction.Toolkit;
 
 public class HandHarvest : MonoBehaviourPunCallbacks, IFreeze
@@ -46,7 +47,7 @@ public class HandHarvest : MonoBehaviourPunCallbacks, IFreeze
 
     IEnumerator wait111()
     {
-        yield return null;
+        yield return new WaitUntil(() => rightController.gameObject.activeSelf);
         OnEnableItem();
 
     }

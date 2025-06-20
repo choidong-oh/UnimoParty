@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af1967572b0a3db4fa91c0b74289555f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  monsterPrefab: {fileID: 6964213239136335483, guid: 2cee181b6e497ff4e885baafd38b2338, type: 3}
+  monsterPrefab: Laycock
   maxCount: 10
 --- !u!1 &1313182949433518002
 GameObject:
@@ -90,7 +90,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d5540f24b4eeb14ba3134f6ef433a63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyPrefab: {fileID: 1072457946450581002, guid: 4c7b23f28121b2f4c95603a0ab85877a, type: 3}
+  enemyPrefab: Pewpew
   maxEnemies: 10
   spawnTimer: 3
 --- !u!1 &1659351243827333647
@@ -137,7 +137,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 690ee294ac5abbd45a03d63b8e2fcaad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyPrefab: {fileID: 2682052996701666488, guid: 4c925edc2ee3a4646816f58583d8100e, type: 3}
+  enemyPrefab: Bungpeo
   maxEnemies: 10
   spawnTimer: 3
   NoSpawn: 5
@@ -186,7 +186,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 690ee294ac5abbd45a03d63b8e2fcaad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyPrefab: {fileID: 1313915641652497427, guid: 04f781e2c9327b844a37f146580b2ef3, type: 3}
+  enemyPrefab: Bigbin
   maxEnemies: 10
   spawnTimer: 3
   NoSpawn: 5
@@ -235,7 +235,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 690ee294ac5abbd45a03d63b8e2fcaad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyPrefab: {fileID: 2560127493471256366, guid: d2f351637dd3ff545b15ced3c30fa928, type: 3}
+  enemyPrefab: ShookShook
   maxEnemies: 10
   spawnTimer: 3
   NoSpawn: 5
@@ -284,7 +284,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 690ee294ac5abbd45a03d63b8e2fcaad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyPrefab: {fileID: 8470377270446183419, guid: 927e35cb881a2ef449423e0b6cb1b1c9, type: 3}
+  enemyPrefab: Burnduri
   maxEnemies: 10
   spawnTimer: 3
   NoSpawn: 5
@@ -340,21 +340,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   poolItems:
-  - prefab: {fileID: 1072457946450581002, guid: 4c7b23f28121b2f4c95603a0ab85877a, type: 3}
+  - prefabName: Bigbin
     defaultCapacity: 10
     maxSize: 50
-  - prefab: {fileID: 8470377270446183419, guid: 927e35cb881a2ef449423e0b6cb1b1c9, type: 3}
+  - prefabName: Bungpeo
     defaultCapacity: 10
     maxSize: 50
-  - prefab: {fileID: 2560127493471256366, guid: d2f351637dd3ff545b15ced3c30fa928, type: 3}
+  - prefabName: Burnduri
     defaultCapacity: 10
     maxSize: 50
-  - prefab: {fileID: 1313915641652497427, guid: 04f781e2c9327b844a37f146580b2ef3, type: 3}
+  - prefabName: Laycock
     defaultCapacity: 10
     maxSize: 50
-  - prefab: {fileID: 2682052996701666488, guid: 4c925edc2ee3a4646816f58583d8100e, type: 3}
+  - prefabName: Pewpew
     defaultCapacity: 10
     maxSize: 50
-  - prefab: {fileID: 6964213239136335483, guid: 2cee181b6e497ff4e885baafd38b2338, type: 3}
+  - prefabName: ShookShook
     defaultCapacity: 10
     maxSize: 50

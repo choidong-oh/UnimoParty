@@ -170,7 +170,7 @@ public class PewPew : EnemyBase
         {
             EnemyBase otherEnemy = other.GetComponent<EnemyBase>();
             if (otherEnemy == null)
-                return; 
+                return;
 
 
             if (otherEnemy.ImFreeze)

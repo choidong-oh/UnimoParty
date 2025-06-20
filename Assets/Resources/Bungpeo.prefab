@@ -213,6 +213,7 @@ GameObject:
   - component: {fileID: -2929386769901427779}
   - component: {fileID: 6814298388328768283}
   - component: {fileID: 3915703617830455850}
+  - component: {fileID: -1196211123506306009}
   m_Layer: 7
   m_Name: Bungpeo
   m_TagString: Monster
@@ -418,8 +419,8 @@ MonoBehaviour:
   enemyMoveSpeed: 0
   sizeScale: 0
   spawnCount: 0
-  explosionForce: 20
-  explosionRadius: 20
+  explosionForce: 30
+  explosionRadius: 30
   upwardsModifier: 1
   explosionMask:
     serializedVersion: 2
@@ -485,6 +486,22 @@ MonoBehaviour:
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &-1196211123506306009
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2682052996701666488}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
 --- !u!1 &2774577515815760134
 GameObject:
   m_ObjectHideFlags: 0
@@ -1048,7 +1065,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3260197632824321117, guid: 73d9cc76526d75848bfd7bd7a1dac735, type: 3}
       propertyPath: m_Layer
-      value: 7
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 4067781856247368626, guid: 73d9cc76526d75848bfd7bd7a1dac735, type: 3}
       propertyPath: m_Layer
@@ -1199,7 +1216,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3260197632824321117, guid: 73d9cc76526d75848bfd7bd7a1dac735, type: 3}
       propertyPath: m_Layer
-      value: 7
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 4067781856247368626, guid: 73d9cc76526d75848bfd7bd7a1dac735, type: 3}
       propertyPath: m_Layer
@@ -1354,7 +1371,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3260197632824321117, guid: 73d9cc76526d75848bfd7bd7a1dac735, type: 3}
       propertyPath: m_Layer
-      value: 7
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 4067781856247368626, guid: 73d9cc76526d75848bfd7bd7a1dac735, type: 3}
       propertyPath: m_Layer
@@ -1505,7 +1522,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3260197632824321117, guid: 73d9cc76526d75848bfd7bd7a1dac735, type: 3}
       propertyPath: m_Layer
-      value: 7
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 4067781856247368626, guid: 73d9cc76526d75848bfd7bd7a1dac735, type: 3}
       propertyPath: m_Layer
