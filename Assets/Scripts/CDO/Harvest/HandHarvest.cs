@@ -261,9 +261,9 @@ public class HandHarvest : MonoBehaviourPunCallbacks, IFreeze
        
             var modelGun2 = modelGun1.model;
 
-        invenItem1 = modelGun2.GetChild(3);
-        invenItem2 = modelGun2.GetChild(4);
-        invenItem3 = modelGun2.GetChild(5);
+        invenItem1 = modelGun2.GetChild(2);
+        invenItem2 = modelGun2.GetChild(3);
+        invenItem3 = modelGun2.GetChild(4);
 
     }
 
