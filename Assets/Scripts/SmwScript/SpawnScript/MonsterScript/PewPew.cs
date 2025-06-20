@@ -89,6 +89,8 @@ public class PewPew : EnemyBase
     }
 
 
+
+
     IEnumerator GoPewPew()
     {
         myCollider = GetComponent<Collider>();
@@ -113,7 +115,7 @@ public class PewPew : EnemyBase
 
 
         animator.speed = 0f;
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1.5f);
         animator.speed = 1f;
 
         myCollider.enabled = true;
@@ -173,8 +175,6 @@ public class PewPew : EnemyBase
 
             if (otherEnemy.ImFreeze)
             {
-                Manager.Instance.observer.HitPlayer(damage);
-
                 Vector3 hitPoint = other.ClosestPoint(transform.position);
 
                 Vector3 normal = (hitPoint - transform.position).normalized;
@@ -182,14 +182,13 @@ public class PewPew : EnemyBase
 
                 GameObject inst = Instantiate(CrashPewPew, hitPoint, rot);
 
-                PoolManager.Instance.Despawn(gameObject);
                 Spawner.SpawnOne();
+
+                PoolManager.Instance.Despawn(gameObject);
             }
         }
         if (other.gameObject.tag == "Aube")
         {
-            Manager.Instance.observer.HitPlayer(damage);
-
             Vector3 hitPoint = other.ClosestPoint(transform.position);
 
             Vector3 normal = (hitPoint - transform.position).normalized;
@@ -244,7 +243,7 @@ public class PewPew : EnemyBase
         }
         else
         {
-            Debug.Log("퓨퓨 프리즈 고장남");
+            Debug.LogWarning("퓨퓨 프리즈 고장남");
         }
     }
     IEnumerator FreezeCor()
