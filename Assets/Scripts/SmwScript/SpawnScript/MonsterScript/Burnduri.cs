@@ -38,10 +38,6 @@ public class Burnduri : EnemyBase
     Animator animator;
     Collider myCollider;
 
-    //private AnimationClip appearanceClip;
-    //private AnimationClip encounterClip;
-    //private AnimationClip disappearClip;
-
     [SerializeField] GameObject CrashBurnduri;
 
     [SerializeField] float FreezeTime = 3;
