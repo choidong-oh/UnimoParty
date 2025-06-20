@@ -73,7 +73,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2441716627875014694}
-  - component: {fileID: 8575579929014071900}
   - component: {fileID: -3582709165692901176}
   m_Layer: 10
   m_Name: BeeShip
@@ -99,27 +98,6 @@ Transform:
   - {fileID: 3642375490984183739}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!95 &8575579929014071900
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3074103645958566556}
-  m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 90adcf789a9bd164a9c77081cde905e4, type: 3}
-  m_Controller: {fileID: 9100000, guid: 275d0bb8a116482458f7ba9deda2716c, type: 2}
-  m_CullingMode: 1
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &-3582709165692901176
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -134,6 +112,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Model: {fileID: 3074103645958566556}
   ItemSlot: []
+  shipnamek: 
 --- !u!1 &3626098518391923181
 GameObject:
   m_ObjectHideFlags: 0

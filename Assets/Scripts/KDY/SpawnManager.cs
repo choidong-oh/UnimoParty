@@ -1,20 +1,19 @@
-using System.Collections.Generic;
-using UnityEngine;
-using Photon.Pun;
 using System.Collections;
+using System.Collections.Generic;
+using Photon.Pun;
+using UnityEngine;
 
 public class SpawnManager : MonoBehaviourPunCallbacks
 {
     [Header("스폰 포인트 리스트 (인스펙터에서 수동으로 설정)")]
     public List<Transform> spawnPoints = new List<Transform>();
 
-    // 현재까지 스폰된 인덱스를 저장하는 변수
-    private int currentSpawnIndex = 0;
 
-    // 게임이 시작될 때 실행되는 함수
     private void Start()
     {
         StartCoroutine(wait());
+        Debug.Log($"받은 캐릭터 인덱스: {SelectedData.characterIndex}");
+        Debug.Log($"받은 우주선 인덱스: {SelectedData.shipIndex}");
     }
 
 
@@ -31,21 +30,44 @@ public class SpawnManager : MonoBehaviourPunCallbacks
     // 특정 인덱스 위치에 플레이어를 스폰하는 함수
     public void SpawnAtIndex(int index)
     {
-        // 유효한 인덱스인지 확인
-        if (index >= 0 && index < spawnPoints.Count )
+        if (index >= 0 && index < spawnPoints.Count)
         {
             Transform spawnPoint = spawnPoints[index];
-            Vector3 spawnPos = spawnPoint.position;
-
-            // Y축 회전만 유지하고 나머지 회전은 제거
             Quaternion yRotationOnly = Quaternion.Euler(0, spawnPoint.rotation.eulerAngles.y, 0);
 
-            PhotonNetwork.Instantiate("PlayerVariant", spawnPoint.position, yRotationOnly);
+            GameObject player = PhotonNetwork.Instantiate("PlayerVariant", spawnPoint.position, yRotationOnly);
 
+            if (player.GetComponent<PhotonView>().IsMine)
+            {
+                Debug.Log("여기 들어오냐?");
+                StartCoroutine(SetUpCharacterAndShip(player));
+            }
         }
-        else
-        {
-            Debug.LogWarning($"SpawnAtIndex: 잘못된 인덱스 {index}");
-        }
+    }
+
+    IEnumerator SetUpCharacterAndShip(GameObject player)
+    {
+        yield return new WaitForSeconds(0.1f);
+
+        Transform characterPos = player.transform.Find("XR Origin (XR Rig)/CharacterPos");
+        Transform xrOrigin = player.transform.Find("XR Origin (XR Rig)");
+
+        Transform shipPos = null;
+
+        Transform spaceShip = xrOrigin.GetChild(3);
+        shipPos = spaceShip.GetChild(1);
+
+        Debug.Log(characterPos + " ← 캐릭터 포지션");
+        Debug.Log(shipPos + " ← 우주선 포지션");
+
+        GameObject[] characters = Resources.LoadAll<GameObject>("Characters");
+        GameObject[] ships = Resources.LoadAll<GameObject>("Prefabs");
+
+        GameObject charObj = Instantiate(characters[SelectedData.characterIndex], characterPos.position, Quaternion.identity, characterPos);
+        charObj.transform.localPosition = Vector3.zero;
+
+        GameObject shipObj = Instantiate(ships[SelectedData.shipIndex], shipPos.position, Quaternion.identity, shipPos);
+        shipObj.transform.localPosition = Vector3.zero;
+
     }
 }
