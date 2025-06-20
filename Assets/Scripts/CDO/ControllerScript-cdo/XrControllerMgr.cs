@@ -145,7 +145,7 @@ public class XrControllerMgr : MonoBehaviourPunCallbacks
         if (publicitemQueue.Count == 0)
         {
             publicitemQueue.Enqueue("Boomprefab");
-            publicitemQueue.Enqueue("PotionPrefab1");
+            publicitemQueue.Enqueue("PotionPrefab2");
             publicitemQueue.Enqueue("TestItem1");
         }
 
