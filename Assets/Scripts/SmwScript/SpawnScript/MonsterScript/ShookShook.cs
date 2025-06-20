@@ -131,7 +131,6 @@ public class ShookShook : EnemyBase
 
             damage = 1;
             Manager.Instance.observer.HitPlayer(damage);
-            Debug.Log(Manager.Instance.observer.UserPlayer.gamedata.life);
 
             Vector3 hitPoint = other.ClosestPoint(transform.position);//충돌지점에 최대한 가깝게
 
@@ -159,18 +158,12 @@ public class ShookShook : EnemyBase
 
                 GameObject inst = Instantiate(CrashShookShook, hitPoint, rot);
 
-
-                Debug.Log(Manager.Instance.observer.UserPlayer.gamedata.life);
-                Manager.Instance.observer.HitPlayer(damage);
-
                 PoolManager.Instance.Despawn(gameObject);
             }
         }
 
         if (other.gameObject.tag == "Aube")
         {
-            Manager.Instance.observer.HitPlayer(damage);
-
             Vector3 hitPoint = other.ClosestPoint(transform.position);
 
             Vector3 normal = (hitPoint - transform.position).normalized;

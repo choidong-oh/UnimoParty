@@ -22,7 +22,7 @@ public class Bungpeo : EnemyBase
 
     Collider myCollider;
     string AppearAni = "anim_MON003_appear";
-    private string explodeStateName = "anim_MON003_ready02";
+    string explodeStateName = "anim_MON003_ready02";
 
     [SerializeField] GameObject CrashBunpeo;
 
@@ -39,7 +39,6 @@ public class Bungpeo : EnemyBase
         if (other.gameObject.tag == "Player")
         {
             Manager.Instance.observer.HitPlayer(damage);
-            Debug.Log(Manager.Instance.observer.UserPlayer.gamedata.life);
 
             Vector3 hitPoint = other.ClosestPoint(transform.position);//충돌지점에 최대한 가깝게
 
@@ -67,18 +66,12 @@ public class Bungpeo : EnemyBase
 
                 GameObject inst = Instantiate(CrashBunpeo, hitPoint, rot);
 
-
-                Debug.Log(Manager.Instance.observer.UserPlayer.gamedata.life);
-                Manager.Instance.observer.HitPlayer(damage);
-
                 PoolManager.Instance.Despawn(gameObject);
             }
         }
 
         if (other.gameObject.tag == "Aube")
         {
-            Manager.Instance.observer.HitPlayer(damage);
-
             Vector3 hitPoint = other.ClosestPoint(transform.position);
 
             Vector3 normal = (hitPoint - transform.position).normalized;
@@ -125,10 +118,10 @@ public class Bungpeo : EnemyBase
 
         myCollider.enabled = true;
 
-        while (!animator.GetCurrentAnimatorStateInfo(0).IsName(explodeStateName))
-        {
+        yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName(explodeStateName));
+        while (animator.GetCurrentAnimatorStateInfo(0).IsName(explodeStateName))
             yield return null;
-        }
+
 
         // State가 재생되는 순간, 연결된 클립길이 가져오기
         AnimatorClipInfo[] clips = animator.GetCurrentAnimatorClipInfo(0);
@@ -225,12 +218,11 @@ public class Bungpeo : EnemyBase
         IsActivateFragment++;
         if (IsActivateFragment == 4)
         {
-            Debug.Log("완료");
+
             IsActivateFragment = 0;
 
             PoolManager.Instance.Despawn(gameObject);
         }
-        Debug.Log(IsActivateFragment + "일단 작동함 ");
     }
     public void IsActivate()
     {
