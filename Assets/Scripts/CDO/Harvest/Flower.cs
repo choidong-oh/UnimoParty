@@ -178,18 +178,25 @@ public class Flower : MonoBehaviourPun
         currentProgress = 0;
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        if (collision.gameObject.tag == "Ground")
+        if (other.gameObject.tag == "Ground")
         {
             Rigidbody rb = gameObject.GetComponent<Rigidbody>();
             rb.useGravity = false;
 
             rb.constraints = RigidbodyConstraints.FreezeAll;
 
-            Collider collider = gameObject.GetComponent<Collider>();
-            collider.isTrigger = true;
+            //Collider collider = gameObject.GetComponent<Collider>();
+            //collider.isTrigger = true;
+            StartCoroutine(EnableTriggerNextFrame());
         }
+    }
+
+    private IEnumerator EnableTriggerNextFrame()
+    {
+        yield return null; // 다음 프레임까지 기다림
+        GetComponent<Collider>().isTrigger = true;
     }
 }
 

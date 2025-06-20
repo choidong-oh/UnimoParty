@@ -213,6 +213,7 @@ GameObject:
   - component: {fileID: 6617873011636352024}
   - component: {fileID: -3836480637052131136}
   - component: {fileID: 7794598289152759205}
+  - component: {fileID: -8349091107459473323}
   m_Layer: 11
   m_Name: Flower 1
   m_TagString: Untagged
@@ -508,6 +509,23 @@ MonoBehaviour:
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &-8349091107459473323
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3477442797691105170}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87996e81a5026dc429bfd6a9271548b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_InteractionManager: {fileID: 0}
+  m_InteractableObject: {fileID: 0}
+  m_SnapCollider: {fileID: 6479257641856994594}
+  m_DisableSnapColliderWhenSelected: 1
+  m_SnapToCollider: {fileID: 6479257641856994594}
 --- !u!1001 &3633039817140013034
 PrefabInstance:
   m_ObjectHideFlags: 0
