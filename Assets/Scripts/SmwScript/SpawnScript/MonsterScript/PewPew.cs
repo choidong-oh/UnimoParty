@@ -89,6 +89,8 @@ public class PewPew : EnemyBase
     }
 
 
+
+
     IEnumerator GoPewPew()
     {
         myCollider = GetComponent<Collider>();
@@ -113,7 +115,7 @@ public class PewPew : EnemyBase
 
 
         animator.speed = 0f;
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1.5f);
         animator.speed = 1f;
 
         myCollider.enabled = true;
