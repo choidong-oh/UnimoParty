@@ -180,6 +180,19 @@ public class Flower : MonoBehaviourPun
         currentProgress = 0;
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "Ground")
+        {
+            Rigidbody rb = gameObject.GetComponent<Rigidbody>();
+            rb.useGravity = false;
+
+            rb.constraints = RigidbodyConstraints.FreezeAll;
+
+            Collider collider = gameObject.GetComponent<Collider>();
+            collider.isTrigger = true;
+        }
+    }
 }
 
 
