@@ -1,13 +1,10 @@
 using Photon.Pun;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.TerrainUtils;
-using static UnityEngine.Rendering.DebugUI.Table;
 
 public class Spawner : MonoBehaviourPun
 {
-    [SerializeField] private GameObject enemyPrefab;
+    [SerializeField] private string enemyPrefab;
 
     float RandomXMin;
     float RandomZMin;
@@ -46,7 +43,7 @@ public class Spawner : MonoBehaviourPun
 
     IEnumerator SpawnRoutine()
     {
-        
+
         int spawned = 0;
 
 

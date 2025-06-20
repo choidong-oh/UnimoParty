@@ -1,15 +1,11 @@
-using Photon.Pun;
-using System.Collections;
 using System.Collections.Generic;
-using System.Threading;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class LaycockSP : MonoBehaviour
 {
-    [SerializeField] private GameObject monsterPrefab;
+    [SerializeField] private string monsterPrefab = "Laycock";
     [SerializeField] private int maxCount = 10;
-    private int Count= 0;
+    private int Count = 0;
     List<GameObject> Monsters = new List<GameObject>();
 
     public void SpawnLaycock(Transform position)
