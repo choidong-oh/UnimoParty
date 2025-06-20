@@ -258,12 +258,12 @@ public class HandHarvest : MonoBehaviourPunCallbacks, IFreeze
     void OnEnableItem()
     {
         var modelGun1 = rightController.gameObject.GetComponent<ActionBasedController>();
-       
-            var modelGun2 = modelGun1.model;
 
-        invenItem1 = modelGun2.GetChild(3);
-        invenItem2 = modelGun2.GetChild(4);
-        invenItem3 = modelGun2.GetChild(5);
+        var modelGun2 = modelGun1.model;
+
+        invenItem1 = modelGun2.GetChild(2);
+        invenItem2 = modelGun2.GetChild(3);
+        invenItem3 = modelGun2.GetChild(4);
 
     }
 

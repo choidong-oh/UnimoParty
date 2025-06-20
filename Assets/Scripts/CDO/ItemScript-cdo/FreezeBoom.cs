@@ -2,12 +2,13 @@ using Photon.Pun;
 using System.Collections;
 using UnityEngine;
 
-public class FreezeBoom : MonoBehaviourPunCallbacks, IItemUse
+public class FreezeBoom : MonoBehaviourPunCallbacks, IItemUse, InterfaceMethod.IItemData
 {
     [SerializeField] int boomRange; //ÆøÅº ¹üÀ§
     [SerializeField] int boomDuration; //Áö¼Ó½Ã°£
     [SerializeField] int boomShootPower; //ÆøÅº ¹ß»ç ¼Óµµ
 
+    public ItemData ItemData { get; set; }
 
     IEnumerator wait()
     {

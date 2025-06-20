@@ -98,7 +98,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
             currentPanel = panelStack.Peek();
             currentPanel.SetActive(true);
         }
-        
+
     }
     //PVE 스테이지 진입
     public void Stage1()
@@ -154,7 +154,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
             codeInput.interactable = false;
 
             Count.gameObject.SetActive(true);
-            matchCorutine = StartCoroutine(MatchmakingRoutine()); 
+            matchCorutine = StartCoroutine(MatchmakingRoutine());
             matchImage.color = new Color(1, 1, 0, 1);
         }
     }
@@ -168,8 +168,8 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         Count.text = "00:00";
         while (maxPlayers >= minPlayers)
         {
-            
-            if(PhotonNetwork.InRoom)
+
+            if (PhotonNetwork.InRoom)
             {
                 PhotonNetwork.LeaveRoom(true);
                 yield return new WaitUntil(() => !PhotonNetwork.InRoom);
@@ -185,10 +185,10 @@ public class LobbyManager : MonoBehaviourPunCallbacks
                 Count.text = $"{minutes:D2}:{seconds:D2}";
 
                 yield return new WaitForSeconds(1f);
-                timeElapsed++;                
+                timeElapsed++;
             }
             addTime += 30;
-            
+
             Debug.Log($"[매치메이킹] 인원 감소 → maxPlayers: {maxPlayers}");
         }
     }
@@ -237,7 +237,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
             }
 
             UpdateActionButton();
-            if(PhotonNetwork.IsMasterClient)
+            if (PhotonNetwork.IsMasterClient)
             {
                 CheckAllReady();
             }
@@ -247,7 +247,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     {
         int totalPlayers = PhotonNetwork.CurrentRoom.PlayerCount;
 
-        if(readyCount >= totalPlayers - 1)
+        if (readyCount >= totalPlayers - 1)
         {
             actionButton.interactable = true;
         }
@@ -264,9 +264,6 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
         GameObject panel = Instantiate(playerPanelPrefab, nicknamePanelParent);
         RectTransform rt = panel.GetComponent<RectTransform>();
-        rt.localScale = Vector3.one;
-        rt.localPosition = Vector3.zero;
-        rt.localRotation = Quaternion.identity;
 
         PlayerPanel pPanel = panel.GetComponent<PlayerPanel>();
         pPanel.Setup(player);
@@ -274,7 +271,20 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         pPanel.MasterClient(player.ActorNumber == PhotonNetwork.MasterClient.ActorNumber);
 
         playerUIMap[player.ActorNumber] = panel;
+
+        int charIndex = player.CustomProperties.ContainsKey("CharacterIndex") ? (int)player.CustomProperties["CharacterIndex"] : 0;
+        int shipIndex = player.CustomProperties.ContainsKey("ShipIndex") ? (int)player.CustomProperties["ShipIndex"] : 0;
+
+        GameObject[] characters = Resources.LoadAll<GameObject>("Characters");
+        GameObject[] ships = Resources.LoadAll<GameObject>("Prefabs");
+
+        Transform characterPos = panel.transform.Find("CharacterPos");
+        Transform shipPos = panel.transform.Find("SpaceShipPos");
+
+        GameObject charObj = Instantiate(characters[charIndex], characterPos.position, Quaternion.Euler(0,180,0), characterPos);
+        GameObject shipObj = Instantiate(ships[shipIndex], shipPos.position, Quaternion.Euler(0, 180, 0), shipPos);
     }
+
 
 
 
@@ -302,7 +312,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     public void ReadyButton()
     {
         photonView.RPC("SetReadyState", RpcTarget.All, PhotonNetwork.LocalPlayer.ActorNumber);
-        
+
     }
 
 

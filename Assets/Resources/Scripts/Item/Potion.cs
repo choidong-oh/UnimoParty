@@ -14,13 +14,5 @@ public class Potion : MonoBehaviour , InterfaceMethod.IItemData
         {_itemdata = value;}
     }
 
-    private void Start()
-    {
-        InitPostionData();
-    }
 
-    void InitPostionData()
-    {
-        _itemdata = (ItemData)Manager.Instance.dataLoader.data["ItemData"][0];
-    }
 }

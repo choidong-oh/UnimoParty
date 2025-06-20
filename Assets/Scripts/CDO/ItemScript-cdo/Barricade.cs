@@ -2,7 +2,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
-public class Barricade : MonoBehaviour, IItemUse
+public class Barricade : MonoBehaviour, IItemUse, InterfaceMethod.IItemData
 {
     [SerializeField] int installMaxDistance; //설치 거리
 
@@ -23,6 +23,8 @@ public class Barricade : MonoBehaviour, IItemUse
 
     public bool isGrab = false;
     float rotationY = 0;
+
+    public ItemData ItemData { get; set; }
 
     private void OnEnable()
     {

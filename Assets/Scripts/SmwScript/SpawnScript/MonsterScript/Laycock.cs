@@ -39,7 +39,6 @@ public class Laycock : EnemyBase
 
             damage = 1;
             Manager.Instance.observer.HitPlayer(damage);
-            Debug.Log(Manager.Instance.observer.UserPlayer.gamedata.life);
 
             Vector3 hitPoint = other.ClosestPoint(transform.position);//충돌지점에 최대한 가깝게
 
@@ -66,18 +65,12 @@ public class Laycock : EnemyBase
 
                 GameObject inst = Instantiate(DieParticles, hitPoint, rot);
 
-
-                Debug.Log(Manager.Instance.observer.UserPlayer.gamedata.life);
-                Manager.Instance.observer.HitPlayer(damage);
-
                 PoolManager.Instance.Despawn(gameObject);
             }
         }
 
         if (other.gameObject.tag == "Aube")
         {
-            Manager.Instance.observer.HitPlayer(damage);
-
             Vector3 hitPoint = other.ClosestPoint(transform.position);
 
             Vector3 normal = (hitPoint - transform.position).normalized;
@@ -172,7 +165,7 @@ public class Laycock : EnemyBase
 
         yield return new WaitUntil(() => !ChargeParticles.IsAlive(true));
 
-        animator.SetTrigger("action");
+        animator.SetBool("action", true);
         yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName("anim_MON006_ShootStart") && !animator.IsInTransition(0));
         yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f);
 
@@ -210,17 +203,12 @@ public class Laycock : EnemyBase
             myCollider.enabled = false;
             animator.speed = 0f;
             IsFreeze.SetActive(true);
-            if (lazerCoroutine != null)
-            {
-                StopCoroutine(lazerCoroutine);
-                lazerCoroutine = null;
-            }
         }
         else if (isFreeze == false)
         {
+            animator.SetTrigger("Freeze");
             ImFreeze = isFreeze;
             StartCoroutine(FreezeCor());
-            ShootLazer();
         }
         else
         {

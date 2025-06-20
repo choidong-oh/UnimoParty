@@ -332,6 +332,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CH002_Sofo_ST000
       objectReference: {fileID: 0}
+    - target: {fileID: 2090828822177639507, guid: e7d86a2921a3f7b4b9d3bafa50c2533e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1663,7 +1667,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6598815579406187037, guid: 18ddb545287c546e19cc77dc9fbb2189, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1752,7 +1756,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 286303521}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 639352130}
+        m_TargetAssemblyTypeName: ShopManager, Assembly-CSharp
+        m_MethodName: SaveSelectedIndices
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &286303521
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3063,7 +3079,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &436613644
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5680,7 +5696,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -32.690002, y: -4.0200005}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &686010343
 MonoBehaviour:
@@ -5716,7 +5732,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uAD6C\uB9E4"
+  m_text: "\uD655\uC778"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: e29a69e0b954b234a83c0f82141c788b, type: 2}
   m_sharedMaterial: {fileID: -4611146595656123925, guid: e29a69e0b954b234a83c0f82141c788b, type: 2}
@@ -6775,8 +6791,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 27.5}
-  m_SizeDelta: {x: 135.95, y: 19.27}
+  m_AnchoredPosition: {x: 0, y: 12}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &791624235
 MonoBehaviour:
@@ -6812,7 +6828,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uAD6C\uB9E4 \uD558\uC2DC\uACA0\uC2B5\uB2C8\uAE4C?"
+  m_text: "\uCC29\uC6A9 \uD558\uC2DC\uACA0\uC2B5\uB2C8\uAE4C?"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: e29a69e0b954b234a83c0f82141c788b, type: 2}
   m_sharedMaterial: {fileID: -4611146595656123925, guid: e29a69e0b954b234a83c0f82141c788b, type: 2}
@@ -7604,7 +7620,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &916043039
 RectTransform:
   m_ObjectHideFlags: 0
@@ -12029,6 +12045,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: EQ002_Box_ST000
       objectReference: {fileID: 0}
+    - target: {fileID: 3619495647311211870, guid: 51329ecb425ac6843a44b3f36bef148c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4139046316011354084, guid: 51329ecb425ac6843a44b3f36bef148c, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -12178,7 +12198,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1734139193
 RectTransform:
   m_ObjectHideFlags: 0
@@ -15430,6 +15450,14 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1750763844}
+    - target: {fileID: 3919945420018946444, guid: 735c08352f757b84db130c6f6677123b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OptionSave
+      objectReference: {fileID: 0}
+    - target: {fileID: 3919945420018946444, guid: 735c08352f757b84db130c6f6677123b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: OptionManager, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 4552476527154209038, guid: 735c08352f757b84db130c6f6677123b, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 

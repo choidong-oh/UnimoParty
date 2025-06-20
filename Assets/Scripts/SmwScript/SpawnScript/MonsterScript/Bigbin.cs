@@ -81,7 +81,7 @@ public class Bigbin : EnemyBase
             yield return null;
         JumpParticles.SetActive(true);  
         MoveSpeed += FirstSpeed;
-        //Debug.Log($"state2 exit → MoveSpeed={MoveSpeed}");
+
 
         StartCoroutine(MoveRoutine());
         StartCoroutine(UpdateDistance());
@@ -92,7 +92,7 @@ public class Bigbin : EnemyBase
         JumpParticles.SetActive(true);
 
         MoveSpeed += FirstSpeed;
-        //Debug.Log($"state3 exit → MoveSpeed={MoveSpeed}");
+
 
 
 
@@ -103,7 +103,7 @@ public class Bigbin : EnemyBase
         JumpParticles.SetActive(true);
 
         MoveSpeed += FirstSpeed;
-        //Debug.Log($"state4 exit → MoveSpeed={MoveSpeed}");
+
 
 
 
@@ -118,7 +118,7 @@ public class Bigbin : EnemyBase
         }
         else
         {
-            Debug.LogWarning("현재 재생 중인 클립을 찾지 못했습니다.");
+            Debug.LogWarning("현재 재생 중인 클립이없음");
         }
         Instantiate(JumpExplode, transform.position, Quaternion.identity);
         StopAllCoroutines();
@@ -132,7 +132,6 @@ public class Bigbin : EnemyBase
         if (other.gameObject.tag == "Player")
         {
             Manager.Instance.observer.HitPlayer(damage);
-            Debug.Log(Manager.Instance.observer.UserPlayer.gamedata.life);
 
             Vector3 hitPoint = other.ClosestPoint(transform.position);//충돌지점에 최대한 가깝게
 
@@ -160,18 +159,12 @@ public class Bigbin : EnemyBase
 
                 GameObject inst = Instantiate(CrashBigbin, hitPoint, rot);
 
-
-                Debug.Log(Manager.Instance.observer.UserPlayer.gamedata.life);
-                Manager.Instance.observer.HitPlayer(damage);
-
                 PoolManager.Instance.Despawn(gameObject);
             }
         }
 
         if (other.gameObject.tag == "Aube")
         {
-            Manager.Instance.observer.HitPlayer(damage);
-
             Vector3 hitPoint = other.ClosestPoint(transform.position);
 
             Vector3 normal = (hitPoint - transform.position).normalized;

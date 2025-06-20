@@ -64,12 +64,10 @@ public class Spawner : MonoBehaviourPun
                 RandomZ = Random.Range(RandomZMin + SideNoSpawn, RandomZMax - SideNoSpawn);
             }
 
-            //Debug.Log(RandomX+" ÁÂÇ¥   " + RandomZ + " ÁÂÇ¥ ¼ÒÈ¯µÊ");
             spawnPos = new Vector3(RandomX, 0f, RandomZ);
 
-            Debug.Log(enemyPrefab + " " + spawnPos);
             PoolManager.Instance.Spawn(enemyPrefab, spawnPos, Quaternion.identity);
-            //Instantiate(enemyPrefab, spawnPos, Quaternion.identity);
+
 
             spawned++;
             yield return new WaitForSeconds(spawnTimer);

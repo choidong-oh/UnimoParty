@@ -30,10 +30,21 @@ public class XrControllerMgr : MonoBehaviourPunCallbacks
     //총 가지고 있는 아이템
     public Queue<string> publicitemQueue = new Queue<string>();
 
+
+    #region 종현삭제금지
+    //종현이꺼
+    [SerializeField] InputActionReference MenuInputActionReference;
+    [SerializeField] GameObject optionPanel;
+    private bool isOption = false;
+    #endregion
+
     private void Start()
     {
         RController = Instantiate(ItemGun, rightController.gameObject.transform);
         RController.SetActive(false);
+
+
+        optionPanel.SetActive(false);
     }
 
     public override void OnEnable()
@@ -41,6 +52,10 @@ public class XrControllerMgr : MonoBehaviourPunCallbacks
         base.OnEnable();
         AInputActionReference.action.Enable();
         AInputActionReference.action.performed += ControllerA;
+
+
+        MenuInputActionReference.action.Enable();
+        MenuInputActionReference.action.performed += ControllerMenu;
 
         //임시 아이템 추가
         ItemQueueAdd("start");
@@ -53,6 +68,24 @@ public class XrControllerMgr : MonoBehaviourPunCallbacks
         AInputActionReference.action.performed -= ControllerA;
         AInputActionReference.action.Disable();
 
+        MenuInputActionReference.action.performed -= ControllerMenu;
+        MenuInputActionReference.action.Disable();
+
+    }
+    private void ControllerMenu(InputAction.CallbackContext context)
+    {
+        if (photonView.IsMine)
+        {
+            isOption = !isOption;
+            if (isOption)
+            {
+                optionPanel.SetActive(true);
+            }
+            else
+            {
+                optionPanel.SetActive(false);
+            }
+        }
     }
 
     //아이템, 채집총 교체 a

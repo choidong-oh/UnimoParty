@@ -6,8 +6,9 @@ public class Inventory
 {
     public List<InterfaceMethod.IItemData> userItemDatas = new List<InterfaceMethod.IItemData>()
     {
-        new Potion()
-        
+        new Potion(),
+        new FreezeBoom(),
+        new Barricade(),
     };
 
 
