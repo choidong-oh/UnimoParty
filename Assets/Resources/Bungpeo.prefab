@@ -418,8 +418,8 @@ MonoBehaviour:
   enemyMoveSpeed: 0
   sizeScale: 0
   spawnCount: 0
-  explosionForce: 20
-  explosionRadius: 20
+  explosionForce: 30
+  explosionRadius: 30
   upwardsModifier: 1
   explosionMask:
     serializedVersion: 2
@@ -1048,7 +1048,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3260197632824321117, guid: 73d9cc76526d75848bfd7bd7a1dac735, type: 3}
       propertyPath: m_Layer
-      value: 7
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 4067781856247368626, guid: 73d9cc76526d75848bfd7bd7a1dac735, type: 3}
       propertyPath: m_Layer
@@ -1199,7 +1199,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3260197632824321117, guid: 73d9cc76526d75848bfd7bd7a1dac735, type: 3}
       propertyPath: m_Layer
-      value: 7
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 4067781856247368626, guid: 73d9cc76526d75848bfd7bd7a1dac735, type: 3}
       propertyPath: m_Layer
@@ -1354,7 +1354,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3260197632824321117, guid: 73d9cc76526d75848bfd7bd7a1dac735, type: 3}
       propertyPath: m_Layer
-      value: 7
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 4067781856247368626, guid: 73d9cc76526d75848bfd7bd7a1dac735, type: 3}
       propertyPath: m_Layer
@@ -1505,7 +1505,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3260197632824321117, guid: 73d9cc76526d75848bfd7bd7a1dac735, type: 3}
       propertyPath: m_Layer
-      value: 7
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 4067781856247368626, guid: 73d9cc76526d75848bfd7bd7a1dac735, type: 3}
       propertyPath: m_Layer
