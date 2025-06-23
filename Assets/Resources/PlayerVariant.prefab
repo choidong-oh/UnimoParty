@@ -179,7 +179,7 @@ MonoBehaviour:
   itemInputB: {fileID: 4414192712401531367}
   handHarvest: {fileID: 3999241018668250046}
   harvestGun: {fileID: 1902367689499881727, guid: 6df06eda25e3cca46aa64bf61dfbfb27, type: 3}
-  ItemGun: {fileID: 4756468719463012015, guid: a52667fed78cf2148a1efb56bda8f247, type: 3}
+  ItemGun: {fileID: 2252587407990674451, guid: 4db6ce11d6d7ad54dad7f863165ca63d, type: 3}
   MenuInputActionReference: {fileID: 6000972130181610442, guid: 75c98270c91a5e74bba10c83794ab594, type: 3}
   optionPanel: {fileID: 5510926369268307097}
 --- !u!1 &3339427171508547215

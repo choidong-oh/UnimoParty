@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.XR;
 using UnityEngine.XR.Interaction.Toolkit;
 
 public class HandHarvest : MonoBehaviourPunCallbacks, IFreeze
@@ -29,6 +28,18 @@ public class HandHarvest : MonoBehaviourPunCallbacks, IFreeze
 
     public Queue<string> itemQueue = new Queue<string>();
 
+    //아이템 관련 변수
+    //아이템 위치 (자식객체)
+    Transform invenItem1;
+    Transform invenItem2;
+    Transform invenItem3;
+
+    //아이템 생성 프리팹
+    GameObject item1;
+    GameObject item2;
+    GameObject item3;
+
+
     //콜백은 OnEnable 안댐
     //player은 안사라지니깐 awake, start에 넣으면 댈듯 
     //콜백 쓸만한건없긴함
@@ -42,12 +53,12 @@ public class HandHarvest : MonoBehaviourPunCallbacks, IFreeze
         {
             StartCoroutine(FlowerDistanceCor());
         }
-        StartCoroutine(wait111());
+        //StartCoroutine(OnEnableItemCor());
     }
 
-    IEnumerator wait111()
+    IEnumerator OnEnableItemCor()
     {
-        yield return new WaitUntil(() => rightController.gameObject.activeSelf);
+        yield return new WaitUntil(()=> rightController.gameObject.activeSelf);
         OnEnableItem();
 
     }
@@ -61,13 +72,15 @@ public class HandHarvest : MonoBehaviourPunCallbacks, IFreeze
             activateAction.action.canceled += OnTriggerReleased;
         }
 
-        StartCoroutine(waitr());
+        StartCoroutine(InvenCreateItemCor());
         //itemQueue = xrControllerMgr.publicitemQueue;
     }
 
-    IEnumerator waitr()
+    IEnumerator InvenCreateItemCor()
     {
-        yield return new WaitForSeconds(1);
+        StartCoroutine(OnEnableItemCor());
+        //yield return new WaitForSeconds(1);
+        yield return null;
         itemQueue = xrControllerMgr.publicitemQueue;
         InvenCreateItem();
     }
@@ -245,17 +258,6 @@ public class HandHarvest : MonoBehaviourPunCallbacks, IFreeze
         itemQueue.Enqueue(ItemName);
         InvenCreateItem();
     }
-
-    //아이템 위치 (자식객체)
-    Transform invenItem1;
-    Transform invenItem2;
-    Transform invenItem3;
-
-    //아이템 생성 프리팹
-    GameObject item1;
-    GameObject item2;
-    GameObject item3;
-
     void OnEnableItem()
     {
         var modelGun1 = rightController.gameObject.GetComponent<ActionBasedController>();
