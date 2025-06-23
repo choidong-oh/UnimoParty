@@ -13,6 +13,4 @@ public class Potion : MonoBehaviour , InterfaceMethod.IItemData
         set
         {_itemdata = value;}
     }
-
-
 }

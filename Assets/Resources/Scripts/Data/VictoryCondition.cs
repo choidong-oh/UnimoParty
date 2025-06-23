@@ -30,11 +30,13 @@ public class VictoryCondition : MonoBehaviour
     {
         if(Manager.Instance.observer.isGameOver == true)
         {
-            switch(Manager.Instance.players.Count <= 1)
-            {
-
-            }
+           
         }
+
+    }
+
+    public void bonusWinCondition()
+    {
 
     }
 }

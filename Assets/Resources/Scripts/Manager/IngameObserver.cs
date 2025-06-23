@@ -16,7 +16,6 @@ public class IngameObserver
     public List<int> ranks;
     public int currentPlayerRank;
 
-
     public bool isGameOver = false;
     public int mainGameOverNum;
     public int subGameOverNum;
@@ -47,6 +46,8 @@ public class IngameObserver
 
         //여기에 포톤 추가.
         OnGameDataChange?.Invoke(templife);
+
+        Manager.Instance.observer.UserPlayer.gamedata.hitcount++;
 
         if (UserPlayer.gamedata.life <= 0)
         {
@@ -163,6 +164,8 @@ public class IngameObserver
             isGameOver = true;
             OnGameEnd?.Invoke();
         }
+
+        Manager.Instance.observer.UserPlayer.gamedata.deliveryCount++;
 
         //여기에 포톤 추가.
         OnGameDataChange?.Invoke(tempfairy);

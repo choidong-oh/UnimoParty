@@ -4,16 +4,16 @@ using UnityEngine;
 
 public class Ranking : MonoBehaviour
 {
-    List<int> score = new List<int> { 8, 4, 4, 1, 3, 3 };
+    List<int> tempscore = new List<int>();
     List<int> ranks = new List<int>();
 
     // Start is called before the first frame update
     void Start()
     {
-        //Manager.Instance.observer.OnGameRankChange += RefreshPlayerScoreRank;
-        //InitPlayerCount();
-        DefaultPlayerScoreSetting(score);
-        RefreshPlayerScoreRank(score);
+        Manager.Instance.observer.OnGameRankChange += RefreshPlayerScoreRank;
+        tempscore = Manager.Instance.score;
+        DefaultPlayerScoreSetting(tempscore);
+        RefreshPlayerScoreRank(tempscore);
     }
 
     void InitPlayerCount()
@@ -21,7 +21,8 @@ public class Ranking : MonoBehaviour
         //플레이어 수 만큼 랭크 List에 추가함.
         for (int i = 0; 0 < Manager.Instance.observer.roomInPlayerCount; i++)
         {
-            score.Add(Manager.Instance.observer.UserPlayer.gamedata.score);
+            tempscore.Add(Manager.Instance.observer.UserPlayer.gamedata.score);
+     
         }
     }
 
@@ -43,7 +44,7 @@ public class Ranking : MonoBehaviour
             }
         }
 
-        Debug.Log($"정렬 결과: {{ {string.Join(", ", score)} }}");
+        Debug.Log($"정렬 결과: {{ {string.Join(", ", tempscore)} }}");
     }
 
     //1등과 점수를 비교하여, 등수를 부여

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Photon.Realtime;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Manager : MonoBehaviour
@@ -28,10 +29,12 @@ public class Manager : MonoBehaviour
     public IngameObserver observer = new IngameObserver();
     Shop shop;
     public List<Player> players = new List<Player>();
+    public List<int> score = new List<int>();
+    public List<int> deliveryCount = new List<int>();
+    public List<int> hitCount = new List<int>();
 
     void Awake()
     {
-
         if (instance == null)
         {
             instance = this;
@@ -62,6 +65,23 @@ public class Manager : MonoBehaviour
             SpaceShip tempspaceship = new SpaceShip();
             tempspaceship.SpaceShipData = (SpaceShipData)dataLoader.data["SpaceShip"][i];
             Debug.Log(tempspaceship.SpaceShipData.Name);
+        }
+    }
+
+    public void SetGameList()
+    {
+        score.Clear();
+        deliveryCount.Clear();
+        hitCount.Clear();
+
+        for( int i = 0; i < players.Count; i++)
+        {
+            if(players[i].ActorNumber == i)
+            {
+                score.Add(Manager.instance.observer.UserPlayer.gamedata.score);
+                deliveryCount.Add(Manager.instance.observer.UserPlayer.gamedata.deliveryCount);
+                hitCount.Add(Manager.instance.observer.UserPlayer.gamedata.hitcount);
+            }
         }
     }
 }
