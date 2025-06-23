@@ -38,10 +38,6 @@ public class Burnduri : EnemyBase
     Animator animator;
     Collider myCollider;
 
-    //private AnimationClip appearanceClip;
-    //private AnimationClip encounterClip;
-    //private AnimationClip disappearClip;
-
     [SerializeField] GameObject CrashBurnduri;
 
     [SerializeField] float FreezeTime = 3;
@@ -133,7 +129,7 @@ public class Burnduri : EnemyBase
     {
         yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName(AppearAni));
         while (animator.GetCurrentAnimatorStateInfo(0).IsName(AppearAni))
-        yield return null;
+            yield return null;
 
         myCollider.enabled = true;
 
@@ -286,12 +282,12 @@ public class Burnduri : EnemyBase
     [PunRPC]
     public void MoveRPC(Vector3 direction)
     {
-        
+
     }
 
     public override void Freeze(Vector3 direction, bool isFreeze)
     {
-        photonView.RPC("FreezeRPC", RpcTarget.All, direction,isFreeze);
+        photonView.RPC("FreezeRPC", RpcTarget.All, direction, isFreeze);
     }
 
     [PunRPC]

@@ -1,17 +1,17 @@
+using Photon.Pun;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class PewPewSp : MonoBehaviour
+public class PewPewSp : MonoBehaviourPun
 {
-    [SerializeField] private GameObject enemyPrefab;
+    [SerializeField] private string enemyPrefab = "Pewpew";
 
-    Terrain terrain;          
+    Terrain terrain;
 
     [SerializeField] int maxEnemies = 10;
     [SerializeField] float spawnTimer = 3;
 
-     Vector3 terrainCenter;
+    Vector3 terrainCenter;
 
 
     private void Start()

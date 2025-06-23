@@ -1,10 +1,8 @@
-using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.SceneManagement;
+using Photon.Pun;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.UIElements;
 
 public class Flower : MonoBehaviourPun
 {
@@ -93,7 +91,7 @@ public class Flower : MonoBehaviourPun
     //수확 시작
     private IEnumerator HarvestCoroutine()
     {
-        
+
 
         while (currentProgress < harvestTime)
         {
@@ -159,7 +157,7 @@ public class Flower : MonoBehaviourPun
 
         this.gameObject.SetActive(false);
 
-        photonView.RPC("FlowerSetAcive", RpcTarget.Others,false);
+        photonView.RPC("FlowerSetAcive", RpcTarget.Others, false);
 
         Debug.Log("채집 완료!");
     }
@@ -180,6 +178,26 @@ public class Flower : MonoBehaviourPun
         currentProgress = 0;
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Ground")
+        {
+            Rigidbody rb = gameObject.GetComponent<Rigidbody>();
+            rb.useGravity = false;
+
+            rb.constraints = RigidbodyConstraints.FreezeAll;
+
+            //Collider collider = gameObject.GetComponent<Collider>();
+            //collider.isTrigger = true;
+            StartCoroutine(EnableTriggerNextFrame());
+        }
+    }
+
+    private IEnumerator EnableTriggerNextFrame()
+    {
+        yield return null; // 다음 프레임까지 기다림
+        GetComponent<Collider>().isTrigger = true;
+    }
 }
 
 

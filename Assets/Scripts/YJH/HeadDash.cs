@@ -14,6 +14,7 @@ public class HeadDash : MonoBehaviourPunCallbacks, IFreeze
     public float dashCooldown = 5f;       // 쿨타임
     public float dashDuration = 0.5f;     // 대시 지속 시간
 
+    public DashCooldown dashCooldownUI; 
 
     private float lastDashTime = -999f;
     private bool isDashing = false;
@@ -87,6 +88,8 @@ public class HeadDash : MonoBehaviourPunCallbacks, IFreeze
 
         xrOrigin.position = endPos;
         isDashing = false;
+
+        dashCooldownUI.StartCooldown(); //  UI 연동
     }
 
     //어름

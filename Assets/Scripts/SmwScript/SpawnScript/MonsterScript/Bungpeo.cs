@@ -1,8 +1,6 @@
 using Photon.Pun;
 using System.Collections;
 using UnityEngine;
-using static UnityEditor.PlayerSettings;
-using static UnityEngine.ParticleSystem;
 
 public class Bungpeo : EnemyBase
 {
