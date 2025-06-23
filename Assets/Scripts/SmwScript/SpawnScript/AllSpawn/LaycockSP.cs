@@ -39,6 +39,7 @@ public class LaycockSP : MonoBehaviour
     
     public void DisCountLaycock()
     {
+        if (!PhotonNetwork.IsMasterClient) return;
         Count--;
     }
 
