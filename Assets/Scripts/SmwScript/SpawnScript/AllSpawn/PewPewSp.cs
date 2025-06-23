@@ -16,6 +16,7 @@ public class PewPewSp : MonoBehaviourPun
 
     private void Start()
     {
+        if (!PhotonNetwork.IsMasterClient) return;
         terrain = Terrain.activeTerrain;
         terrainCenter = terrain.transform.position + terrain.terrainData.size * 0.5f;
         StartCoroutine(SpawnRoutine());
@@ -34,7 +35,9 @@ public class PewPewSp : MonoBehaviourPun
 
     public void SpawnOne()
     {
+        if (!PhotonNetwork.IsMasterClient) return;
         PoolManager.Instance.Spawn(enemyPrefab, terrainCenter, Quaternion.identity);
+        
     }
 
 }

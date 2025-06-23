@@ -120,37 +120,49 @@ public class Bigbin : EnemyBase
     {
         if (other.gameObject.tag == "Player")
         {
-            Manager.Instance.observer.HitPlayer(damage);
-
-            Vector3 hitPoint = other.ClosestPoint(transform.position);//충돌지점에 최대한 가깝게
-
-            Vector3 normal = (hitPoint - transform.position).normalized;// 방향계산
-            Quaternion rot = Quaternion.LookRotation(normal);// 방향계산
-
-            GameObject inst = Instantiate(CrashBigbin, hitPoint, rot);
-
-
-            PoolManager.Instance.Despawn(gameObject);
-        }
-
-        if (other.gameObject.tag == "Monster")
-        {
-            EnemyBase otherEnemy = other.GetComponent<EnemyBase>();
-            if (otherEnemy == null)
-                return;
-
-            if (otherEnemy.ImFreeze)
+            if (ImFreeze == true)
             {
-                Vector3 hitPoint = other.ClosestPoint(transform.position);
+                ImFreeze = false;
+                StartCoroutine(FreezeCor());
+            }
+            else if (ImFreeze == false)
+            {
+                damage = 1;
+                Manager.Instance.observer.HitPlayer(damage + 1);
 
-                Vector3 normal = (hitPoint - transform.position).normalized;
-                Quaternion rot = Quaternion.LookRotation(normal);
-
+                Vector3 hitPoint = other.ClosestPoint(transform.position);//충돌지점에 최대한 가깝게
+                Vector3 normal = (hitPoint - transform.position).normalized;// 방향계산
+                Quaternion rot = Quaternion.LookRotation(normal);// 방향계산
                 GameObject inst = Instantiate(CrashBigbin, hitPoint, rot);
 
                 PoolManager.Instance.Despawn(gameObject);
             }
         }
+
+        if (other.gameObject.tag == "Monster")
+        {
+            EnemyBase otherEnemy = other.GetComponent<EnemyBase>();
+
+            if (otherEnemy == null)
+            {
+                Debug.Log("몬스터 EnemyBase 가 없음");
+                return;
+            }
+
+            if (ImFreeze == true && otherEnemy == false)
+            {
+                ImFreeze = false;
+                StartCoroutine(FreezeCor());
+
+                Vector3 hitPoint = other.ClosestPoint(transform.position);
+                Vector3 normal = (hitPoint - transform.position).normalized;
+                Quaternion rot = Quaternion.LookRotation(normal);
+                GameObject inst = Instantiate(CrashBigbin, hitPoint, rot);
+
+                PoolManager.Instance.Despawn(gameObject);
+            }
+        }
+
 
         if (other.gameObject.tag == "Aube")
         {
@@ -260,7 +272,6 @@ public class Bigbin : EnemyBase
     {
         if (isFreeze == true)
         {
-            myCollider.enabled = false;
             ImFreeze = isFreeze;
             IsFreeze.SetActive(true);
             MoveSpeedSave = MoveSpeed;
@@ -269,7 +280,7 @@ public class Bigbin : EnemyBase
         }
         else if (isFreeze == false)
         {
-            //Move(direction);
+            Debug.Log(isFreeze + " 프리즈 해제");// 이거 넘어 오긴하는건가
             ImFreeze = isFreeze;
             StartCoroutine(FreezeCor());
         }
@@ -289,7 +300,6 @@ public class Bigbin : EnemyBase
         yield return new WaitForSeconds(FreezeTime);
         MoveSpeed = MoveSpeedSave;
         animator.speed = 1f;
-        myCollider.enabled = true;
         IsFreeze.SetActive(false);
     }
 }

@@ -9,7 +9,8 @@ public class ExplosionDamage : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
-            Manager.Instance.observer.HitPlayer(damage);
+            
+            Manager.Instance.observer.HitPlayer(damage + 1);
             Debug.Log(Manager.Instance.observer.UserPlayer.gamedata.life);
         }
     }
