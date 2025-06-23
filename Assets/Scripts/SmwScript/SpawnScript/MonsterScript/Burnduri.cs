@@ -54,34 +54,51 @@ public class Burnduri : EnemyBase
 
     private void OnTriggerEnter(Collider other)
     {
+        if (!photonView.IsMine) return;
         if (other.gameObject.tag == "Player")
         {
+            if (ImFreeze == true)
+            {
+                ImFreeze = false;
+                StartCoroutine(FreezeCor());
+            }
+            else if (ImFreeze == false)
+            {
+                damage = 1;
+                var otherPV = other.GetComponent<PhotonView>();
+                if (otherPV != null && otherPV.Owner != null)
+                {
+                    // 데미지 전용 RPC
+                    photonView.RPC("HitPlayerRPC", otherPV.Owner, damage + 1);
+                }
 
-            Vector3 hitPoint = other.ClosestPoint(transform.position);//충돌지점에 최대한 가깝게
+                Vector3 hitPoint = other.ClosestPoint(transform.position);//충돌지점에 최대한 가깝게
+                Vector3 normal = (hitPoint - transform.position).normalized;// 방향계산
+                Quaternion rot = Quaternion.LookRotation(normal);// 방향계산
+                GameObject inst = Instantiate(CrashBurnduri, hitPoint, rot);
 
-            Vector3 normal = (hitPoint - transform.position).normalized;// 방향계산
-            Quaternion rot = Quaternion.LookRotation(normal);// 방향계산
-
-            GameObject inst = Instantiate(CrashBurnduri, hitPoint, rot);
-
-            Manager.Instance.observer.HitPlayer(damage);
-            StopAllCoroutines();
-            PoolManager.Instance.Despawn(gameObject);
+                PoolManager.Instance.Despawn(gameObject);
+            }
         }
 
         if (other.gameObject.tag == "Monster")
         {
             EnemyBase otherEnemy = other.GetComponent<EnemyBase>();
+
             if (otherEnemy == null)
-                return;
-
-            if (otherEnemy.ImFreeze)
             {
-                Vector3 hitPoint = other.ClosestPoint(transform.position);
+                Debug.Log("몬스터 EnemyBase 가 없음");
+                return;
+            }
 
+            if (ImFreeze == true && otherEnemy == false)
+            {
+                ImFreeze = false;
+                StartCoroutine(FreezeCor());
+
+                Vector3 hitPoint = other.ClosestPoint(transform.position);
                 Vector3 normal = (hitPoint - transform.position).normalized;
                 Quaternion rot = Quaternion.LookRotation(normal);
-
                 GameObject inst = Instantiate(CrashBurnduri, hitPoint, rot);
 
                 PoolManager.Instance.Despawn(gameObject);
@@ -101,6 +118,7 @@ public class Burnduri : EnemyBase
         }
     }
 
+
     public override void OnEnable()
     {
         base.OnEnable();
@@ -109,7 +127,14 @@ public class Burnduri : EnemyBase
 
         myCollider.enabled = false;
 
-        //한번만 찾을꺼임
+        terrain = Terrain.activeTerrain;
+        isCharging = false;
+
+        StartCoroutine(GoBurnduri());
+    }
+
+    void FindPlayer()
+    {
         if (players.Count == 0)
         {
             var objs = GameObject.FindGameObjectsWithTag("Player");
@@ -118,15 +143,18 @@ public class Burnduri : EnemyBase
                 players.Add(obj.transform);
             }
         }
-
-        terrain = Terrain.activeTerrain;
-        isCharging = false;
-
-        StartCoroutine(GoBurnduri());
     }
 
     IEnumerator GoBurnduri()
     {
+        if (players.Count == 0)
+        {
+            var objs = GameObject.FindGameObjectsWithTag("Player");
+            foreach (var obj in objs)
+            {
+                players.Add(obj.transform);
+            }
+        }
         yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName(AppearAni));
         while (animator.GetCurrentAnimatorStateInfo(0).IsName(AppearAni))
             yield return null;
@@ -151,6 +179,12 @@ public class Burnduri : EnemyBase
     {
         while (true)
         {
+            if (players != null && players.Count == 0)
+            {
+                FindPlayer();
+                yield return null;
+            }
+
             for (int i = players.Count - 1; i >= 0; i--)
             {
                 Transform p = players[i];
@@ -298,12 +332,11 @@ public class Burnduri : EnemyBase
             StopAllCoroutines();
             ImFreeze = isFreeze;
             IsFreeze.SetActive(true);
-            myCollider.enabled = false;
             animator.speed = 0f;
         }
         else if (isFreeze == false)
         {
-            //Move(direction);
+            Debug.Log(isFreeze + " 프리즈 해제");// 이거 넘어 오긴하는건가
             ImFreeze = isFreeze;
             StartCoroutine(FreezeCor());
         }
@@ -316,10 +349,15 @@ public class Burnduri : EnemyBase
     IEnumerator FreezeCor()
     {
         yield return new WaitForSeconds(FreezeTime);
-        myCollider.enabled = true;
         animator.speed = 1f;
         StartCoroutine(GoBurnduri());
         IsFreeze.SetActive(false);
 
+    }
+
+    [PunRPC]
+    void HitPlayerRPC(int dmg)
+    {
+        Manager.Instance.observer.HitPlayer(dmg);
     }
 }

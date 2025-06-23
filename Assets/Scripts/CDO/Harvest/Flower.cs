@@ -44,6 +44,7 @@ public class Flower : MonoBehaviourPun
 
     private void Start()
     {
+        LaycockSpawner = FindObjectOfType<LaycockSP>();
         controller = GameObject.Find("InGameDataController").GetComponent<InGameDataController>();
         //체크포인트
         checkPoints.Add(harvestTime / 3f);
@@ -135,7 +136,7 @@ public class Flower : MonoBehaviourPun
     //채집 결과
     void CompleteHarvest()
     {
-        //LaycockSpawner.SpawnLaycock(gameObject.transform);
+        LaycockSpawner.SpawnLaycock(gameObject.transform);
         harvestingRoutine = null;
         currentProgress = 0f;
 

@@ -8,6 +8,8 @@ public class TEST : MonoBehaviour, IItemUse
 
     public bool Use(Transform firePos, int power)
     {
+        Manager.Instance.observer.RecoveryPlayerHP(10);
+
         PhotonNetwork.Destroy(gameObject);  
         return true;
     }

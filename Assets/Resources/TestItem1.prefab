@@ -360,7 +360,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   installMaxDistance: 5
-  realBarricadPrefab: {fileID: 3242883989005295176, guid: 2595f1cefa56a5443ba36cea4acb5dc9, type: 3}
   noGroundlayerMask:
     serializedVersion: 2
     m_Bits: 3066
