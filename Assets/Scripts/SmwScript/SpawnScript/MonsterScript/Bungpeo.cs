@@ -36,32 +36,43 @@ public class Bungpeo : EnemyBase
     {
         if (other.gameObject.tag == "Player")
         {
-            Manager.Instance.observer.HitPlayer(damage);
+            if (ImFreeze == true)
+            {
+                ImFreeze = false;
+                StartCoroutine(FreezeCor());
+            }
+            else if (ImFreeze == false)
+            {
+                damage = 1;
+                Manager.Instance.observer.HitPlayer(damage + 1);
 
-            Vector3 hitPoint = other.ClosestPoint(transform.position);//충돌지점에 최대한 가깝게
+                Vector3 hitPoint = other.ClosestPoint(transform.position);//충돌지점에 최대한 가깝게
+                Vector3 normal = (hitPoint - transform.position).normalized;// 방향계산
+                Quaternion rot = Quaternion.LookRotation(normal);// 방향계산
+                GameObject inst = Instantiate(CrashBunpeo, hitPoint, rot);
 
-            Vector3 normal = (hitPoint - transform.position).normalized;// 방향계산
-            Quaternion rot = Quaternion.LookRotation(normal);// 방향계산
-
-            GameObject inst = Instantiate(CrashBunpeo, hitPoint, rot);
-
-
-            PoolManager.Instance.Despawn(gameObject);
+                PoolManager.Instance.Despawn(gameObject);
+            }
         }
 
         if (other.gameObject.tag == "Monster")
         {
             EnemyBase otherEnemy = other.GetComponent<EnemyBase>();
+
             if (otherEnemy == null)
-                return;
-
-            if (otherEnemy.ImFreeze)
             {
-                Vector3 hitPoint = other.ClosestPoint(transform.position);
+                Debug.Log("몬스터 EnemyBase 가 없음");
+                return;
+            }
 
+            if (ImFreeze == true && otherEnemy == false)
+            {
+                ImFreeze = false;
+                StartCoroutine(FreezeCor());
+
+                Vector3 hitPoint = other.ClosestPoint(transform.position);
                 Vector3 normal = (hitPoint - transform.position).normalized;
                 Quaternion rot = Quaternion.LookRotation(normal);
-
                 GameObject inst = Instantiate(CrashBunpeo, hitPoint, rot);
 
                 PoolManager.Instance.Despawn(gameObject);
@@ -264,12 +275,12 @@ public class Bungpeo : EnemyBase
         if (isFreeze == true)
         {
             ImFreeze = isFreeze;
-            myCollider.enabled = false;
             animator.speed = 0f;
             IsFreeze.SetActive(true);
         }
         else if (isFreeze == false)
         {
+            Debug.Log(isFreeze + " 프리즈 해제");// 이거 넘어 오긴하는건가
             ImFreeze = isFreeze;
             StartCoroutine(FreezeCor());
         }
@@ -281,9 +292,7 @@ public class Bungpeo : EnemyBase
     IEnumerator FreezeCor()
     {
         yield return new WaitForSeconds(FreezeTime);
-
         animator.speed = 1f;
-        myCollider.enabled = true;
         IsFreeze.SetActive(false);
     }
 

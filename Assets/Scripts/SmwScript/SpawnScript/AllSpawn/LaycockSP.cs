@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,6 +11,7 @@ public class LaycockSP : MonoBehaviour
 
     public void SpawnLaycock(Transform position)
     {
+        if (!PhotonNetwork.IsMasterClient) return;
         Vector3 vector3 = new Vector3(position.position.x, position.position.y, position.position.z);
         GameObject go = PoolManager.Instance.Spawn(monsterPrefab, vector3, Quaternion.identity);
         Monsters.Add(go);
@@ -34,6 +36,13 @@ public class LaycockSP : MonoBehaviour
         }
 
     }
+    
+    public void DisCountLaycock()
+    {
+        Count--;
+    }
+
+
 }
 
 

@@ -43,6 +43,7 @@ public class Spawner : MonoBehaviourPun
 
     IEnumerator SpawnRoutine()
     {
+        if (!PhotonNetwork.IsMasterClient) yield return null;
 
         int spawned = 0;
 
