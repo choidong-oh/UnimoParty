@@ -157,6 +157,9 @@ MonoBehaviour:
   _FairyScore_1: 1
   _FairyScore_2: 2
   _FairyScore_3: 3
+  score: 
+  deliveryCount: 
+  hitCount: 
 --- !u!4 &37525067
 Transform:
   m_ObjectHideFlags: 0
@@ -938,7 +941,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7626579411440929942, guid: 68d30902df87b5d40b777c9b45999f53, type: 3}
       propertyPath: maxEnemies
-      value: 100
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 7626579411440929942, guid: 68d30902df87b5d40b777c9b45999f53, type: 3}
       propertyPath: spawnTimer
