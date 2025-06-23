@@ -109,7 +109,7 @@ GameObject:
   - component: {fileID: 4139046316011354084}
   - component: {fileID: 8487764742425616624}
   m_Layer: 10
-  m_Name: BoxShip
+  m_Name: 2BoxShip
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -61,15 +61,53 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -2427402418884179475, guid: f0fc906181e39254496cb65b3fde09ee, type: 3}
+      propertyPath: m_Bones.Array.data[10]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: -2427402418884179475, guid: f0fc906181e39254496cb65b3fde09ee, type: 3}
+      propertyPath: m_Bones.Array.data[11]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: -2427402418884179475, guid: f0fc906181e39254496cb65b3fde09ee, type: 3}
+      propertyPath: m_Bones.Array.data[12]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: -2427402418884179475, guid: f0fc906181e39254496cb65b3fde09ee, type: 3}
+      propertyPath: m_Bones.Array.data[13]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: -2427402418884179475, guid: f0fc906181e39254496cb65b3fde09ee, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: -876546973899608171, guid: f0fc906181e39254496cb65b3fde09ee, type: 3}
+      objectReference: {fileID: 2100000, guid: 41a065f3b2d0a5f4dbeab34322d251f8, type: 2}
     - target: {fileID: 919132149155446097, guid: f0fc906181e39254496cb65b3fde09ee, type: 3}
       propertyPath: m_Name
-      value: CH003_Gomgom
+      value: 2Bear
       objectReference: {fileID: 0}
+    - target: {fileID: 2737082241221778497, guid: f0fc906181e39254496cb65b3fde09ee, type: 3}
+      propertyPath: m_Bones.Array.data[10]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2737082241221778497, guid: f0fc906181e39254496cb65b3fde09ee, type: 3}
+      propertyPath: m_Bones.Array.data[11]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2737082241221778497, guid: f0fc906181e39254496cb65b3fde09ee, type: 3}
+      propertyPath: m_Bones.Array.data[12]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2737082241221778497, guid: f0fc906181e39254496cb65b3fde09ee, type: 3}
+      propertyPath: m_Bones.Array.data[13]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2737082241221778497, guid: f0fc906181e39254496cb65b3fde09ee, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 7348d6a3b0474234f8dc896b988a52f8, type: 2}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: -6391686363080112703, guid: f0fc906181e39254496cb65b3fde09ee, type: 3}
+    - {fileID: 8406702092012887250, guid: f0fc906181e39254496cb65b3fde09ee, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f0fc906181e39254496cb65b3fde09ee, type: 3}

@@ -320,10 +320,20 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     {
         if (PhotonNetwork.IsMasterClient)
         {
+            
             Manager.Instance.players.Clear();
             Manager.Instance.players.AddRange(PhotonNetwork.PlayerList);
 
+
+            Manager.Instance.SetGameList();
+
+            for(int i=0; i< Manager.Instance.players.Count ; i++)
+            {
+                Debug.Log(Manager.Instance.players[i] + "플레이어들 setting");
+            }
+            
             PhotonNetwork.LoadLevel(3);
+
         }
     }
     private void UpdateActionButton()
