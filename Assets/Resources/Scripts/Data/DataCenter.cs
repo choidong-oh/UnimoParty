@@ -23,6 +23,8 @@ public class DataCenter
 {
     public int life;
     public int score;
+    public int hitcount;
+    public int deliveryCount;
     public int _money;
     public FairyType playerFairyType;
     public PlayerState _playerState;
