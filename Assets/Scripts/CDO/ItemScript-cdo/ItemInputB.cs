@@ -171,9 +171,9 @@ public class ItemInputB : MonoBehaviourPunCallbacks, IFreeze
 
     GameObject ItemCreate(string ItemPrefabName)
     {
-        if(ItemPrefabName == "TestItem1")
+        if(ItemPrefabName == "Barricade2")
         {
-            ItemPrefabName = "TestItem";
+            ItemPrefabName = "Barricade1";
         }
         firepos = rightController.gameObject.GetComponentInChildren<ActionBasedController>().model.GetChild(0).transform;
         newItem = PhotonNetwork.Instantiate(ItemPrefabName, firepos.position, Quaternion.identity);

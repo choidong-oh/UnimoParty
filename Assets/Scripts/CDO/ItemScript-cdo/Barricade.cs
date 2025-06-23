@@ -1,12 +1,13 @@
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
+using Photon.Pun;
 
 public class Barricade : MonoBehaviour, IItemUse, InterfaceMethod.IItemData
 {
     [SerializeField] int installMaxDistance; //汲摹 芭府
 
-    [SerializeField] GameObject realBarricadPrefab; //角力 积己
+    //[SerializeField] GameObject realBarricadPrefab; //角力 积己
     GameObject previewBarricadPrefab; //固府焊扁
 
     Vector3 previewPlayerPos;
@@ -30,7 +31,8 @@ public class Barricade : MonoBehaviour, IItemUse, InterfaceMethod.IItemData
     {
         if (previewBarricadPrefab == null)
         {
-            previewBarricadPrefab = Instantiate(realBarricadPrefab);
+            previewBarricadPrefab = PhotonNetwork.Instantiate("Barricade",transform.position,Quaternion.identity);
+
             Destroy(previewBarricadPrefab.GetComponent<Collider>());
             GroundPos();
 
@@ -186,7 +188,7 @@ public class Barricade : MonoBehaviour, IItemUse, InterfaceMethod.IItemData
     {
         if (CanPlace() == false)
         {
-            Instantiate(realBarricadPrefab, GroundPos(), previewBarricadPrefab.transform.rotation);
+            PhotonNetwork.Instantiate("Barricade", GroundPos(), previewBarricadPrefab.transform.rotation);
             DestoryPreviewPrefab();
             return true;
         }
