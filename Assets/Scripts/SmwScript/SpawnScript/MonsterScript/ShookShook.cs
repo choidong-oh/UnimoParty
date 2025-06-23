@@ -126,66 +126,71 @@ public class ShookShook : EnemyBase
 
     private void OnTriggerEnter(Collider other)
     {
- 
-            if (other.gameObject.tag == "Player")
+        if (!photonView.IsMine) return;
+        if (other.gameObject.tag == "Player")
+        {
+            if (ImFreeze == true)
             {
-                if (ImFreeze == true)
-                {
-                    ImFreeze = false;
-                    StartCoroutine(FreezeCor());
-                }
-                else if (ImFreeze == false)
-                {
-                    damage = 1;
-                    Manager.Instance.observer.HitPlayer(damage + 1);
-
-                    Vector3 hitPoint = other.ClosestPoint(transform.position);//충돌지점에 최대한 가깝게
-                    Vector3 normal = (hitPoint - transform.position).normalized;// 방향계산
-                    Quaternion rot = Quaternion.LookRotation(normal);// 방향계산
-                    GameObject inst = Instantiate(CrashShookShook, hitPoint, rot);
-
-                    PoolManager.Instance.Despawn(gameObject);
-                }
+                ImFreeze = false;
+                StartCoroutine(FreezeCor());
             }
-
-            if (other.gameObject.tag == "Monster")
+            else if (ImFreeze == false)
             {
-                EnemyBase otherEnemy = other.GetComponent<EnemyBase>();
-
-                if (otherEnemy == null)
+                damage = 1;
+                var otherPV = other.GetComponent<PhotonView>();
+                if (otherPV != null && otherPV.Owner != null)
                 {
-                    Debug.Log("몬스터 EnemyBase 가 없음");
-                    return;
+                    // 데미지 전용 RPC
+                    photonView.RPC("HitPlayerRPC", otherPV.Owner, damage + 1);
                 }
 
-                if (ImFreeze == true && otherEnemy == false)
-                {
-                    ImFreeze = false;
-                    StartCoroutine(FreezeCor());
-
-                    Vector3 hitPoint = other.ClosestPoint(transform.position);
-                    Vector3 normal = (hitPoint - transform.position).normalized;
-                    Quaternion rot = Quaternion.LookRotation(normal);
-                    GameObject inst = Instantiate(CrashShookShook, hitPoint, rot);
-
-                    PoolManager.Instance.Despawn(gameObject);
-                }
-            }
-
-            if (other.gameObject.tag == "Aube")
-            {
-                Vector3 hitPoint = other.ClosestPoint(transform.position);
-
-                Vector3 normal = (hitPoint - transform.position).normalized;
-                Quaternion rot = Quaternion.LookRotation(normal);
-
+                Vector3 hitPoint = other.ClosestPoint(transform.position);//충돌지점에 최대한 가깝게
+                Vector3 normal = (hitPoint - transform.position).normalized;// 방향계산
+                Quaternion rot = Quaternion.LookRotation(normal);// 방향계산
                 GameObject inst = Instantiate(CrashShookShook, hitPoint, rot);
 
                 PoolManager.Instance.Despawn(gameObject);
             }
-
         }
-    
+
+        if (other.gameObject.tag == "Monster")
+        {
+            EnemyBase otherEnemy = other.GetComponent<EnemyBase>();
+
+            if (otherEnemy == null)
+            {
+                Debug.Log("몬스터 EnemyBase 가 없음");
+                return;
+            }
+
+            if (ImFreeze == true && otherEnemy == false)
+            {
+                ImFreeze = false;
+                StartCoroutine(FreezeCor());
+
+                Vector3 hitPoint = other.ClosestPoint(transform.position);
+                Vector3 normal = (hitPoint - transform.position).normalized;
+                Quaternion rot = Quaternion.LookRotation(normal);
+                GameObject inst = Instantiate(CrashShookShook, hitPoint, rot);
+
+                PoolManager.Instance.Despawn(gameObject);
+            }
+        }
+
+        if (other.gameObject.tag == "Aube")
+        {
+            Vector3 hitPoint = other.ClosestPoint(transform.position);
+
+            Vector3 normal = (hitPoint - transform.position).normalized;
+            Quaternion rot = Quaternion.LookRotation(normal);
+
+            GameObject inst = Instantiate(CrashShookShook, hitPoint, rot);
+
+            PoolManager.Instance.Despawn(gameObject);
+        }
+
+    }
+
 
 
     public override void Move(Vector3 direction)
@@ -293,6 +298,12 @@ public class ShookShook : EnemyBase
         MoveSpeed = MoveSpeedSave;
         animator.speed = 1f;
         IsFreeze.SetActive(false);
+    }
+
+    [PunRPC]
+    void HitPlayerRPC(int dmg)
+    {
+        Manager.Instance.observer.HitPlayer(dmg);
     }
 
 }
