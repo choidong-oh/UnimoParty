@@ -338,7 +338,7 @@ PrefabInstance:
     - target: {fileID: 3132521309283916604, guid: 688994b758e53ee448c92419b5423d4b, type: 3}
       propertyPath: centerObject
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1996686028}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -636,7 +636,7 @@ Transform:
   m_GameObject: {fileID: 1390242330}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -50, y: 0, z: -50}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -830,6 +830,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c970e0457609cd8479a1afd2f9dd0d83, type: 3}
+--- !u!4 &1996686028 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2197714591804827823, guid: c970e0457609cd8479a1afd2f9dd0d83, type: 3}
+  m_PrefabInstance: {fileID: 1996686027}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2065504389
 GameObject:
   m_ObjectHideFlags: 0
