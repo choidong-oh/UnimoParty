@@ -34,6 +34,7 @@ public class Bungpeo : EnemyBase
 
     private void OnTriggerEnter(Collider other)
     {
+        if (!photonView.IsMine) return;
         if (other.gameObject.tag == "Player")
         {
             if (ImFreeze == true)
@@ -44,7 +45,12 @@ public class Bungpeo : EnemyBase
             else if (ImFreeze == false)
             {
                 damage = 1;
-                Manager.Instance.observer.HitPlayer(damage + 1);
+                var otherPV = other.GetComponent<PhotonView>();
+                if (otherPV != null && otherPV.Owner != null)
+                {
+                    // 데미지 전용 RPC
+                    photonView.RPC("HitPlayerRPC", otherPV.Owner, damage + 1);
+                }
 
                 Vector3 hitPoint = other.ClosestPoint(transform.position);//충돌지점에 최대한 가깝게
                 Vector3 normal = (hitPoint - transform.position).normalized;// 방향계산
@@ -296,4 +302,10 @@ public class Bungpeo : EnemyBase
         IsFreeze.SetActive(false);
     }
 
+
+    [PunRPC]
+    void HitPlayerRPC(int dmg)
+    {
+        Manager.Instance.observer.HitPlayer(dmg);
+    }
 }
