@@ -31,7 +31,7 @@ public class Barricade : MonoBehaviour, IItemUse, InterfaceMethod.IItemData
     {
         if (previewBarricadPrefab == null)
         {
-            previewBarricadPrefab = PhotonNetwork.Instantiate("Barricade",transform.position,Quaternion.identity);
+            previewBarricadPrefab = PhotonNetwork.InstantiateRoomObject("Barricade",transform.position,Quaternion.identity);
 
             Destroy(previewBarricadPrefab.GetComponent<Collider>());
             GroundPos();
@@ -188,7 +188,7 @@ public class Barricade : MonoBehaviour, IItemUse, InterfaceMethod.IItemData
     {
         if (CanPlace() == false)
         {
-            PhotonNetwork.Instantiate("Barricade", GroundPos(), previewBarricadPrefab.transform.rotation);
+            PhotonNetwork.InstantiateRoomObject("Barricade", GroundPos(), previewBarricadPrefab.transform.rotation);
             DestoryPreviewPrefab();
             return true;
         }
