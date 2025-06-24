@@ -37,7 +37,7 @@ public class SpawnManager : MonoBehaviourPunCallbacks
             if (player.GetComponent<PhotonView>().IsMine)
             {
                 PhotonView pv = player.GetComponent<PhotonView>();
-                pv.RPC("RPC_SetupPlayer", RpcTarget.AllBuffered, SelectedData.characterIndex, SelectedData.shipIndex);
+                pv.RPC("SetupPlayer", RpcTarget.AllBuffered, SelectedData.characterIndex, SelectedData.shipIndex);
             }
         }
     }

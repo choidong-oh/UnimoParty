@@ -38,10 +38,4 @@ public class LoadPlayerSetting : MonoBehaviourPunCallbacks
         }
         
     }
-
-    
-    void Update()
-    {
-        
-    }
 }

@@ -2023,7 +2023,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &924924877
 Transform:
   m_ObjectHideFlags: 0
@@ -2489,6 +2489,9 @@ MonoBehaviour:
   _FairyScore_1: 1
   _FairyScore_2: 2
   _FairyScore_3: 3
+  score: 
+  deliveryCount: 
+  hitCount: 
 --- !u!4 &1221788417
 Transform:
   m_ObjectHideFlags: 0
@@ -3639,7 +3642,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1550927052
 MonoBehaviour:
   m_ObjectHideFlags: 0

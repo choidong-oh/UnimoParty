@@ -1,6 +1,7 @@
 using UnityEngine;
 using TMPro;
 using Photon.Pun;
+using UnityEngine.SceneManagement;
 
 
 public class TimeUI : MonoBehaviourPunCallbacks
@@ -45,7 +46,7 @@ public class TimeUI : MonoBehaviourPunCallbacks
 
     void GameOverUI()
     {
-        PhotonNetwork.LoadLevel(1);
         PhotonNetwork.LeaveRoom();
+        SceneManager.LoadScene(1);
     }
 }

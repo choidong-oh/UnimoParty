@@ -5,7 +5,7 @@ using System.Collections;
 public class PlayerAvatarSetup : MonoBehaviourPun
 {
     [PunRPC]
-    public void RPC_SetupPlayer(int charIndex, int shipIndex)
+    public void SetupPlayer(int charIndex, int shipIndex)
     {
         StartCoroutine(SetupPlayerRoutine(charIndex, shipIndex));
     }
@@ -31,6 +31,15 @@ public class PlayerAvatarSetup : MonoBehaviourPun
         {
             GameObject charObj = Instantiate(characters[charIndex], characterPos.position, Quaternion.identity, characterPos);
             charObj.transform.localPosition = Vector3.zero;
+
+            // 내 캐릭터만 안 보이게
+            if (photonView.IsMine)
+            {
+                foreach (var r in charObj.GetComponentsInChildren<Renderer>())
+                {
+                    r.enabled = false;
+                }
+            }
         }
 
         if (shipPos && shipIndex < ships.Length)
