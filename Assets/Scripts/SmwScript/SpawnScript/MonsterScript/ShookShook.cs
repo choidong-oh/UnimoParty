@@ -274,7 +274,7 @@ public class ShookShook : EnemyBase
     {
         if (isFreeze == true)
         {
-            IsFreeze.SetActive(true);
+            //IsFreeze.SetActive(true);
             ImFreeze = isFreeze;
             MoveSpeedSave = MoveSpeed;
             MoveSpeed = 0;
@@ -297,7 +297,7 @@ public class ShookShook : EnemyBase
         yield return new WaitForSeconds(FreezeTime);
         MoveSpeed = MoveSpeedSave;
         animator.speed = 1f;
-        IsFreeze.SetActive(false);
+        //IsFreeze.SetActive(false);
     }
 
     [PunRPC]

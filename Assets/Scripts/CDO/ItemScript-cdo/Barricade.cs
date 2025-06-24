@@ -139,7 +139,7 @@ public class Barricade : MonoBehaviour, IItemUse, InterfaceMethod.IItemData
 
                 Quaternion rotation = Quaternion.LookRotation(direction);
 
-                rotation *= Quaternion.Euler(0, rotationY, 0);
+                rotation *= Quaternion.Euler(0, rotationY, 180);
                 previewBarricadPrefab.transform.rotation = rotation;
 
                 previewBarricadPrefab.transform.position = new Vector3(spawnPos.x, tempSpawnPos, spawnPos.z);
@@ -199,4 +199,6 @@ public class Barricade : MonoBehaviour, IItemUse, InterfaceMethod.IItemData
         }
 
     }
+
+   
 }
