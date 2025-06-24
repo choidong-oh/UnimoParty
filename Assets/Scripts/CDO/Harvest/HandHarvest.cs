@@ -58,7 +58,9 @@ public class HandHarvest : MonoBehaviourPunCallbacks, IFreeze
 
     IEnumerator OnEnableItemCor()
     {
-        yield return new WaitUntil(()=> rightController.gameObject.activeSelf);
+        yield return new WaitUntil(() => rightController.gameObject.activeSelf &&
+       rightController.gameObject.GetComponent<ActionBasedController>().model != null
+   );
         OnEnableItem();
 
     }
