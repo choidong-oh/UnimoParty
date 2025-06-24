@@ -311,7 +311,7 @@ public class Bigbin : EnemyBase
     IEnumerator FreezeCor()
     {
         yield return new WaitForSeconds(FreezeTime);
-        MoveSpeed = MoveSpeedSave;
+        MoveSpeed = 3;
         animator.speed = 1f;
         IsFreeze.SetActive(false);
     }
