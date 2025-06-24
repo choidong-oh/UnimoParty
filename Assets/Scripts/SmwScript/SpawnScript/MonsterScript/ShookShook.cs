@@ -27,7 +27,7 @@ public class ShookShook : EnemyBase
 
     float MoveSpeedSave;
 
-    Animator animator;
+    //Animator animator;
 
     [SerializeField] float FreezeTime = 3;
 
@@ -290,7 +290,7 @@ public class ShookShook : EnemyBase
             ImFreeze = isFreeze;
             MoveSpeedSave = MoveSpeed;
             MoveSpeed = 0;
-            animator.speed = 0f;
+            //animator.speed = 0f;
         }
         else if (isFreeze == false)
         {
@@ -308,7 +308,7 @@ public class ShookShook : EnemyBase
     {
         yield return new WaitForSeconds(FreezeTime);
         MoveSpeed = MoveSpeedSave;
-        animator.speed = 1f;
+        //animator.speed = 1f;
         //IsFreeze.SetActive(false);
     }
 

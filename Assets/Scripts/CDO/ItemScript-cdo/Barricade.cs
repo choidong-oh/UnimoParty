@@ -74,7 +74,7 @@ public class Barricade : MonoBehaviour, IItemUse, InterfaceMethod.IItemData
                                      noGroundlayerMask);
         if (isBlocked == true)
         {
-            Debug.Log("겹치는 오브젝트 있음요");
+            //Debug.Log("겹치는 오브젝트 있음요");
             SetTransparent(0.3f, Color.red);
         }
         else
@@ -194,7 +194,7 @@ public class Barricade : MonoBehaviour, IItemUse, InterfaceMethod.IItemData
         }
         else
         {
-            Debug.Log("겹쳐서 배치 불가!");
+            //Debug.Log("겹쳐서 배치 불가!");
             return false;
         }
 
