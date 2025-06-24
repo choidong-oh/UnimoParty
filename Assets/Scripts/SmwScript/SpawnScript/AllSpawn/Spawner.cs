@@ -64,7 +64,7 @@ public class Spawner : MonoBehaviourPun
 
             spawnPos = new Vector3(RandomX, 0f, RandomZ);
 
-            PoolManager.Instance.Spawn(enemyPrefab, spawnPos, Quaternion.identity);
+            PoolManager.Instance.SpawnNetworked(enemyPrefab, spawnPos, Quaternion.identity);
 
 
             spawned++;

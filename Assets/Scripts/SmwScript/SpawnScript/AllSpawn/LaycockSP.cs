@@ -13,7 +13,7 @@ public class LaycockSP : MonoBehaviour
     {
         if (!PhotonNetwork.IsMasterClient) return;
         Vector3 vector3 = new Vector3(position.position.x, position.position.y, position.position.z);
-        GameObject go = PoolManager.Instance.Spawn(monsterPrefab, vector3, Quaternion.identity);
+        GameObject go = PoolManager.Instance.SpawnNetworked(monsterPrefab, vector3, Quaternion.identity);
         Monsters.Add(go);
 
         Debug.Log(Count);

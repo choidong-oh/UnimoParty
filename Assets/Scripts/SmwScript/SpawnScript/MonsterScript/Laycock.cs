@@ -61,7 +61,7 @@ public class Laycock : EnemyBase
 
                 laycockSP.DisCountLaycock();
 
-                PoolManager.Instance.Despawn(gameObject);
+                PoolManager.Instance.DespawnNetworked(gameObject);
             }
         }
 
@@ -87,7 +87,7 @@ public class Laycock : EnemyBase
 
                 laycockSP.DisCountLaycock();
 
-                PoolManager.Instance.Despawn(gameObject);
+                PoolManager.Instance.DespawnNetworked(gameObject);
             }
         }
 
@@ -100,7 +100,7 @@ public class Laycock : EnemyBase
 
             GameObject inst = Instantiate(DieParticles, hitPoint, rot);
 
-            PoolManager.Instance.Despawn(gameObject);
+            PoolManager.Instance.DespawnNetworked(gameObject);
         }
 
     }
@@ -198,7 +198,7 @@ public class Laycock : EnemyBase
         yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f);
 
         lazerCoroutine = null;
-        PoolManager.Instance.Despawn(gameObject);
+        PoolManager.Instance.DespawnNetworked(gameObject);
     }
 
     IEnumerator LoopLazer()

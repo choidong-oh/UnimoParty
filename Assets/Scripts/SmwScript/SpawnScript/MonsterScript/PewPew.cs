@@ -173,7 +173,7 @@ public class PewPew : EnemyBase
 
                 Spawner.SpawnOne();
 
-                PoolManager.Instance.Despawn(gameObject);
+                PoolManager.Instance.DespawnNetworked(gameObject);
             }
         }
 
@@ -199,7 +199,7 @@ public class PewPew : EnemyBase
 
                 Spawner.SpawnOne();
 
-                PoolManager.Instance.Despawn(gameObject);
+                PoolManager.Instance.DespawnNetworked(gameObject);
             }
         }
 
@@ -215,7 +215,7 @@ public class PewPew : EnemyBase
 
             Spawner.SpawnOne();
 
-            PoolManager.Instance.Despawn(gameObject);
+            PoolManager.Instance.DespawnNetworked(gameObject);
         }
 
     }

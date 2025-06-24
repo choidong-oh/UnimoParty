@@ -57,7 +57,7 @@ public class Bungpeo : EnemyBase
                 Quaternion rot = Quaternion.LookRotation(normal);// 방향계산
                 GameObject inst = Instantiate(CrashBunpeo, hitPoint, rot);
 
-                PoolManager.Instance.Despawn(gameObject);
+                PoolManager.Instance.DespawnNetworked(gameObject);
             }
         }
 
@@ -81,7 +81,7 @@ public class Bungpeo : EnemyBase
                 Quaternion rot = Quaternion.LookRotation(normal);
                 GameObject inst = Instantiate(CrashBunpeo, hitPoint, rot);
 
-                PoolManager.Instance.Despawn(gameObject);
+                PoolManager.Instance.DespawnNetworked(gameObject);
             }
         }
 
@@ -94,7 +94,7 @@ public class Bungpeo : EnemyBase
 
             GameObject inst = Instantiate(CrashBunpeo, hitPoint, rot);
 
-            PoolManager.Instance.Despawn(gameObject);
+            PoolManager.Instance.DespawnNetworked(gameObject);
         }
 
     }
@@ -223,7 +223,7 @@ public class Bungpeo : EnemyBase
 
             IsActivateFragment = 0;
 
-            PoolManager.Instance.Despawn(gameObject);
+            PoolManager.Instance.DespawnNetworked(gameObject);
         }
     }
     public void IsActivate()
