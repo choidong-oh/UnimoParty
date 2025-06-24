@@ -173,7 +173,10 @@ public class PewPew : EnemyBase
 
                 Spawner.SpawnOne();
 
-                PoolManager.Instance.DespawnNetworked(gameObject);
+                if (PhotonNetwork.IsMasterClient)
+                {
+                    PoolManager.Instance.DespawnNetworked(gameObject);
+                }
             }
         }
 
@@ -199,7 +202,10 @@ public class PewPew : EnemyBase
 
                 Spawner.SpawnOne();
 
-                PoolManager.Instance.DespawnNetworked(gameObject);
+                if (PhotonNetwork.IsMasterClient)
+                {
+                    PoolManager.Instance.DespawnNetworked(gameObject);
+                }
             }
         }
 
@@ -215,7 +221,10 @@ public class PewPew : EnemyBase
 
             Spawner.SpawnOne();
 
-            PoolManager.Instance.DespawnNetworked(gameObject);
+            if (PhotonNetwork.IsMasterClient)
+            {
+                PoolManager.Instance.DespawnNetworked(gameObject);
+            }
         }
 
     }

@@ -111,7 +111,10 @@ public class Bigbin : EnemyBase
 
         Instantiate(JumpExplode, transform.position, Quaternion.identity);
         StopAllCoroutines();
-        PoolManager.Instance.DespawnNetworked(gameObject);
+        if (PhotonNetwork.IsMasterClient)
+        {
+            PoolManager.Instance.DespawnNetworked(gameObject);
+        }
     }
 
 
@@ -140,8 +143,10 @@ public class Bigbin : EnemyBase
                 Vector3 normal = (hitPoint - transform.position).normalized;// 방향계산
                 Quaternion rot = Quaternion.LookRotation(normal);// 방향계산
                 GameObject inst = Instantiate(CrashBigbin, hitPoint, rot);
-
-                PoolManager.Instance.DespawnNetworked(gameObject);
+                if (PhotonNetwork.IsMasterClient)
+                {
+                    PoolManager.Instance.DespawnNetworked(gameObject);
+                }
             }
         }
 
@@ -164,8 +169,8 @@ public class Bigbin : EnemyBase
                 Vector3 normal = (hitPoint - transform.position).normalized;
                 Quaternion rot = Quaternion.LookRotation(normal);
                 GameObject inst = Instantiate(CrashBigbin, hitPoint, rot);
-
-                PoolManager.Instance.DespawnNetworked(gameObject);
+                if (PhotonNetwork.IsMasterClient)
+                    PoolManager.Instance.DespawnNetworked(gameObject);
             }
         }
 
@@ -178,8 +183,10 @@ public class Bigbin : EnemyBase
             Quaternion rot = Quaternion.LookRotation(normal);
 
             GameObject inst = Instantiate(CrashBigbin, hitPoint, rot);
-
-            PoolManager.Instance.DespawnNetworked(gameObject);
+            if(PhotonNetwork.IsMasterClient)
+            {
+                PoolManager.Instance.DespawnNetworked(gameObject);
+            }
         }
 
     }

@@ -77,7 +77,10 @@ public class Burnduri : EnemyBase
                 Quaternion rot = Quaternion.LookRotation(normal);// 방향계산
                 GameObject inst = Instantiate(CrashBurnduri, hitPoint, rot);
 
-                PoolManager.Instance.DespawnNetworked(gameObject);
+                if (PhotonNetwork.IsMasterClient)
+                {
+                    PoolManager.Instance.DespawnNetworked(gameObject);
+                }
             }
         }
 
@@ -101,7 +104,10 @@ public class Burnduri : EnemyBase
                 Quaternion rot = Quaternion.LookRotation(normal);
                 GameObject inst = Instantiate(CrashBurnduri, hitPoint, rot);
 
-                PoolManager.Instance.DespawnNetworked(gameObject);
+                if (PhotonNetwork.IsMasterClient)
+                {
+                    PoolManager.Instance.DespawnNetworked(gameObject);
+                }
             }
         }
 
@@ -114,7 +120,10 @@ public class Burnduri : EnemyBase
 
             GameObject inst = Instantiate(CrashBurnduri, hitPoint, rot);
 
-            PoolManager.Instance.DespawnNetworked(gameObject);
+            if (PhotonNetwork.IsMasterClient)
+            {
+                PoolManager.Instance.DespawnNetworked(gameObject);
+            }
         }
     }
 
@@ -298,7 +307,10 @@ public class Burnduri : EnemyBase
         yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName(state5));
         while (animator.GetCurrentAnimatorStateInfo(0).IsName(state5))
             yield return null;
-        PoolManager.Instance.DespawnNetworked(gameObject);
+        if (PhotonNetwork.IsMasterClient)
+        {
+            PoolManager.Instance.DespawnNetworked(gameObject);
+        }
     }
 
 
