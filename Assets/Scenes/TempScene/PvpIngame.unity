@@ -283,6 +283,88 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &206072568
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 206072570}
+  - component: {fileID: 206072569}
+  - component: {fileID: 206072571}
+  m_Layer: 0
+  m_Name: SpawnTest
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &206072569
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 206072568}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef126d0abea6de345a2ed5d083daa933, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnList:
+  - prefabName: Bigbin
+    count: 10
+  - prefabName: Bungpeo
+    count: 10
+  - prefabName: Burnduri
+    count: 10
+  - prefabName: Laycock
+    count: 10
+  - prefabName: Pewpew
+    count: 10
+  - prefabName: ShookShook
+    count: 10
+  areaCenter: {x: 50, y: 0, z: 50}
+  areaSize: {x: 100, y: 0, z: 100}
+--- !u!4 &206072570
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 206072568}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &206072571
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 206072568}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 2
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1001 &219266595
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1015,6 +1097,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PoolMG
       objectReference: {fileID: 0}
+    - target: {fileID: 8939297473847098787, guid: 68d30902df87b5d40b777c9b45999f53, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1034,5 +1120,6 @@ SceneRoots:
   - {fileID: 37525067}
   - {fileID: 2065504392}
   - {fileID: 1969727536}
-  - {fileID: 2082550303}
   - {fileID: 1996686027}
+  - {fileID: 2082550303}
+  - {fileID: 206072570}

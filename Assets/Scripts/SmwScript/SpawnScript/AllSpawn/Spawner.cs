@@ -30,8 +30,8 @@ public class Spawner : MonoBehaviourPun
         Vector3 TerrainMin = terrain.transform.position;
         Vector3 TerrainMax = terrain.terrainData.size;
 
-        RandomXMin = TerrainMin.x;
-        RandomZMin = TerrainMin.z;
+        RandomXMin = TerrainMin.x+50;
+        RandomZMin = TerrainMin.z+50;
 
         RandomXMax = TerrainMin.x + TerrainMax.x;
         RandomZMax = TerrainMin.z + TerrainMax.z;

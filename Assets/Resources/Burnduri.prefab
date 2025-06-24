@@ -724,7 +724,7 @@ MonoBehaviour:
   enemyName: 
   spawnStartTime: 0
   spawnCycle: 0
-  damage: 1
+  damage: 2
   enemyMoveSpeed: 0
   sizeScale: 0
   spawnCount: 0
@@ -757,7 +757,6 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 5201961080034001827}
-  - {fileID: 0}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
