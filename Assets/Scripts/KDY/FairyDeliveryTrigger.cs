@@ -1,10 +1,11 @@
 using UnityEngine;
+using Photon.Pun;
 
-public class FairyDeliveryTrigger : MonoBehaviour
+public class FairyDeliveryTrigger : MonoBehaviourPun
 {
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player")&&photonView.IsMine)
         {
             Manager.Instance.observer.AddScore();
             Debug.Log(" 플레이어가 AUBE에 닿음 페어리 반납");
