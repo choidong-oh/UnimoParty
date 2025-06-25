@@ -17,7 +17,7 @@ public class HeadDash : MonoBehaviourPunCallbacks, IFreeze
     public DashCooldown dashCooldownUI; 
 
     private float lastDashTime = -999f;
-    private bool isDashing = false;
+    public bool isDashing = false;
 
     //freeze º¯¼ö
     float tempDashDistance = 1F;

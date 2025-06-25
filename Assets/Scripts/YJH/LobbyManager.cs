@@ -30,6 +30,8 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     [SerializeField] TextMeshProUGUI actionButtonText;
     [SerializeField] GameObject gameSettingPanel;
     [SerializeField] GameObject playerPanelPrefab;
+    [SerializeField] GameObject gameSettingButton;
+
 
     [Header("매칭 분류")]
     [SerializeField] Button makeRoomBtn;
@@ -49,11 +51,15 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     private bool isMatchMaking;
 
     public List<Player> playerList = new List<Player>();
-    IEnumerator Start()
+    private void Awake()
     {
         PhotonNetwork.AutomaticallySyncScene = true;
         PhotonNetwork.ConnectUsingSettings();
+    }
+    IEnumerator Start()
+    {
         yield return new WaitUntil(() => PhotonNetwork.IsConnectedAndReady);
+        PhotonNetwork.NickName = FirebaseAuthMgr.user.DisplayName;
 
         Debug.Log("네트워크 연결 완");
 
@@ -64,7 +70,6 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         roomPanel.SetActive(false);
         failPanel.SetActive(false);
 
-        PhotonNetwork.NickName = FirebaseAuthMgr.user.DisplayName;
 
     }
     private void ShowPanel(GameObject nextPanel)
@@ -112,7 +117,12 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     }
     IEnumerator WaitCreatRoom()
     {
-        yield return new WaitUntil(() => PhotonNetwork.IsConnectedAndReady);
+        PhotonNetwork.JoinLobby();
+        //yield return new WaitUntil(() => PhotonNetwork.InLobby);
+        //yield return new WaitForSeconds(0.5f);
+        yield return new WaitUntil(() =>
+      PhotonNetwork.NetworkClientState == ClientState.JoinedLobby);
+
         PhotonNetwork.CreateRoom($"{Random.Range(10000, 99999)}", new RoomOptions { IsVisible = false, MaxPlayers = 8 });
         PVPPanel.SetActive(false);
         roomPanel.SetActive(true);
@@ -189,7 +199,6 @@ public class LobbyManager : MonoBehaviourPunCallbacks
             }
             addTime += 30;
 
-            Debug.Log($"[매치메이킹] 인원 감소 → maxPlayers: {maxPlayers}");
         }
     }
 
@@ -257,6 +266,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         }
     }
 
+    //
     private void AddNicknameUI(Player player)
     {
         if (playerUIMap.ContainsKey(player.ActorNumber))
@@ -322,6 +332,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
             for(int i=0; i< Manager.Instance.players.Count ; i++)
             {
                 Debug.Log(Manager.Instance.players[i] + "플레이어들 setting");
+                Debug.Log(Manager.Instance.players[i].ActorNumber);
             }
             
             PhotonNetwork.LoadLevel(3);

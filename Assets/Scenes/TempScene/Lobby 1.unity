@@ -681,6 +681,7 @@ MonoBehaviour:
   actionButtonText: {fileID: 128436253}
   gameSettingPanel: {fileID: 2145313864}
   playerPanelPrefab: {fileID: 1834638525326064622, guid: 8b7bfa262cb7b3a4ea38912616bb9ca4, type: 3}
+  gameSettingButton: {fileID: 0}
   makeRoomBtn: {fileID: 491087539}
   codeInput: {fileID: 694122122}
 --- !u!114 &73048170
@@ -1733,7 +1734,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 1.85, y: -0.49}
+  m_AnchoredPosition: {x: 1.29, y: -0.49}
   m_SizeDelta: {x: 200, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &207746831
@@ -11931,7 +11932,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1531945398
 Transform:
   m_ObjectHideFlags: 0
