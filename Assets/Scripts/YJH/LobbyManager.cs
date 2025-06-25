@@ -53,7 +53,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     {
         PhotonNetwork.AutomaticallySyncScene = true;
         PhotonNetwork.ConnectUsingSettings();
-        yield return new WaitUntil(() => PhotonNetwork.IsConnected);
+        yield return new WaitUntil(() => PhotonNetwork.IsConnectedAndReady);
 
         Debug.Log("네트워크 연결 완");
 
@@ -112,7 +112,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     }
     IEnumerator WaitCreatRoom()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitUntil(() => PhotonNetwork.IsConnectedAndReady);
         PhotonNetwork.CreateRoom($"{Random.Range(10000, 99999)}", new RoomOptions { IsVisible = false, MaxPlayers = 8 });
         PVPPanel.SetActive(false);
         roomPanel.SetActive(true);
@@ -284,17 +284,9 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         GameObject charObj = Instantiate(characters[charIndex], characterPos.position, Quaternion.Euler(0,180,0), characterPos);
         GameObject shipObj = Instantiate(ships[shipIndex], shipPos.position, Quaternion.Euler(0, 180, 0), shipPos);
     }
+    
 
 
-
-
-    public override void OnJoinRoomFailed(short returnCode, string message)
-    {
-        failPanel.SetActive(true);
-        Debug.Log("방 찾기 실패");
-
-        roomPanel.SetActive(false);
-    }
     public void CodeJoinRoom()
     {
         Debug.Log("입장 중");
