@@ -33,8 +33,8 @@ public class Spawner : MonoBehaviourPun
         RandomXMin = TerrainMin.x+50;
         RandomZMin = TerrainMin.z+50;
 
-        RandomXMax = TerrainMin.x + TerrainMax.x;
-        RandomZMax = TerrainMin.z + TerrainMax.z;
+        RandomXMax = TerrainMin.x + TerrainMax.x-50;
+        RandomZMax = TerrainMin.z + TerrainMax.z-50;
 
         StartCoroutine(SpawnRoutine());
     }
