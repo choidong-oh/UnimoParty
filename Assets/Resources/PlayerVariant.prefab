@@ -2195,6 +2195,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ResultCanvas
       objectReference: {fileID: 0}
+    - target: {fileID: 8503999653020555339, guid: 0059a3de4805df649a3362141da556ee, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8637297432512392331, guid: 0059a3de4805df649a3362141da556ee, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 1

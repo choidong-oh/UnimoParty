@@ -101,6 +101,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   material: {fileID: 2100000, guid: 3578595a4124b46458b2df094b50278f, type: 2}
+  hp: 0
 --- !u!54 &-6659576155624084875
 Rigidbody:
   m_ObjectHideFlags: 0
