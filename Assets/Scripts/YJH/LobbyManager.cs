@@ -70,7 +70,19 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         roomPanel.SetActive(false);
         failPanel.SetActive(false);
 
+        if (Manager.Instance.IsPlayAgainPending)
+        {
+            yield return new WaitForSeconds(0.5f);
+            Manager.Instance.IsPlayAgainPending = false;
 
+            string roomCode = Manager.Instance.PlayAgainRoomCode;
+            codeInput.text = roomCode;
+
+            PhotonNetwork.JoinOrCreateRoom(roomCode, new RoomOptions { MaxPlayers = 8 }, TypedLobby.Default);
+
+            PVPPanel.SetActive(false);
+            roomPanel.SetActive(true);
+        }
     }
     private void ShowPanel(GameObject nextPanel)
     {
@@ -299,6 +311,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     public void CodeJoinRoom()
     {
+
         Debug.Log("¿‘¿Â ¡ﬂ");
         PhotonNetwork.JoinRoom(codeInput.text);
         PVPPanel.SetActive(false);

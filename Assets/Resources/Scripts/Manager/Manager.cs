@@ -19,6 +19,10 @@ public class Manager : MonoBehaviour
     public int _FairyScore_1 = 1;
     public int _FairyScore_2 = 2;
     public int _FairyScore_3 = 3;
+    
+    //µ¿¿¬ÀÌ²¨
+    public string PlayAgainRoomCode { get; set; }
+    public bool IsPlayAgainPending { get; set; }
 
     public static Manager Instance
     {
