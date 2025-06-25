@@ -520,6 +520,9 @@ MonoBehaviour:
   _FairyScore_1: 1
   _FairyScore_2: 2
   _FairyScore_3: 3
+  score: 
+  deliveryCount: 
+  hitCount: 
 --- !u!4 &1531656183
 Transform:
   m_ObjectHideFlags: 0
@@ -609,10 +612,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1168439179064205256, guid: 966bc0a092b89c4468fa9a4c467e78fa, type: 3}
-      propertyPath: sceneViewId
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 3212577677110866569, guid: 966bc0a092b89c4468fa9a4c467e78fa, type: 3}
       propertyPath: m_LocalPosition.x
       value: 31.7
@@ -656,10 +655,6 @@ PrefabInstance:
     - target: {fileID: 8109497528567356183, guid: 966bc0a092b89c4468fa9a4c467e78fa, type: 3}
       propertyPath: m_Name
       value: PlayerVariant
-      objectReference: {fileID: 0}
-    - target: {fileID: 9097946719516881756, guid: 966bc0a092b89c4468fa9a4c467e78fa, type: 3}
-      propertyPath: sceneViewId
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

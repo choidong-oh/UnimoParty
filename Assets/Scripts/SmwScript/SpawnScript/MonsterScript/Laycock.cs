@@ -47,7 +47,7 @@ public class Laycock : EnemyBase
             else if (ImFreeze == false)
             {
                 damage = 1;
-                var otherPV = other.GetComponent<PhotonView>();
+                var otherPV = other.GetComponentInParent<PhotonView>();
                 if (otherPV != null && otherPV.Owner != null)
                 {
                     // 데미지 전용 RPC

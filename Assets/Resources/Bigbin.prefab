@@ -137,6 +137,7 @@ GameObject:
   - component: {fileID: 7079987684951623214}
   - component: {fileID: 6446618362366840468}
   - component: {fileID: -4803530991491251225}
+  - component: {fileID: -8080642466377926314}
   m_Layer: 7
   m_Name: Bigbin
   m_TagString: Monster
@@ -301,6 +302,20 @@ MonoBehaviour:
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 0
   m_UseLocal: 1
+--- !u!114 &-8080642466377926314
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1313915641652497427}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a35fd54ac079a8b47aa6549789157333, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  iconPrefab: {fileID: 4922837886278913688, guid: 64491c38b1af452409456a53259a0f43, type: 3}
+  clampOnRadar: 0
 --- !u!1 &2361167099061129024
 GameObject:
   m_ObjectHideFlags: 0
