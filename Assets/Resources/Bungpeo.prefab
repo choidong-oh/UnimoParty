@@ -413,13 +413,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f4f64b8c7659344f82ed585da0debb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyName: 
-  spawnStartTime: 0
-  spawnCycle: 0
   damage: 2
-  enemyMoveSpeed: 0
-  sizeScale: 0
-  spawnCount: 0
   explosionForce: 30
   explosionRadius: 30
   upwardsModifier: 1

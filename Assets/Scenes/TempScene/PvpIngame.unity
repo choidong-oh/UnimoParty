@@ -1025,6 +1025,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 155698287355504900, guid: 68d30902df87b5d40b777c9b45999f53, type: 3}
+      propertyPath: maxEnemies
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 440648528201813425, guid: 68d30902df87b5d40b777c9b45999f53, type: 3}
       propertyPath: SideNoSpawn
       value: 60

@@ -158,24 +158,17 @@ public class PewPew : EnemyBase
             else if (ImFreeze == false)
             {
                 damage = 1;
-                var otherPV = other.GetComponent<PhotonView>();
-                if (otherPV != null && otherPV.Owner != null)
-                {
-                    // 데미지 전용 RPC
-                    photonView.RPC("HitPlayerRPC", otherPV.Owner, damage + 1);
-                }
+                Manager.Instance.observer.HitPlayer(damage);
+
 
                 Vector3 hitPoint = other.ClosestPoint(transform.position);//충돌지점에 최대한 가깝게
                 Vector3 normal = (hitPoint - transform.position).normalized;// 방향계산
                 Quaternion rot = Quaternion.LookRotation(normal);// 방향계산
                 GameObject inst = Instantiate(CrashPewPew, hitPoint, rot);
 
-                Spawner.SpawnOne();
-
-                if (PhotonNetwork.IsMasterClient)
-                {
-                    PoolManager.Instance.DespawnNetworked(gameObject);
-                }
+                if (!PhotonNetwork.IsMasterClient) return;
+                //Spawner.SpawnOne();
+                PoolManager.Instance.DespawnNetworked(gameObject);
             }
         }
 
@@ -202,12 +195,12 @@ public class PewPew : EnemyBase
 
                 GameObject inst = Instantiate(CrashPewPew, hitPoint, rot);
 
-                Spawner.SpawnOne();
+                if (!PhotonNetwork.IsMasterClient) return;
+                //Spawner.SpawnOne();
 
-                if (PhotonNetwork.IsMasterClient)
-                {
-                    PoolManager.Instance.DespawnNetworked(gameObject);
-                }
+
+                PoolManager.Instance.DespawnNetworked(gameObject);
+
             }
         }
 
@@ -220,13 +213,12 @@ public class PewPew : EnemyBase
             Quaternion rot = Quaternion.LookRotation(normal);
 
             GameObject inst = Instantiate(CrashPewPew, hitPoint, rot);
+            if (!PhotonNetwork.IsMasterClient) return;
+            //Spawner.SpawnOne();
 
-            Spawner.SpawnOne();
 
-            if (PhotonNetwork.IsMasterClient)
-            {
-                PoolManager.Instance.DespawnNetworked(gameObject);
-            }
+            PoolManager.Instance.DespawnNetworked(gameObject);
+
         }
 
     }
@@ -274,9 +266,5 @@ public class PewPew : EnemyBase
         IsFreeze.SetActive(false);
     }
 
-    [PunRPC]
-    void HitPlayerRPC(int dmg)
-    {
-        Manager.Instance.observer.HitPlayer(dmg);
-    }
+
 }

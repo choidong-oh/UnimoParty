@@ -48,12 +48,7 @@ public class Laycock : EnemyBase
             else if (ImFreeze == false)
             {
                 damage = 1;
-                var otherPV = other.GetComponent<PhotonView>();
-                if (otherPV != null && otherPV.Owner != null)
-                {
-                    // 데미지 전용 RPC
-                    photonView.RPC("HitPlayerRPC", otherPV.Owner, damage + 1);
-                }
+                Manager.Instance.observer.HitPlayer(damage);
 
                 Vector3 hitPoint = other.ClosestPoint(transform.position);//충돌지점에 최대한 가깝게
                 Vector3 normal = (hitPoint - transform.position).normalized;// 방향계산
@@ -62,10 +57,9 @@ public class Laycock : EnemyBase
 
                 laycockSP.DisCountLaycock();
 
-                if (PhotonNetwork.IsMasterClient)
-                {
-                    PoolManager.Instance.DespawnNetworked(gameObject);
-                }
+
+                PoolManager.Instance.DespawnNetworked(gameObject);
+
             }
         }
 
@@ -92,10 +86,9 @@ public class Laycock : EnemyBase
 
                 laycockSP.DisCountLaycock();
 
-                if (PhotonNetwork.IsMasterClient)
-                {
-                    PoolManager.Instance.DespawnNetworked(gameObject);
-                }
+
+                PoolManager.Instance.DespawnNetworked(gameObject);
+
             }
         }
 
@@ -108,10 +101,9 @@ public class Laycock : EnemyBase
 
             Instantiate(DieParticles, hitPoint, rot);
 
-            if (PhotonNetwork.IsMasterClient)
-            {
-                PoolManager.Instance.DespawnNetworked(gameObject);
-            }
+
+            PoolManager.Instance.DespawnNetworked(gameObject);
+
         }
 
     }
@@ -209,10 +201,9 @@ public class Laycock : EnemyBase
         yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f);
 
         lazerCoroutine = null;
-        if (PhotonNetwork.IsMasterClient)
-        {
-            PoolManager.Instance.DespawnNetworked(gameObject);
-        }
+
+        PoolManager.Instance.DespawnNetworked(gameObject);
+
     }
 
     IEnumerator LoopLazer()
@@ -257,9 +248,5 @@ public class Laycock : EnemyBase
         IsFreeze.SetActive(false);
     }
 
-    [PunRPC]
-    void HitPlayerRPC(int dmg)
-    {
-        Manager.Instance.observer.HitPlayer(dmg);
-    }
+
 }

@@ -9,7 +9,7 @@ public class PewPewSp : MonoBehaviourPun
 
     Terrain terrain;
 
-    [SerializeField] int maxEnemies = 10;
+    [SerializeField] int maxEnemies = 5;
     [SerializeField] float spawnTimer = 3;
 
     Vector3 terrainCenter;

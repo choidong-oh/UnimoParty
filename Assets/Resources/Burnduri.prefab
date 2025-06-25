@@ -722,13 +722,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f3a8812ac458e645bb47ef37a4534ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyName: 
-  spawnStartTime: 0
-  spawnCycle: 0
   damage: 2
-  enemyMoveSpeed: 0
-  sizeScale: 0
-  spawnCount: 0
   players: []
   MoveSpeed: 1
   chargeSpeed: 10

@@ -1,7 +1,5 @@
 using Photon.Pun;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Pool;
 
 [System.Serializable]
 public class PoolItem

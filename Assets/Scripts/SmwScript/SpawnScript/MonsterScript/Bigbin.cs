@@ -112,10 +112,9 @@ public class Bigbin : EnemyBase
 
         Instantiate(JumpExplode, transform.position, Quaternion.identity);
         StopAllCoroutines();
-        if (PhotonNetwork.IsMasterClient)
-        {
-            PoolManager.Instance.DespawnNetworked(gameObject);
-        }
+
+        PoolManager.Instance.DespawnNetworked(gameObject);
+
     }
 
 
@@ -133,21 +132,15 @@ public class Bigbin : EnemyBase
             else if (ImFreeze == false)
             {
                 damage = 1;
-                var otherPV = other.GetComponent<PhotonView>();
-                if (otherPV != null && otherPV.Owner != null)
-                {
-                    // 데미지 전용 RPC
-                    photonView.RPC("HitPlayerRPC", otherPV.Owner, damage + 1);
-                }
+                Manager.Instance.observer.HitPlayer(damage);
 
                 Vector3 hitPoint = other.ClosestPoint(transform.position);//충돌지점에 최대한 가깝게
                 Vector3 normal = (hitPoint - transform.position).normalized;// 방향계산
                 Quaternion rot = Quaternion.LookRotation(normal);// 방향계산
                 Instantiate(CrashBigbin, hitPoint, rot);
-                if (PhotonNetwork.IsMasterClient)
-                {
-                    PoolManager.Instance.DespawnNetworked(gameObject);
-                }
+
+                PoolManager.Instance.DespawnNetworked(gameObject);
+
             }
         }
 
@@ -171,8 +164,7 @@ public class Bigbin : EnemyBase
                 Vector3 normal = (hitPoint - transform.position).normalized;
                 Quaternion rot = Quaternion.LookRotation(normal);
                 Instantiate(CrashBigbin, hitPoint, rot);
-                if (PhotonNetwork.IsMasterClient)
-                    PoolManager.Instance.DespawnNetworked(gameObject);
+                PoolManager.Instance.DespawnNetworked(gameObject);
             }
         }
 
@@ -185,10 +177,9 @@ public class Bigbin : EnemyBase
             Quaternion rot = Quaternion.LookRotation(normal);
 
             Instantiate(CrashBigbin, hitPoint, rot);
-            if (PhotonNetwork.IsMasterClient)
-            {
-                PoolManager.Instance.DespawnNetworked(gameObject);
-            }
+
+            PoolManager.Instance.DespawnNetworked(gameObject);
+
         }
 
     }
@@ -301,9 +292,4 @@ public class Bigbin : EnemyBase
         IsFreeze.SetActive(false);
     }
 
-    [PunRPC]
-    void HitPlayerRPC(int dmg)
-    {
-        Manager.Instance.observer.HitPlayer(dmg);
-    }
 }
