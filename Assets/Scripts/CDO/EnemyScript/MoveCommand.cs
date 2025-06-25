@@ -18,7 +18,7 @@ public class MoveCommand : ICommand
 
     public void Execute()
     {
-        enemyBase.Move(direction);
+        //enemyBase.Move(direction);
     }
 
 }

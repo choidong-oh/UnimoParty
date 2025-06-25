@@ -1,3 +1,4 @@
+//퓨퓨 스포너
 using Photon.Pun;
 using System.Collections;
 using UnityEngine;
@@ -12,7 +13,6 @@ public class PewPewSp : MonoBehaviourPun
     [SerializeField] float spawnTimer = 3;
 
     Vector3 terrainCenter;
-
 
     private void Start()
     {
@@ -38,7 +38,7 @@ public class PewPewSp : MonoBehaviourPun
     {
         if (!PhotonNetwork.IsMasterClient) return;
         PoolManager.Instance.SpawnNetworked(enemyPrefab, terrainCenter, Quaternion.identity);
-        
+
     }
 
 }

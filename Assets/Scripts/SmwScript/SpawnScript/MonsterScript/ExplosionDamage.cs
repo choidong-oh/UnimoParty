@@ -1,3 +1,4 @@
+//폭발 데미지
 using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;

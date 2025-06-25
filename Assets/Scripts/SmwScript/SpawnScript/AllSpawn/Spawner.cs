@@ -1,3 +1,4 @@
+//½ºÆ÷³Ê 
 using Photon.Pun;
 using System.Collections;
 using UnityEngine;
@@ -30,11 +31,11 @@ public class Spawner : MonoBehaviourPun
         Vector3 TerrainMin = terrain.transform.position;
         Vector3 TerrainMax = terrain.terrainData.size;
 
-        RandomXMin = TerrainMin.x+50;
-        RandomZMin = TerrainMin.z+50;
+        RandomXMin = TerrainMin.x;
+        RandomZMin = TerrainMin.z;
 
-        RandomXMax = TerrainMin.x + TerrainMax.x-50;
-        RandomZMax = TerrainMin.z + TerrainMax.z-50;
+        RandomXMax = TerrainMin.x + TerrainMax.x;
+        RandomZMax = TerrainMin.z + TerrainMax.z;
 
         StartCoroutine(SpawnRoutine());
     }
@@ -64,8 +65,7 @@ public class Spawner : MonoBehaviourPun
 
             spawnPos = new Vector3(RandomX, 0f, RandomZ);
 
-            PoolManager.Instance.SpawnNetworked(enemyPrefab, spawnPos, Quaternion.identity);
-
+            PhotonNetwork.Instantiate(enemyPrefab, spawnPos, Quaternion.identity);
 
             spawned++;
             yield return new WaitForSeconds(spawnTimer);

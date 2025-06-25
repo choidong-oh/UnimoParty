@@ -1,3 +1,4 @@
+//번드리
 using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
@@ -28,12 +29,9 @@ public class Burnduri : EnemyBase
     Terrain terrain;
 
     private Coroutine updateRoutine;
-    private Coroutine moveRoutine;
+
 
     Transform nearestPlayer;
-
-    int dashStateHash;
-
 
     Animator animator;
     Collider myCollider;
@@ -45,9 +43,7 @@ public class Burnduri : EnemyBase
     [SerializeField] GameObject IsFreeze;
 
     string AppearAni = "anim_01_MON001_Bduri_Appearance";
-    string state2 = "anim_02_MON001_Bduri_SlowMove";
     string state3 = "anim_03_MON001_Bduri_Encounter";
-    string state4 = "anim_04_MON001_Bduri_Dash";
     string state5 = "anim_01_MON001_Bduri_Disappearance";
 
 
@@ -55,7 +51,7 @@ public class Burnduri : EnemyBase
     private void OnTriggerEnter(Collider other)
     {
         if (!photonView.IsMine) return;
-        if (other.gameObject.tag == "Player")
+        if (other.CompareTag("Player"))
         {
             if (ImFreeze == true)
             {
@@ -65,7 +61,7 @@ public class Burnduri : EnemyBase
             else if (ImFreeze == false)
             {
                 damage = 1;
-                var otherPV = other.GetComponentInParent<PhotonView>();
+                var otherPV = other.GetComponent<PhotonView>();
                 if (otherPV != null && otherPV.Owner != null)
                 {
                     // 데미지 전용 RPC
@@ -75,7 +71,7 @@ public class Burnduri : EnemyBase
                 Vector3 hitPoint = other.ClosestPoint(transform.position);//충돌지점에 최대한 가깝게
                 Vector3 normal = (hitPoint - transform.position).normalized;// 방향계산
                 Quaternion rot = Quaternion.LookRotation(normal);// 방향계산
-                GameObject inst = Instantiate(CrashBurnduri, hitPoint, rot);
+                Instantiate(CrashBurnduri, hitPoint, rot);
 
                 if (PhotonNetwork.IsMasterClient)
                 {
@@ -84,7 +80,7 @@ public class Burnduri : EnemyBase
             }
         }
 
-        if (other.gameObject.tag == "Monster")
+        else if (other.CompareTag("Monster"))
         {
             EnemyBase otherEnemy = other.GetComponent<EnemyBase>();
 
@@ -94,14 +90,18 @@ public class Burnduri : EnemyBase
                 return;
             }
 
-            if (ImFreeze == true && otherEnemy == false)
+
+            if (ImFreeze == false && otherEnemy.ImFreeze == true)
             {
-                ImFreeze = false;
-                StartCoroutine(FreezeCor());
+
+                otherEnemy.ImFreeze = false;
+                otherEnemy.Move();
 
                 Vector3 hitPoint = other.ClosestPoint(transform.position);
+
                 Vector3 normal = (hitPoint - transform.position).normalized;
                 Quaternion rot = Quaternion.LookRotation(normal);
+
                 GameObject inst = Instantiate(CrashBurnduri, hitPoint, rot);
 
                 if (PhotonNetwork.IsMasterClient)
@@ -111,7 +111,7 @@ public class Burnduri : EnemyBase
             }
         }
 
-        if (other.gameObject.tag == "Aube")
+        else if (other.CompareTag("Aube"))
         {
             Vector3 hitPoint = other.ClosestPoint(transform.position);
 
@@ -156,14 +156,7 @@ public class Burnduri : EnemyBase
 
     IEnumerator GoBurnduri()
     {
-        if (players.Count == 0)
-        {
-            var objs = GameObject.FindGameObjectsWithTag("Player");
-            foreach (var obj in objs)
-            {
-                players.Add(obj.transform);
-            }
-        }
+
         yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName(AppearAni));
         while (animator.GetCurrentAnimatorStateInfo(0).IsName(AppearAni))
             yield return null;
@@ -171,7 +164,7 @@ public class Burnduri : EnemyBase
         myCollider.enabled = true;
 
         updateRoutine = StartCoroutine(UpdateDistance());
-        moveRoutine = StartCoroutine(MoveRoutine());
+        StartCoroutine(MoveRoutine());
         yield return null;
     }
 
@@ -314,21 +307,9 @@ public class Burnduri : EnemyBase
     }
 
 
-
-    public override void CsvEnemyInfo()
+    public override void Move()
     {
-
-    }
-
-    public override void Move(Vector3 direction)
-    {
-        photonView.RPC("MoveRPC", RpcTarget.All, direction);
-    }
-
-    [PunRPC]
-    public void MoveRPC(Vector3 direction)
-    {
-
+        StartCoroutine(FreezeCor());
     }
 
     public override void Freeze(Vector3 direction, bool isFreeze)

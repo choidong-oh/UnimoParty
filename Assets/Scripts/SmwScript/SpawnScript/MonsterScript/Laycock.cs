@@ -1,3 +1,4 @@
+//레이콕
 using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
@@ -37,7 +38,7 @@ public class Laycock : EnemyBase
     private void OnTriggerEnter(Collider other)
     {
         if (!photonView.IsMine) return;
-        if (other.gameObject.tag == "Player")
+        if (other.CompareTag("Player"))
         {
             if (ImFreeze == true)
             {
@@ -47,7 +48,7 @@ public class Laycock : EnemyBase
             else if (ImFreeze == false)
             {
                 damage = 1;
-                var otherPV = other.GetComponentInParent<PhotonView>();
+                var otherPV = other.GetComponent<PhotonView>();
                 if (otherPV != null && otherPV.Owner != null)
                 {
                     // 데미지 전용 RPC
@@ -57,7 +58,7 @@ public class Laycock : EnemyBase
                 Vector3 hitPoint = other.ClosestPoint(transform.position);//충돌지점에 최대한 가깝게
                 Vector3 normal = (hitPoint - transform.position).normalized;// 방향계산
                 Quaternion rot = Quaternion.LookRotation(normal);// 방향계산
-                GameObject inst = Instantiate(DieParticles, hitPoint, rot);
+                Instantiate(DieParticles, hitPoint, rot);
 
                 laycockSP.DisCountLaycock();
 
@@ -68,7 +69,7 @@ public class Laycock : EnemyBase
             }
         }
 
-        if (other.gameObject.tag == "Monster")
+        else if (other.CompareTag("Monster"))
         {
             EnemyBase otherEnemy = other.GetComponent<EnemyBase>();
 
@@ -78,15 +79,16 @@ public class Laycock : EnemyBase
                 return;
             }
 
-            if (ImFreeze == true && otherEnemy == false)
+            if (ImFreeze == false && otherEnemy.ImFreeze == true)
             {
-                ImFreeze = false;
-                StartCoroutine(FreezeCor());
+
+                otherEnemy.ImFreeze = false;
+                otherEnemy.Move();
 
                 Vector3 hitPoint = other.ClosestPoint(transform.position);
                 Vector3 normal = (hitPoint - transform.position).normalized;
                 Quaternion rot = Quaternion.LookRotation(normal);
-                GameObject inst = Instantiate(DieParticles, hitPoint, rot);
+                Instantiate(DieParticles, hitPoint, rot);
 
                 laycockSP.DisCountLaycock();
 
@@ -97,14 +99,14 @@ public class Laycock : EnemyBase
             }
         }
 
-        if (other.gameObject.tag == "Aube")
+        else if (other.CompareTag("Aube"))
         {
             Vector3 hitPoint = other.ClosestPoint(transform.position);
 
             Vector3 normal = (hitPoint - transform.position).normalized;
             Quaternion rot = Quaternion.LookRotation(normal);
 
-            GameObject inst = Instantiate(DieParticles, hitPoint, rot);
+            Instantiate(DieParticles, hitPoint, rot);
 
             if (PhotonNetwork.IsMasterClient)
             {
@@ -118,7 +120,7 @@ public class Laycock : EnemyBase
     public override void OnEnable()
     {
         base.OnEnable();
-        StartCoroutine(Distance()); ;
+        StartCoroutine(Distance());
     }
 
 
@@ -222,14 +224,6 @@ public class Laycock : EnemyBase
         animator.SetTrigger("disappear");
     }
 
-
-
-
-    public override void CsvEnemyInfo()
-    {
-        throw new System.NotImplementedException();
-    }
-
     public override void Freeze(Vector3 direction, bool isFreeze)
     {
         if (isFreeze == true)
@@ -251,9 +245,9 @@ public class Laycock : EnemyBase
         }
     }
 
-    public override void Move(Vector3 direction)
+    public override void Move()
     {
-        throw new System.NotImplementedException();
+        StartCoroutine(FreezeCor());
     }
 
     IEnumerator FreezeCor()

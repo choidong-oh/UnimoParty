@@ -1,3 +1,4 @@
+//레이콕 레이져 
 using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
@@ -5,7 +6,7 @@ using UnityEngine;
 
 public class Lazercoll : MonoBehaviourPunCallbacks
 {
-    int damage; 
+    int damage;
 
     private void OnTriggerEnter(Collider other)
     {

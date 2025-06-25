@@ -1025,6 +1025,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 440648528201813425, guid: 68d30902df87b5d40b777c9b45999f53, type: 3}
+      propertyPath: SideNoSpawn
+      value: 60
+      objectReference: {fileID: 0}
     - target: {fileID: 527471862456176497, guid: 68d30902df87b5d40b777c9b45999f53, type: 3}
       propertyPath: poolItems.Array.data[4].prefab
       value: 
@@ -1043,7 +1047,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6632942309842899335, guid: 68d30902df87b5d40b777c9b45999f53, type: 3}
       propertyPath: SideNoSpawn
-      value: 0
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 7626579411440929942, guid: 68d30902df87b5d40b777c9b45999f53, type: 3}
       propertyPath: maxEnemies
@@ -1051,11 +1055,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7626579411440929942, guid: 68d30902df87b5d40b777c9b45999f53, type: 3}
       propertyPath: spawnTimer
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7626579411440929942, guid: 68d30902df87b5d40b777c9b45999f53, type: 3}
       propertyPath: SideNoSpawn
-      value: 5
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 7626579411440929942, guid: 68d30902df87b5d40b777c9b45999f53, type: 3}
       propertyPath: enemyPrefab
@@ -1104,6 +1108,10 @@ PrefabInstance:
     - target: {fileID: 7907539709961554583, guid: 68d30902df87b5d40b777c9b45999f53, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8064253897577441618, guid: 68d30902df87b5d40b777c9b45999f53, type: 3}
+      propertyPath: SideNoSpawn
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 8441358980824217389, guid: 68d30902df87b5d40b777c9b45999f53, type: 3}
       propertyPath: m_IsActive

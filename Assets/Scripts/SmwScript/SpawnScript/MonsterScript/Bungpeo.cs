@@ -1,3 +1,4 @@
+//범퍼
 using Photon.Pun;
 using System.Collections;
 using UnityEngine;
@@ -35,7 +36,7 @@ public class Bungpeo : EnemyBase
     private void OnTriggerEnter(Collider other)
     {
         if (!photonView.IsMine) return;
-        if (other.gameObject.tag == "Player")
+        if (other.CompareTag("Player"))
         {
             if (ImFreeze == true)
             {
@@ -45,7 +46,7 @@ public class Bungpeo : EnemyBase
             else if (ImFreeze == false)
             {
                 damage = 1;
-                var otherPV = other.GetComponentInParent<PhotonView>();
+                var otherPV = other.GetComponent<PhotonView>();
                 if (otherPV != null && otherPV.Owner != null)
                 {
                     // 데미지 전용 RPC
@@ -55,7 +56,7 @@ public class Bungpeo : EnemyBase
                 Vector3 hitPoint = other.ClosestPoint(transform.position);//충돌지점에 최대한 가깝게
                 Vector3 normal = (hitPoint - transform.position).normalized;// 방향계산
                 Quaternion rot = Quaternion.LookRotation(normal);// 방향계산
-                GameObject inst = Instantiate(CrashBunpeo, hitPoint, rot);
+                Instantiate(CrashBunpeo, hitPoint, rot);
 
                 if (PhotonNetwork.IsMasterClient)
                 {
@@ -64,7 +65,7 @@ public class Bungpeo : EnemyBase
             }
         }
 
-        if (other.gameObject.tag == "Monster")
+        else if (other.CompareTag("Monster"))
         {
             EnemyBase otherEnemy = other.GetComponent<EnemyBase>();
 
@@ -74,15 +75,16 @@ public class Bungpeo : EnemyBase
                 return;
             }
 
-            if (ImFreeze == true && otherEnemy == false)
+            if (ImFreeze == false && otherEnemy.ImFreeze == true)
             {
-                ImFreeze = false;
-                StartCoroutine(FreezeCor());
+
+                otherEnemy.ImFreeze = false;
+                otherEnemy.Move();
 
                 Vector3 hitPoint = other.ClosestPoint(transform.position);
                 Vector3 normal = (hitPoint - transform.position).normalized;
                 Quaternion rot = Quaternion.LookRotation(normal);
-                GameObject inst = Instantiate(CrashBunpeo, hitPoint, rot);
+                Instantiate(CrashBunpeo, hitPoint, rot);
 
                 if (PhotonNetwork.IsMasterClient)
                 {
@@ -91,14 +93,14 @@ public class Bungpeo : EnemyBase
             }
         }
 
-        if (other.gameObject.tag == "Aube")
+        else if (other.CompareTag("Aube"))
         {
             Vector3 hitPoint = other.ClosestPoint(transform.position);
 
             Vector3 normal = (hitPoint - transform.position).normalized;
             Quaternion rot = Quaternion.LookRotation(normal);
 
-            GameObject inst = Instantiate(CrashBunpeo, hitPoint, rot);
+            Instantiate(CrashBunpeo, hitPoint, rot);
 
             if (PhotonNetwork.IsMasterClient)
             {
@@ -210,7 +212,7 @@ public class Bungpeo : EnemyBase
             }
         }
 
-        GameObject inst = Instantiate(explosionPartycle, transform.position, Quaternion.identity);
+        Instantiate(explosionPartycle, transform.position, Quaternion.identity);
 
         for (int i = 0; i < Body.Length; i++)
         {
@@ -243,47 +245,14 @@ public class Bungpeo : EnemyBase
         photonView.RPC("IsActivateRPC", RpcTarget.All);
     }
 
-    public override void Move(Vector3 direction)
+    public override void Move()
     {
-        //photonView.RPC("MoveRPC", RpcTarget.All, direction);
+        StartCoroutine(FreezeCor());
     }
 
     public override void Freeze(Vector3 direction, bool isFreeze)
     {
         photonView.RPC("FreezeRPC", RpcTarget.All, direction, isFreeze);
-    }
-
-    public override void CsvEnemyInfo()
-    {
-        throw new System.NotImplementedException();
-    }
-
-
-    [PunRPC]
-    public void MoveRPC(Vector3 direction)
-    {
-        animator = GetComponent<Animator>();
-        myCollider = GetComponent<Collider>();
-
-        myCollider.enabled = true;
-
-        terrain = Terrain.activeTerrain;
-
-        float terrainY = terrain.SampleHeight(transform.position) + transform.localScale.y / 2f;
-        transform.position = new Vector3(transform.position.x, terrainY, transform.position.z);
-
-        for (int i = 0; i < Body.Length; i++)
-        {
-            Body[i].SetActive(true);
-        }
-
-
-        for (int i = 0; i < Fragment.Length; i++)
-        {
-            Fragment[i].SetActive(true);
-        }
-
-        StartCoroutine(WaitAndExplode());
     }
 
 
@@ -304,7 +273,7 @@ public class Bungpeo : EnemyBase
         }
         else
         {
-            Debug.Log("빅빈 프리즈 고장남");
+            Debug.Log("범퍼 프리즈 고장남");
         }
     }
     IEnumerator FreezeCor()
