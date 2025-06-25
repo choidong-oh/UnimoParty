@@ -2204,6 +2204,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ResultCanvas
       objectReference: {fileID: 0}
+    - target: {fileID: 8503999653020555339, guid: 0059a3de4805df649a3362141da556ee, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8637297432512392331, guid: 0059a3de4805df649a3362141da556ee, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 1
@@ -2300,6 +2304,11 @@ MonoBehaviour:
 --- !u!224 &4953340185471741468 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5956413008550452642, guid: 0059a3de4805df649a3362141da556ee, type: 3}
+  m_PrefabInstance: {fileID: 1591075467591398334}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &6922283409885260789 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8503999653020555339, guid: 0059a3de4805df649a3362141da556ee, type: 3}
   m_PrefabInstance: {fileID: 1591075467591398334}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2844808767402822041
@@ -3601,6 +3610,14 @@ PrefabInstance:
     - target: {fileID: 5400450911596005153, guid: 55cc9623736065f40b1d3e8709325a55, type: 3}
       propertyPath: m_Color.a
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5739655512046396649, guid: 55cc9623736065f40b1d3e8709325a55, type: 3}
+      propertyPath: rankPanel
+      value: 
+      objectReference: {fileID: 6922283409885260789}
+    - target: {fileID: 5739655512046396649, guid: 55cc9623736065f40b1d3e8709325a55, type: 3}
+      propertyPath: gameDuration
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 5845913677574556417, guid: 55cc9623736065f40b1d3e8709325a55, type: 3}
       propertyPath: m_LocalPosition.z
