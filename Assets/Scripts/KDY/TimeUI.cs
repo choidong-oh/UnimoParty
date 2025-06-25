@@ -1,52 +1,56 @@
-using UnityEngine;
-using TMPro;
 using Photon.Pun;
-using UnityEngine.SceneManagement;
-
+using TMPro;
+using UnityEngine;
+using PhotonHashtable = ExitGames.Client.Photon.Hashtable;
 
 public class TimeUI : MonoBehaviourPunCallbacks
 {
     [SerializeField] private float gameDuration = 120f;
 
-   
-    private float currentTime;
-
-   
     [SerializeField] private TextMeshProUGUI timeText;
+    [SerializeField] private GameObject rankPanel;
+
+    private double startTime;
 
     private void Start()
     {
         Manager.Instance.observer.OnGameEnd += GameOverUI;
-        currentTime = gameDuration;
 
+        // 마스터가 시작 시간 설정
+        if (PhotonNetwork.IsMasterClient)
+        {
+            PhotonHashtable hash = new PhotonHashtable();
+            hash.Add("StartTime", PhotonNetwork.Time);
+            PhotonNetwork.CurrentRoom.SetCustomProperties(hash);
+        }
     }
 
     private void Update()
     {
-        if (currentTime <= 0f)
+        if (PhotonNetwork.CurrentRoom.CustomProperties.ContainsKey("StartTime"))
         {
-            currentTime = 0f;
+            startTime = (double)PhotonNetwork.CurrentRoom.CustomProperties["StartTime"];
 
-            //게임 종료 호출  isGameOver 처리 포함됨 (팀장님이 반영함)
-            GameOverUI();
-            //Manager.Instance.observer.EndGame();
+            double elapsedTime = PhotonNetwork.Time - startTime;
+            double remainingTime = gameDuration - elapsedTime;
 
-            //타이머 비활성화로 정지
-            enabled = false;
-            return;
+            if (remainingTime <= 0)
+            {
+                timeText.text = "00:00";
+                GameOverUI();
+                enabled = false;
+                return;
+            }
+
+            int minutes = Mathf.FloorToInt((float)remainingTime / 60f);
+            int seconds = Mathf.FloorToInt((float)remainingTime % 60f);
+
+            timeText.text = $"{minutes:00}:{seconds:00}";
         }
-
-        currentTime -= Time.deltaTime;
-
-        int minutes = Mathf.FloorToInt(currentTime / 60f);
-        int seconds = Mathf.FloorToInt(currentTime % 60f);
-
-        timeText.text = $"{minutes:00}:{seconds:00}";
     }
 
     void GameOverUI()
     {
-        PhotonNetwork.LeaveRoom();
-        SceneManager.LoadScene(1);
+        rankPanel.SetActive(true);
     }
 }
