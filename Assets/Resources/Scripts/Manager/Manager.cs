@@ -70,17 +70,25 @@ public class Manager : MonoBehaviour
 
     public void SetGameList()
     {
+        Manager.instance.observer.UserPlayer.gamedata.score = 0;
+        Manager.instance.observer.UserPlayer.gamedata.deliveryCount = 0;
+        Manager.instance.observer.UserPlayer.gamedata.hitcount = 0;
+
         score.Clear();
         deliveryCount.Clear();
         hitCount.Clear();
 
         for( int i = 0; i < players.Count; i++)
         {
-            if(players[i].ActorNumber == i)
+            if(players[i].ActorNumber == i+1)
             {
                 score.Add(Manager.instance.observer.UserPlayer.gamedata.score);
                 deliveryCount.Add(Manager.instance.observer.UserPlayer.gamedata.deliveryCount);
                 hitCount.Add(Manager.instance.observer.UserPlayer.gamedata.hitcount);
+
+                Debug.Log("스코어 기본 세팅" + score[0]);
+                Debug.Log("반납 기본 세팅" + deliveryCount[0]);
+                Debug.Log("히트 기본 세팅" + hitCount[0]);
             }
         }
     }

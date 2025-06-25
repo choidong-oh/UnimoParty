@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public enum GameEndConditionList
 {
@@ -18,6 +19,8 @@ public enum BonusConditionList
 
 public class VictoryCondition : MonoBehaviour
 {
+    List<Sprite> bonusVictoryImage;
+
 
     private void Start()
     {
@@ -35,7 +38,7 @@ public class VictoryCondition : MonoBehaviour
 
     }
 
-    public void bonusWinCondition()
+    public void BonusWinCondition()
     {
 
     }

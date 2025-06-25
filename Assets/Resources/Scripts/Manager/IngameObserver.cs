@@ -169,6 +169,8 @@ public class IngameObserver
 
         //여기에 포톤 추가.
         OnGameDataChange?.Invoke(tempfairy);
+
+        Debug.Log("반납 후 점수" + Manager.Instance.observer.UserPlayer.gamedata.score);
     }
 
     public void AddScore()
