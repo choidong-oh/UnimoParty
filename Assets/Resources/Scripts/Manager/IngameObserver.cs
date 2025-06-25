@@ -175,9 +175,9 @@ public class IngameObserver
 
     public void AddScore()
     {
-        var tempscore1 = tempPlayerFairy.FairyDataType_1 * Manager.Instance._FairyScore_1;
-        var tempscore2 = tempPlayerFairy.FairyDataType_2 * Manager.Instance._FairyScore_2;
-        var tempscore3 = tempPlayerFairy.FairyDataType_3 * Manager.Instance._FairyScore_3;
+        var tempscore1 = UserPlayer.gamedata.playerFairyType.FairyDataType_1 * Manager.Instance._FairyScore_1;
+        var tempscore2 = UserPlayer.gamedata.playerFairyType.FairyDataType_2 * Manager.Instance._FairyScore_2;
+        var tempscore3 = UserPlayer.gamedata.playerFairyType.FairyDataType_3 * Manager.Instance._FairyScore_3;
         var tempscore = tempscore1 + tempscore2 + tempscore3;
 
         UserPlayer.gamedata.score = UserPlayer.gamedata.score + tempscore;
