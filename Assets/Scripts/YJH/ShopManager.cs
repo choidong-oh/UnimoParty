@@ -34,8 +34,6 @@ public class ShopManager : MonoBehaviour
     [SerializeField] GameObject sellPanel;
 
 
-    private int selectedCharacterIndex = 0;
-    private int selectedShipIndex = 0;
     private IEnumerator Start()
     {
         ingameMoney = Manager.Instance.observer.UserPlayer.gamedata._money;
