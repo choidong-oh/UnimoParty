@@ -1441,6 +1441,7 @@ MonoBehaviour:
   dashCooldown: 5
   dashDuration: 0.5
   dashCooldownUI: {fileID: 4242816069263286899}
+  isDashing: 0
 --- !u!114 &6976437449580022216
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1770,6 +1771,14 @@ PrefabInstance:
     - target: {fileID: 1402260092760313672, guid: 0059a3de4805df649a3362141da556ee, type: 3}
       propertyPath: m_RaycastTarget
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1670561641531216051, guid: 0059a3de4805df649a3362141da556ee, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 6455375385792236074}
+    - target: {fileID: 1670561641531216051, guid: 0059a3de4805df649a3362141da556ee, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ExitButton
       objectReference: {fileID: 0}
     - target: {fileID: 2156661799466666280, guid: 0059a3de4805df649a3362141da556ee, type: 3}
       propertyPath: m_PresetInfoIsWorld

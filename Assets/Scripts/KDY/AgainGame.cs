@@ -2,9 +2,14 @@ using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class AgainGame : MonoBehaviourPunCallbacks
 {
+    private void Awake()
+    {
+        DontDestroyOnLoad(gameObject); // 씬 넘어가도 안 죽게 함
+    }
     // "한 번 더 하기" 클릭 시 호출됨
     public void OnClickPlayAgain()
     {
@@ -17,22 +22,7 @@ public class AgainGame : MonoBehaviourPunCallbacks
 
         // 2. 방 나가기
         PhotonNetwork.LeaveRoom();
+        SceneManager.LoadScene(1);
     }
 
-    // "로비로 가기" 클릭 시 호출됨
-    public void OnClickGoToLobby()
-    {
-        Manager.Instance.IsPlayAgainPending = false;
-        Manager.Instance.PlayAgainRoomCode = "";
-
-        Debug.Log("[AgainGame] 로비로 가기 선택");
-        PhotonNetwork.LeaveRoom();
-    }
-
-    // LeaveRoom 완료 후 콜백
-    public override void OnLeftRoom()
-    {
-        Debug.Log("[AgainGame] 방 나가기 완료 → 로비로 이동");
-        SceneManager.LoadScene("Lobby 1"); // 공통 처리
-    }
 }
