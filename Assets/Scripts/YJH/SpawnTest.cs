@@ -19,6 +19,9 @@ public class SpawnTest : MonoBehaviourPun
     [SerializeField] private Vector3 areaCenter = Vector3.zero;
     [SerializeField] private Vector3 areaSize = new Vector3(50f, 0f, 50f);
 
+
+    private bool isGameEnded = false;
+    private Coroutine spawnRoutine;
     private void Start()
     {
         if (PhotonNetwork.PrefabPool == null)
@@ -30,12 +33,31 @@ public class SpawnTest : MonoBehaviourPun
         }
     }
 
+    private void OnEnable()
+    {
+        Manager.Instance.observer.OnGameEnd += OnGameEndHandler;
+    }
+
+    private void OnDisable()
+    {
+        Manager.Instance.observer.OnGameEnd -= OnGameEndHandler;
+    }
+    private void OnGameEndHandler()
+    {
+        isGameEnded = true;
+
+        if (spawnRoutine != null)
+            StopCoroutine(spawnRoutine);
+    }
     private IEnumerator SpawnAllMonsters()
     {
         foreach (var data in spawnList)
         {
             for (int i = 0; i < data.count; i++)
             {
+                if (isGameEnded)
+                    yield break;
+
                 Vector3 randomPos = GetRandomSpawnPosition();
                 photonView.RPC("RPC_SpawnMonster", RpcTarget.All, data.prefabName, randomPos, Quaternion.identity);
                 yield return new WaitForSeconds(0.1f);
