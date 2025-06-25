@@ -3617,7 +3617,7 @@ PrefabInstance:
       objectReference: {fileID: 6922283409885260789}
     - target: {fileID: 5739655512046396649, guid: 55cc9623736065f40b1d3e8709325a55, type: 3}
       propertyPath: gameDuration
-      value: 5
+      value: 150
       objectReference: {fileID: 0}
     - target: {fileID: 5845913677574556417, guid: 55cc9623736065f40b1d3e8709325a55, type: 3}
       propertyPath: m_LocalPosition.z
