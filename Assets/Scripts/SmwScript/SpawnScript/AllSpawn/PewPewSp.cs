@@ -26,6 +26,7 @@ public class PewPewSp : MonoBehaviourPun
     {
         if (!PhotonNetwork.IsMasterClient) yield return null;
         int spawned = 0;
+        Debug.Log("퓨퓨 스폰 " + spawned);
         while (spawned < maxEnemies)
         {
             PoolManager.Instance.SpawnNetworked(enemyPrefab, terrainCenter, Quaternion.identity);
@@ -36,6 +37,7 @@ public class PewPewSp : MonoBehaviourPun
 
     public void SpawnOne()
     {
+        Debug.Log("퓨퓨 재스폰");
         if (!PhotonNetwork.IsMasterClient) return;
         PoolManager.Instance.SpawnNetworked(enemyPrefab, terrainCenter, Quaternion.identity);
 

@@ -216,6 +216,7 @@ public class ShookShook : EnemyBase
             MoveSpeedSave = MoveSpeed;
             MoveSpeed = 0;
             animator.speed = 0f;
+            
         }
         else if (isFreeze == false)
         {
