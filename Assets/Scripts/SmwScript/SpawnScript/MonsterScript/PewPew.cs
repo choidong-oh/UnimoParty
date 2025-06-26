@@ -242,8 +242,8 @@ public class PewPew : EnemyBase
         else if (isFreeze == false)
         {
             Debug.Log(isFreeze + " 프리즈 해제");// 이거 넘어 오긴하는건가
-            ImFreeze = isFreeze;
-            StartCoroutine(FreezeCor());
+            ImFreeze = isFreeze;//이거 넘어오면 false임
+            StartCoroutine(FreezeCor());//행동 시켜줌
         }
         else
         {
@@ -253,10 +253,10 @@ public class PewPew : EnemyBase
     IEnumerator FreezeCor()
     {
 
-        yield return new WaitForSeconds(FreezeTime);
-        MoveSpeed = MoveSpeedSave;
-        animator.speed = 1f;
-        IsFreeze.SetActive(false);
+        yield return new WaitForSeconds(FreezeTime);//해동시키는데 기달리는시간 
+        MoveSpeed = MoveSpeedSave;//이동속도를 원레속도로 바꿔줄꺼임
+        animator.speed = 1f;//애니메이션 다시 움직이게 함
+        IsFreeze.SetActive(false);//얼음 프리팹 비활성화 
     }
 
 
