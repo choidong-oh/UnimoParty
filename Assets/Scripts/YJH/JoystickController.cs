@@ -6,6 +6,7 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public class JoystickController : MonoBehaviourPunCallbacks, IFreeze
 {
+    [SerializeReference] CharacterController xrOriginController;
     public GameObject xrOriginObject;     // XROrigin 오브젝트
     [Space]
     [Header("조이스틱 이동속도")]
@@ -64,13 +65,15 @@ public class JoystickController : MonoBehaviourPunCallbacks, IFreeze
     private void OnJoystickMoveY(float value)
     {
         Vector3 forward = new Vector3(xrOriginTransform.forward.x, 0f, xrOriginTransform.forward.z).normalized;
-        xrOriginTransform.position += forward * value * moveSpeed * Time.deltaTime;
+        Vector3 movement = forward * value * moveSpeed * Time.deltaTime;
+        xrOriginController.Move(movement);
     }
 
     private void OnJoystickMoveX(float value)
     {
         Vector3 right = new Vector3(xrOriginTransform.right.x, 0f, xrOriginTransform.right.z).normalized;
-        xrOriginTransform.position += right * value * moveSpeed * Time.deltaTime;
+        Vector3 movement = right * value * moveSpeed * Time.deltaTime;
+        xrOriginController.Move(movement);
     }
 
     public void OnSelect()
