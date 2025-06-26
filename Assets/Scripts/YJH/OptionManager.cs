@@ -21,6 +21,10 @@ public class OptionManager : MonoBehaviourPunCallbacks
     [SerializeField] ActionBasedContinuousTurnProvider smoothTurn;
     float vigentteSize;
 
+
+    [SerializeField] AudioSource[] BGM;
+    [SerializeField] AudioSource[] SFX;
+
     private void Start()
     {
         OptionLoad();
@@ -36,8 +40,9 @@ public class OptionManager : MonoBehaviourPunCallbacks
         }
         UpdateVignetteSize();
         UpdateNomalTurn();
+        UpdateBGMSound();
+        UpdateSFXSound();
 
-        
     }
     public void OperationChange()
     {
@@ -136,7 +141,25 @@ public class OptionManager : MonoBehaviourPunCallbacks
                 angleToggles[2].isOn = true;
             }
         }
-       
+
+        //BGM 로드
+        float bgmVolume = PlayerPrefs.GetFloat("BGMVolume", 50f);
+        sliders[1].value = bgmVolume;
+
+        for (int i = 0; i < BGM.Length; i++)
+        {
+            BGM[i].volume = bgmVolume / 100f;
+        }
+
+        //SFX 로드
+        float sfxVolume = PlayerPrefs.GetFloat("SFXVolume", 50f);
+        sliders[2].value = sfxVolume;
+
+        for (int i = 0; i < BGM.Length; i++)
+        {
+            BGM[i].volume = sfxVolume / 100f;
+        }
+
 
     }
     public void UpdateVignetteSize()
@@ -155,14 +178,29 @@ public class OptionManager : MonoBehaviourPunCallbacks
     {
         //여기서 optionData저장 
         //배경음 업데이트 및 저장
+        for (int i = 0; i < BGM.Length; i++)
+        {
+            BGM[i].volume = sliders[1].value / 100f;
+            Debug.Log(BGM[i].volume);
+        }
 
         OptionData.dataValues[1] = sliders[1].value;
+
+        PlayerPrefs.SetFloat("BGMVolume", sliders[1].value);
+        PlayerPrefs.Save();
     }
     public void UpdateSFXSound()
     {
         //여기서 optionData저장 
         //효과음 소리 업데이트 및 저장
+        for (int i = 0; i < SFX.Length; i++)
+        {
+            SFX[i].volume = sliders[2].value / 100;
+        }
+
         OptionData.dataValues[2] = sliders[2].value;
+
+        PlayerPrefs.SetFloat("SFXVolume", sliders[2].value);
     }
     public void UpdateNomalTurn()
     {
