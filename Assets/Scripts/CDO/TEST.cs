@@ -1,6 +1,7 @@
 using UnityEngine;
 using Photon.Pun;
 using TMPro;
+using System.Collections;
 
 
 public class TEST : MonoBehaviour, IItemUse
@@ -10,20 +11,20 @@ public class TEST : MonoBehaviour, IItemUse
 
     public bool Use(Transform firePos, int power)
     {
-        hp = Manager.Instance.observer.UserPlayer.gamedata.life;
-        Debug.Log("player hp = " + hp);
-        Manager.Instance.observer.RecoveryPlayerHP(10);
+        StartCoroutine(UseWait());
 
-
-
-        hp = Manager.Instance.observer.UserPlayer.gamedata.life;
-        Debug.Log("player hp = " + hp);
-
-        //PhotonNetwork.Destroy(gameObject);  
         return true;
     }
 
     
+    IEnumerator UseWait()
+    {
+        Manager.Instance.observer.RecoveryPlayerHP(10);
+        yield return null;
+
+        PhotonNetwork.Destroy(gameObject);  
+    }
+
 
     private void Awake()
     {

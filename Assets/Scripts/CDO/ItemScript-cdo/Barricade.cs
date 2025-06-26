@@ -23,6 +23,7 @@ public class Barricade : MonoBehaviourPunCallbacks, IItemUse, InterfaceMethod.II
     private XRGrabInteractable grabInteractable;
 
     public bool isGrab = false;
+    bool isOneGrab = false;
     float rotationY = 0;
 
     public ItemData ItemData { get; set; }
@@ -43,6 +44,7 @@ public class Barricade : MonoBehaviourPunCallbacks, IItemUse, InterfaceMethod.II
         grabInteractable = GetComponent<XRGrabInteractable>();
         grabInteractable.selectEntered.AddListener(OnGrab);
         isGrab = false;
+        isOneGrab = false
     }
 
     public override void OnDisable()
@@ -55,7 +57,11 @@ public class Barricade : MonoBehaviourPunCallbacks, IItemUse, InterfaceMethod.II
     void OnGrab(SelectEnterEventArgs args)
     {
         Debug.Log("±×·¦ÇÜ");
-        isGrab = true;
+        if (isOneGrab == false)
+        {
+            isOneGrab = true;
+            isGrab = true;
+        }
        
     }
 
