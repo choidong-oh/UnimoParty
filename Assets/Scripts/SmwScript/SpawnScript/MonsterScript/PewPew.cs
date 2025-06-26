@@ -105,7 +105,7 @@ public class PewPew : EnemyBase
         terrainY = terrain.SampleHeight(transform.position) + transform.localScale.y / 2f + fixedY;//terrainY에 transform.position 자기위치에  terrain.SampleHeight(트레인에 높이)에 퓨퓨 자신의 크기의 절반만큼 + fixedY 더 한높이로 조정
         newPos = new Vector3(x, terrainY, z);// 최종 목적지 좌표 생성
 
-        moveDir = (newPos - transform.position).normalized; //normalized: 단위 벡터. LookRotation에 사용
+        moveDir = (newPos - transform.position).normalized; //normalized: 단위 벡터LookRotation에 사용
 
         if (moveDir.sqrMagnitude > 0.001f) //너무심하게 작은 원 막기위한 코드
         {
@@ -164,7 +164,7 @@ public class PewPew : EnemyBase
 
                 Vector3 hitPoint = other.ClosestPoint(transform.position);//이 오브젝트와 가장 가까운 지점을 계산
                 Vector3 normal = (hitPoint - transform.position).normalized;// 몬스터 중심에서 충돌 지점으로 향하는 방향 벡터를 단위 벡터로 변환
-                Quaternion rot = Quaternion.LookRotation(normal);// 위에서 구한 방향(normal)을 앞(direction)으로 삼아 회전(Quaternion) 생성
+                Quaternion rot = Quaternion.LookRotation(normal);// 회전방향
                 Instantiate(CrashPewPew, hitPoint, rot);// 위에 3개를 적용해서 퓨퓨 사망 파티클 생성
 
                 if (!PhotonNetwork.IsMasterClient) return;//방장아니면 함수를 종료해라 
@@ -194,7 +194,7 @@ public class PewPew : EnemyBase
 
                 Vector3 hitPoint = other.ClosestPoint(transform.position);//이 오브젝트와 가장 가까운 지점을 계산
                 Vector3 normal = (hitPoint - transform.position).normalized;// 몬스터 중심에서 충돌 지점으로 향하는 방향 벡터를 단위 벡터로 변환
-                Quaternion rot = Quaternion.LookRotation(normal);// 위에서 구한 방향(normal)을 앞(direction)으로 삼아 회전(Quaternion) 생성
+                Quaternion rot = Quaternion.LookRotation(normal);// 회전방향
                 Instantiate(CrashPewPew, hitPoint, rot);// 위에 3개를 적용해서 퓨퓨 사망 파티클 생성
 
                 if (!PhotonNetwork.IsMasterClient) return;//방장만 실행하게 
@@ -208,11 +208,11 @@ public class PewPew : EnemyBase
         }
 
 
-        else if (other.CompareTag("Aube"))
+        else if (other.CompareTag("Aube"))//가운데 오브에 충돌되면 (닿을일은 거이없긴한데)
         {
             Vector3 hitPoint = other.ClosestPoint(transform.position);//이 오브젝트와 가장 가까운 지점을 계산
             Vector3 normal = (hitPoint - transform.position).normalized;// 몬스터 중심에서 충돌 지점으로 향하는 방향 벡터를 단위 벡터로 변환
-            Quaternion rot = Quaternion.LookRotation(normal);// 위에서 구한 방향(normal)을 앞(direction)으로 삼아 회전(Quaternion) 생성
+            Quaternion rot = Quaternion.LookRotation(normal);//회전방향 지정
             Instantiate(CrashPewPew, hitPoint, rot);// 위에 3개를 적용해서 퓨퓨 사망 파티클 생성
 
             if (!PhotonNetwork.IsMasterClient) return;//방장만 실행하게 
@@ -250,7 +250,6 @@ public class PewPew : EnemyBase
         }
         else if (isFreeze == false)
         {
-            Debug.Log(isFreeze + " 프리즈 해제");// 이거 넘어 오긴하는건가
             ImFreeze = isFreeze;//이거 넘어오면 false임
             StartCoroutine(FreezeCor());//행동 시켜줌
         }

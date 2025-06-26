@@ -11,22 +11,22 @@ public class Bigbin : EnemyBase
     public List<Transform> players = new List<Transform>();//플레이어 여기에 등록함
 
     [Header("이동 설정")]
-    float MoveSpeed = 5f;
-    float FirstSpeed;
+    float MoveSpeed = 5f;//이동속도
+    float FirstSpeed; //처음속도를 저장할 변수
 
 
     [Header("거리 조건")]
-    [SerializeField] float fixedY = 0f;
+    [SerializeField] float fixedY = 0f;//빅빈 높이를 조정할 변수 
 
-    Terrain terrain;
+    Terrain terrain; //트레인을 담을 변수 
 
-    Collider myCollider;
+    Collider myCollider;//자기자신의 충동체를담을 변수
 
-    [SerializeField] GameObject CrashBigbin;
+    [SerializeField] GameObject CrashBigbin;// 빅빈 죽을때 쓸파티클
 
-    [SerializeField] GameObject JumpParticles;
+    [SerializeField] GameObject JumpParticles;//점프하고 땅에 닿을때마다 생성 파티클
 
-    [SerializeField] GameObject JumpExplode;
+    [SerializeField] GameObject JumpExplode;//점프 종료되면 빅빈이 사라지는 파티클
 
     Transform nearestPlayer;
 

@@ -65,7 +65,7 @@ public class Burnduri : EnemyBase
 
                 Vector3 hitPoint = other.ClosestPoint(transform.position);//이 오브젝트와 가장 가까운 지점을 계산
                 Vector3 normal = (hitPoint - transform.position).normalized;// 몬스터 중심에서 충돌 지점으로 향하는 방향 벡터를 단위 벡터로 변환
-                Quaternion rot = Quaternion.LookRotation(normal);// 위에서 구한 방향(normal)을 앞(direction)으로 삼아 회전(Quaternion) 생성
+                Quaternion rot = Quaternion.LookRotation(normal);// 회전방향 지정
                 Instantiate(CrashBurnduri, hitPoint, rot);//번드리전용 파티클을 생성함 
 
                 if (PhotonNetwork.IsMasterClient)
@@ -95,33 +95,26 @@ public class Burnduri : EnemyBase
 
                 Vector3 hitPoint = other.ClosestPoint(transform.position);//이 오브젝트와 가장 가까운 지점을 계산
                 Vector3 normal = (hitPoint - transform.position).normalized;// 몬스터 중심에서 충돌 지점으로 향하는 방향 벡터를 단위 벡터로 변환
-                Quaternion rot = Quaternion.LookRotation(normal);// 위에서 구한 방향(normal)을 앞(direction)으로 삼아 회전(Quaternion) 생성
-                GameObject inst = Instantiate(CrashBurnduri, hitPoint, rot);// 
-
-
+                Quaternion rot = Quaternion.LookRotation(normal);// 회전방향 지정
+                Instantiate(CrashBurnduri, hitPoint, rot);// 번드리 사망 파티클 생성 
                 if (PhotonNetwork.IsMasterClient)
                 {
-                    PoolManager.Instance.DespawnNetworked(gameObject);
+                    PoolManager.Instance.DespawnNetworked(gameObject);//나자신을 PoolManager에 반환
                 }
 
             }
         }
 
-        else if (other.CompareTag("Aube"))
+        else if (other.CompareTag("Aube"))//오브에 충돌될경우 
         {
-            Vector3 hitPoint = other.ClosestPoint(transform.position);
-
-            Vector3 normal = (hitPoint - transform.position).normalized;
-            Quaternion rot = Quaternion.LookRotation(normal);
-
-            GameObject inst = Instantiate(CrashBurnduri, hitPoint, rot);
-
-
+            Vector3 hitPoint = other.ClosestPoint(transform.position);//이 오브젝트와 가장 가까운 지점을 계산
+            Vector3 normal = (hitPoint - transform.position).normalized;// 몬스터 중심에서 충돌 지점으로 향하는 방향 벡터를 단위 벡터로 변환
+            Quaternion rot = Quaternion.LookRotation(normal);// 회전방향 지정
+            Instantiate(CrashBurnduri, hitPoint, rot);// 번드리 사망 파티클 생성 
             if (PhotonNetwork.IsMasterClient)
             {
-                PoolManager.Instance.DespawnNetworked(gameObject);
+                PoolManager.Instance.DespawnNetworked(gameObject);//나자신을 PoolManager에 반환
             }
-
         }
     }
 
@@ -129,25 +122,25 @@ public class Burnduri : EnemyBase
     public override void OnEnable()
     {
         base.OnEnable();
-        animator = GetComponent<Animator>();
-        myCollider = GetComponent<Collider>();
+        animator = GetComponent<Animator>();//자신의 애니메이션을 넣는다 animator에
+        myCollider = GetComponent<Collider>();// 나자신의 충돌체를 넣음 myCollider에
 
-        myCollider.enabled = false;
+        myCollider.enabled = false;//처음에 스폰 때문에 잠시 충돌을 꺼준다
 
-        terrain = Terrain.activeTerrain;
-        isCharging = false;
+        terrain = Terrain.activeTerrain; //Terrain의 정보를 담는다 
+        isCharging = false;//차징 상태가 아니므로 초기엔 false로해준다 
 
-        StartCoroutine(GoBurnduri());
+        StartCoroutine(GoBurnduri());// GoBurnduri() 코루틴을 실행 한다 
     }
 
-    void FindPlayer()
+    void FindPlayer()// 해당 함수는 플레이어를 찾는 함수임 
     {
-        if (players.Count == 0)
+        if (players.Count == 0)// 플레이어가 없으면 
         {
-            var objs = GameObject.FindGameObjectsWithTag("Player");
+            var objs = GameObject.FindGameObjectsWithTag("Player");//하이러키에 플레이어 테그 달린애들을 찾는다 
             foreach (var obj in objs)
             {
-                players.Add(obj.transform);
+                players.Add(obj.transform);//리스트에 플레이어 추가
             }
         }
     }
@@ -155,43 +148,42 @@ public class Burnduri : EnemyBase
     IEnumerator GoBurnduri()
     {
 
-        yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName(AppearAni));
-        while (animator.GetCurrentAnimatorStateInfo(0).IsName(AppearAni))
-            yield return null;
+        yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName(AppearAni));// AppearAni 애니메이션이 시작될 때까지 대기
+        while (animator.GetCurrentAnimatorStateInfo(0).IsName(AppearAni))// 지금 플레이 중인 애니메이션이 AppearAni 라는 이름일 동안 계속 반복하라
+            yield return null; // 한 프레임만 쉬었다가 다음 프레임에 다시 이어서 실행하게함
 
-        myCollider.enabled = true;
+        myCollider.enabled = true;// 번드리 충돌체를 다시 켜줌 스폰장면이 끝났기 때문에 
 
-        updateRoutine = StartCoroutine(UpdateDistance());
-        StartCoroutine(MoveRoutine());
-        yield return null;
+        updateRoutine = StartCoroutine(UpdateDistance()); // UpdateDistance() 코루틴을 실행함 그냥 스타트 코루틴이랑 다른점은 이거는 중간에 스탑 코루틴으로 멈출수 있어서   
+        StartCoroutine(MoveRoutine());//  MoveRoutine() 을 실행해라 
     }
 
 
     public override void OnDisable()
     {
         base.OnDisable();
-        StopAllCoroutines();
-        myCollider.enabled = false;
+        StopAllCoroutines();//모든 코루틴을 종료 할때
+        myCollider.enabled = false;//충돌체를 꺼준다
     }
 
 
-    IEnumerator UpdateDistance()
+    IEnumerator UpdateDistance()//가까운 플레이어 거리 계산이랑 가까운 플레이어 방향을 쳐다보는걸 해주는 코루틴 
     {
         while (true)
         {
-            if (players != null && players.Count == 0)
+            if (players != null && players.Count == 0)//플레이어 리스트틑 존재하나 플레이어가 없으면 
             {
-                FindPlayer();
+                FindPlayer();// 플래이어 찾는함수 실행
                 yield return null;
             }
 
-            for (int i = players.Count - 1; i >= 0; i--)
+            for (int i = players.Count - 1; i >= 0; i--)//플레이어 리스트 안에 애들검사 
             {
-                Transform p = players[i];
+                Transform p = players[i];// 일단 플레이어 자표
 
-                if (p == null || !p.gameObject.activeInHierarchy)
+                if (p == null || !p.gameObject.activeInHierarchy)//플레이어 좌표가 없다고뜨거나 하이렄에 없으면 
                 {
-                    players.RemoveAt(i);
+                    players.RemoveAt(i);// 그 플레이어 좌표는 제거 한다 
                 }
             }
 
@@ -199,117 +191,112 @@ public class Burnduri : EnemyBase
             float minDistance = Mathf.Infinity;// 일단 제일 큰값으로함 
 
 
-            foreach (var player in players)
+            foreach (var player in players)//플레이어들 수만큼반복
             {
 
-                // 거리계산
-                float Distance = Vector3.Distance(myPos, player.position);
 
-                //이전까지 찾았던 최소 거리보다 작으면 갱신
-                if (Distance < minDistance)
+                float Distance = Vector3.Distance(myPos, player.position);//플레이어와 번드리르 거리를 Distance에 담음
+
+                if (Distance < minDistance)//이전까지 찾았던 최소 거리보다 작으면 갱신
                 {
                     minDistance = Distance;
                     nearestPlayer = player;
                 }
             }
 
-            if (nearestPlayer != null)
+            if (nearestPlayer != null)//nearestPlayer 가 없는게 아니면
             {
-                Target = nearestPlayer.position;
+                Target = nearestPlayer.position;//Target에 nearestPlayer.position 값을 담는다 제일 가까운 애 이기때문
 
-                transform.LookAt(Target);
+                transform.LookAt(Target);// 제일 가까운애를 쳐다보게 하는 LookAt 함수 
             }
 
 
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(0.5f);// 너무 자주반복하면 렉걸리니 0.5초마다 해라
         }
     }
 
 
-    IEnumerator MoveRoutine()
+    IEnumerator MoveRoutine()//실질적으로 앞으로 가는코루틴
     {
         while (true)
         {
-            if (!isCharging)
+            if (!isCharging)//차징상태가 아니라면 
             {
-                float CheckNear = Vector3.Distance(myPos, Target);
+                float CheckNear = Vector3.Distance(myPos, Target); // 번드링와 가까운 플레이어의 거리를 CheckNear 에넣음
 
-                if (CheckNear < chargeDistance)
+                if (CheckNear < chargeDistance)// 돌진 거리 이내에 들어오면 chargeDistance가 더크면 거리에 도달한거라서 
                 {
 
-                    if (updateRoutine != null)
+                    if (updateRoutine != null)//혹시없는거 체크 
                     {
-                        StopCoroutine(updateRoutine);
+                        StopCoroutine(updateRoutine);//방향 잡아주는 코루틴 멈춤 
                     }
-                    isCharging = true;
+                    isCharging = true;//앞으로 더가면 안되니깐 앞의로 이동을 막음
 
 
-                    StartCoroutine(ChargeRoutine());
+                    StartCoroutine(ChargeRoutine());// 일직선으로 차징하는 코루틴 실행 
 
-                    yield break;
+                    yield break;//지금 앞으로가는 코루틴도 종료 
                 }
                 else
                 {
-                    myPos = transform.position;
-                    float terrainY = terrain.SampleHeight(transform.position) + transform.localScale.y / 2f + fixedY;
-                    transform.position = new Vector3(myPos.x, terrainY, myPos.z);
-                    transform.position += transform.forward * MoveSpeed * Time.fixedDeltaTime;
+                    myPos = transform.position;// 다시한번 자기위치 저장
+                    float terrainY = terrain.SampleHeight(transform.position) + transform.localScale.y / 2f + fixedY; //지금 번드리가 있는 위치에 트레인 높이 값에 번드리 y크기 절반만큼 높이로 지정 + fixedY
+                    transform.position = new Vector3(myPos.x, terrainY, myPos.z);// 여기에서 높이를 적용
+                    transform.position += transform.forward * MoveSpeed * Time.fixedDeltaTime;// 앞으로 이동속도만큼 이동 (Time.fixedDeltaTime는 0.02초마다 갱신한다 )
                 }
             }
-            yield return new WaitForFixedUpdate();
+            yield return new WaitForFixedUpdate();//0.05초마다 반복
         }
     }
 
-    IEnumerator ChargeRoutine()
+    IEnumerator ChargeRoutine()//이제 차징을 하는 코루틴 
     {
-        animator.SetTrigger("ChargeStart");
+        animator.SetTrigger("ChargeStart");//애니메이터에 ChargeStart 라는 트리거를 실행
 
-        yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName(state3));
-        while (animator.GetCurrentAnimatorStateInfo(0).IsName(state3))
-            yield return null;
+        yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName(state3));// state3 애니메이션이 시작될 때까지 대기
+        while (animator.GetCurrentAnimatorStateInfo(0).IsName(state3))// 지금 플레이 중인 애니메이션이 state3 라는 이름일 동안 계속 반복하라
+            yield return null;// 한 프레임만 쉬었다가 다음 프레임에 다시 이어서 실행하게함
 
-        Vector3 startPos = transform.position;
+        Vector3 startPos = transform.position;// 차징 하기전 차징 시작위치를 저장 
+
+        Quaternion Rot = Quaternion.Euler(0f, transform.eulerAngles.y, transform.eulerAngles.z); // Y, Z 회전값만 유지하고 X 회전은 0으로 고정 왜냐면 앞으로만 가기때문
+
+        transform.rotation = Rot;// 회전값을 적용
 
 
-        float yAngle = transform.eulerAngles.y;
-        float zAngle = transform.eulerAngles.z;
-
-        Quaternion Rot = Quaternion.Euler(0f, yAngle, zAngle);
-
-        transform.rotation = Rot;
-
+        //triggerDistance이상이되면 빠져나가는데 triggerDistance는 차징거리임 Vector3.Distance(transform.position, startPos)이거는 처음시작위치와의 거리
         while (Vector3.Distance(transform.position, startPos) < triggerDistance)
         {
             myPos = transform.position;
-            float terrainY = terrain.SampleHeight(transform.position) + transform.localScale.y / 2f + fixedY;
-            transform.position = new Vector3(myPos.x, terrainY, myPos.z);
-            transform.position += transform.forward * chargeSpeed * Time.fixedDeltaTime;
+            float terrainY = terrain.SampleHeight(transform.position) + transform.localScale.y / 2f + fixedY; //지금 번드리가 있는 위치에 트레인 높이 값에 번드리 y크기 절반만큼 높이로 지정 + fixedY
+            transform.position = new Vector3(myPos.x, terrainY, myPos.z);//그 높이를 적용 
+            transform.position += transform.forward * chargeSpeed * Time.fixedDeltaTime;// 앞으로가는코드에서 chargeSpeed 으로 바꿔서 적용함 
             yield return new WaitForFixedUpdate();
         }
 
-
-        StartCoroutine(DieBurnduri());
+        StartCoroutine(DieBurnduri());//다끝나면 번드리는 죽어야함 죽는 코루틴임
     }
 
-    IEnumerator DieBurnduri()
+    IEnumerator DieBurnduri()//번드리 차징다하고 죽을때 쓰는 코루틴 
     {
-        myCollider.enabled = false;
-        animator.SetTrigger("disappear");
-        yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName(state5));
-        while (animator.GetCurrentAnimatorStateInfo(0).IsName(state5))
-            yield return null;
+        myCollider.enabled = false;//충돌체를 꺼준다 
+        animator.SetTrigger("disappear");//애니메이터에 사라질때쓰는 트리거를 발동시킨다
+        yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName(state5));// state5 애니메이션이 시작될 때까지 대기
+        while (animator.GetCurrentAnimatorStateInfo(0).IsName(state5))// 지금 플레이 중인 애니메이션이 state5 라는 이름일 동안 계속 반복하라
+            yield return null;// 한 프레임만 쉬었다가 다음 프레임에 다시 이어서 실행하게함
 
-        if (PhotonNetwork.IsMasterClient)
+        if (PhotonNetwork.IsMasterClient)//마스터 클라이언트만 멀티일때 다른애들도 할수 있긴때문 
         {
-            PoolManager.Instance.DespawnNetworked(gameObject);
+            PoolManager.Instance.DespawnNetworked(gameObject); //PoolManager로 반환 
         }
-
     }
 
 
     public override void Move()
     {
-        StartCoroutine(FreezeCor());
+        StartCoroutine(FreezeCor());//해동할때 쓰는 코루틴
     }
 
     public override void Freeze(Vector3 direction, bool isFreeze)
@@ -320,18 +307,17 @@ public class Burnduri : EnemyBase
     [PunRPC]
     public void FreezeRPC(Vector3 direction, bool isFreeze)
     {
-        if (isFreeze == true)
+        if (isFreeze == true)//얼음 폭탄에 맞으면 
         {
-            StopAllCoroutines();
-            ImFreeze = isFreeze;
-            IsFreeze.SetActive(true);
-            animator.speed = 0f;
+            StopAllCoroutines();//모든코루틴을 멈춤 
+            ImFreeze = isFreeze;//빙결상태 저장 
+            IsFreeze.SetActive(true);//얼음 프리팹 키기
+            animator.speed = 0f;//애니메이션 재생을 멈춤 
         }
-        else if (isFreeze == false)
+        else if (isFreeze == false)//빙결 상태가 풀리면 
         {
-            Debug.Log(isFreeze + " 프리즈 해제");// 이거 넘어 오긴하는건가
-            ImFreeze = isFreeze;
-            StartCoroutine(FreezeCor());
+            ImFreeze = isFreeze;//빙결상태 저장 
+            StartCoroutine(FreezeCor());//해동 코루틴발동
         }
         else
         {
@@ -339,12 +325,12 @@ public class Burnduri : EnemyBase
         }
     }
 
-    IEnumerator FreezeCor()
+    IEnumerator FreezeCor()// 번드리 해동하는 코루틴
     {
-        yield return new WaitForSeconds(FreezeTime);
-        animator.speed = 1f;
-        StartCoroutine(GoBurnduri());
-        IsFreeze.SetActive(false);
+        yield return new WaitForSeconds(FreezeTime);//빙결상태 풀리기까지 걸리는 시간 
+        animator.speed = 1f;//애니메이션 다시재생 
+        StartCoroutine(GoBurnduri());//다시 번드리 행동을 켜줄꺼임 
+        IsFreeze.SetActive(false);//얼음 프리팹을 꺼줌 
 
     }
 
