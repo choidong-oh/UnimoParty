@@ -189,18 +189,14 @@ public class PewPew : EnemyBase
                 otherEnemy.ImFreeze = false;//상대방에 빙결을 풀어준다 
                 otherEnemy.Move();// 여기에 FreezeCor() 에 들어있는 빙결해제를 담겨있어서  실행시킴 
 
-                Vector3 hitPoint = other.ClosestPoint(transform.position);
+                Vector3 hitPoint = other.ClosestPoint(transform.position);//이 오브젝트와 가장 가까운 지점을 계산
+                Vector3 normal = (hitPoint - transform.position).normalized;// 몬스터 중심에서 충돌 지점으로 향하는 방향 벡터를 단위 벡터로 변환
+                Quaternion rot = Quaternion.LookRotation(normal);// 위에서 구한 방향(normal)을 앞(direction)으로 삼아 회전(Quaternion) 생성
+                Instantiate(CrashPewPew, hitPoint, rot);// 위에 3개를 적용해서 퓨퓨 사망 파티클 생성
 
-                Vector3 normal = (hitPoint - transform.position).normalized;
-                Quaternion rot = Quaternion.LookRotation(normal);
-
-                GameObject inst = Instantiate(CrashPewPew, hitPoint, rot);
-
-                if (!PhotonNetwork.IsMasterClient) return;
-                Spawner.SpawnOne();
-
-
-                PoolManager.Instance.DespawnNetworked(gameObject);
+                if (!PhotonNetwork.IsMasterClient) return;//방장만 실행하게 
+                Spawner.SpawnOne();// Spawner안에 있는 SpawnOne() 실행 SpawnOne()은 퓨퓨가 죽으면 다시생성하게 할꺼임
+                PoolManager.Instance.DespawnNetworked(gameObject); //PoolManager에 지금 퓨퓨를 반환
 
             }
         }
@@ -208,18 +204,14 @@ public class PewPew : EnemyBase
 
         else if (other.CompareTag("Aube"))
         {
-            Vector3 hitPoint = other.ClosestPoint(transform.position);
+            Vector3 hitPoint = other.ClosestPoint(transform.position);//이 오브젝트와 가장 가까운 지점을 계산
+            Vector3 normal = (hitPoint - transform.position).normalized;// 몬스터 중심에서 충돌 지점으로 향하는 방향 벡터를 단위 벡터로 변환
+            Quaternion rot = Quaternion.LookRotation(normal);// 위에서 구한 방향(normal)을 앞(direction)으로 삼아 회전(Quaternion) 생성
+            Instantiate(CrashPewPew, hitPoint, rot);// 위에 3개를 적용해서 퓨퓨 사망 파티클 생성
 
-            Vector3 normal = (hitPoint - transform.position).normalized;
-            Quaternion rot = Quaternion.LookRotation(normal);
-
-            GameObject inst = Instantiate(CrashPewPew, hitPoint, rot);
-            if (!PhotonNetwork.IsMasterClient) return;
-            Spawner.SpawnOne();
-
-
-            PoolManager.Instance.DespawnNetworked(gameObject);
-
+            if (!PhotonNetwork.IsMasterClient) return;//방장만 실행하게 
+            Spawner.SpawnOne();// Spawner안에 있는 SpawnOne() 실행 SpawnOne()은 퓨퓨가 죽으면 다시생성하게 할꺼임
+            PoolManager.Instance.DespawnNetworked(gameObject);//PoolManager에 지금 퓨퓨를 반환
         }
 
     }
@@ -228,24 +220,24 @@ public class PewPew : EnemyBase
 
     public override void Move()
     {
-        StartCoroutine(FreezeCor());
+        StartCoroutine(FreezeCor());//해동 시켜주는 코루틴실행 
     }
 
     public override void Freeze(Vector3 direction, bool isFreeze)
     {
-        photonView.RPC("FreezeRPC", RpcTarget.All, direction, isFreeze);
+        photonView.RPC("FreezeRPC", RpcTarget.All, direction, isFreeze);// 모든 대상에게 FreezeRPC 함수를 쏴줌
     }
 
     [PunRPC]
-    public void FreezeRPC(Vector3 direction, bool isFreeze)
+    public void FreezeRPC(Vector3 direction, bool isFreeze)// 처음 얼음 상태를 처리해줄 함수 
     {
-        if (isFreeze == true)
+        if (isFreeze == true)//얼음!! 걸리면 
         {
-            ImFreeze = isFreeze;
-            IsFreeze.SetActive(true);
-            MoveSpeedSave = MoveSpeed;
-            MoveSpeed = 0;
-            animator.speed = 0f;
+            ImFreeze = isFreeze;// ImFreeze는 isFreeze가 true 이니깐 true를 담아줌 
+            IsFreeze.SetActive(true);//이거는 몬스터가 얼음이라는걸 외형적으로 보여줌 (얼음 활성화)
+            MoveSpeedSave = MoveSpeed;//얼음 상태 에서는 이동도 금지해야하니깐 나중에 다시 속도가 돌아올때 기존 이동속도를 저장함
+            MoveSpeed = 0;// 이제 이동을 금지시킴 
+            animator.speed = 0f;//얼음상태이니 애니메이션도 잠시 멈춤 
         }
         else if (isFreeze == false)
         {
