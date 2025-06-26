@@ -103,6 +103,8 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     public void PVPButton()
     {
         ShowPanel(PVPPanel);
+
+        AudioManager.Instance?.PlayBGM("PVPBGM");
     }
 
     public void BackButton()
@@ -114,9 +116,14 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
             currentPanel = panelStack.Peek();
             currentPanel.SetActive(true);
-        }
 
+            if (currentPanel == lobbyPanel)
+            {
+                AudioManager.Instance?.PlayBGM("OutGameBGM");
+            }
+        }
     }
+
     //PVE 스테이지 진입
     public void Stage1()
     {

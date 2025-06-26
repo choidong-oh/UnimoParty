@@ -22,9 +22,6 @@ public class OptionManager : MonoBehaviourPunCallbacks
     float vigentteSize;
 
 
-    [SerializeField] AudioSource[] BGM;
-    [SerializeField] AudioSource[] SFX;
-
     private void Start()
     {
         OptionLoad();
@@ -142,23 +139,14 @@ public class OptionManager : MonoBehaviourPunCallbacks
             }
         }
 
-        //BGM 로드
         float bgmVolume = PlayerPrefs.GetFloat("BGMVolume", 50f);
-        sliders[1].value = bgmVolume;
-
-        for (int i = 0; i < BGM.Length; i++)
-        {
-            BGM[i].volume = bgmVolume / 100f;
-        }
-
-        //SFX 로드
         float sfxVolume = PlayerPrefs.GetFloat("SFXVolume", 50f);
+
+        sliders[1].value = bgmVolume;
         sliders[2].value = sfxVolume;
 
-        for (int i = 0; i < BGM.Length; i++)
-        {
-            BGM[i].volume = sfxVolume / 100f;
-        }
+        AudioManager.Instance?.SetBGMVolume(bgmVolume / 100f);
+        AudioManager.Instance?.SetSFXVolume(sfxVolume / 100f);
 
 
     }
@@ -178,29 +166,25 @@ public class OptionManager : MonoBehaviourPunCallbacks
     {
         //여기서 optionData저장 
         //배경음 업데이트 및 저장
-        for (int i = 0; i < BGM.Length; i++)
-        {
-            BGM[i].volume = sliders[1].value / 100f;
-            Debug.Log(BGM[i].volume);
-        }
+        float value = sliders[1].value;
+        OptionData.dataValues[1] = value;
 
-        OptionData.dataValues[1] = sliders[1].value;
-
-        PlayerPrefs.SetFloat("BGMVolume", sliders[1].value);
+        PlayerPrefs.SetFloat("BGMVolume", value);
         PlayerPrefs.Save();
+
+        AudioManager.Instance?.SetBGMVolume(value / 100f);
     }
     public void UpdateSFXSound()
     {
         //여기서 optionData저장 
         //효과음 소리 업데이트 및 저장
-        for (int i = 0; i < SFX.Length; i++)
-        {
-            SFX[i].volume = sliders[2].value / 100;
-        }
+        float value = sliders[2].value;
+        OptionData.dataValues[2] = value;
 
-        OptionData.dataValues[2] = sliders[2].value;
+        PlayerPrefs.SetFloat("SFXVolume", value);
+        PlayerPrefs.Save();
 
-        PlayerPrefs.SetFloat("SFXVolume", sliders[2].value);
+        AudioManager.Instance?.SetSFXVolume(value / 100f);
     }
     public void UpdateNomalTurn()
     {
