@@ -121,10 +121,10 @@ public class ShookShook : EnemyBase
             yield return new WaitForFixedUpdate();
         }
         transform.position = Target;
-
-        PoolManager.Instance.DespawnNetworked(gameObject);
-
-
+        if (PhotonNetwork.IsMasterClient)
+        {
+            PoolManager.Instance.DespawnNetworked(gameObject);
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -146,7 +146,10 @@ public class ShookShook : EnemyBase
                 Vector3 normal = (hitPoint - transform.position).normalized;// 방향계산
                 Quaternion rot = Quaternion.LookRotation(normal);// 방향계산
                 Instantiate(CrashShookShook, hitPoint, rot);
-                PoolManager.Instance.DespawnNetworked(gameObject);
+                if (PhotonNetwork.IsMasterClient)
+                {
+                    PoolManager.Instance.DespawnNetworked(gameObject);
+                }
 
             }
         }
@@ -173,7 +176,10 @@ public class ShookShook : EnemyBase
                 Instantiate(CrashShookShook, hitPoint, rot);
 
 
-                PoolManager.Instance.DespawnNetworked(gameObject);
+                if (PhotonNetwork.IsMasterClient)
+                {
+                    PoolManager.Instance.DespawnNetworked(gameObject);
+                }
 
             }
         }
@@ -188,7 +194,10 @@ public class ShookShook : EnemyBase
             Instantiate(CrashShookShook, hitPoint, rot);
 
 
-            PoolManager.Instance.DespawnNetworked(gameObject);
+            if (PhotonNetwork.IsMasterClient)
+            {
+                PoolManager.Instance.DespawnNetworked(gameObject);
+            }
 
         }
 

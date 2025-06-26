@@ -54,7 +54,10 @@ public class Bungpeo : EnemyBase
                 Instantiate(CrashBunpeo, hitPoint, rot);
 
 
-                PoolManager.Instance.DespawnNetworked(gameObject);
+                if (PhotonNetwork.IsMasterClient)
+                {
+                    PoolManager.Instance.DespawnNetworked(gameObject);
+                }
 
             }
         }
@@ -81,7 +84,10 @@ public class Bungpeo : EnemyBase
                 Instantiate(CrashBunpeo, hitPoint, rot);
 
 
-                PoolManager.Instance.DespawnNetworked(gameObject);
+                if (PhotonNetwork.IsMasterClient)
+                {
+                    PoolManager.Instance.DespawnNetworked(gameObject);
+                }
 
             }
         }
@@ -96,7 +102,10 @@ public class Bungpeo : EnemyBase
             Instantiate(CrashBunpeo, hitPoint, rot);
 
 
-            PoolManager.Instance.DespawnNetworked(gameObject);
+            if (PhotonNetwork.IsMasterClient)
+            {
+                PoolManager.Instance.DespawnNetworked(gameObject);
+            }
 
         }
 
@@ -227,7 +236,10 @@ public class Bungpeo : EnemyBase
             IsActivateFragment = 0;
 
 
-            PoolManager.Instance.DespawnNetworked(gameObject);
+            if (PhotonNetwork.IsMasterClient)
+            {
+                PoolManager.Instance.DespawnNetworked(gameObject);
+            }
 
         }
     }

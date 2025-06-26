@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 using Photon.Pun;
 
-public class Barricade : MonoBehaviour, IItemUse, InterfaceMethod.IItemData
+public class Barricade : MonoBehaviourPunCallbacks, IItemUse, InterfaceMethod.IItemData
 {
     [SerializeField] int installMaxDistance; //¼³Ä¡ °Å¸®
 
@@ -23,15 +23,17 @@ public class Barricade : MonoBehaviour, IItemUse, InterfaceMethod.IItemData
     private XRGrabInteractable grabInteractable;
 
     public bool isGrab = false;
+    bool isOneGrab = false;
     float rotationY = 0;
 
     public ItemData ItemData { get; set; }
 
-    private void OnEnable()
+    public override void OnEnable()
     {
+        base.OnEnable();//
         if (previewBarricadPrefab == null)
         {
-            previewBarricadPrefab = PhotonNetwork.InstantiateRoomObject("Barricade",transform.position,Quaternion.identity);
+            previewBarricadPrefab = PhotonNetwork.Instantiate("Barricade",transform.position,Quaternion.identity);
 
             Destroy(previewBarricadPrefab.GetComponent<Collider>());
             GroundPos();
@@ -41,10 +43,13 @@ public class Barricade : MonoBehaviour, IItemUse, InterfaceMethod.IItemData
         }
         grabInteractable = GetComponent<XRGrabInteractable>();
         grabInteractable.selectEntered.AddListener(OnGrab);
+        isGrab = false;
+        isOneGrab = false;
     }
 
-    private void OnDisable()
+    public override void OnDisable()
     {
+        base.OnDisable();
         DestoryPreviewPrefab();
         grabInteractable.selectEntered.RemoveListener(OnGrab);
     }
@@ -52,13 +57,17 @@ public class Barricade : MonoBehaviour, IItemUse, InterfaceMethod.IItemData
     void OnGrab(SelectEnterEventArgs args)
     {
         Debug.Log("±×·¦ÇÜ");
-        isGrab = true;
+        if (isOneGrab == false)
+        {
+            isOneGrab = true;
+            isGrab = true;
+        }
        
     }
 
     private void FixedUpdate()
     {
-        if (previewBarricadPrefab == null)
+        if (previewBarricadPrefab == null || photonView.IsMine ==false )
         {
             return;
         }
@@ -188,7 +197,7 @@ public class Barricade : MonoBehaviour, IItemUse, InterfaceMethod.IItemData
     {
         if (CanPlace() == false)
         {
-            PhotonNetwork.InstantiateRoomObject("Barricade", GroundPos(), previewBarricadPrefab.transform.rotation);
+            PhotonNetwork.Instantiate("Barricade", GroundPos(), previewBarricadPrefab.transform.rotation);
             DestoryPreviewPrefab();
             return true;
         }
