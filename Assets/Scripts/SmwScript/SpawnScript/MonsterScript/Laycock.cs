@@ -58,7 +58,10 @@ public class Laycock : EnemyBase
                 laycockSP.DisCountLaycock();
 
 
-                PoolManager.Instance.DespawnNetworked(gameObject);
+                if (PhotonNetwork.IsMasterClient)
+                {
+                    PoolManager.Instance.DespawnNetworked(gameObject);
+                }
 
             }
         }
@@ -87,7 +90,10 @@ public class Laycock : EnemyBase
                 laycockSP.DisCountLaycock();
 
 
-                PoolManager.Instance.DespawnNetworked(gameObject);
+                if (PhotonNetwork.IsMasterClient)
+                {
+                    PoolManager.Instance.DespawnNetworked(gameObject);
+                }
 
             }
         }
@@ -102,7 +108,10 @@ public class Laycock : EnemyBase
             Instantiate(DieParticles, hitPoint, rot);
 
 
-            PoolManager.Instance.DespawnNetworked(gameObject);
+            if (PhotonNetwork.IsMasterClient)
+            {
+                PoolManager.Instance.DespawnNetworked(gameObject);
+            }
 
         }
 
@@ -202,7 +211,10 @@ public class Laycock : EnemyBase
 
         lazerCoroutine = null;
 
-        PoolManager.Instance.DespawnNetworked(gameObject);
+        if (PhotonNetwork.IsMasterClient)
+        {
+            PoolManager.Instance.DespawnNetworked(gameObject);
+        }
 
     }
 

@@ -169,7 +169,10 @@ public class PewPew : EnemyBase
 
                 if (!PhotonNetwork.IsMasterClient) return;//방장아니면 함수를 종료해라 
                 Spawner.SpawnOne();// Spawner안에 있는 SpawnOne() 실행 SpawnOne()은 퓨퓨가 죽으면 다시생성하게 할꺼임
-                PoolManager.Instance.DespawnNetworked(gameObject);//퓨퓨를 PoolManager로 반환함 
+                if (PhotonNetwork.IsMasterClient)
+                {
+                    PoolManager.Instance.DespawnNetworked(gameObject);
+                }
             }
         }
 
@@ -196,7 +199,10 @@ public class PewPew : EnemyBase
 
                 if (!PhotonNetwork.IsMasterClient) return;//방장만 실행하게 
                 Spawner.SpawnOne();// Spawner안에 있는 SpawnOne() 실행 SpawnOne()은 퓨퓨가 죽으면 다시생성하게 할꺼임
-                PoolManager.Instance.DespawnNetworked(gameObject); //PoolManager에 지금 퓨퓨를 반환
+                if (PhotonNetwork.IsMasterClient)
+                {
+                    PoolManager.Instance.DespawnNetworked(gameObject);
+                }
 
             }
         }
@@ -211,7 +217,10 @@ public class PewPew : EnemyBase
 
             if (!PhotonNetwork.IsMasterClient) return;//방장만 실행하게 
             Spawner.SpawnOne();// Spawner안에 있는 SpawnOne() 실행 SpawnOne()은 퓨퓨가 죽으면 다시생성하게 할꺼임
-            PoolManager.Instance.DespawnNetworked(gameObject);//PoolManager에 지금 퓨퓨를 반환
+            if (PhotonNetwork.IsMasterClient)
+            {
+                PoolManager.Instance.DespawnNetworked(gameObject);
+            }
         }
 
     }

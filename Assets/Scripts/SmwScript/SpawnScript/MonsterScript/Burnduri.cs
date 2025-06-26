@@ -68,7 +68,10 @@ public class Burnduri : EnemyBase
                 Quaternion rot = Quaternion.LookRotation(normal);// 위에서 구한 방향(normal)을 앞(direction)으로 삼아 회전(Quaternion) 생성
                 Instantiate(CrashBurnduri, hitPoint, rot);//번드리전용 파티클을 생성함 
 
-                PoolManager.Instance.DespawnNetworked(gameObject);//번드리를 PoolManager로 반환함 
+                if (PhotonNetwork.IsMasterClient)
+                {
+                    PoolManager.Instance.DespawnNetworked(gameObject);//번드리를 풀로 반환
+                }
 
             }
         }
@@ -96,7 +99,10 @@ public class Burnduri : EnemyBase
                 GameObject inst = Instantiate(CrashBurnduri, hitPoint, rot);// 
 
 
-                PoolManager.Instance.DespawnNetworked(gameObject);
+                if (PhotonNetwork.IsMasterClient)
+                {
+                    PoolManager.Instance.DespawnNetworked(gameObject);
+                }
 
             }
         }
@@ -111,7 +117,10 @@ public class Burnduri : EnemyBase
             GameObject inst = Instantiate(CrashBurnduri, hitPoint, rot);
 
 
-            PoolManager.Instance.DespawnNetworked(gameObject);
+            if (PhotonNetwork.IsMasterClient)
+            {
+                PoolManager.Instance.DespawnNetworked(gameObject);
+            }
 
         }
     }
@@ -290,7 +299,10 @@ public class Burnduri : EnemyBase
         while (animator.GetCurrentAnimatorStateInfo(0).IsName(state5))
             yield return null;
 
-        PoolManager.Instance.DespawnNetworked(gameObject);
+        if (PhotonNetwork.IsMasterClient)
+        {
+            PoolManager.Instance.DespawnNetworked(gameObject);
+        }
 
     }
 
