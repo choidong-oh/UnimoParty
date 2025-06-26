@@ -53,6 +53,15 @@ namespace Ilumisoft.RadarSystem
         /// </summary>
         public bool ApplyRotation { get => applyRotation; set => applyRotation = value; }
 
+        private void Start()
+        {
+            foreach (var loc in LocatableManager.Locatables)
+            {
+                OnLocatableAdded(loc);
+            }
+        }
+
+
         private void OnEnable()
         {
             LocatableManager.OnLocatableAdded += OnLocatableAdded;
