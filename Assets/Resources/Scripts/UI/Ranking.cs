@@ -1,28 +1,34 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
+
 
 public class Ranking : MonoBehaviour
 {
     List<int> tempscore = new List<int>();
     List<int> ranks = new List<int>();
+    public List<TextMeshProUGUI> scoretexts;
+    public List<TextMeshProUGUI> nicknametexts;
+    public List<TextMeshProUGUI> rewardtexts;
+    public List<GameObject> rankObject;
+
 
     // Start is called before the first frame update
     void Start()
     {
-        Manager.Instance.observer.OnGameRankChange += RefreshPlayerScoreRank;
         tempscore = Manager.Instance.score;
         DefaultPlayerScoreSetting(tempscore);
         RefreshPlayerScoreRank(tempscore);
+        SetPlayerList();
     }
 
-    void InitPlayerCount()
+    void SetPlayerList()
     {
-        //플레이어 수 만큼 랭크 List에 추가함.
-        for (int i = 0; 0 < Manager.Instance.observer.roomInPlayerCount; i++)
+        for( int i = 1; i < Manager.Instance.players.Count; i++ )
         {
-            tempscore.Add(Manager.Instance.observer.UserPlayer.gamedata.score);
-     
+            rankObject[i+1].gameObject.SetActive(true);
         }
     }
 

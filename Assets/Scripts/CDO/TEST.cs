@@ -1,18 +1,30 @@
 using UnityEngine;
 using Photon.Pun;
+using TMPro;
+using System.Collections;
 
 
 public class TEST : MonoBehaviour, IItemUse
 {
     [SerializeField] Material material;
+    [SerializeField] int hp;
 
     public bool Use(Transform firePos, int power)
     {
-        Manager.Instance.observer.RecoveryPlayerHP(10);
+        StartCoroutine(UseWait());
 
-        PhotonNetwork.Destroy(gameObject);  
         return true;
     }
+
+    
+    IEnumerator UseWait()
+    {
+        Manager.Instance.observer.RecoveryPlayerHP(10);
+        yield return null;
+
+        PhotonNetwork.Destroy(gameObject);  
+    }
+
 
     private void Awake()
     {
@@ -23,7 +35,10 @@ public class TEST : MonoBehaviour, IItemUse
         renderer.materials = materials;
     }
 
-
+    private void Start()
+    {
+        hp = Manager.Instance.observer.UserPlayer.gamedata.life;
+    }
 
 
 }

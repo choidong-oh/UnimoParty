@@ -23,12 +23,15 @@ public class IngameObserver
     public ItemGetRate getItemRate = new ItemGetRate();
     System.Random _itemRandomNum;
 
-    public void Setting()
+    public void DefaultSetting()
     {
-        UserPlayer.gamedata.life = 100;
-        var tempUser = UserPlayer.gamedata;
+        Manager.Instance.tempFairyValue_1 = 10;
+        Manager.Instance.tempFairyValue_1 = 20;
+        Manager.Instance.tempFairyValue_1 = 30;
 
-        OnGameDataChange.Invoke(tempUser);
+        UserPlayer.gamedata.playerFairyType.FairyDataType_1 = 0;
+        UserPlayer.gamedata.playerFairyType.FairyDataType_2 = 0;
+        UserPlayer.gamedata.playerFairyType.FairyDataType_3 = 0;
     }
 
     public void HitPlayer(int damage)
@@ -135,14 +138,12 @@ public class IngameObserver
 
     public void GetFairy(FairyType fairytype)
     {
-        //페어리 타입을 이미 받은 상태에서 유저 페어리에 대입함.
         UserPlayer.gamedata.playerFairyType.FairyDataType_1 += fairytype.FairyDataType_1;
         UserPlayer.gamedata.playerFairyType.FairyDataType_2 += fairytype.FairyDataType_2;
         UserPlayer.gamedata.playerFairyType.FairyDataType_3 += fairytype.FairyDataType_3;
 
         var tempfairy = UserPlayer.gamedata;
 
-        //여기에 포톤 추가.
         OnGameDataChange?.Invoke(tempfairy);
     }
 
@@ -167,7 +168,6 @@ public class IngameObserver
 
         Manager.Instance.observer.UserPlayer.gamedata.deliveryCount++;
 
-        //여기에 포톤 추가.
         OnGameDataChange?.Invoke(tempfairy);
 
         Debug.Log("반납 후 점수" + Manager.Instance.observer.UserPlayer.gamedata.score);
@@ -183,14 +183,12 @@ public class IngameObserver
         UserPlayer.gamedata.score = UserPlayer.gamedata.score + tempscore;
         var tempuser = UserPlayer.gamedata;
 
-        //여기에 포톤 추가.
         OnGameDataChange?.Invoke(tempuser);
 
         if(UserPlayer.gamedata.score >= gameoverTargetScore)
         {
             isGameOver = true;
 
-            // 여기에 포톤 추가.
             OnGameEnd?.Invoke();
         }
     }
@@ -207,7 +205,6 @@ public class IngameObserver
 
     public void BuyShip(SpaceShipData buyship)
     {
-        
         UserPlayer.gamedata._money -= buyship.ShipCost;
         UserPlayer.gamedata._Inventory.spaceShipDatas.Add(buyship);
 
@@ -220,7 +217,6 @@ public class IngameObserver
     {
         var tempPlayer = UserPlayer.gamedata.Clone();
 
-        //여기에 포톤 추가.
         OnGameDataChange?.Invoke(tempPlayer);
     }
 
@@ -229,7 +225,6 @@ public class IngameObserver
     {
         isGameOver = true;
          
-        //여기에 포톤 추가.
         OnGameEnd?.Invoke();
     }
 }

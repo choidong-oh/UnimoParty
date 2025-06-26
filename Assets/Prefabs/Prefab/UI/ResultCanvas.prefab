@@ -17,7 +17,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1372169950892650920
 RectTransform:
   m_ObjectHideFlags: 0
@@ -620,7 +620,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &4483962458574089161
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1311,7 +1311,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &786650866583354346
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1466,7 +1466,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &9150624338766549973
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5436,7 +5436,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &7603028879968412976
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5516,7 +5516,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &4710777999193569756
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5945,7 +5945,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1758528312274571722
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7496,6 +7496,7 @@ GameObject:
   - component: {fileID: 8236870969481639683}
   - component: {fileID: 2156661799466666280}
   - component: {fileID: 8830999900740075822}
+  - component: {fileID: 450939159002121804}
   m_Layer: 5
   m_Name: ResultCanvas
   m_TagString: Untagged
@@ -7588,6 +7589,53 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   m_RaycastTriggerInteraction: 1
+--- !u!114 &450939159002121804
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8503999653020555339}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1fa01854f4e32449a7a7699b67d32cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scoretexts:
+  - {fileID: 4378631538772363351}
+  - {fileID: 3904289114918096831}
+  - {fileID: 2702430737479714047}
+  - {fileID: 7382449886367453793}
+  - {fileID: 6691050175458181085}
+  - {fileID: 6803848755035230235}
+  - {fileID: 9216283548642131074}
+  - {fileID: 5438394067682015724}
+  nicknametexts:
+  - {fileID: 6627941537796899957}
+  - {fileID: 1402260092760313672}
+  - {fileID: 8426912360567290075}
+  - {fileID: 4309248999100624982}
+  - {fileID: 3729784362326716554}
+  - {fileID: 5036874642407419212}
+  - {fileID: 9149593178289279815}
+  - {fileID: 6913585627623973083}
+  rewardtexts:
+  - {fileID: 4281027222938126210}
+  - {fileID: 7627341728506440090}
+  - {fileID: 441287108301684571}
+  - {fileID: 6783102714201568441}
+  - {fileID: 7473798653763110859}
+  - {fileID: 6283071991212273944}
+  - {fileID: 6766314385255111181}
+  - {fileID: 7380526761812083531}
+  rankObject:
+  - {fileID: 6978161719248311121}
+  - {fileID: 6969837230751942801}
+  - {fileID: 2271786467837351761}
+  - {fileID: 373129172605086813}
+  - {fileID: 1459764185951158222}
+  - {fileID: 2618756860747997465}
+  - {fileID: 7504968718374712351}
 --- !u!1 &8620354334041434793
 GameObject:
   m_ObjectHideFlags: 0
