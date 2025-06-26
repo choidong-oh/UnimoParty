@@ -10,6 +10,15 @@ namespace Ilumisoft.RadarSystem
     {
         public abstract bool ClampOnRadar { get; set; }
 
+        protected virtual void Start()
+        {
+            if (LocatableManager.Locatables.Contains(this) == false)
+            {
+                LocatableManager.Register(this);
+            }
+        }
+
+
         protected virtual void OnEnable()
         {
             LocatableManager.Register(this);
