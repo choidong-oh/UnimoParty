@@ -32,31 +32,31 @@ public class FirebaseDataMgr : MonoBehaviour
         }
     }
 
-    private void Start()
-    {
-        FirebaseApp.CheckAndFixDependenciesAsync().ContinueWithOnMainThread(async task =>
-        {
-            FirebaseApp app = FirebaseApp.DefaultInstance;
-            dbReference = FirebaseDatabase.DefaultInstance.RootReference;
-            if (FirebaseAuthMgr.user != null)
-            {
-                //TODO:초기 저장 바꾸기 12000
-                if (userMoney == -1)
-                {
-                    //StartCoroutine(SaveUserData(FirebaseAuthMgr.user.DisplayName, "gold", 10000));
-                    userMoney = 10000;
-                }
+    //private void Start()
+    //{
+    //    FirebaseApp.CheckAndFixDependenciesAsync().ContinueWithOnMainThread(async task =>
+    //    {
+    //        FirebaseApp app = FirebaseApp.DefaultInstance;
+    //        dbReference = FirebaseDatabase.DefaultInstance.RootReference;
+    //        if (FirebaseAuthMgr.user != null)
+    //        {
+    //            //TODO:초기 저장 바꾸기 12000
+    //            if (userMoney == -1)
+    //            {
+    //                //StartCoroutine(SaveUserData(FirebaseAuthMgr.user.DisplayName, "gold", 10000));
+    //                userMoney = 10000;
+    //            }
 
-                // 친구 목록 불러오기
-                //await LoadFriends(FirebaseAuthMgr.user.DisplayName);
+    //            // 친구 목록 불러오기
+    //            //await LoadFriends(FirebaseAuthMgr.user.DisplayName);
 
-            }
-            else
-            {
-                Debug.LogError("파이어베이스 문제");
-            }
-        });
-    }
+    //        }
+    //        else
+    //        {
+    //            Debug.LogError("파이어베이스 문제");
+    //        }
+    //    });
+    //}
 
     //데이터 저장 함수
     //SaveUserData(id,"level",5);

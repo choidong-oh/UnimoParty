@@ -24,7 +24,7 @@ public class HandHarvest : MonoBehaviourPunCallbacks, IFreeze
     [Header("Haptic 진동 관련")]
     [SerializeField] float hapticAmplitude;
     [SerializeField] float hapticDuraiton;
-    int gap = 10;
+    //int gap = 10;
 
     public Queue<string> itemQueue = new Queue<string>();
 
@@ -190,7 +190,7 @@ public class HandHarvest : MonoBehaviourPunCallbacks, IFreeze
                     flower.StopHarvest();
 
                 }
-               
+
             }
 
             if (flower.gameObject.activeSelf == false)
