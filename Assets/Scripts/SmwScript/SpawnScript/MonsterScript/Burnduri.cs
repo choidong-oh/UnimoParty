@@ -147,7 +147,6 @@ public class Burnduri : EnemyBase
 
     IEnumerator GoBurnduri()
     {
-
         yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName(AppearAni));// AppearAni 애니메이션이 시작될 때까지 대기
         while (animator.GetCurrentAnimatorStateInfo(0).IsName(AppearAni))// 지금 플레이 중인 애니메이션이 AppearAni 라는 이름일 동안 계속 반복하라
             yield return null; // 한 프레임만 쉬었다가 다음 프레임에 다시 이어서 실행하게함

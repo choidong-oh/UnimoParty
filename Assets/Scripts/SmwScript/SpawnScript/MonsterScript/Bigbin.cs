@@ -11,7 +11,7 @@ public class Bigbin : EnemyBase
     public List<Transform> players = new List<Transform>();//플레이어 여기에 등록함
 
     [Header("이동 설정")]
-    float MoveSpeed = 5f;//이동속도
+    float MoveSpeed = 5f;//현제속도
     float FirstSpeed; //처음속도를 저장할 변수
 
 
@@ -28,94 +28,89 @@ public class Bigbin : EnemyBase
 
     [SerializeField] GameObject JumpExplode;//점프 종료되면 빅빈이 사라지는 파티클
 
-    Transform nearestPlayer;
+    Transform nearestPlayer; // 가장 가까운 플레이어 Transform을 저장할 변수
 
-    Vector3 myPos;
-    Vector3 Target;
+    Vector3 myPos;// 빅빈의 현재 위치를 저장할 변수
+    Vector3 Target;// 최종 가까운 플레이어 위치를 저장할 변수
 
-    Animator animator;
+    Animator animator;//빅빈의 애니메이터를 담을 변수
 
-    [SerializeField] float FreezeTime = 3;
+    [SerializeField] float FreezeTime = 3; //해동할때 걸리는시간 
 
+    //애니메이션 스테이트 이름들
     string AppearAni = "anim_MON004_appear";
     string state2 = "anim_MON004_readytojump";
     string state3 = "anim_MON004_jump01";
     string state4 = "anim_MON004_jump02";
     string state5 = "anim_MON004_jump03";
 
-    [SerializeField] GameObject IsFreeze;
+    [SerializeField] GameObject IsFreeze;//얼음 프리팹
 
-    float MoveSpeedSave;
+    float MoveSpeedSave;//현제 이동속도를담을 변수
 
     public override void OnEnable()
     {
-        animator = GetComponent<Animator>();
-        myCollider = GetComponent<Collider>();
-        terrain = Terrain.activeTerrain;
-        FirstSpeed = MoveSpeed / 2;
         base.OnEnable();
-        StartCoroutine(GoBigBin());
-
+        animator = GetComponent<Animator>();// animator에 애니메이터를 담음
+        myCollider = GetComponent<Collider>();//myCollider에 자신의 충돌체를넣음
+        terrain = Terrain.activeTerrain;//terrain에 트레인정보를 넣음
+        FirstSpeed = MoveSpeed / 2;//현제 이동속도에 0.5만큼 증가시킬꺼기때문에
+        StartCoroutine(GoBigBin());//GoBigBin() 코루틴실행 
     }
 
 
     public override void OnDisable()
     {
         base.OnDisable();
-        MoveSpeed = FirstSpeed * 2;
-        myCollider.enabled = false;
+        MoveSpeed = FirstSpeed * 2;//값을 다시 초기화해줌
+        myCollider.enabled = false;//충돌체 다시꺼줌
     }
 
 
     IEnumerator GoBigBin()
     {
+        yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName(AppearAni));// AppearAni 애니메이션이 시작될 때까지 대기
+        while (animator.GetCurrentAnimatorStateInfo(0).IsName(AppearAni))// 지금 플레이 중인 애니메이션이 AppearAni 라는 이름일 동안 계속 반복하라
+            yield return null;// 한 프레임만 쉬었다가 다음 프레임에 다시 이어서 실행하게함
+
+        myCollider.enabled = true;//충돌체를 다시 키기 
+
+        yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName(state2));//state2 애니메이션이 시작될 때까지 대기
+        while (animator.GetCurrentAnimatorStateInfo(0).IsName(state2))// 지금 플레이 중인 애니메이션이 state2 라는 이름일 동안 계속 반복하라
+            yield return null;// 한 프레임만 쉬었다가 다음 프레임에 다시 이어서 실행하게함
+
+        JumpParticles.SetActive(true);//점프 파티클 활성화 
+        MoveSpeed += FirstSpeed;//속도 증가
 
 
-        yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName(AppearAni));
-        while (animator.GetCurrentAnimatorStateInfo(0).IsName(AppearAni))
-            yield return null;
+        StartCoroutine(MoveRoutine());//앞으로 가는 코루틴 시작
+        StartCoroutine(UpdateDistance());//방향을 잡아주는 코루틴 시작
 
-        myCollider.enabled = true;
+        yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName(state3));//state3 애니메이션이 시작될 때까지 대기
+        while (animator.GetCurrentAnimatorStateInfo(0).IsName(state3))// 지금 플레이 중인 애니메이션이 state3 라는 이름일 동안 계속 반복하라
+            yield return null;// 한 프레임만 쉬었다가 다음 프레임에 다시 이어서 실행하게함
 
-        yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName(state2));
-        while (animator.GetCurrentAnimatorStateInfo(0).IsName(state2))
-            yield return null;
-        JumpParticles.SetActive(true);
-        MoveSpeed += FirstSpeed;
+        JumpParticles.SetActive(true);//점프 파티클 활성화 
+        MoveSpeed += FirstSpeed;//속도 증가
 
 
-        StartCoroutine(MoveRoutine());
-        StartCoroutine(UpdateDistance());
+        yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName(state4));//state4 애니메이션이 시작될 때까지 대기
+        while (animator.GetCurrentAnimatorStateInfo(0).IsName(state4))// 지금 플레이 중인 애니메이션이 state4 라는 이름일 동안 계속 반복하라
+            yield return null;// 한 프레임만 쉬었다가 다음 프레임에 다시 이어서 실행하게함
 
-        yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName(state3));
-        while (animator.GetCurrentAnimatorStateInfo(0).IsName(state3))
-            yield return null;
-        JumpParticles.SetActive(true);
+        JumpParticles.SetActive(true);//점프 파티클 활성화 
+        MoveSpeed += FirstSpeed;//속도 증가
 
-        MoveSpeed += FirstSpeed;
+        yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName(state5));//state5 애니메이션이 시작될 때까지 대기
+        while (animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1f)// 지금 플레이 중인 애니메이션이 완전히 재생될때까지 계속 반복하라
+            yield return null;// 한 프레임만 쉬었다가 다음 프레임에 다시 이어서 실행하게함
 
-
-
-
-
-        yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName(state4));
-        while (animator.GetCurrentAnimatorStateInfo(0).IsName(state4))
-            yield return null;
-
-        JumpParticles.SetActive(true);
-
-        MoveSpeed += FirstSpeed;
-
-        yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).IsName(state5));
-        while (animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1f)
-            yield return null;
-
-        Instantiate(JumpExplode, transform.position, Quaternion.identity);
-        StopAllCoroutines();
+        Instantiate(JumpExplode, transform.position, Quaternion.identity);//점프다하고 마지막에 빅빈이 사라지는 파티클생성
+        StopAllCoroutines();//모든코루틴 멈추게하기
 
         if (PhotonNetwork.IsMasterClient)
         {
-            PoolManager.Instance.DespawnNetworked(gameObject);
+            PoolManager.Instance.DespawnNetworked(gameObject);//PoolManager에 자신을 반환
         }
 
     }
