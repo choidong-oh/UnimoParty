@@ -1,3 +1,4 @@
+//빅빈
 using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
@@ -111,10 +112,9 @@ public class Bigbin : EnemyBase
 
         Instantiate(JumpExplode, transform.position, Quaternion.identity);
         StopAllCoroutines();
-        if (PhotonNetwork.IsMasterClient)
-        {
-            PoolManager.Instance.DespawnNetworked(gameObject);
-        }
+
+        PoolManager.Instance.DespawnNetworked(gameObject);
+
     }
 
 
@@ -122,7 +122,7 @@ public class Bigbin : EnemyBase
     private void OnTriggerEnter(Collider other)
     {
         if (!photonView.IsMine) return;
-        if (other.gameObject.tag == "Player")
+        if (other.CompareTag("Player"))
         {
             if (ImFreeze == true)
             {
@@ -132,25 +132,19 @@ public class Bigbin : EnemyBase
             else if (ImFreeze == false)
             {
                 damage = 1;
-                var otherPV = other.GetComponentInParent<PhotonView>();
-                if (otherPV != null && otherPV.Owner != null)
-                {
-                    // 데미지 전용 RPC
-                    photonView.RPC("HitPlayerRPC", otherPV.Owner, damage + 1);
-                }
+                Manager.Instance.observer.HitPlayer(damage);
 
                 Vector3 hitPoint = other.ClosestPoint(transform.position);//충돌지점에 최대한 가깝게
                 Vector3 normal = (hitPoint - transform.position).normalized;// 방향계산
                 Quaternion rot = Quaternion.LookRotation(normal);// 방향계산
-                GameObject inst = Instantiate(CrashBigbin, hitPoint, rot);
-                if (PhotonNetwork.IsMasterClient)
-                {
-                    PoolManager.Instance.DespawnNetworked(gameObject);
-                }
+                Instantiate(CrashBigbin, hitPoint, rot);
+
+                PoolManager.Instance.DespawnNetworked(gameObject);
+
             }
         }
 
-        if (other.gameObject.tag == "Monster")
+        else if (other.CompareTag("Monster"))
         {
             EnemyBase otherEnemy = other.GetComponent<EnemyBase>();
 
@@ -160,33 +154,32 @@ public class Bigbin : EnemyBase
                 return;
             }
 
-            if (ImFreeze == true && otherEnemy == false)
+            if (ImFreeze == false && otherEnemy.ImFreeze == true)
             {
-                ImFreeze = false;
-                StartCoroutine(FreezeCor());
+
+                otherEnemy.ImFreeze = false;
+                otherEnemy.Move();
 
                 Vector3 hitPoint = other.ClosestPoint(transform.position);
                 Vector3 normal = (hitPoint - transform.position).normalized;
                 Quaternion rot = Quaternion.LookRotation(normal);
-                GameObject inst = Instantiate(CrashBigbin, hitPoint, rot);
-                if (PhotonNetwork.IsMasterClient)
-                    PoolManager.Instance.DespawnNetworked(gameObject);
+                Instantiate(CrashBigbin, hitPoint, rot);
+                PoolManager.Instance.DespawnNetworked(gameObject);
             }
         }
 
 
-        if (other.gameObject.tag == "Aube")
+        else if (other.CompareTag("Aube"))
         {
             Vector3 hitPoint = other.ClosestPoint(transform.position);
 
             Vector3 normal = (hitPoint - transform.position).normalized;
             Quaternion rot = Quaternion.LookRotation(normal);
 
-            GameObject inst = Instantiate(CrashBigbin, hitPoint, rot);
-            if(PhotonNetwork.IsMasterClient)
-            {
-                PoolManager.Instance.DespawnNetworked(gameObject);
-            }
+            Instantiate(CrashBigbin, hitPoint, rot);
+
+            PoolManager.Instance.DespawnNetworked(gameObject);
+
         }
 
     }
@@ -196,8 +189,6 @@ public class Bigbin : EnemyBase
 
         while (true)
         {
-            float CheckNear = Vector3.Distance(myPos, Target);
-
             myPos = transform.position;
             float terrainY = terrain.SampleHeight(transform.position) + fixedY;
             transform.position = new Vector3(myPos.x, terrainY, myPos.z);
@@ -259,25 +250,15 @@ public class Bigbin : EnemyBase
     }
 
 
-    public override void Move(Vector3 direction)
+    public override void Move()
     {
-        photonView.RPC("MoveRPC", RpcTarget.All, direction);
+        StartCoroutine(FreezeCor());
     }
 
-    [PunRPC]
-    public void MoveRPC(Vector3 direction)
-    {
-        animator = GetComponent<Animator>();
-        myCollider = GetComponent<Collider>();
-        terrain = Terrain.activeTerrain;
-        FirstSpeed = MoveSpeed / 2;
-        base.OnEnable();
-        StartCoroutine(GoBigBin());
-    }
 
     public override void Freeze(Vector3 direction, bool isFreeze)
     {
-        photonView.RPC("FreezeRPC", RpcTarget.All, direction,isFreeze);
+        photonView.RPC("FreezeRPC", RpcTarget.All, direction, isFreeze);
     }
 
     [PunRPC]
@@ -303,22 +284,12 @@ public class Bigbin : EnemyBase
         }
     }
 
-    public override void CsvEnemyInfo()
-    {
-        throw new System.NotImplementedException();
-    }
-
     IEnumerator FreezeCor()
     {
         yield return new WaitForSeconds(FreezeTime);
-        MoveSpeed = 3;
+        MoveSpeed = MoveSpeedSave;
         animator.speed = 1f;
         IsFreeze.SetActive(false);
     }
 
-    [PunRPC]
-    void HitPlayerRPC(int dmg)
-    {
-        Manager.Instance.observer.HitPlayer(dmg);
-    }
 }
