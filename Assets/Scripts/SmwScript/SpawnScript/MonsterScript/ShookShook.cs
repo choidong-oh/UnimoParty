@@ -1,3 +1,4 @@
+//슉슉
 using Photon.Pun;
 using System.Collections;
 using UnityEngine;
@@ -27,7 +28,7 @@ public class ShookShook : EnemyBase
 
     float MoveSpeedSave;
 
-    //Animator animator;
+    Animator animator;
 
     [SerializeField] float FreezeTime = 3;
 
@@ -120,17 +121,16 @@ public class ShookShook : EnemyBase
             yield return new WaitForFixedUpdate();
         }
         transform.position = Target;
-        if (PhotonNetwork.IsMasterClient)
-        {
-            PoolManager.Instance.DespawnNetworked(gameObject);
-        }
+
+        PoolManager.Instance.DespawnNetworked(gameObject);
+
 
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (!photonView.IsMine) return;
-        if (other.gameObject.tag == "Player")
+        if (other.CompareTag("Player"))
         {
             if (ImFreeze == true)
             {
@@ -140,26 +140,18 @@ public class ShookShook : EnemyBase
             else if (ImFreeze == false)
             {
                 damage = 1;
-                var otherPV = other.GetComponentInParent<PhotonView>();
-                if (otherPV != null && otherPV.Owner != null)
-                {
-                    // 데미지 전용 RPC
-                    photonView.RPC("HitPlayerRPC", otherPV.Owner, damage + 1);
-                }
+                Manager.Instance.observer.HitPlayer(damage);
 
                 Vector3 hitPoint = other.ClosestPoint(transform.position);//충돌지점에 최대한 가깝게
                 Vector3 normal = (hitPoint - transform.position).normalized;// 방향계산
                 Quaternion rot = Quaternion.LookRotation(normal);// 방향계산
-                GameObject inst = Instantiate(CrashShookShook, hitPoint, rot);
+                Instantiate(CrashShookShook, hitPoint, rot);
+                PoolManager.Instance.DespawnNetworked(gameObject);
 
-                if (PhotonNetwork.IsMasterClient)
-                {
-                    PoolManager.Instance.DespawnNetworked(gameObject);
-                }
             }
         }
 
-        if (other.gameObject.tag == "Monster")
+        else if (other.CompareTag("Monster"))
         {
             EnemyBase otherEnemy = other.GetComponent<EnemyBase>();
 
@@ -169,111 +161,44 @@ public class ShookShook : EnemyBase
                 return;
             }
 
-            if (ImFreeze == true && otherEnemy == false)
+            if (ImFreeze == false && otherEnemy.ImFreeze == true)
             {
-                ImFreeze = false;
-                StartCoroutine(FreezeCor());
+
+                otherEnemy.ImFreeze = false;
+                otherEnemy.Move();
 
                 Vector3 hitPoint = other.ClosestPoint(transform.position);
                 Vector3 normal = (hitPoint - transform.position).normalized;
                 Quaternion rot = Quaternion.LookRotation(normal);
-                GameObject inst = Instantiate(CrashShookShook, hitPoint, rot);
+                Instantiate(CrashShookShook, hitPoint, rot);
 
-                if (PhotonNetwork.IsMasterClient)
-                {
-                    PoolManager.Instance.DespawnNetworked(gameObject);
-                }
+
+                PoolManager.Instance.DespawnNetworked(gameObject);
+
             }
         }
 
-        if (other.gameObject.tag == "Aube")
+        else if (other.CompareTag("Aube"))
         {
             Vector3 hitPoint = other.ClosestPoint(transform.position);
 
             Vector3 normal = (hitPoint - transform.position).normalized;
             Quaternion rot = Quaternion.LookRotation(normal);
 
-            GameObject inst = Instantiate(CrashShookShook, hitPoint, rot);
+            Instantiate(CrashShookShook, hitPoint, rot);
 
-            if (PhotonNetwork.IsMasterClient)
-            {
-                PoolManager.Instance.DespawnNetworked(gameObject);
-            }
+
+            PoolManager.Instance.DespawnNetworked(gameObject);
+
         }
 
     }
 
 
 
-    public override void Move(Vector3 direction)
+    public override void Move()
     {
-        photonView.RPC("MoveRPC", RpcTarget.All, direction);
-    }
-
-    [PunRPC]
-    public void MoveRPC(Vector3 direction)
-    {
-        myCollider = GetComponent<Collider>();
-        myCollider.enabled = false;
-        terrain = Terrain.activeTerrain;
-        Terrainsize = terrain.terrainData.size;
-        Terrainpos = terrain.transform.position;
-
-        Position = transform.position;
-
-        minX = Terrainpos.x;
-        maxX = Terrainpos.x + Terrainsize.x;
-        minZ = Terrainpos.z;
-        maxZ = Terrainpos.z + Terrainsize.z;
-
-
-        float Left = Mathf.Abs(Position.x - minX);
-        float Right = Mathf.Abs(Position.x - maxX);
-        float Bottom = Mathf.Abs(Position.z - minZ);
-        float Top = Mathf.Abs(Position.z - maxZ);
-
-        float NearPos = Mathf.Min(Left, Right, Bottom, Top);
-
-        if (NearPos == Left)
-        {
-            Position.x = minX;
-            Target = new Vector3(maxX, 0, Position.z);
-        }
-        else if (NearPos == Right)
-        {
-            Position.x = maxX;
-            Target = new Vector3(minX, 0, Position.z);
-        }
-        else if (NearPos == Bottom)
-        {
-            Position.z = minZ;
-            Target = new Vector3(Position.x, 0, maxZ);
-        }
-        else if (NearPos == Top)
-        {
-            Position.z = maxZ;
-            Target = new Vector3(Position.x, 0, minZ);
-        }
-        else
-        {
-            Debug.Log("슉슉이 절대값 잡아주는곳 오류임");
-        }
-
-        float terrainY = terrain.SampleHeight(Position) + transform.localScale.y / 2f + fixedY;
-        Position.y = terrainY;
-        transform.position = Position;
-
-        terrainY = terrain.SampleHeight(Target) + transform.localScale.y / 2f + fixedY;
-        Target.y = terrainY;
-
-        transform.position = Position;
-
-        Coroutine = StartCoroutine(GoShookShook());
-    }
-
-    public override void CsvEnemyInfo()
-    {
-        throw new System.NotImplementedException();
+        StartCoroutine(FreezeCor());
     }
 
     public override void Freeze(Vector3 direction, bool isFreeze)
@@ -286,11 +211,12 @@ public class ShookShook : EnemyBase
     {
         if (isFreeze == true)
         {
-            //IsFreeze.SetActive(true);
+            IsFreeze.SetActive(true);
             ImFreeze = isFreeze;
             MoveSpeedSave = MoveSpeed;
             MoveSpeed = 0;
-            //animator.speed = 0f;
+            animator.speed = 0f;
+            
         }
         else if (isFreeze == false)
         {
@@ -308,14 +234,10 @@ public class ShookShook : EnemyBase
     {
         yield return new WaitForSeconds(FreezeTime);
         MoveSpeed = MoveSpeedSave;
-        //animator.speed = 1f;
-        //IsFreeze.SetActive(false);
+        animator.speed = 1f;
+        IsFreeze.SetActive(false);
     }
 
-    [PunRPC]
-    void HitPlayerRPC(int dmg)
-    {
-        Manager.Instance.observer.HitPlayer(dmg);
-    }
+
 
 }

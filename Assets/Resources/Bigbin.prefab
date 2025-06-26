@@ -201,13 +201,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c78380e37e6cd784587baff4c21d8702, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyName: 
-  spawnStartTime: 0
-  spawnCycle: 0
   damage: 2
-  enemyMoveSpeed: 0
-  sizeScale: 0
-  spawnCount: 0
   players: []
   fixedY: 0
   CrashBigbin: {fileID: 3334270714622040670, guid: ec76bf7085b617642b864a17d4140558, type: 3}

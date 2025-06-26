@@ -283,17 +283,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98deb07145de43d44bfbde2d50fcdff4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyName: 
-  spawnStartTime: 0
-  spawnCycle: 0
   damage: 2
-  enemyMoveSpeed: 0
-  sizeScale: 0
-  spawnCount: 0
   fixedY: 0
   CrashShookShook: {fileID: 3334270714622040670, guid: 82e464f45bb255b4da1b9565fa50643d, type: 3}
   FreezeTime: 3
-  IsFreeze: {fileID: 0}
+  IsFreeze: {fileID: 2003858623261827542}
 --- !u!114 &-8131516004819685662
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -849,6 +843,11 @@ PrefabInstance:
 --- !u!4 &1190342702394227564 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5892140821859311731, guid: c96b2f060bca00d44ba6fe58e17b6869, type: 3}
+  m_PrefabInstance: {fileID: 4702290988980181791}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2003858623261827542 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6525371096981633737, guid: c96b2f060bca00d44ba6fe58e17b6869, type: 3}
   m_PrefabInstance: {fileID: 4702290988980181791}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &9218712710705763785
