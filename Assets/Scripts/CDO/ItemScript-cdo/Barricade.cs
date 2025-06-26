@@ -44,7 +44,7 @@ public class Barricade : MonoBehaviourPunCallbacks, IItemUse, InterfaceMethod.II
         grabInteractable = GetComponent<XRGrabInteractable>();
         grabInteractable.selectEntered.AddListener(OnGrab);
         isGrab = false;
-        isOneGrab = false
+        isOneGrab = false;
     }
 
     public override void OnDisable()
