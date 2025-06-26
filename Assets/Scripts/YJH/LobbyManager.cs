@@ -103,6 +103,8 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     public void PVPButton()
     {
         ShowPanel(PVPPanel);
+
+        AudioManager.Instance?.PlayBGM("PVPBGM");
     }
 
     public void BackButton()
@@ -114,9 +116,14 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
             currentPanel = panelStack.Peek();
             currentPanel.SetActive(true);
-        }
 
+            if (currentPanel == lobbyPanel)
+            {
+                AudioManager.Instance?.PlayBGM("OutGameBGM");
+            }
+        }
     }
+
     //PVE 스테이지 진입
     public void Stage1()
     {
@@ -294,8 +301,25 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
         playerUIMap[player.ActorNumber] = panel;
 
-        int charIndex = player.CustomProperties.ContainsKey("CharacterIndex") ? (int)player.CustomProperties["CharacterIndex"] : 0;
-        int shipIndex = player.CustomProperties.ContainsKey("ShipIndex") ? (int)player.CustomProperties["ShipIndex"] : 0;
+        int charIndex = 0;
+        if (player.CustomProperties.ContainsKey("CharacterIndex"))
+        {
+            object charIndexValue = player.CustomProperties["CharacterIndex"];
+            if (charIndexValue is int)
+            {
+                charIndex = (int)charIndexValue;
+            }
+        }
+
+        int shipIndex = 0;
+        if (player.CustomProperties.ContainsKey("ShipIndex"))
+        {
+            object shipIndexValue = player.CustomProperties["ShipIndex"];
+            if (shipIndexValue is int)
+            {
+                shipIndex = (int)shipIndexValue;
+            }
+        }
 
         GameObject[] characters = Resources.LoadAll<GameObject>("Characters");
         GameObject[] ships = Resources.LoadAll<GameObject>("Prefabs");
@@ -311,8 +335,6 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     public void CodeJoinRoom()
     {
-
-        Debug.Log("입장 중");
         PhotonNetwork.JoinRoom(codeInput.text);
         PVPPanel.SetActive(false);
         roomPanel.SetActive(true);

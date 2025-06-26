@@ -21,6 +21,7 @@ public class OptionManager : MonoBehaviourPunCallbacks
     [SerializeField] ActionBasedContinuousTurnProvider smoothTurn;
     float vigentteSize;
 
+
     private void Start()
     {
         OptionLoad();
@@ -36,8 +37,9 @@ public class OptionManager : MonoBehaviourPunCallbacks
         }
         UpdateVignetteSize();
         UpdateNomalTurn();
+        UpdateBGMSound();
+        UpdateSFXSound();
 
-        
     }
     public void OperationChange()
     {
@@ -136,7 +138,16 @@ public class OptionManager : MonoBehaviourPunCallbacks
                 angleToggles[2].isOn = true;
             }
         }
-       
+
+        float bgmVolume = PlayerPrefs.GetFloat("BGMVolume", 50f);
+        float sfxVolume = PlayerPrefs.GetFloat("SFXVolume", 50f);
+
+        sliders[1].value = bgmVolume;
+        sliders[2].value = sfxVolume;
+
+        AudioManager.Instance?.SetBGMVolume(bgmVolume / 100f);
+        AudioManager.Instance?.SetSFXVolume(sfxVolume / 100f);
+
 
     }
     public void UpdateVignetteSize()
@@ -155,14 +166,25 @@ public class OptionManager : MonoBehaviourPunCallbacks
     {
         //여기서 optionData저장 
         //배경음 업데이트 및 저장
+        float value = sliders[1].value;
+        OptionData.dataValues[1] = value;
 
-        OptionData.dataValues[1] = sliders[1].value;
+        PlayerPrefs.SetFloat("BGMVolume", value);
+        PlayerPrefs.Save();
+
+        AudioManager.Instance?.SetBGMVolume(value / 100f);
     }
     public void UpdateSFXSound()
     {
         //여기서 optionData저장 
         //효과음 소리 업데이트 및 저장
-        OptionData.dataValues[2] = sliders[2].value;
+        float value = sliders[2].value;
+        OptionData.dataValues[2] = value;
+
+        PlayerPrefs.SetFloat("SFXVolume", value);
+        PlayerPrefs.Save();
+
+        AudioManager.Instance?.SetSFXVolume(value / 100f);
     }
     public void UpdateNomalTurn()
     {
