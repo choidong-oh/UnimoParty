@@ -36,6 +36,7 @@ public class ShookShook : EnemyBase
     public override void OnEnable()
     {
         base.OnEnable();
+        animator = GetComponent<Animator>();    
         myCollider = GetComponent<Collider>();
         myCollider.enabled = false;
         terrain = Terrain.activeTerrain;
@@ -243,7 +244,7 @@ public class ShookShook : EnemyBase
     {
         yield return new WaitForSeconds(FreezeTime);
         MoveSpeed = MoveSpeedSave;
-        //animator.speed = 1f;
+        animator.speed = 1f;
         IsFreeze.SetActive(false);
     }
 
