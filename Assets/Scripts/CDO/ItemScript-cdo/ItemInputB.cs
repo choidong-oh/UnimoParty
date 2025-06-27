@@ -48,6 +48,29 @@ public class ItemInputB : MonoBehaviourPunCallbacks, IFreeze
     GameObject item2;
     GameObject item3;
 
+    public override void OnEnable()
+    {
+        base.OnEnable();
+        bInputActionReference.action.Enable();
+        bInputActionReference.action.performed += ControllerB;
+
+        triggerInputActionReference.action.performed += OnTriggerPressed;
+
+
+        //아이템 입힘
+        itemQueue = xrControllerMgr.publicitemQueue;
+
+    }
+
+    public override void OnDisable()
+    {
+        base.OnDisable();
+        bInputActionReference.action.performed -= ControllerB;
+        bInputActionReference.action.Disable();
+
+        triggerInputActionReference.action.performed -= OnTriggerPressed;
+    }
+
 
     void OnEnableItem()
     {
@@ -115,29 +138,6 @@ public class ItemInputB : MonoBehaviourPunCallbacks, IFreeze
 
 
 
-    }
-
-    public override void OnEnable()
-    {
-        base.OnEnable();
-        bInputActionReference.action.Enable();
-        bInputActionReference.action.performed += ControllerB;
-
-        triggerInputActionReference.action.performed += OnTriggerPressed;
-
-
-        //아이템 입힘
-        itemQueue = xrControllerMgr.publicitemQueue;
-
-    }
-
-    public override void OnDisable()
-    {
-        base.OnDisable();
-        bInputActionReference.action.performed -= ControllerB;
-        bInputActionReference.action.Disable();
-
-        triggerInputActionReference.action.performed -= OnTriggerPressed;
     }
 
     //트리거 함
