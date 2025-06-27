@@ -53,6 +53,5 @@ public class TimeUI : MonoBehaviourPunCallbacks
     void GameOverUI()
     {
         rankPanel.SetActive(true);
-        PhotonNetwork.LeaveRoom();
     }
 }
