@@ -24,7 +24,10 @@ public class BarricadeBox : MonoBehaviourPunCallbacks
         yield return new WaitForSeconds(1);
         photonView.RPC("Explode", RpcTarget.All, false);
 
-        PhotonNetwork.Destroy(gameObject);
+        if (photonView.IsMine)
+        {
+            PhotonNetwork.Destroy(gameObject);
+        }
     }
 
     [PunRPC]
