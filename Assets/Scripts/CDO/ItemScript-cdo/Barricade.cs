@@ -31,7 +31,7 @@ public class Barricade : MonoBehaviourPunCallbacks, IItemUse, InterfaceMethod.II
     public override void OnEnable()
     {
         base.OnEnable();
-        if (previewBarricadPrefab == null)
+        if (previewBarricadPrefab == null && photonView.IsMine == true)
         {
             previewBarricadPrefab = PhotonNetwork.Instantiate("Barricade",transform.position,Quaternion.identity);
 
