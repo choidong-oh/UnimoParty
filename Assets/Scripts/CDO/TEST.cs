@@ -4,7 +4,7 @@ using TMPro;
 using System.Collections;
 
 
-public class TEST : MonoBehaviour, IItemUse
+public class TEST : MonoBehaviourPunCallbacks, IItemUse
 {
     [SerializeField] Material material;
     [SerializeField] int hp;
@@ -22,7 +22,10 @@ public class TEST : MonoBehaviour, IItemUse
         Manager.Instance.observer.RecoveryPlayerHP(10);
         yield return null;
 
-        PhotonNetwork.Destroy(gameObject);  
+        if (photonView.IsMine)
+        {
+            PhotonNetwork.Destroy(gameObject);
+        }
     }
 
 
