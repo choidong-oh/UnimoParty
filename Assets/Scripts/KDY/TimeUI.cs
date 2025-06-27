@@ -37,7 +37,8 @@ public class TimeUI : MonoBehaviourPunCallbacks
             if (remainingTime <= 0)
             {
                 timeText.text = "00:00";
-                GameOverUI();
+                Manager.Instance.observer.EndGame();
+                //GameOverUI();
                 enabled = false;
                 return;
             }
