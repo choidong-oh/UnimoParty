@@ -14,14 +14,25 @@ public class Ranking : MonoBehaviour
     public List<TextMeshProUGUI> rewardtexts;
     public List<GameObject> rankObject;
 
-
-    // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
+        Debug.Log("Awake 구독 확인 디버그 ");
+        Manager.Instance.observer.OnGameEnd += GameEndResult;
+    }
+
+    private void Start()
+    {
+        Manager.Instance.observer.EndGame();
+    }
+
+    void GameEndResult()
+    {
+        Debug.Log("구독 확인 디버그");
+        SetPlayerList();
         tempscore = Manager.Instance.score;
         DefaultPlayerScoreSetting(tempscore);
         RefreshPlayerScoreRank(tempscore);
-        SetPlayerList();
+        InitRankData();
     }
 
     void SetPlayerList()
@@ -74,4 +85,21 @@ public class Ranking : MonoBehaviour
         }
         Debug.Log($"정렬 결과: {{ {string.Join(", ", ranks)} }}");
     }
+
+  
+    void InitRankData()
+    {
+        for(int i = 0; i < Manager.Instance.players.Count;i++)
+        {
+            if(Manager.Instance.players[i].ActorNumber == i+1)
+            {
+                scoretexts[i].GetComponent<TextMeshProUGUI>().text = Manager.Instance.observer.UserPlayer.gamedata.score.ToString();
+                nicknametexts[i].GetComponent<TextMeshProUGUI>().text = Manager.Instance.players[i].NickName.ToString();
+            }
+            
+
+            Debug.Log(tempscore[i]);
+        }   
+    }
 }
+ 
