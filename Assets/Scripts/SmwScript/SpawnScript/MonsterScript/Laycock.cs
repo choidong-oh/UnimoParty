@@ -60,7 +60,7 @@ public class Laycock : EnemyBase
 
                 if (PhotonNetwork.IsMasterClient)
                 {
-                    PoolManager.Instance.DespawnNetworked(gameObject);
+                    PhotonNetwork.Destroy(gameObject);
                 }
 
             }
@@ -92,7 +92,7 @@ public class Laycock : EnemyBase
 
                 if (PhotonNetwork.IsMasterClient)
                 {
-                    PoolManager.Instance.DespawnNetworked(gameObject);
+                    PhotonNetwork.Destroy(gameObject);
                 }
 
             }
@@ -110,7 +110,7 @@ public class Laycock : EnemyBase
 
             if (PhotonNetwork.IsMasterClient)
             {
-                PoolManager.Instance.DespawnNetworked(gameObject);
+                PhotonNetwork.Destroy(gameObject);
             }
 
         }
@@ -213,7 +213,7 @@ public class Laycock : EnemyBase
 
         if (PhotonNetwork.IsMasterClient)
         {
-            PoolManager.Instance.DespawnNetworked(gameObject);
+            PhotonNetwork.Destroy(gameObject);
         }
 
     }

@@ -70,7 +70,7 @@ public class Burnduri : EnemyBase
 
                 if (PhotonNetwork.IsMasterClient)
                 {
-                    PoolManager.Instance.DespawnNetworked(gameObject);//번드리를 풀로 반환
+                    PhotonNetwork.Destroy(gameObject);//번드리를 풀로 반환
                 }
 
             }
@@ -101,7 +101,7 @@ public class Burnduri : EnemyBase
 
                 if (PhotonNetwork.IsMasterClient)
                 {
-                    PoolManager.Instance.DespawnNetworked(gameObject);
+                    PhotonNetwork.Destroy(gameObject);
                 }
 
             }
@@ -119,7 +119,7 @@ public class Burnduri : EnemyBase
 
             if (PhotonNetwork.IsMasterClient)
             {
-                PoolManager.Instance.DespawnNetworked(gameObject);
+                PhotonNetwork.Destroy(gameObject);
             }
 
         }
@@ -301,7 +301,7 @@ public class Burnduri : EnemyBase
 
         if (PhotonNetwork.IsMasterClient)
         {
-            PoolManager.Instance.DespawnNetworked(gameObject);
+            PhotonNetwork.Destroy(gameObject);
         }
 
     }

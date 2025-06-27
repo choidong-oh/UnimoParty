@@ -123,7 +123,7 @@ public class ShookShook : EnemyBase
         transform.position = Target;
         if (PhotonNetwork.IsMasterClient)
         {
-            PoolManager.Instance.DespawnNetworked(gameObject);
+            PhotonNetwork.Destroy(gameObject);
         }
     }
 
@@ -148,7 +148,7 @@ public class ShookShook : EnemyBase
                 Instantiate(CrashShookShook, hitPoint, rot);
                 if (PhotonNetwork.IsMasterClient)
                 {
-                    PoolManager.Instance.DespawnNetworked(gameObject);
+                    PhotonNetwork.Destroy(gameObject);
                 }
 
             }
@@ -178,7 +178,7 @@ public class ShookShook : EnemyBase
 
                 if (PhotonNetwork.IsMasterClient)
                 {
-                    PoolManager.Instance.DespawnNetworked(gameObject);
+                    PhotonNetwork.Destroy(gameObject);
                 }
 
             }
@@ -196,7 +196,7 @@ public class ShookShook : EnemyBase
 
             if (PhotonNetwork.IsMasterClient)
             {
-                PoolManager.Instance.DespawnNetworked(gameObject);
+                PhotonNetwork.Destroy(gameObject);
             }
 
         }

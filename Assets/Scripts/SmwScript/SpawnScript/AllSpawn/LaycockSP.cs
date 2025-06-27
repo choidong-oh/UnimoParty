@@ -14,7 +14,7 @@ public class LaycockSP : MonoBehaviour
     {
         if (!PhotonNetwork.IsMasterClient) return;
 
-        GameObject go = PoolManager.Instance.SpawnNetworked(monsterPrefab, position.position, Quaternion.identity);
+        GameObject go = PhotonNetwork.Instantiate(monsterPrefab, position.position,Quaternion.identity);
 
         Monsters.Add(go);
 

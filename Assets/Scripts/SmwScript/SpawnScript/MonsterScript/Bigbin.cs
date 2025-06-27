@@ -118,7 +118,7 @@ public class Bigbin : EnemyBase
 
         if (PhotonNetwork.IsMasterClient)
         {
-            PoolManager.Instance.DespawnNetworked(gameObject);
+            PhotonNetwork.Destroy(gameObject);
         }
 
     }
@@ -147,7 +147,7 @@ public class Bigbin : EnemyBase
 
                 if (PhotonNetwork.IsMasterClient)
                 {
-                    PoolManager.Instance.DespawnNetworked(gameObject);
+                    PhotonNetwork.Destroy(gameObject);
                 }
 
             }
@@ -175,7 +175,7 @@ public class Bigbin : EnemyBase
                 Instantiate(CrashBigbin, hitPoint, rot);
                 if (PhotonNetwork.IsMasterClient)
                 {
-                    PoolManager.Instance.DespawnNetworked(gameObject);
+                    PhotonNetwork.Destroy(gameObject);
                 }
             }
         }
@@ -192,7 +192,7 @@ public class Bigbin : EnemyBase
 
             if (PhotonNetwork.IsMasterClient)
             {
-                PoolManager.Instance.DespawnNetworked(gameObject);
+                PhotonNetwork.Destroy(gameObject);
             }
 
         }
