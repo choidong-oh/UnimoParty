@@ -99,6 +99,9 @@ public class PoolManager : MonoBehaviour
         Instance = this;
     }
 
+    /// <summary>
+    /// 네트워크 오브젝트 생성 (RoomObject이므로 방 내 전체에 생성됨)
+    /// </summary>
     public GameObject SpawnNetworked(string prefabName, Vector3 position, Quaternion rotation)
     {
         return PhotonNetwork.InstantiateRoomObject(prefabName, position, rotation);
@@ -106,6 +109,26 @@ public class PoolManager : MonoBehaviour
 
     public void DespawnNetworked(GameObject obj)
     {
-        PhotonNetwork.Destroy(obj);
+        if (obj == null)
+        {
+            return;
+        }
+
+        PhotonView pv = obj.GetComponent<PhotonView>();
+
+        if (pv == null)
+        {
+            Destroy(obj);
+            return;
+        }
+
+        if (pv.IsMine || PhotonNetwork.IsMasterClient)
+        {
+            PhotonNetwork.Destroy(obj);
+        }
+        else
+        {
+            Debug.LogWarning($" Destroy 시도 실패: ViewID {pv.ViewID}, Owner: {pv.Owner}, Local: {PhotonNetwork.LocalPlayer}");
+        }
     }
 }
