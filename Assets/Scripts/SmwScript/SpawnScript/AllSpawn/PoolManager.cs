@@ -104,6 +104,11 @@ public class PoolManager : MonoBehaviour
     /// </summary>
     public GameObject SpawnNetworked(string prefabName, Vector3 position, Quaternion rotation)
     {
+        if (!PhotonNetwork.IsMasterClient)
+        {
+            return null;
+        }
+
         return PhotonNetwork.InstantiateRoomObject(prefabName, position, rotation);
     }
 
