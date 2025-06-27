@@ -54,7 +54,10 @@ public class Bigbin : EnemyBase
         terrain = Terrain.activeTerrain;
         FirstSpeed = MoveSpeed / 2;
         base.OnEnable();
-        StartCoroutine(GoBigBin());
+        if (PhotonNetwork.IsMasterClient)
+        {
+            StartCoroutine(GoBigBin());
+        }
 
     }
 
