@@ -130,6 +130,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         SceneManager.LoadScene(2);
     }
 
+    //방 생성 코드
     public void CreatRoom()
     {
         StartCoroutine(WaitCreatRoom());
@@ -146,6 +147,8 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         PVPPanel.SetActive(false);
         roomPanel.SetActive(true);
     }
+
+
     public void InRoomBackButton()
     {
         checkPanel.SetActive(true);
@@ -154,6 +157,8 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     {
         checkPanel.SetActive(false);
     }
+
+
     public void LeaveRoomButton()
     {
         PhotonNetwork.LeaveRoom();
@@ -162,6 +167,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         roomPanel.SetActive(false);
     }
 
+    //매치메이킹 버튼 
     public void MatchmakingButton()
     {
         isMatchMaking = !isMatchMaking;
@@ -188,6 +194,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         }
     }
 
+    //매치메이킹 시스템
     private IEnumerator MatchmakingRoutine()
     {
         maxPlayers = 8;
@@ -221,6 +228,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         }
     }
 
+    //Photon 방 입장시 콜백
     public override void OnJoinedRoom()
     {
         if (PhotonNetwork.CurrentRoom.Name == "Random")
@@ -240,7 +248,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         }
     }
 
-
+    //Photon 플레이어 입장시 콜백
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
         if (PhotonNetwork.CurrentRoom.Name != "Random")
@@ -254,6 +262,8 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         }
     }
 
+
+    //Photon 방 떠날시 콜백 ,판넬 삭제
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
         if (PhotonNetwork.CurrentRoom.Name != "Random")
@@ -271,21 +281,9 @@ public class LobbyManager : MonoBehaviourPunCallbacks
             }
         }
     }
-    private void CheckAllReady()
-    {
-        int totalPlayers = PhotonNetwork.CurrentRoom.PlayerCount;
 
-        if (readyCount >= totalPlayers - 1)
-        {
-            actionButton.interactable = true;
-        }
-        else
-        {
-            actionButton.interactable = false;
-        }
-    }
 
-    //
+    //방 입장시 플레이어 이름, 캐릭터 동기화
     private void AddNicknameUI(Player player)
     {
         if (playerUIMap.ContainsKey(player.ActorNumber))
@@ -333,6 +331,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     
 
 
+    //방 코드로 입장
     public void CodeJoinRoom()
     {
         PhotonNetwork.JoinRoom(codeInput.text);
@@ -342,17 +341,23 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
 
 
+    //방장 바뀔시 버튼 초기화
     public override void OnMasterClientSwitched(Player newMasterClient)
     {
         UpdateActionButton();
     }
-    public void ReadyButton()
-    {
-        photonView.RPC("SetReadyState", RpcTarget.All, PhotonNetwork.LocalPlayer.ActorNumber);
 
+    
+    
+
+    //방 입장 실패
+    public override void OnJoinRoomFailed(short returnCode, string message)
+    {
+        failPanel.SetActive(true);
     }
 
 
+    //게임 시작 버튼 (마스터클라이언트만)
     public void StartGameButton()
     {
         if (PhotonNetwork.IsMasterClient)
@@ -374,6 +379,10 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
         }
     }
+
+
+
+    //방장은 게임시작 버튼, 나머지는 준비 버튼
     private void UpdateActionButton()
     {
         actionButton.onClick.RemoveAllListeners();
@@ -389,6 +398,9 @@ public class LobbyManager : MonoBehaviourPunCallbacks
             actionButton.onClick.AddListener(ReadyButton);
         }
     }
+
+
+    //레디 하면 rpc 쏴서 방장에게 알려주기
     [PunRPC]
     public void SetReadyState(int actorNumber)
     {
@@ -404,16 +416,42 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         }
     }
 
+    // 레디 RPC 쓰는 코드
+    public void ReadyButton()
+    {
+        photonView.RPC("SetReadyState", RpcTarget.All, PhotonNetwork.LocalPlayer.ActorNumber);
 
+    }
+
+    //레디 전부 다하면 방장 버튼 활성화
+    private void CheckAllReady()
+    {
+        int totalPlayers = PhotonNetwork.CurrentRoom.PlayerCount;
+
+        if (readyCount >= totalPlayers - 1)
+        {
+            actionButton.interactable = true;
+        }
+        else
+        {
+            actionButton.interactable = false;
+        }
+    }
 
     public void GameSettingButton()
     {
         gameSettingPanel.SetActive(true);
     }
+
+
+
     public void ExitSetting()
     {
         gameSettingPanel.SetActive(false);
     }
+
+
+
     public void SaveSetting()
     {
         gameSettingPanel.SetActive(false);

@@ -27,7 +27,6 @@ public class AudioManager : MonoBehaviour
         float sfxVolume = PlayerPrefs.GetFloat("SFXVolume", 50f) / 100f;
         bgmSource.volume = bgmVolume;
 
-        //초기 SFX AudioSource 풀 3개 정도 생성
         for (int i = 0; i < 3; i++)
         {
             AudioSource sfx = gameObject.AddComponent<AudioSource>();

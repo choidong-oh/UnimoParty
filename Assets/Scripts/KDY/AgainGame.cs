@@ -20,8 +20,6 @@ public class AgainGame : MonoBehaviourPunCallbacks
 
         Debug.Log($"[AgainGame] 다시하기 선택 - 방 코드: {roomCode}");
 
-        // 2. 방 나가기
-        PhotonNetwork.LeaveRoom();
         SceneManager.LoadScene(1);
     }
 
