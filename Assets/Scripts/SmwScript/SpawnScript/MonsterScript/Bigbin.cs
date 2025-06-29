@@ -119,53 +119,53 @@ public class Bigbin : EnemyBase
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!photonView.IsMine) return;
-        if (other.CompareTag("Player"))
+        if (!photonView.IsMine) return;//객체가 나의 것이 아니면 함수종료 
+        if (other.CompareTag("Player"))//해당객체가 플레이어일경우 
         {
-            if (ImFreeze == true)
+            if (ImFreeze == true)//내가 프리즈상태이면
             {
-                ImFreeze = false;
-                StartCoroutine(FreezeCor());
+                ImFreeze = false;//프리즈상태 제거 
+                StartCoroutine(FreezeCor());//해동 코루틴 발동 
             }
-            else if (ImFreeze == false)
+            else if (ImFreeze == false)//내가 프리즈 상태가 아니면 
             {
-                damage = 1;
-                Manager.Instance.observer.HitPlayer(damage);
+                damage = 1;//임의로 데미지를 1로 줌
+                Manager.Instance.observer.HitPlayer(damage);//플레이어에게 데미지를준거
 
                 Vector3 hitPoint = other.ClosestPoint(transform.position);//충돌지점에 최대한 가깝게
-                Vector3 normal = (hitPoint - transform.position).normalized;// 방향계산
-                Quaternion rot = Quaternion.LookRotation(normal);// 방향계산
-                Instantiate(CrashBigbin, hitPoint, rot);
+                Vector3 normal = (hitPoint - transform.position).normalized;// 몬스터 중심에서 충돌 지점으로 향하는 방향 벡터를 단위 벡터로 변환
+                Quaternion rot = Quaternion.LookRotation(normal);// 회전방향
+                Instantiate(CrashBigbin, hitPoint, rot);//빅빈이 터지는 파티클 생성 
 
-                if (PhotonNetwork.IsMasterClient)
+                if (PhotonNetwork.IsMasterClient)//마스터클라이언트만
                 {
-                    PoolManager.Instance.DespawnNetworked(gameObject);
+                    PoolManager.Instance.DespawnNetworked(gameObject);//PoolManager에 반환할꺼임
                 }
 
             }
         }
 
-        else if (other.CompareTag("Monster"))
+        else if (other.CompareTag("Monster"))//테그가 몬스터라면 
         {
-            EnemyBase otherEnemy = other.GetComponent<EnemyBase>();
+            EnemyBase otherEnemy = other.GetComponent<EnemyBase>();//Monster 종류들은 EnemyBase스크립트가 있으므로 연결해줌
 
-            if (otherEnemy == null)
+            if (otherEnemy == null)//연결안됬으면 
             {
                 Debug.Log("몬스터 EnemyBase 가 없음");
                 return;
             }
 
-            if (ImFreeze == false && otherEnemy.ImFreeze == true)
+            if (ImFreeze == false && otherEnemy.ImFreeze == true)//나는 프리즈가 아닌데 상대 몬스터가 프리즈일경우 
             {
 
-                otherEnemy.ImFreeze = false;
-                otherEnemy.Move();
+                otherEnemy.ImFreeze = false;//상대방 프리즈는 풀어준다 
+                otherEnemy.Move();//상대 해동상태로 만들어준다 
 
-                Vector3 hitPoint = other.ClosestPoint(transform.position);
-                Vector3 normal = (hitPoint - transform.position).normalized;
-                Quaternion rot = Quaternion.LookRotation(normal);
-                Instantiate(CrashBigbin, hitPoint, rot);
-                if (PhotonNetwork.IsMasterClient)
+                Vector3 hitPoint = other.ClosestPoint(transform.position);//충돌지점에 최대한 가깝게
+                Vector3 normal = (hitPoint - transform.position).normalized;// 몬스터 중심에서 충돌 지점으로 향하는 방향 벡터를 단위 벡터로 변환
+                Quaternion rot = Quaternion.LookRotation(normal);// 회전방향
+                Instantiate(CrashBigbin, hitPoint, rot);//빅빈이 터지는 파티클 생성 
+                if (PhotonNetwork.IsMasterClient)//마스터클라이언트만
                 {
                     PoolManager.Instance.DespawnNetworked(gameObject);
                 }
@@ -173,16 +173,14 @@ public class Bigbin : EnemyBase
         }
 
 
-        else if (other.CompareTag("Aube"))
+        else if (other.CompareTag("Aube"))//충돌된게 오브이면 
         {
-            Vector3 hitPoint = other.ClosestPoint(transform.position);
+            Vector3 hitPoint = other.ClosestPoint(transform.position);//충돌지점에 최대한 가깝게
+            Vector3 normal = (hitPoint - transform.position).normalized;// 몬스터 중심에서 충돌 지점으로 향하는 방향 벡터를 단위 벡터로 변환
+            Quaternion rot = Quaternion.LookRotation(normal);// 회전방향
+            Instantiate(CrashBigbin, hitPoint, rot);//빅빈이 터지는 파티클 생성 
 
-            Vector3 normal = (hitPoint - transform.position).normalized;
-            Quaternion rot = Quaternion.LookRotation(normal);
-
-            Instantiate(CrashBigbin, hitPoint, rot);
-
-            if (PhotonNetwork.IsMasterClient)
+            if (PhotonNetwork.IsMasterClient)//마스터클라이언트만
             {
                 PoolManager.Instance.DespawnNetworked(gameObject);
             }
@@ -191,18 +189,18 @@ public class Bigbin : EnemyBase
 
     }
 
-    IEnumerator MoveRoutine()
+    IEnumerator MoveRoutine()//앞으로만 움직이는 코루틴
     {
 
         while (true)
         {
-            myPos = transform.position;
-            float terrainY = terrain.SampleHeight(transform.position) + fixedY;
-            transform.position = new Vector3(myPos.x, terrainY, myPos.z);
+            myPos = transform.position;//높이 관련 필요한벡터
+            float terrainY = terrain.SampleHeight(transform.position) + fixedY;//적용할 높이
+            transform.position = new Vector3(myPos.x, terrainY, myPos.z);//높이적용
 
-            transform.position += transform.forward * MoveSpeed * Time.fixedDeltaTime;
+            transform.position += transform.forward * MoveSpeed * Time.fixedDeltaTime;//앞으로만 이동
 
-            yield return new WaitForFixedUpdate();
+            yield return new WaitForFixedUpdate();//주기적으로
         }
     }
 
@@ -210,10 +208,10 @@ public class Bigbin : EnemyBase
     {
         if (players.Count == 0)
         {
-            var objs = GameObject.FindGameObjectsWithTag("Player");
+            var objs = GameObject.FindGameObjectsWithTag("Player");//Player 라는테그가 애들 전부 찾기
             foreach (var obj in objs)
             {
-                players.Add(obj.transform);
+                players.Add(obj.transform);//추격할때 쓸 리스트에 추가해줌
             }
         }
         while (true)
@@ -222,42 +220,42 @@ public class Bigbin : EnemyBase
             {
                 Transform p = players[i];
 
-                if (p == null || !p.gameObject.activeInHierarchy)
+                if (p == null || !p.gameObject.activeInHierarchy)//만약 플레이어리스트에 해당플레이어가 없거나 하이러키창에도 없으면 
                 {
-                    players.RemoveAt(i);
+                    players.RemoveAt(i);//리스트에서 지워라
                 }
             }
 
-            myPos = transform.position;
+            myPos = transform.position;//혹시모를 초기화 
             float minDistance = Mathf.Infinity;// 일단 제일 큰값으로함 
 
             foreach (var player in players)
             {
-                float Distance = Vector3.Distance(myPos, player.position);
+                float Distance = Vector3.Distance(myPos, player.position);//플레이어 거리를 빋아옴
 
 
-                if (Distance < minDistance)
+                if (Distance < minDistance)//기존꺼보다 가까우면 바꿔주는것 
                 {
                     minDistance = Distance;
-                    nearestPlayer = player;
+                    nearestPlayer = player;// 이제 추격할 플레이어 nearestPlayer에 담아줌
                 }
             }
 
             if (nearestPlayer != null)
             {
-                Target = nearestPlayer.position;
+                Target = nearestPlayer.position;//타겟은 제일가까운에 이기때문에 Target에 담아줌
 
-                transform.LookAt(Target);
-                transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
+                transform.LookAt(Target);//타켓을 쳐다봄
+                transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);// 한번쳐다보는데 y축을제외한 다른축이 뒤집히지않게 
             }
 
 
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(0.5f);//0.5마다 방향 찾음
         }
     }
 
 
-    public override void Move()
+    public override void Move()//다른대에서 빅빈이 해동되는걸 해줄 함수 
     {
         StartCoroutine(FreezeCor());
     }
