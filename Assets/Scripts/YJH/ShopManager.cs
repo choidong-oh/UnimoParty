@@ -39,11 +39,12 @@ public class ShopManager : MonoBehaviour
         ingameMoney = Manager.Instance.observer.UserPlayer.gamedata._money;
         money1.text = ingameMoney.ToString();
 
-        PlayerPrefs.GetInt("SelectedCharacterIndex", SelectedData.characterIndex);
-        PlayerPrefs.GetInt("SelectedShipIndex", SelectedData.shipIndex);
+        SelectedData.characterIndex = PlayerPrefs.GetInt("SelectedCharacterIndex", 0);
+        SelectedData.shipIndex = PlayerPrefs.GetInt("SelectedShipIndex", 0);
 
         sellPanel.SetActive(false);
 
+        
         for (int i = 0; i < viewToggles.Length; i++)
         {
             if (viewToggles[i].isOn)
@@ -68,6 +69,9 @@ public class ShopManager : MonoBehaviour
                 // 备概等 版快 肺流
             }
         }
+
+        CharacterPreview(SelectedData.characterIndex);
+        ShipPreview(SelectedData.shipIndex);
 
     }
 

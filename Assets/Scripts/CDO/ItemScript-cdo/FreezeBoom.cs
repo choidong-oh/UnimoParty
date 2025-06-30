@@ -19,7 +19,10 @@ public class FreezeBoom : MonoBehaviourPunCallbacks, IItemUse, InterfaceMethod.I
         photonView.RPC("Explode", RpcTarget.All, false);
 
         yield return new WaitForSeconds(boomDuration);
-        PhotonNetwork.Destroy(gameObject);
+        if (photonView.IsMine)
+        {
+            PhotonNetwork.Destroy(gameObject);
+        }
     }
 
     private void OnCollisionEnter(Collision collision)

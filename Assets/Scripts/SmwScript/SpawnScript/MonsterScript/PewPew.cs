@@ -46,10 +46,10 @@ public class PewPew : EnemyBase
 
         animator = GetComponent<Animator>();// 자신의 애니메이터를 담아줌
 
-        if (Spawner == null)//퓨퓨전용 스포너가 등록이 안되 있으면  
-        {
-            Spawner = FindObjectOfType<PewPewSp>();//Spawner에 PewPewSp 컴포너트가 있는걸 담아라 ObjectOfType는 오브젝트가 1개만있으면 써도됨 그외는 x
-        }
+        // if (Spawner == null)//퓨퓨전용 스포너가 등록이 안되 있으면  
+        // {
+        //     Spawner = FindObjectOfType<PewPewSp>();//Spawner에 PewPewSp 컴포너트가 있는걸 담아라 ObjectOfType는 오브젝트가 1개만있으면 써도됨 그외는 x
+        // }
 
         myCollider = GetComponent<Collider>();//myCollider에 나 자신 충돌체를 넣어줄꺼임 
 
@@ -168,10 +168,10 @@ public class PewPew : EnemyBase
                 Instantiate(CrashPewPew, hitPoint, rot);// 위에 3개를 적용해서 퓨퓨 사망 파티클 생성
 
                 if (!PhotonNetwork.IsMasterClient) return;//방장아니면 함수를 종료해라 
-                Spawner.SpawnOne();// Spawner안에 있는 SpawnOne() 실행 SpawnOne()은 퓨퓨가 죽으면 다시생성하게 할꺼임
+                //Spawner.SpawnOne();// Spawner안에 있는 SpawnOne() 실행 SpawnOne()은 퓨퓨가 죽으면 다시생성하게 할꺼임
                 if (PhotonNetwork.IsMasterClient)
                 {
-                    PoolManager.Instance.DespawnNetworked(gameObject);
+                    PhotonNetwork.Destroy(gameObject);
                 }
             }
         }
@@ -198,10 +198,10 @@ public class PewPew : EnemyBase
                 Instantiate(CrashPewPew, hitPoint, rot);// 위에 3개를 적용해서 퓨퓨 사망 파티클 생성
 
                 if (!PhotonNetwork.IsMasterClient) return;//방장만 실행하게 
-                Spawner.SpawnOne();// Spawner안에 있는 SpawnOne() 실행 SpawnOne()은 퓨퓨가 죽으면 다시생성하게 할꺼임
+                //Spawner.SpawnOne();// Spawner안에 있는 SpawnOne() 실행 SpawnOne()은 퓨퓨가 죽으면 다시생성하게 할꺼임
                 if (PhotonNetwork.IsMasterClient)
                 {
-                    PoolManager.Instance.DespawnNetworked(gameObject);
+                    PhotonNetwork.Destroy(gameObject);
                 }
 
             }
@@ -216,10 +216,10 @@ public class PewPew : EnemyBase
             Instantiate(CrashPewPew, hitPoint, rot);// 위에 3개를 적용해서 퓨퓨 사망 파티클 생성
 
             if (!PhotonNetwork.IsMasterClient) return;//방장만 실행하게 
-            Spawner.SpawnOne();// Spawner안에 있는 SpawnOne() 실행 SpawnOne()은 퓨퓨가 죽으면 다시생성하게 할꺼임
+            //Spawner.SpawnOne();// Spawner안에 있는 SpawnOne() 실행 SpawnOne()은 퓨퓨가 죽으면 다시생성하게 할꺼임
             if (PhotonNetwork.IsMasterClient)
             {
-                PoolManager.Instance.DespawnNetworked(gameObject);
+                PhotonNetwork.Destroy(gameObject);
             }
         }
 

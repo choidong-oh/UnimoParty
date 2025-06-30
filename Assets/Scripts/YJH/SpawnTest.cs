@@ -51,18 +51,23 @@ public class SpawnTest : MonoBehaviourPun
     }
     private IEnumerator SpawnAllMonsters()
     {
-        foreach (var data in spawnList)
+        while(Manager.Instance.observer.isGameOver == false)
         {
-            for (int i = 0; i < data.count; i++)
+            foreach (var data in spawnList)
             {
-                if (isGameEnded)
-                    yield break;
+                for (int i = 0; i < data.count; i++)
+                {
+                    if (isGameEnded)
+                        yield break;
 
-                Vector3 randomPos = GetRandomSpawnPosition();
-                photonView.RPC("RPC_SpawnMonster", RpcTarget.All, data.prefabName, randomPos, Quaternion.identity);
-                yield return new WaitForSeconds(0.1f);
+                    Vector3 randomPos = GetRandomSpawnPosition();
+                    photonView.RPC("RPC_SpawnMonster", RpcTarget.All, data.prefabName, randomPos, Quaternion.identity);
+                    yield return new WaitForSeconds(0.1f);
+                }
             }
+            yield return new WaitForSeconds(10);
         }
+        
     }
 
     [PunRPC]

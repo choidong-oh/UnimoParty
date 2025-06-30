@@ -54,7 +54,10 @@ public class Bigbin : EnemyBase
         terrain = Terrain.activeTerrain;
         FirstSpeed = MoveSpeed / 2;
         base.OnEnable();
-        StartCoroutine(GoBigBin());
+        if (PhotonNetwork.IsMasterClient)
+        {
+            StartCoroutine(GoBigBin());
+        }
 
     }
 
@@ -115,7 +118,7 @@ public class Bigbin : EnemyBase
 
         if (PhotonNetwork.IsMasterClient)
         {
-            PoolManager.Instance.DespawnNetworked(gameObject);
+            PhotonNetwork.Destroy(gameObject);
         }
 
     }
@@ -144,7 +147,7 @@ public class Bigbin : EnemyBase
 
                 if (PhotonNetwork.IsMasterClient)
                 {
-                    PoolManager.Instance.DespawnNetworked(gameObject);
+                    PhotonNetwork.Destroy(gameObject);
                 }
 
             }
@@ -172,7 +175,7 @@ public class Bigbin : EnemyBase
                 Instantiate(CrashBigbin, hitPoint, rot);
                 if (PhotonNetwork.IsMasterClient)
                 {
-                    PoolManager.Instance.DespawnNetworked(gameObject);
+                    PhotonNetwork.Destroy(gameObject);
                 }
             }
         }
@@ -189,7 +192,7 @@ public class Bigbin : EnemyBase
 
             if (PhotonNetwork.IsMasterClient)
             {
-                PoolManager.Instance.DespawnNetworked(gameObject);
+                PhotonNetwork.Destroy(gameObject);
             }
 
         }

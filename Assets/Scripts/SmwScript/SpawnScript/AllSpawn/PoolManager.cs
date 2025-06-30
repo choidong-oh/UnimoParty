@@ -101,11 +101,36 @@ public class PoolManager : MonoBehaviour
 
     public GameObject SpawnNetworked(string prefabName, Vector3 position, Quaternion rotation)
     {
-        return PhotonNetwork.InstantiateRoomObject(prefabName, position, rotation);
+        if (!PhotonNetwork.IsMasterClient)
+        {
+            return null;
+        }
+
+        return PhotonNetwork.Instantiate(prefabName, position, rotation);
     }
 
     public void DespawnNetworked(GameObject obj)
     {
-        PhotonNetwork.Destroy(obj);
+        if (obj == null)
+        {
+            return;
+        }
+
+        PhotonView pv = obj.GetComponent<PhotonView>();
+
+        if (pv == null)
+        {
+            Destroy(obj);
+            return;
+        }
+
+        if (PhotonNetwork.IsMasterClient)
+        {
+            PhotonNetwork.Destroy(obj);
+        }
+        else
+        {
+            Debug.LogWarning($" Destroy 시도 실패: ViewID {pv.ViewID}, Owner: {pv.Owner}, Local: {PhotonNetwork.LocalPlayer}");
+        }
     }
 }

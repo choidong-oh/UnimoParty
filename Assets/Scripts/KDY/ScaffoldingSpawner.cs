@@ -55,5 +55,6 @@ public class ScaffoldingSpawner : MonoBehaviour
                 // 랜덤 색상 적용
             }
         }
+        AudioManager.Instance.PlayBGM("InGameBGM");
     }
 }

@@ -36,6 +36,7 @@ public class ShookShook : EnemyBase
     public override void OnEnable()
     {
         base.OnEnable();
+        animator = GetComponent<Animator>();    
         myCollider = GetComponent<Collider>();
         myCollider.enabled = false;
         terrain = Terrain.activeTerrain;
@@ -123,7 +124,7 @@ public class ShookShook : EnemyBase
         transform.position = Target;
         if (PhotonNetwork.IsMasterClient)
         {
-            PoolManager.Instance.DespawnNetworked(gameObject);
+            PhotonNetwork.Destroy(gameObject);
         }
     }
 
@@ -148,7 +149,7 @@ public class ShookShook : EnemyBase
                 Instantiate(CrashShookShook, hitPoint, rot);
                 if (PhotonNetwork.IsMasterClient)
                 {
-                    PoolManager.Instance.DespawnNetworked(gameObject);
+                    PhotonNetwork.Destroy(gameObject);
                 }
 
             }
@@ -178,7 +179,7 @@ public class ShookShook : EnemyBase
 
                 if (PhotonNetwork.IsMasterClient)
                 {
-                    PoolManager.Instance.DespawnNetworked(gameObject);
+                    PhotonNetwork.Destroy(gameObject);
                 }
 
             }
@@ -196,7 +197,7 @@ public class ShookShook : EnemyBase
 
             if (PhotonNetwork.IsMasterClient)
             {
-                PoolManager.Instance.DespawnNetworked(gameObject);
+                PhotonNetwork.Destroy(gameObject);
             }
 
         }
