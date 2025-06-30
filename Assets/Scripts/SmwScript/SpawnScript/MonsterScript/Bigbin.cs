@@ -261,7 +261,7 @@ public class Bigbin : EnemyBase
     }
 
 
-    public override void Freeze(Vector3 direction, bool isFreeze)
+    public override void Freeze(Vector3 direction, bool isFreeze)//  프리즈 전용 포툰
     {
         photonView.RPC("FreezeRPC", RpcTarget.All, direction, isFreeze);
     }
@@ -271,17 +271,17 @@ public class Bigbin : EnemyBase
     {
         if (isFreeze == true)
         {
-            ImFreeze = isFreeze;
-            IsFreeze.SetActive(true);
-            MoveSpeedSave = MoveSpeed;
-            MoveSpeed = 0;
-            animator.speed = 0f;
+            ImFreeze = isFreeze;//얼음 상태 값 받기
+            IsFreeze.SetActive(true);//알음 프리펩 활성화
+            MoveSpeedSave = MoveSpeed;// 자신의 이동 속도 저장 
+            MoveSpeed = 0;// 이동 정지 
+            animator.speed = 0f;//애니메이션 정지
         }
-        else if (isFreeze == false)
+        else if (isFreeze == false)//얼음 해제 지시
         {
             Debug.Log(isFreeze + " 프리즈 해제");// 이거 넘어 오긴하는건가
-            ImFreeze = isFreeze;
-            StartCoroutine(FreezeCor());
+            ImFreeze = isFreeze; ////얼음 상태 값 받기
+            StartCoroutine(FreezeCor());//해동 코루틴 실행
         }
         else
         {
@@ -289,12 +289,12 @@ public class Bigbin : EnemyBase
         }
     }
 
-    IEnumerator FreezeCor()
+    IEnumerator FreezeCor()//해동 코루틴
     {
-        yield return new WaitForSeconds(FreezeTime);
-        MoveSpeed = MoveSpeedSave;
-        animator.speed = 1f;
-        IsFreeze.SetActive(false);
+        yield return new WaitForSeconds(FreezeTime);//해동되는데 걸리는시간
+        MoveSpeed = MoveSpeedSave;//원레 이동속도 다시받기
+        animator.speed = 1f;//애니메이션 실행
+        IsFreeze.SetActive(false);//얼음 프리팹 비활성화
     }
 
 }
