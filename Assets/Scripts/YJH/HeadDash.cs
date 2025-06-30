@@ -92,7 +92,7 @@ public class HeadDash : MonoBehaviourPunCallbacks, IFreeze
         dashCooldownUI.StartCooldown(); //  UI 연동
     }
 
-    //어름
+    //얼음
     public void Freeze(bool IsFreeze)
     {
         if (IsFreeze == true)

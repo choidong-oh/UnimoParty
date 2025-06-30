@@ -8,7 +8,7 @@ using UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets;
 public class LoadPlayerSetting : MonoBehaviourPunCallbacks
 {
     [SerializeField] private TunnelingVignetteController vignette;
-    [SerializeField] private ActionBasedControllerManager ABCM;
+    [SerializeField] private ActionBasedControllerManager rightController;
     [SerializeField] private ActionBasedSnapTurnProvider snapTurn;
     [SerializeField] private ActionBasedContinuousTurnProvider smoothTurn;
     void Start()
@@ -16,7 +16,7 @@ public class LoadPlayerSetting : MonoBehaviourPunCallbacks
         if(photonView.IsMine)
         {
             vignette = GetComponentInChildren<TunnelingVignetteController>();
-            ABCM = GameObject.Find("Camera Offset").transform.GetChild(5).GetComponent<ActionBasedControllerManager>();
+            rightController = GameObject.Find("Camera Offset").transform.GetChild(5).GetComponent<ActionBasedControllerManager>();
             GameObject turn = GameObject.Find("Turn");
             snapTurn = turn.GetComponent<ActionBasedSnapTurnProvider>();
             smoothTurn = turn.GetComponent<ActionBasedContinuousTurnProvider>();
@@ -26,12 +26,12 @@ public class LoadPlayerSetting : MonoBehaviourPunCallbacks
 
             if(OptionData.isSmooth)
             {
-                ABCM.smoothTurnEnabled = true;
+                rightController.smoothTurnEnabled = true;
                 smoothTurn.turnSpeed = OptionData.dataValues[3];
             }
             else
             {
-                ABCM.smoothTurnEnabled = false;
+                rightController.smoothTurnEnabled = false;
                 snapTurn.turnAmount = OptionData.amount;
             }
                 

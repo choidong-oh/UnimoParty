@@ -84,6 +84,8 @@ public class LobbyManager : MonoBehaviourPunCallbacks
             roomPanel.SetActive(true);
         }
     }
+
+    //판넬들 스택에 저장
     private void ShowPanel(GameObject nextPanel)
     {
         if (panelStack.Count > 0)
@@ -94,19 +96,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         nextPanel.SetActive(true);
         currentPanel = panelStack.Peek().gameObject;
     }
-    //인스펙터 끼워 넣기 용
-    public void PVEButton()
-    {
-        ShowPanel(PVEPanel);
-    }
-    //인스펙터 끼워 넣기 용
-    public void PVPButton()
-    {
-        ShowPanel(PVPPanel);
-
-        AudioManager.Instance?.PlayBGM("PVPBGM");
-    }
-
+    //뒤로가기버튼
     public void BackButton()
     {
         if (panelStack.Count > 1)
@@ -124,6 +114,20 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         }
     }
 
+    //인스펙터 끼워 넣기 용
+    public void PVEButton()
+    {
+        ShowPanel(PVEPanel);
+    }
+    //인스펙터 끼워 넣기 용
+    public void PVPButton()
+    {
+        ShowPanel(PVPPanel);
+
+        AudioManager.Instance?.PlayBGM("PVPBGM");
+    }
+
+
     //PVE 스테이지 진입
     public void Stage1()
     {
@@ -135,6 +139,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     {
         StartCoroutine(WaitCreatRoom());
     }
+
     IEnumerator WaitCreatRoom()
     {
         PhotonNetwork.JoinLobby();
@@ -153,11 +158,11 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     {
         checkPanel.SetActive(true);
     }
+
     public void StayButton()
     {
         checkPanel.SetActive(false);
     }
-
 
     public void LeaveRoomButton()
     {
@@ -302,7 +307,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         int charIndex = 0;
         if (player.CustomProperties.ContainsKey("CharacterIndex"))
         {
-            object charIndexValue = player.CustomProperties["CharacterIndex"];
+            var charIndexValue = player.CustomProperties["CharacterIndex"];
             if (charIndexValue is int)
             {
                 charIndex = (int)charIndexValue;
@@ -312,7 +317,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         int shipIndex = 0;
         if (player.CustomProperties.ContainsKey("ShipIndex"))
         {
-            object shipIndexValue = player.CustomProperties["ShipIndex"];
+            var shipIndexValue = player.CustomProperties["ShipIndex"];
             if (shipIndexValue is int)
             {
                 shipIndex = (int)shipIndexValue;
